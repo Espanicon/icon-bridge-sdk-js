@@ -4,7 +4,7 @@
   "description": "",
   "main": "utils.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "tsc && node dist/index.js"
   },
   "author": "",
   "license": "ISC",
@@ -15,6 +15,8 @@
     "eslint": "^8.25.0"
   },
   "dependencies": {
-    "@espanicon/espanicon-sdk": "github:Espanicon/espanicon-sdk"
+    "@espanicon/espanicon-sdk": "github:Espanicon/espanicon-sdk",
+    "dotenv": "^16.0.3",
+    "web3": "^1.8.0"
   }
 }
