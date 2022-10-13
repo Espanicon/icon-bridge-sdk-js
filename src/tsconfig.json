@@ -1,0 +1,15 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "target": "es2016",
+    "lib": ["es6"],
+    "module": "commonjs",
+    "rootDir": "./",
+     "paths": {
+       "*": ["../nodes_modules/*", "./*"]
+     },
+    "types": ["node"],
+    "outDir": "../dist/",
+    "esModuleInterop": true
+  }
+}
