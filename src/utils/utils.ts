@@ -1,7 +1,11 @@
 // utils/utils.ts
 //
-const contracts = require("./contracts");
+const { contracts, tokenLabels } = require("./contracts");
 const networks = require("./networks");
+const lib = require("./lib");
+
+// variables
+const abiDataPath = "data/abiData.json";
 
 const iconNode = {
   node: "lisbon.net.solidwallet.io",
@@ -29,12 +33,17 @@ const bscNode = {
   node: networks.testnet.bsc.uri,
   nid: networks.testnet.bsc.network_id
 };
+
+// exports
 const utils = {
   networks,
   contracts,
   iconNode,
   bscNode,
-  routes
+  routes,
+  lib,
+  abiDataPath,
+  tokenLabels
 };
 
 export = utils;

@@ -6,7 +6,7 @@ const fs = require("fs");
 
 // variables
 const apiKey = process.env.BSC_API_KEY;
-const dataPath = "data/abiData.json";
+const dataPath = utils.abiDataPath;
 const lib = new EspaniconSDKNode(utils.iconNode.node, utils.iconNode.nid);
 
 // types
