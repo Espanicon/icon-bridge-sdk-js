@@ -6,7 +6,7 @@
   "scripts": {
     "test": "tsc -p ./src/tsconfig.json && node dist/index.js",
     "test-web": "webpack serve --open",
-    "build-data": "tsc -p ./src/tsconfig.json && node dist/utils/customPath.js"
+    "build-data": "tsc -p ./src/tsconfig.json && node dist/utils/buildABIData.js"
   },
   "author": "",
   "license": "ISC",

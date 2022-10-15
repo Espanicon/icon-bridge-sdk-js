@@ -2,7 +2,7 @@ require("dotenv").config();
 import web3 from "web3";
 const EspaniconSDKNode = require("@espanicon/espanicon-sdk");
 const utils = require("./utils/utils");
-const { getMainnetAndTestnetAbi } = require("./utils/buildABIData");
+// const { getMainnetAndTestnetAbi } = require("./utils/buildABIData");
 
 // types
 interface Wallet {
@@ -31,9 +31,9 @@ async function runAsync() {
 
   try {
     // custom request
-    const query1 = await getMainnetAndTestnetAbi();
-    console.log("query1");
-    console.log(query1);
+    // const query1 = await getMainnetAndTestnetAbi();
+    // console.log("query1");
+    // console.log(query1);
     //
     iconQuery = await iconLib.getIcxBalance(walletsRaw.icon.address);
     if (typeof walletsRaw.bsc.address === "string") {

@@ -1,19 +1,61 @@
 require("dotenv").config();
 const EspaniconSDKNode = require("@espanicon/espanicon-sdk");
 const utils = require("./utils");
+const customPath = require("./customPath");
+const fs = require("fs");
 
+// variables
 const apiKey = process.env.BSC_API_KEY;
-// const dataPath = "abiData.json";
+const dataPath = "data/abiData.json";
 const lib = new EspaniconSDKNode(utils.iconNode.node, utils.iconNode.nid);
 
-function sleep(time: number = 6000): Promise<void> {
-  return new Promise(resolve => setTimeout(resolve, time));
-}
-
+// types
 interface Query {
   status: "0" | "1";
   message: string;
   result: string;
+}
+
+class GenericContractAddress {
+  /**
+   * Generic Contract address class
+   * */
+  private address: string;
+
+  constructor(address: string) {
+    this.address = this.validated(address);
+  }
+
+  public getAddress(): string {
+    return this.address;
+  }
+
+  public setAddress(address: string): void {
+    this.address = this.validated(address);
+  }
+
+  private validated(address: string): string {
+    const regex = new RegExp("^0x([a-fA-F0-9]{40,40}$)");
+
+    if (!regex.test(address)) {
+      throw new TypeError(`${address} is not a valid contract address.`);
+    }
+
+    return address;
+  }
+}
+
+interface Batch {
+  [key: string]: { address: GenericContractAddress };
+}
+
+interface Result {
+  [key: string]: { abi: any } | undefined;
+}
+
+// functions
+function sleep(time: number = 6000): Promise<void> {
+  return new Promise(resolve => setTimeout(resolve, time));
 }
 
 async function getAbi(
@@ -60,43 +102,6 @@ function parseAbiResponse(abi: Query | null) {
   return result;
 }
 
-class GenericContractAddress {
-  /**
-   * Generic Contract address class
-   * */
-  private address: string;
-
-  constructor(address: string) {
-    this.address = this.validated(address);
-  }
-
-  public getAddress(): string {
-    return this.address;
-  }
-
-  public setAddress(address: string): void {
-    this.address = this.validated(address);
-  }
-
-  private validated(address: string): string {
-    const regex = new RegExp("^0x([a-fA-F0-9]{40,40}$)");
-
-    if (!regex.test(address)) {
-      throw new TypeError(`${address} is not a valid contract address.`);
-    }
-
-    return address;
-  }
-}
-
-interface Batch {
-  [key: string]: { address: GenericContractAddress };
-}
-
-interface Result {
-  [key: string]: { abi: any } | undefined;
-}
-
 async function getAbiBatch(
   batch: Batch,
   isMainnet: boolean = true
@@ -130,4 +135,26 @@ async function getMainnetAndTestnetAbi(): Promise<string | null> {
   }
 }
 
-export = { getMainnetAndTestnetAbi };
+async function runAsync(filePath: string): Promise<void> {
+  // build abi data json
+  try {
+    const abiData = await getMainnetAndTestnetAbi();
+
+    if (fs.existsSync(filePath)) {
+      console.log(`file "${filePath}" already exists. it will be updated`);
+      fs.unlinkSync(filePath);
+    }
+
+    const fileData = abiData;
+    fs.writeFileSync(filePath, fileData);
+    console.log(`file "${filePath}" created`);
+  } catch (err) {
+    console.log(`unexpected error trying to create "${filePath}" file`);
+    console.log(err);
+  }
+}
+
+if (require.main === module) {
+  runAsync(customPath(dataPath));
+}
+export = getMainnetAndTestnetAbi;
