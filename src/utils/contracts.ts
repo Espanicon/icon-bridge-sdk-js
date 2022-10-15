@@ -1,6 +1,6 @@
 // utils/contracts.ts
 //
-const tokenLabels = {
+export const tokenLabels = {
   sicx: "sICX",
   bnusd: "bnUSD",
   bnb: "BNB",
@@ -18,7 +18,7 @@ const tokenLabels = {
   icx: "ICX"
 };
 
-const contracts = {
+export const contracts = {
   icon: {
     mainnet: {
       [tokenLabels.sicx]: {
@@ -164,5 +164,3 @@ const contracts = {
     }
   }
 };
-
-export = { contracts, tokenLabels };

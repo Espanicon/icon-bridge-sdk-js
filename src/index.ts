@@ -1,7 +1,7 @@
 require("dotenv").config();
 import web3 from "web3";
+import utils from "./utils/utils";
 const EspaniconSDKNode = require("@espanicon/espanicon-sdk");
-const utils = require("./utils/utils");
 
 // types
 interface Wallet {
@@ -31,8 +31,8 @@ async function runAsync() {
 
   try {
     //
-    const abiBnb = utils.lib.getAbiOf(utils.abiDataPath, "ETH");
-    console.log(abiBnb);
+    const abiEth = utils.getAbiOf("ETH");
+    console.log(abiEth);
     //
     iconQuery = await iconLib.getIcxBalance(walletsRaw.icon.address);
     if (typeof walletsRaw.bsc.address === "string") {

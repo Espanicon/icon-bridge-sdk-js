@@ -1,8 +1,9 @@
 // utils/utils.ts
 //
-const { contracts, tokenLabels } = require("./contracts");
-const networks = require("./networks");
-const lib = require("./lib");
+import type {LabelValues } from './lib'
+import { contracts, tokenLabels } from "./contracts"
+import networks from "./networks"
+import lib from "./lib"
 
 // variables
 const abiDataPath = "data/abiData.json";
@@ -34,6 +35,11 @@ const bscNode = {
   nid: networks.testnet.bsc.network_id
 };
 
+function getAbiOf(token: LabelValues, isMainnet: boolean = true) {
+  //
+  return lib.getAbiOf(abiDataPath, token, isMainnet)
+}
+
 // exports
 const utils = {
   networks,
@@ -43,7 +49,8 @@ const utils = {
   routes,
   lib,
   abiDataPath,
-  tokenLabels
+  tokenLabels,
+  getAbiOf
 };
 
-export = utils;
+export default utils;

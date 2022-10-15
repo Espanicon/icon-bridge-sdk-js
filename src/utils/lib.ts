@@ -9,7 +9,7 @@ const tk = { ...tokenLabels } as const;
 
 // types
 type LabelsKeys = keyof typeof tk;
-type LabelValues = typeof tk[LabelsKeys];
+export type LabelValues = typeof tk[LabelsKeys];
 
 // functions
 function getBTPAddress(network: string, account: string): string | null {
@@ -65,8 +65,10 @@ function getAbiOf(
   return result;
 }
 
-export = {
+const lib = {
+  getAbiOf,
   getBTPAddress,
-  readDb,
-  getAbiOf
+  readDb
 };
+
+export default lib;
