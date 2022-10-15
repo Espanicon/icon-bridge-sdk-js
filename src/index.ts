@@ -2,6 +2,7 @@ require("dotenv").config();
 import web3 from "web3";
 const EspaniconSDKNode = require("@espanicon/espanicon-sdk");
 const utils = require("./utils/utils");
+const { getMainnetAndTestnetAbi } = require("./utils/buildABIData");
 
 // types
 interface Wallet {
@@ -9,14 +10,6 @@ interface Wallet {
   pk: string | undefined;
 }
 //
-const iconNode = {
-  node: "lisbon.net.solidwallet.io",
-  nid: 2
-};
-const bscNode = {
-  node: utils.networks.testnet.bsc.uri,
-  nid: utils.networks.testnet.bsc.network_id
-};
 
 const walletsRaw: { icon: Wallet; bsc: Wallet } = {
   icon: {
@@ -29,14 +22,19 @@ const walletsRaw: { icon: Wallet; bsc: Wallet } = {
   }
 };
 
-const iconLib = new EspaniconSDKNode(iconNode.node, iconNode.nid);
-const bscLib = new web3(bscNode.node);
+const iconLib = new EspaniconSDKNode(utils.iconNode.node, utils.iconNode.nid);
+const bscLib = new web3(utils.bscNode.node);
 
 async function runAsync() {
   let bscQuery: any = null;
   let iconQuery: any = null;
 
   try {
+    // custom request
+    const query1 = await getMainnetAndTestnetAbi();
+    console.log("query1");
+    console.log(query1);
+    //
     iconQuery = await iconLib.getIcxBalance(walletsRaw.icon.address);
     if (typeof walletsRaw.bsc.address === "string") {
       bscQuery = await bscLib.eth.getBalance(

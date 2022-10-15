@@ -5,7 +5,8 @@
   "main": "utils.js",
   "scripts": {
     "test": "tsc -p ./src/tsconfig.json && node dist/index.js",
-    "test-web": "webpack serve --open"
+    "test-web": "webpack serve --open",
+    "build-data": "tsc -p ./src/tsconfig.json && node dist/utils/customPath.js"
   },
   "author": "",
   "license": "ISC",
@@ -34,7 +35,7 @@
     "webpack-dev-server": "^4.9.3"
   },
   "dependencies": {
-    "@espanicon/espanicon-sdk": "github:Espanicon/espanicon-sdk",
+    "@espanicon/espanicon-sdk": "github:Espanicon/espanicon-sdk#dev",
     "dotenv": "^16.0.3",
     "web3": "^1.8.0"
   }
