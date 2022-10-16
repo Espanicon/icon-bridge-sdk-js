@@ -16,7 +16,42 @@ export const tokenLabels = {
   BTSCore: "BTSCore",
   BTSPeriphery: "BTSPeriphery",
   icx: "ICX"
-};
+} as const;
+
+export type TokenKeys = keyof typeof tokenLabels;
+export type TokenValues = typeof tokenLabels[TokenKeys];
+
+export const chains = {
+  icon: "ICON",
+  bsc: "BINANCE_SMART_CHAIN"
+} as const;
+
+export type ChainsKeys = keyof typeof chains;
+export type ChainsValues = typeof chains[ChainsKeys];
+
+// export type Contracts = {
+//   icon: {
+//     mainnet: {
+//       // eslint-disable-next-line
+//       [key in ChainsKeys]: { address: string };
+//     };
+//     testnet: {
+//       // eslint-disable-next-line
+//       [key in ChainsKeys]: { address: string };
+//     };
+//   };
+
+//   bsc: {
+//     mainnet: {
+//       // eslint-disable-next-line
+//       [key in ChainsKeys]: { address: string };
+//     };
+//     testnet: {
+//       // eslint-disable-next-line
+//       [key in ChainsKeys]: { address: string };
+//     };
+//   };
+// };
 
 export const contracts = {
   icon: {
@@ -164,3 +199,5 @@ export const contracts = {
     }
   }
 };
+
+export type Contracts = typeof contracts;

@@ -31,8 +31,23 @@ async function runAsync() {
 
   try {
     //
-    const abiEth = utils.getAbiOf("ETH");
-    console.log(abiEth);
+    const ethAbi = utils.getAbiOf("ETH");
+    console.log("abi");
+    console.log(ethAbi);
+
+    const ethContract = utils.getContractOf("ETH", "bsc");
+    console.log("contract");
+    console.log(ethContract);
+
+    const ethContract2 = utils.getContractOf("ETH", "icon");
+    console.log("contract icon");
+    console.log(ethContract2);
+
+    if (ethContract !== null) {
+      const contract = new bscLib.eth.Contract(ethAbi, ethContract);
+      console.log("full contract");
+      console.log(contract);
+    }
     //
     iconQuery = await iconLib.getIcxBalance(walletsRaw.icon.address);
     if (typeof walletsRaw.bsc.address === "string") {

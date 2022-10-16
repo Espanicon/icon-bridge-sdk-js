@@ -1,15 +1,14 @@
 // utils/lib.ts
 //
-const fs = require("fs");
-const customPath = require("./customPath");
-const { tokenLabels } = require("./contracts");
+import fs from "fs";
+import customPath from "./customPath";
+// import { tokenLabels } from "./contracts";
+import { TokenValues, Contracts } from "./contracts";
+// import { TokenValues } from "./contracts";
 
 // variables
-const tk = { ...tokenLabels } as const;
 
 // types
-type LabelsKeys = keyof typeof tk;
-export type LabelValues = typeof tk[LabelsKeys];
 
 // functions
 function getBTPAddress(network: string, account: string): string | null {
@@ -25,7 +24,10 @@ function getBTPAddress(network: string, account: string): string | null {
 function readDb(path: string): any {
   try {
     if (fs.existsSync(customPath(path))) {
-      return JSON.parse(fs.readFileSync(customPath(path)));
+      const dbBuffer = fs.readFileSync(customPath(path), "utf-8");
+      const db = JSON.parse(dbBuffer);
+
+      return db;
     } else {
       console.log(`error accesing db file "${path}"`);
       return null;
@@ -37,18 +39,61 @@ function readDb(path: string): any {
   }
 }
 
+type Network = {
+  [key: string]: { address: string };
+};
+
+function getContractOf(
+  token: string,
+  chain: string,
+  contractData: Contracts,
+  isMainnet: boolean = true
+): string | null {
+  //
+  let result: string | null = null;
+  let mainnetData: Network | null = null;
+  let testnetData: Network | null = null;
+
+  switch (chain) {
+    case "icon":
+      mainnetData = contractData.icon.mainnet;
+      testnetData = contractData.icon.testnet;
+      break;
+    case "bsc":
+      mainnetData = contractData.bsc.mainnet;
+      testnetData = contractData.bsc.testnet;
+      break;
+    default:
+      break;
+  }
+
+  if (mainnetData !== null && testnetData !== null) {
+    const mainnetKeys = Object.keys(mainnetData);
+    const testnetKeys = Object.keys(testnetData);
+    if (isMainnet === true) {
+      if (mainnetKeys.includes(token)) {
+        result = mainnetData[token].address;
+      }
+    } else {
+      if (testnetKeys.includes(token)) {
+        result = testnetData[token].address;
+      }
+    }
+  }
+
+  return result;
+}
+
 function getAbiOf(
   dataPath: string,
-  token: LabelValues,
+  token: TokenValues,
   isMainnet: boolean = true
 ): any {
   let result: any = null;
 
   const abiData = readDb(dataPath);
-  console.log("abiData");
-  console.log(abiData);
-  const testnetKeys: LabelValues = Object.keys(abiData.testnet);
-  const mainnetKeys: LabelValues = Object.keys(abiData.mainnet);
+  const testnetKeys = (Object.keys(abiData.testnet) as unknown) as TokenValues;
+  const mainnetKeys = (Object.keys(abiData.mainnet) as unknown) as TokenValues;
 
   if (isMainnet === true) {
     if (mainnetKeys.includes(token)) {
@@ -68,6 +113,7 @@ function getAbiOf(
 const lib = {
   getAbiOf,
   getBTPAddress,
+  getContractOf,
   readDb
 };
 

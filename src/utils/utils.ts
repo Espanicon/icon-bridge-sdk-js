@@ -1,9 +1,9 @@
 // utils/utils.ts
 //
-import type {LabelValues } from './lib'
-import { contracts, tokenLabels } from "./contracts"
-import networks from "./networks"
-import lib from "./lib"
+import { contracts, tokenLabels } from "./contracts";
+import networks from "./networks";
+import lib from "./lib";
+import { TokenValues } from "./contracts";
 
 // variables
 const abiDataPath = "data/abiData.json";
@@ -35,9 +35,21 @@ const bscNode = {
   nid: networks.testnet.bsc.network_id
 };
 
-function getAbiOf(token: LabelValues, isMainnet: boolean = true) {
+function getAbiOf(token: TokenValues, isMainnet: boolean = true) {
   //
-  return lib.getAbiOf(abiDataPath, token, isMainnet)
+  return lib.getAbiOf(abiDataPath, token, isMainnet);
+}
+
+function getBTPAddress(network: string, account: string): string | null {
+  return lib.getBTPAddress(network, account);
+}
+
+function getContractOf(
+  token: string,
+  chain: string,
+  isMainnet: boolean = true
+) {
+  return lib.getContractOf(token, chain, contracts, isMainnet);
 }
 
 // exports
@@ -47,10 +59,11 @@ const utils = {
   iconNode,
   bscNode,
   routes,
-  lib,
+  getBTPAddress,
   abiDataPath,
   tokenLabels,
-  getAbiOf
+  getAbiOf,
+  getContractOf
 };
 
 export default utils;
