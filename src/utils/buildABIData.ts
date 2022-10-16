@@ -1,13 +1,16 @@
 require("dotenv").config();
+import web3 from "web3";
+import utils from "./utils";
+import customPath from "./customPath";
 const EspaniconSDKNode = require("@espanicon/espanicon-sdk");
-const utils = require("./utils");
-const customPath = require("./customPath");
 const fs = require("fs");
 
 // variables
 const apiKey = process.env.BSC_API_KEY;
 const dataPath = utils.abiDataPath;
 const lib = new EspaniconSDKNode(utils.iconNode.node, utils.iconNode.nid);
+const bscLib = new web3(utils.bscNode.node);
+const bscLibTestnet = new web3(utils.bscNodeTestnet.node);
 
 // types
 interface Query {
@@ -16,41 +19,25 @@ interface Query {
   result: string;
 }
 
-class GenericContractAddress {
-  /**
-   * Generic Contract address class
-   * */
-  private address: string;
-
-  constructor(address: string) {
-    this.address = this.validated(address);
-  }
-
-  public getAddress(): string {
-    return this.address;
-  }
-
-  public setAddress(address: string): void {
-    this.address = this.validated(address);
-  }
-
-  private validated(address: string): string {
-    const regex = new RegExp("^0x([a-fA-F0-9]{40,40}$)");
-
-    if (!regex.test(address)) {
-      throw new TypeError(`${address} is not a valid contract address.`);
-    }
-
-    return address;
-  }
-}
-
 interface Batch {
-  [key: string]: { address: GenericContractAddress };
+  [key: string]: {
+    address: any;
+    isProxy?: boolean;
+    implementation?: any;
+  };
 }
 
 interface Result {
-  [key: string]: { abi: any } | undefined;
+  [key: string]:
+    | {
+        abi: any;
+        address: string | null;
+        implementation: {
+          abi: any;
+          address: any;
+        };
+      }
+    | undefined;
 }
 
 // functions
@@ -59,7 +46,7 @@ function sleep(time: number = 6000): Promise<void> {
 }
 
 async function getAbi(
-  contract: GenericContractAddress,
+  contract: any,
   isMainnet: boolean = true
 ): Promise<Query | null> {
   //
@@ -112,9 +99,49 @@ async function getAbiBatch(
   for (const eachKey of objKeys) {
     const abi = await getAbi(batch[eachKey].address, isMainnet);
     const parsedAbi = parseAbiResponse(abi);
+    const implementation: {
+      address: string | null | any;
+      abi: any;
+    } = {
+      address: null,
+      abi: null
+    };
+    const address = (batch[eachKey].address as unknown) as string;
 
+    if (batch[eachKey].isProxy != null && batch[eachKey].isProxy === true) {
+      try {
+        let implSlot: any = null;
+
+        if (isMainnet === true) {
+          implSlot = await bscLib.eth.getStorageAt(
+            address,
+            utils.labels.memSlot
+          );
+        } else {
+          implSlot = await bscLibTestnet.eth.getStorageAt(
+            address,
+            utils.labels.memSlot
+          );
+        }
+        const parsedImpl = (utils.removeZerosFromAddress(
+          implSlot
+        ) as unknown) as any;
+        implementation.address = parsedImpl;
+        const implAbi = await getAbi(parsedImpl, isMainnet);
+        implementation.abi = parseAbiResponse(implAbi);
+      } catch (err) {
+        console.log(
+          `error fetching implementation address of contract "${address}"`
+        );
+        console.log(err);
+      }
+    }
     if (abi !== null) {
-      result[eachKey] = { abi: parsedAbi };
+      result[eachKey] = {
+        abi: parsedAbi,
+        address: address,
+        implementation: implementation
+      };
     }
   }
 

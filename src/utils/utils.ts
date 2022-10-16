@@ -1,9 +1,13 @@
 // utils/utils.ts
 //
-import { contracts, tokenLabels } from "./contracts";
+import {
+  contracts,
+  labels,
+  TokenValues,
+  GenericContractAddress
+} from "./contracts";
 import networks from "./networks";
 import lib from "./lib";
-import { TokenValues } from "./contracts";
 
 // variables
 const abiDataPath = "data/abiData.json";
@@ -30,9 +34,13 @@ const routes = {
   }
 };
 
-const bscNode = {
+const bscNodeTestnet = {
   node: networks.testnet.bsc.uri,
   nid: networks.testnet.bsc.network_id
+};
+const bscNode = {
+  node: networks.mainnet.bsc.uri,
+  nid: networks.mainnet.bsc.network_id
 };
 
 function getAbiOf(token: TokenValues, isMainnet: boolean = true) {
@@ -52,18 +60,25 @@ function getContractOf(
   return lib.getContractOf(token, chain, contracts, isMainnet);
 }
 
+function removeZerosFromAddress(address: string): string {
+  return "0x" + address.slice(address.length - 40, address.length);
+}
+
 // exports
 const utils = {
   networks,
   contracts,
   iconNode,
   bscNode,
+  bscNodeTestnet,
   routes,
   getBTPAddress,
   abiDataPath,
-  tokenLabels,
+  labels,
   getAbiOf,
-  getContractOf
+  getContractOf,
+  removeZerosFromAddress,
+  GenericContractAddress
 };
 
 export default utils;

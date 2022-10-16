@@ -24,6 +24,7 @@ const walletsRaw: { icon: Wallet; bsc: Wallet } = {
 // variables
 const iconLib = new EspaniconSDKNode(utils.iconNode.node, utils.iconNode.nid);
 const bscLib = new web3(utils.bscNode.node);
+const bscLibTesnet = new web3(utils.bscNodeTestnet.node);
 
 async function runAsync() {
   let bscQuery: any = null;
@@ -31,22 +32,41 @@ async function runAsync() {
 
   try {
     //
-    const ethAbi = utils.getAbiOf("ETH");
+    const ethAbi = utils.getAbiOf("BTSCore", false);
     console.log("abi");
     console.log(ethAbi);
 
-    const ethContract = utils.getContractOf("ETH", "bsc");
-    console.log("contract");
-    console.log(ethContract);
+    const bscContract1 = utils.getContractOf("BTSCore", "bsc", false);
+    console.log("contract testnet");
+    console.log(bscContract1);
 
-    const ethContract2 = utils.getContractOf("ETH", "icon");
+    const bscContract2 = utils.getContractOf("BTSCore", "bsc");
+    console.log("contract mainnet");
+    console.log(bscContract2);
+
+    const iconContract1 = utils.getContractOf("ETH", "icon");
     console.log("contract icon");
-    console.log(ethContract2);
+    console.log(iconContract1);
 
-    if (ethContract !== null) {
-      const contract = new bscLib.eth.Contract(ethAbi, ethContract);
-      console.log("full contract");
-      console.log(contract);
+    if (bscContract1 != null && bscContract2 != null) {
+      // const contract = new bscLib.eth.Contract(ethAbi, bscContract1);
+      // console.log("full contract");
+      // console.log(contract);
+
+      const implSlot = await bscLib.eth.getStorageAt(
+        bscContract2,
+        "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc"
+      );
+      console.log("implSlot mainnet");
+      console.log(implSlot);
+
+      const implSlotTestnet = await bscLibTesnet.eth.getStorageAt(
+        bscContract1,
+        "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc"
+      );
+
+      console.log("implSlot testnet");
+      console.log(implSlotTestnet);
     }
     //
     iconQuery = await iconLib.getIcxBalance(walletsRaw.icon.address);

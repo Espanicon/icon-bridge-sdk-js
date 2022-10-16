@@ -2,9 +2,7 @@
 //
 import fs from "fs";
 import customPath from "./customPath";
-// import { tokenLabels } from "./contracts";
-import { TokenValues, Contracts } from "./contracts";
-// import { TokenValues } from "./contracts";
+import { TokenValues } from "./contracts";
 
 // variables
 
@@ -46,7 +44,7 @@ type Network = {
 function getContractOf(
   token: string,
   chain: string,
-  contractData: Contracts,
+  contractData: any,
   isMainnet: boolean = true
 ): string | null {
   //
