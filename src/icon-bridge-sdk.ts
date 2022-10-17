@@ -5,27 +5,39 @@ const bscMainnet = new Web3(utils.bscNode.node);
 const bscTestnet = new Web3(utils.bscNodeTestnet.node);
 
 export default class IconBridgeSDK {
-  icon: any = {};
-  bsc: any = {
-    getlogicContract: this.#getLogicContract
-    }
+  utils: any = utils;
   constructor() {
     //
   }
+    bsc = {
+      getLogicContract: async (
+        address: string,
+        isMainnet: boolean = true,
+        memSlot: string = utils.labels.memSlot
+      ) => {
+        return await this.#getLogicContract(address, isMainnet, memSlot);
+      }
+    };
 
-  async #getLogicContract(
+  #getLogicContract = async (
     address: string,
-    isMainnet: boolean = true,
-    memSlot: string = utils.labels.memSlot
-  ) {
+    isMainnet: boolean,
+    memSlot: string  
+  ) => {
     let result: any = null;
 
     try {
+      let memData: string | null = null;
       if (isMainnet === true) {
-        result = await bscMainnet.eth.getStorageAt(address, memSlot);
+        memData = await bscMainnet.eth.getStorageAt(address, memSlot);
       } else {
-        result = await bscTestnet.eth.getStorageAt(address, memSlot);
+        memData = await bscTestnet.eth.getStorageAt(address, memSlot);
       }
+
+      if (memData !== null) {
+        result = this.utils.removeZerosFromAddress(memData)
+      }
+
     } catch (err) {
       console.log(
         `Error running getLogicContract(). Params:\naddress: ${address}\nmemSlot: ${memSlot}\nisMainnet: ${isMainnet}`

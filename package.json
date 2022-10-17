@@ -13,7 +13,7 @@
     "test": "tsc -p ./src/tsconfig.json && node ./dist/index.js",
     "build": "tsc -p ./src/tsconfig.json",
     "test-web": "webpack serve --open",
-    "test-node": "tsc -p ./tests/node/tsconfig.json && node ./tests/node/main.js",
+    "test-node": "npm run build && tsc -p ./tests/node/tsconfig.json && node ./tests/node/main.js",
     "build-data": "tsc -p ./src/tsconfig.json && node ./dist/utils/buildABIData.js"
   },
   "author": "",
