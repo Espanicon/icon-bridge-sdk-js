@@ -9,13 +9,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 const IconBridgeSDK = require("../../dist/icon-bridge-sdk-node");
 console.log(IconBridgeSDK);
-const sdk = new IconBridgeSDK();
+const sdk = new IconBridgeSDK({ isMainnet: false });
 function runAsync() {
     return __awaiter(this, void 0, void 0, function* () {
         // Test 1: fetch logic contract of a proxy contract (BTSCore) on the
-        // BSC mainnet
-        const BTSCoreProxyContract = sdk.utils.contracts.bsc.mainnet.BTSCore.address;
+        // BSC Testnet
+        const BTSCoreProxyContract = sdk.utils.contracts.bsc.testnet.BTSCore.address;
         const logicContract = yield sdk.bsc.getLogicContract(BTSCoreProxyContract);
+        console.log("proxy contract");
+        console.log(BTSCoreProxyContract);
+        console.log("logic contract");
         console.log(logicContract);
     });
 }
