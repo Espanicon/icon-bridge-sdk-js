@@ -2,11 +2,19 @@
   "name": "misc",
   "version": "1.0.0",
   "description": "",
-  "main": "utils.js",
+  "exports": {
+    "node": {
+      "require": "./dist/icon-bridge-sdk.cjs.js"
+    },
+    "default": "./dist/icon-bridge-sdk.js"
+  },
+  "main": "./src/icon-bridge-sdk.ts",
   "scripts": {
-    "test": "tsc -p ./src/tsconfig.json && node dist/index.js",
+    "test": "tsc -p ./src/tsconfig.json && node ./dist/index.js",
+    "build": "tsc -p ./src/tsconfig.json",
     "test-web": "webpack serve --open",
-    "build-data": "tsc -p ./src/tsconfig.json && node dist/utils/buildABIData.js"
+    "test-node": "tsc -p ./tests/node/tsconfig.json && node ./tests/node/main.js",
+    "build-data": "tsc -p ./src/tsconfig.json && node ./dist/utils/buildABIData.js"
   },
   "author": "",
   "license": "ISC",

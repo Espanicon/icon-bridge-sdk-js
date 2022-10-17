@@ -18,7 +18,7 @@ module.exports = [
     entry: "./tests/web/index.tsx",
     output: {
       filename: "web-test.js",
-      path: path.resolve(__dirname, "test/web/www")
+      path: path.resolve(__dirname, "tests/web/www")
     },
     module: {
       rules: [
@@ -84,55 +84,51 @@ module.exports = [
     //     path: require.resolve("path-browserify")
     //   }
     // }
+  },
+  {
+    mode: "production",
+    entry: "./src/icon-bridge-sdk.ts",
+    output: {
+      filename: "icon-bridge-sdk.cjs.js",
+      path: path.resolve(__dirname, "dist"),
+      libraryTarget: "commonjs2"
+    },
+    externals: {
+      https: "https",
+      http: "http"
+    },
+    module: {
+      rules: [
+        {
+          test: /\.ts?$/,
+          loader: "ts-loader",
+          exclude: /node_modules/,
+          options: {
+            configFile: "./src/tsconfig.json"
+          }
+        }
+      ]
+    }
+  },
+  {
+    mode: "production",
+    entry: "./src/icon-bridge-sdk.ts",
+    output: {
+      filename: "icon-bridge-sdk.js",
+      path: path.resolve(__dirname, "dist"),
+      libraryTarget: "commonjs2"
+    },
+    module: {
+      rules: [
+        {
+          test: /\.ts?$/,
+          loader: "ts-loader",
+          exclude: /node_modules/,
+          options: {
+            configFile: "./src/tsconfig.json"
+          }
+        }
+      ]
+    }
   }
-  // {
-  // mode: "production",
-  // entry: "./espanicon-sdk-node.js",
-  // output: {
-  //   filename: "main.cjs.js",
-  //   path: path.resolve(__dirname, "dist"),
-  //   libraryTarget: "commonjs2"
-  // },
-  // externals: {
-  //   https: "https",
-  //   http: "http"
-  // },
-  // module: {
-  //   rules: [
-  //     {
-  //       test: /\.(js|jsx)$/,
-  //       exclude: /node_modules/,
-  //       use: {
-  //         loader: "babel-loader",
-  //         options: {
-  //           presets: ["@babel/preset-env"]
-  //         }
-  //       }
-  //     }
-  //   ]
-  // }
-  // },
-  // {
-  // mode: "production",
-  // entry: "./espanicon-sdk-web.js",
-  // output: {
-  //   filename: "main.web.js",
-  //   path: path.resolve(__dirname, "dist"),
-  //   libraryTarget: "commonjs2"
-  // },
-  // module: {
-  //   rules: [
-  //     {
-  //       test: /\.(js|jsx)$/,
-  //       exclude: /node_modules/,
-  //       use: {
-  //         loader: "babel-loader",
-  //         options: {
-  //           presets: ["@babel/preset-env"]
-  //         }
-  //       }
-  //     }
-  //   ]
-  // }
-  // }
 ];
