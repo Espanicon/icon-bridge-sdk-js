@@ -1,4 +1,4 @@
-const IconBridgeSDK = require("../../dist/icon-bridge-sdk");
+const IconBridgeSDK = require("../../dist/icon-bridge-sdk-node");
 console.log(IconBridgeSDK);
-// const sdk = new IconBridgeSDK();
-// console.log(sdk);
+const sdk = new IconBridgeSDK();
+console.log(sdk);

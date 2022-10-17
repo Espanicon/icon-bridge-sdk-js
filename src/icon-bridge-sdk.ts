@@ -7,7 +7,7 @@ const bscTestnet = new Web3(utils.bscNodeTestnet.node);
 export default class IconBridgeSDK {
   icon: any = {};
   bsc: any = {
-    getlogicContact: this.#getLogicContract
+    getlogicContract: this.#getLogicContract
     }
   constructor() {
     //

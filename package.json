@@ -1,10 +1,10 @@
 {
-  "name": "misc",
+  "name": "icon-bridge-sdk",
   "version": "1.0.0",
   "description": "",
   "exports": {
     "node": {
-      "require": "./dist/icon-bridge-sdk.cjs.js"
+      "require": "./dist/icon-bridge-sdk-node.js"
     },
     "default": "./dist/icon-bridge-sdk.js"
   },
