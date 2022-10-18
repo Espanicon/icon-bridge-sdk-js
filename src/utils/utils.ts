@@ -12,35 +12,10 @@ import lib from "./lib";
 // variables
 const abiDataPath = "data/abiData.json";
 
-const iconNode = {
-  node: "lisbon.net.solidwallet.io",
-  nid: 2
-};
-
-const routes = {
-  bsc: {
-    trackerMainnet: {
-      hostname: "api.bscscan.com",
-      route: {
-        getContractAbi: "/api?module=contract&action=getabi&address="
-      }
-    },
-    trackerTestnet: {
-      hostname: "api-testnet.bscscan.com",
-      route: {
-        getContractAbi: `/api?module=contract&action=getabi&address=`
-      }
-    }
-  }
-};
-
-const bscNodeTestnet = {
-  node: networks.testnet.bsc.uri,
-  nid: networks.testnet.bsc.network_id
-};
-const bscNode = {
-  node: networks.mainnet.bsc.uri,
-  nid: networks.mainnet.bsc.network_id
+const defaultSDKParams = {
+  useMainnet: null,
+  iconProvider: networks.mainnet.icon.provider.hostname,
+  bscProvider: networks.mainnet.bsc.provider.hostname
 };
 
 function getAbiOf(token: TokenValues, isMainnet: boolean = true) {
@@ -64,21 +39,60 @@ function removeZerosFromAddress(address: string): string {
   return "0x" + address.slice(address.length - 40, address.length);
 }
 
+function getSDKParams(inputParams: any, defaultParams = defaultSDKParams) {
+  //
+  const result = { ...defaultParams, ...inputParams };
+
+  if (result.useMainnet == null) {
+    // useMainnet default value = null, use default providers or the
+    // ones submitted by the user
+    //
+  } else if (result.useMainnet === true) {
+    // use predifined icon and bsc providers for mainnet
+    result.iconProvider = networks.mainnet.icon.provider.hostname;
+    result.bscProvider = networks.mainnet.bsc.provider.hostname;
+  } else if (result.useMainnet === false) {
+    // use predifined icon and bsc providers for testnet
+    result.iconProvider = networks.testnet.icon.provider.hostname;
+    result.bscProvider = networks.testnet.bsc.provider.hostname;
+  } else {
+    // should never happen, default to using mainnet
+    result.useMainnet = null;
+    result.iconProvider = networks.mainnet.icon.provider.hostname;
+    result.bscProvider = networks.mainnet.bsc.provider.hostname;
+  }
+
+  console.log(result);
+  return result;
+}
+
+function getFormattedHostname(hostname: string): string {
+  // for the 'queryMethod' method in the Espanicon library to work properly
+  // the 'hostname' param must not have the url protocol in the string
+  // i.e: must be 'api.espanicon.team' instead of 'https://api.espanicon.team'
+  let temp: string = hostname;
+
+  if (temp[temp.length - 1] === "/") {
+    temp = temp.slice(0, temp.length - 2);
+  }
+
+  const tempArray = temp.split("/");
+  return tempArray[tempArray.length - 1];
+}
 // exports
 const utils = {
   networks,
   contracts,
-  iconNode,
-  bscNode,
-  bscNodeTestnet,
-  routes,
   getBTPAddress,
   abiDataPath,
   labels,
   getAbiOf,
   getContractOf,
   removeZerosFromAddress,
-  GenericContractAddress
+  GenericContractAddress,
+  defaultSDKParams,
+  getSDKParams,
+  getFormattedHostname
 };
 
 export default utils;

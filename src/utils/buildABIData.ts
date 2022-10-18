@@ -8,9 +8,12 @@ const fs = require("fs");
 // variables
 const apiKey = process.env.BSC_API_KEY;
 const dataPath = utils.abiDataPath;
-const lib = new EspaniconSDKNode(utils.iconNode.node, utils.iconNode.nid);
-const bscLib = new web3(utils.bscNode.node);
-const bscLibTestnet = new web3(utils.bscNodeTestnet.node);
+const lib = new EspaniconSDKNode(
+  utils.networks.mainnet.icon.provider.hostname,
+  utils.networks.mainnet.icon.provider.nid
+);
+const bscLib = new web3(utils.networks.mainnet.bsc.provider.hostname);
+const bscLibTestnet = new web3(utils.networks.testnet.bsc.provider.hostname);
 
 // types
 interface Query {
@@ -54,19 +57,20 @@ async function getAbi(
   let hostname: string | null = null;
 
   if (isMainnet === true) {
-    route = `${utils.routes.bsc.trackerMainnet.route.getContractAbi}${contract}&apikey=${apiKey}`;
-    hostname = `${utils.routes.bsc.trackerMainnet.hostname}`;
+    route = `${utils.networks.mainnet.bsc.tracker.routes.getContractAbi}${contract}&apikey=${apiKey}`;
+    hostname = `${utils.networks.mainnet.bsc.tracker.hostname}`;
   } else {
-    route = `${utils.routes.bsc.trackerTestnet.route.getContractAbi}${contract}&apikey=${apiKey}`;
-    hostname = `${utils.routes.bsc.trackerTestnet.hostname}`;
+    route = `${utils.networks.testnet.bsc.tracker.routes.getContractAbi}${contract}&apikey=${apiKey}`;
+    hostname = `${utils.networks.testnet.bsc.tracker.hostname}`;
   }
 
   try {
     console.log("\nBeginning time pause..");
     await sleep();
+    const parsedHostname = utils.getFormattedHostname(hostname);
     console.log("making query");
-    console.log(`url: ${hostname}${route}`);
-    const query = await lib.queryMethod(route, false, hostname);
+    console.log(`url: ${parsedHostname}${route}`);
+    const query = await lib.queryMethod(route, false, parsedHostname);
     console.log("query result: success");
     return query;
   } catch (err) {

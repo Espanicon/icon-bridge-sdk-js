@@ -22,9 +22,12 @@ const walletsRaw: { icon: Wallet; bsc: Wallet } = {
 };
 
 // variables
-const iconLib = new EspaniconSDKNode(utils.iconNode.node, utils.iconNode.nid);
-const bscLib = new web3(utils.bscNode.node);
-const bscLibTesnet = new web3(utils.bscNodeTestnet.node);
+const iconLib = new EspaniconSDKNode(
+  utils.networks.mainnet.icon.provider.hostname,
+  utils.networks.mainnet.icon.provider.nid
+);
+const bscLib = new web3(utils.networks.mainnet.bsc.provider.hostname);
+const bscLibTestnet = new web3(utils.networks.testnet.bsc.provider.hostname);
 
 async function runAsync() {
   let bscQuery: any = null;
@@ -60,7 +63,7 @@ async function runAsync() {
       console.log("implSlot mainnet");
       console.log(implSlot);
 
-      const implSlotTestnet = await bscLibTesnet.eth.getStorageAt(
+      const implSlotTestnet = await bscLibTestnet.eth.getStorageAt(
         bscContract1,
         "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc"
       );
