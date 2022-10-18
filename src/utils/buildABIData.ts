@@ -152,12 +152,27 @@ async function getAbiBatch(
   return result;
 }
 
-async function getMainnetAndTestnetAbi(): Promise<string | null> {
+async function getAbiDataOfAllChains(): Promise<string | null> {
+  const result: { bsc: any } = { bsc: null };
+
+  result.bsc = await getMainnetAndTestnetAbi();
+
+  try {
+    const stringResult = JSON.stringify(result);
+    return stringResult;
+  } catch (err) {
+    console.log("error running getAbiDataOfAllChains()");
+    console.log(err);
+    return null;
+  }
+}
+
+async function getMainnetAndTestnetAbi(): Promise<any> {
   const mainnetAbi = await getAbiBatch(utils.contracts.bsc.mainnet);
   const testnetAbi = await getAbiBatch(utils.contracts.bsc.testnet, false);
 
   try {
-    const result = JSON.stringify({ mainnet: mainnetAbi, testnet: testnetAbi });
+    const result = { mainnet: mainnetAbi, testnet: testnetAbi };
     return result;
   } catch (err) {
     console.log("error fetching contracts abi");
@@ -169,7 +184,7 @@ async function getMainnetAndTestnetAbi(): Promise<string | null> {
 async function runAsync(filePath: string): Promise<void> {
   // build abi data json
   try {
-    const abiData = await getMainnetAndTestnetAbi();
+    const abiData = await getAbiDataOfAllChains();
 
     if (fs.existsSync(filePath)) {
       console.log(`file "${filePath}" already exists. it will be updated`);

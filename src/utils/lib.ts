@@ -2,7 +2,6 @@
 //
 import fs from "fs";
 import customPath from "./customPath";
-import { TokenValues } from "./contracts";
 
 // variables
 
@@ -84,24 +83,31 @@ function getContractOf(
 
 function getAbiOf(
   dataPath: string,
-  token: TokenValues,
+  contractLabel: string,
+  chain: string,
   isMainnet: boolean = true
 ): any {
   let result: any = null;
 
   const abiData = readDb(dataPath);
-  const testnetKeys = (Object.keys(abiData.testnet) as unknown) as TokenValues;
-  const mainnetKeys = (Object.keys(abiData.mainnet) as unknown) as TokenValues;
 
-  if (isMainnet === true) {
-    if (mainnetKeys.includes(token)) {
-      const abi = abiData.mainnet[token];
-      if (abi.abi !== null) result = abi.abi;
-    }
-  } else {
-    if (testnetKeys.includes(token)) {
-      const abi = abiData.testnet[token];
-      if (abi.abi !== null) result = abi.abi;
+  const allChains = Object.keys(abiData);
+
+  if (allChains.includes(chain)) {
+    const chainData = abiData[chain];
+    const testnetKeys = (Object.keys(chainData.testnet) as unknown) as string;
+    const mainnetKeys = (Object.keys(chainData.mainnet) as unknown) as string;
+
+    if (isMainnet === true) {
+      if (mainnetKeys.includes(contractLabel)) {
+        const abi = chainData.mainnet[contractLabel];
+        if (abi.abi !== null) result = abi.abi;
+      }
+    } else {
+      if (testnetKeys.includes(contractLabel)) {
+        const abi = chainData.testnet[contractLabel];
+        if (abi.abi !== null) result = abi.abi;
+      }
     }
   }
 

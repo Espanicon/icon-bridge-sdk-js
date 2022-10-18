@@ -1,11 +1,6 @@
 // utils/utils.ts
 //
-import {
-  contracts,
-  labels,
-  TokenValues,
-  GenericContractAddress
-} from "./contracts";
+import { contracts, labels, GenericContractAddress } from "./contracts";
 import networks from "./networks";
 import lib from "./lib";
 
@@ -18,9 +13,13 @@ const defaultSDKParams = {
   bscProvider: networks.mainnet.bsc.provider.hostname
 };
 
-function getAbiOf(token: TokenValues, isMainnet: boolean = true) {
+function getAbiOf(
+  contractLabel: string,
+  chain: string,
+  isMainnet: boolean = true
+) {
   //
-  return lib.getAbiOf(abiDataPath, token, isMainnet);
+  return lib.getAbiOf(abiDataPath, contractLabel, chain, isMainnet);
 }
 
 function getBTPAddress(network: string, account: string): string | null {
@@ -43,12 +42,12 @@ function getSDKParams(inputParams: any, defaultParams = defaultSDKParams) {
   //
   const result = { ...defaultParams, ...inputParams };
 
-  if (result.useMainnet == null) {
+  if (result.useMainnet == null || result.useMainnet === true) {
     // useMainnet default value = null, use default providers or the
     // ones submitted by the user
     //
-  } else if (result.useMainnet === true) {
     // use predifined icon and bsc providers for mainnet
+    result.useMainnet = true;
     result.iconProvider = networks.mainnet.icon.provider.hostname;
     result.bscProvider = networks.mainnet.bsc.provider.hostname;
   } else if (result.useMainnet === false) {
@@ -57,7 +56,7 @@ function getSDKParams(inputParams: any, defaultParams = defaultSDKParams) {
     result.bscProvider = networks.testnet.bsc.provider.hostname;
   } else {
     // should never happen, default to using mainnet
-    result.useMainnet = null;
+    result.useMainnet = true;
     result.iconProvider = networks.mainnet.icon.provider.hostname;
     result.bscProvider = networks.mainnet.bsc.provider.hostname;
   }

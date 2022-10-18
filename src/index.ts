@@ -35,7 +35,7 @@ async function runAsync() {
 
   try {
     //
-    const ethAbi = utils.getAbiOf("BTSCore", false);
+    const ethAbi = utils.getAbiOf("BTSCore", "bsc", false);
     console.log("abi");
     console.log(ethAbi);
 
