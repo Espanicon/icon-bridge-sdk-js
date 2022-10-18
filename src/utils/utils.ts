@@ -61,7 +61,6 @@ function getSDKParams(inputParams: any, defaultParams = defaultSDKParams) {
     result.bscProvider = networks.mainnet.bsc.provider.hostname;
   }
 
-  console.log(result);
   return result;
 }
 

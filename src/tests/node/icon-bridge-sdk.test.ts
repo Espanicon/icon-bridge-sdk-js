@@ -3,7 +3,7 @@ const IconBridgeSDK = require("../../dist/icon-bridge-sdk-node");
 const sdkMainnet = new IconBridgeSDK();
 const sdkTestnet = new IconBridgeSDK({ useMainnet: false });
 
-async function runAsync() {
+export default async function iconBridgeSDKTests() {
   // Test 1: fetch logic contract of a proxy contract (BTSCore) on the
   // BSC Mainnet
   console.log("Running test on sdk.bsc.getLogicContract()");
@@ -46,5 +46,3 @@ async function runAsync() {
   console.log("fetched abi:");
   console.log(JSON.stringify(b3));
 }
-
-runAsync();

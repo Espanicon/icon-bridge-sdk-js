@@ -1,6 +1,11 @@
 import React from "react";
-import Test from "./components/Test";
+// import Test from "./components/Test";
 import "./App.css";
+import EspaniconSDKWeb from "@espanicon/espanicon-sdk";
+
+const lib = new EspaniconSDKWeb();
+console.log("EspaniconSDKWeb");
+console.log(lib);
 
 export default function App() {
   return (
