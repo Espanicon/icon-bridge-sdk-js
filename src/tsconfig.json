@@ -3,13 +3,13 @@
   "compilerOptions": {
     "target": "es2016",
     "lib": ["es6"],
-    "module": "commonjs",
-    "rootDir": "./",
+    "module": "node16",
+    /* "rootDir": "./", */
     "paths": {
-      "*": ["../nodes_modules/*", "./*"]
+      "*": ["../node_modules/*", "./*"]
     },
     "types": ["node"],
-    "outDir": "../dist/",
+    /* "outDir": "../dist/", */
     "esModuleInterop": true
   }
 }

@@ -10,11 +10,11 @@
   },
   "main": "./src/icon-bridge-sdk.ts",
   "scripts": {
-    "test": "tsc -p ./src/tsconfig.json && node ./dist/index.js",
-    "build": "tsc -p ./src/tsconfig.json",
+    "test": "tsc && node ./dist/index.js",
+    "build": "rm -rf dist/ && tsc",
     "test-web": "webpack serve --open",
-    "test-node": "npm run build && tsc -p ./tests/node/tsconfig.json && node ./tests/node/main.js",
-    "build-data": "tsc -p ./src/tsconfig.json && node ./dist/utils/buildABIData.js"
+    "test-node": "npm run build && node ./dist/tests/node/main.mjs",
+    "build-data": "tsc && node ./dist/utils/buildABIData.js"
   },
   "author": "",
   "license": "ISC",

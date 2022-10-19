@@ -7,7 +7,11 @@ import lib from "./lib";
 // variables
 const abiDataPath = "data/abiData.json";
 
-const defaultSDKParams = {
+const defaultSDKParams: {
+  useMainnet: null | boolean;
+  iconProvider?: any;
+  bscProvider?: any;
+} = {
   useMainnet: null,
   iconProvider: networks.mainnet.icon.provider.hostname,
   bscProvider: networks.mainnet.bsc.provider.hostname
@@ -93,4 +97,4 @@ const utils = {
   getFormattedHostname
 };
 
-export default utils;
+export = utils;

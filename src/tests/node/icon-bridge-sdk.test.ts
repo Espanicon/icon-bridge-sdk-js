@@ -1,4 +1,4 @@
-const IconBridgeSDK = require("../../dist/icon-bridge-sdk-node");
+import IconBridgeSDK from "../../icon-bridge-sdk";
 
 const sdkMainnet = new IconBridgeSDK();
 const sdkTestnet = new IconBridgeSDK({ useMainnet: false });
