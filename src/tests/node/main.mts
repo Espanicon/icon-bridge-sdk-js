@@ -9,12 +9,12 @@ async function runTests() {
   //
 
   // Test for iconBridgeSDKTests module
-  console.log('Test on iconBridgeSDKTests')
-  await iconBridgeSDKTests();
+  // console.log('Test on iconBridgeSDKTests')
+  // await iconBridgeSDKTests();
 
   // Test for iconBridgeSDKWebTests
-  console.log('Test on iconBridgeSDKWebTests')
-  await iconBridgeSDKWebTests();
+  // console.log('Test on iconBridgeSDKWebTests')
+  // await iconBridgeSDKWebTests();
 
   // Test for iconBridgeSDKNodeTests
   console.log('Test on iconBridgeSDKNodeTests')

@@ -5,7 +5,7 @@ import networks from "./networks";
 import lib from "./lib";
 
 // variables
-const abiDataPath = "data/abiData.json";
+const abiDataPath = lib.abiDataPath;
 
 const defaultSDKParams: {
   useMainnet: null | boolean;
@@ -20,14 +20,14 @@ const defaultSDKParams: {
   bscProvider: { hostname: networks.mainnet.bsc.provider.hostname, nid: null }
 };
 
-function getAbiOf(
-  contractLabel: string,
-  chain: string,
-  isMainnet: boolean = true
-) {
-  //
-  return lib.getAbiOf(abiDataPath, contractLabel, chain, isMainnet);
-}
+//function getAbiOf(
+//  contractLabel: string,
+//  chain: string,
+//  isMainnet: boolean = true
+//) {
+//  //
+//  return lib.getAbiOf(contractLabel, chain, isMainnet);
+//}
 
 function getBTPAddress(network: string, account: string): string | null {
   return lib.getBTPAddress(network, account);
@@ -102,6 +102,35 @@ function getFormattedHostname(hostname: string): string {
   const tempArray = temp.split("/");
   return tempArray[tempArray.length - 1];
 }
+
+function getContractOfLabelFromLocalData(
+  label: string,
+  chain: string,
+  isMainnet: boolean,
+  getLogicContract: boolean = false
+) {
+  return lib.getContractOfLabelFromLocalData(
+    label,
+    chain,
+    isMainnet,
+    getLogicContract
+  );
+}
+
+function getAbiOfLabelFromLocalData(
+  label: string,
+  chain: string,
+  isMainnet: boolean,
+  getLogicContract: boolean = false
+) {
+  return lib.getAbiOfLabelFromLocalData(
+    label,
+    chain,
+    isMainnet,
+    getLogicContract
+  );
+}
+
 // exports
 const utils = {
   networks,
@@ -109,13 +138,15 @@ const utils = {
   getBTPAddress,
   abiDataPath,
   labels,
-  getAbiOf,
+  // getAbiOf,
   getContractOf,
   removeZerosFromAddress,
   GenericContractAddress,
   defaultSDKParams,
   getSDKParams,
-  getFormattedHostname
+  getFormattedHostname,
+  getContractOfLabelFromLocalData,
+  getAbiOfLabelFromLocalData
 };
 
 export = utils;
