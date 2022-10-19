@@ -1,7 +1,7 @@
 // utils/utils.ts
 //
 import { contracts, labels, GenericContractAddress } from "./contracts";
-import networks from "./networks";
+import { networks, chains } from "./networks";
 import lib from "./lib";
 
 // variables
@@ -20,17 +20,35 @@ const defaultSDKParams: {
   bscProvider: { hostname: networks.mainnet.bsc.provider.hostname, nid: null }
 };
 
-//function getAbiOf(
-//  contractLabel: string,
-//  chain: string,
-//  isMainnet: boolean = true
-//) {
-//  //
-//  return lib.getAbiOf(contractLabel, chain, isMainnet);
-//}
+// functions
+function getBTPAddress(
+  address: string,
+  chain: string,
+  isMainnet: boolean = true
+): string | null {
+  let result: string | null = null;
+  let nid: string | null = null;
+  const chainsLabels = Object.keys(chains);
+  const networkLabel = isMainnet === true ? "mainnet" : "testnet";
 
-function getBTPAddress(network: string, account: string): string | null {
-  return lib.getBTPAddress(network, account);
+  if (chainsLabels.includes(chain)) {
+    for (const chainLabel of chainsLabels) {
+      if (chainLabel === chain) {
+        nid = networks[networkLabel][chain]["btp_network_id"];
+        break;
+      }
+    }
+  } else {
+    console.log(
+      `error fetching BTP address.\nProvided value for param "chain": ${chain}, is not a valid value`
+    );
+  }
+
+  if (nid != null) {
+    result = `btp://${nid}/${address}`;
+  }
+
+  return result;
 }
 
 function getContractOf(
@@ -138,7 +156,6 @@ const utils = {
   getBTPAddress,
   abiDataPath,
   labels,
-  // getAbiOf,
   getContractOf,
   removeZerosFromAddress,
   GenericContractAddress,

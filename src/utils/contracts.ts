@@ -22,14 +22,6 @@ export const labels = {
 export type TokenKeys = keyof typeof labels;
 export type TokenValues = typeof labels[TokenKeys];
 
-export const chains = {
-  icon: "ICON",
-  bsc: "BINANCE_SMART_CHAIN"
-} as const;
-
-export type ChainsKeys = keyof typeof chains;
-export type ChainsValues = typeof chains[ChainsKeys];
-
 export class GenericContractAddress {
   /**
    * Generic Contract address class
@@ -229,4 +221,3 @@ export const contracts = {
   }
 };
 
-// export type Contracts = typeof contracts;

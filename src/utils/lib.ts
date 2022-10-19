@@ -8,15 +8,6 @@ const abiDataPath = "data/abiData.json";
 // types
 
 // functions
-function getBTPAddress(network: string, account: string): string | null {
-  let result = null;
-
-  if (typeof network === "string" && typeof account === "string") {
-    result = `btp://${network}/${account}`;
-  }
-
-  return result;
-}
 
 function readDb(path: string): any {
   try {
@@ -149,39 +140,7 @@ function getAbiOfLabelFromLocalData(
   return getDataFromLocalData(label, chain, isMainnet, true, getLogicContract);
 }
 
-// function getAbiOf(
-//   contractLabel: string,
-//   chain: string,
-//   isMainnet: boolean = true
-// ): any {
-//   let result: any = null;
-//   const abiData = readDb(abiDataPath);
-//   const allChains = Object.keys(abiData);
-
-//   if (allChains.includes(chain)) {
-//     const chainData = abiData[chain];
-//     const testnetKeys = (Object.keys(chainData.testnet) as unknown) as string;
-//     const mainnetKeys = (Object.keys(chainData.mainnet) as unknown) as string;
-
-//     if (isMainnet === true) {
-//       if (mainnetKeys.includes(contractLabel)) {
-//         const abi = chainData.mainnet[contractLabel];
-//         if (abi.abi !== null) result = abi.abi;
-//       }
-//     } else {
-//       if (testnetKeys.includes(contractLabel)) {
-//         const abi = chainData.testnet[contractLabel];
-//         if (abi.abi !== null) result = abi.abi;
-//       }
-//     }
-//   }
-
-//   return result;
-// }
-
 const lib = {
-  // getAbiOf,
-  getBTPAddress,
   getContractOf,
   readDb,
   abiDataPath,
@@ -189,4 +148,4 @@ const lib = {
   getAbiOfLabelFromLocalData
 };
 
-export default lib;
+export = lib;

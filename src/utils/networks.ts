@@ -1,10 +1,18 @@
 // utils/networks.ts
 //
-const networks = {
+export const chains = {
+  icon: "icon",
+  bsc: "bsc"
+};
+
+export const networks = {
   mainnet: {
-    icon: {
+    [chains.icon]: {
       uri: "https://ctz.solidwallet.io/api/v3/icon_dex",
-      tracker: "https://tracker.icon.community",
+      tracker: {
+        hostname: "https://tracker.icon.community",
+        routes: {}
+      },
       network_id: "0x1",
       btp_network_id: "0x1.icon",
       block_height: 54062001,
@@ -13,7 +21,7 @@ const networks = {
         nid: 1
       }
     },
-    bsc: {
+    [chains.bsc]: {
       uri: "https://bsc-dataseed.binance.org",
       tracker: {
         hostname: "api.bscscan.com",
@@ -31,9 +39,12 @@ const networks = {
     }
   },
   testnet: {
-    icon: {
+    [chains.icon]: {
       uri: "https://lisbon.net.solidwallet.io/api/v3/icon_dex",
-      tracker: "https://lisbon.tracker.solidwallet.io/",
+      tracker: {
+        hostname: "https://lisbon.tracker.solidwallet.io/",
+        routes: {}
+      },
       network_id: "0x2",
       btp_network_id: "0x2.icon",
       block_height: 11273953,
@@ -42,7 +53,7 @@ const networks = {
         nid: 2
       }
     },
-    bsc: {
+    [chains.bsc]: {
       uri: "https://data-seed-prebsc-1-s1.binance.org:8545",
       tracker: {
         hostname: "api-testnet.bscscan.com",
@@ -61,5 +72,3 @@ const networks = {
     }
   }
 };
-
-export = networks;
