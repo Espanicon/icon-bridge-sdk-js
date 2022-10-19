@@ -13,8 +13,11 @@ const defaultSDKParams: {
   bscProvider?: any;
 } = {
   useMainnet: null,
-  iconProvider: networks.mainnet.icon.provider.hostname,
-  bscProvider: networks.mainnet.bsc.provider.hostname
+  iconProvider: {
+    hostname: networks.mainnet.icon.provider.hostname,
+    nid: null
+  },
+  bscProvider: { hostname: networks.mainnet.bsc.provider.hostname, nid: null }
 };
 
 function getAbiOf(
@@ -52,17 +55,35 @@ function getSDKParams(inputParams: any, defaultParams = defaultSDKParams) {
     //
     // use predifined icon and bsc providers for mainnet
     result.useMainnet = true;
-    result.iconProvider = networks.mainnet.icon.provider.hostname;
-    result.bscProvider = networks.mainnet.bsc.provider.hostname;
+    result.iconProvider = {
+      hostname: networks.mainnet.icon.provider.hostname,
+      nid: networks.mainnet.icon.provider.nid
+    };
+    result.bscProvider = {
+      hostname: networks.mainnet.bsc.provider.hostname,
+      nid: networks.mainnet.bsc.provider.nid
+    };
   } else if (result.useMainnet === false) {
     // use predifined icon and bsc providers for testnet
-    result.iconProvider = networks.testnet.icon.provider.hostname;
-    result.bscProvider = networks.testnet.bsc.provider.hostname;
+    result.iconProvider = {
+      hostname: networks.testnet.icon.provider.hostname,
+      nid: networks.testnet.icon.provider.nid
+    };
+    result.bscProvider = {
+      hostname: networks.testnet.bsc.provider.hostname,
+      nid: networks.testnet.bsc.provider.nid
+    };
   } else {
     // should never happen, default to using mainnet
     result.useMainnet = true;
-    result.iconProvider = networks.mainnet.icon.provider.hostname;
-    result.bscProvider = networks.mainnet.bsc.provider.hostname;
+    result.iconProvider = {
+      hostname: networks.mainnet.icon.provider.hostname,
+      nid: networks.mainnet.icon.provider.nid
+    };
+    result.bscProvider = {
+      hostname: networks.mainnet.bsc.provider.hostname,
+      nid: networks.mainnet.bsc.provider.nid
+    };
   }
 
   return result;

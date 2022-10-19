@@ -26,7 +26,7 @@ const networks = {
       block_height: 20493051,
       provider: {
         hostname: "https://bsc-dataseed.binance.org", // TODO: must have https
-        nid: 1
+        nid: 56
       }
     }
   },
@@ -56,7 +56,7 @@ const networks = {
       provider: {
         // TODO: must have https://
         hostname: "https://data-seed-prebsc-1-s1.binance.org:8545",
-        nid: 1
+        nid: 97
       }
     }
   }

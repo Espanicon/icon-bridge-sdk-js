@@ -6,14 +6,14 @@ import Web3 from "web3";
 // variables
 
 // SDK
-export default class IconBridgeSDK {
+class IconBridgeSDK {
   utils: any;
   params = utils.defaultSDKParams;
   bscWeb3: any;
   constructor(inputParams = utils.defaultSDKParams) {
   this.utils = utils;
   this.params = utils.getSDKParams(inputParams)
-  this.bscWeb3 = new Web3(this.params.bscProvider);
+  this.bscWeb3 = new Web3(this.params.bscProvider.hostname);
   }
     bsc = {
       getLogicContract: async (
@@ -66,3 +66,5 @@ export default class IconBridgeSDK {
     return utils.getAbiOf(contractLabel, chain, isMainnet)
   }
 }
+
+export = IconBridgeSDK;
