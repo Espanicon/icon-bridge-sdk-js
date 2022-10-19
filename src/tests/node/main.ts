@@ -1,5 +1,5 @@
 import iconBridgeSDKTests from "./icon-bridge-sdk.test";
-import iconBridgeSDKWebTests from "./icon-bridge-sdk-web.test";
+import iconBridgeSDKWebTests from "./icon-bridge-sdk-web.test.mjs";
 // import iconBridgeSDKNodeTests from "./icon-bridge-sdk-node.test";
 
 async function runTests() {
