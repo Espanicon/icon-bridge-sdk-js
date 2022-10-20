@@ -38,7 +38,7 @@ async function iconBridgeSDKNodeTests() {
 
   console.log("transferNativeCoin test");
   lib.bsc.transferNativeCoin(
-    "0.001",
+    "1",
     wallets.bsc.a.pubK,
     wallets.icon.a.pubK,
     wallets.bsc.a.privK,

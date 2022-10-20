@@ -82,6 +82,16 @@ class IconBridgeSDK {
       true
     )
   }
+  getBTSCoreProxyContractAddress = (
+    chain: string,
+    isMainnet: boolean,
+  ) => {
+    return this.#getContractLocally(
+      "BTSCore",
+      chain,
+      isMainnet
+    )
+  }
 
   #getLogicContract = async (
     address: string,

@@ -49,13 +49,15 @@ class IconBridgeSDKNode extends IconBridgeSDK {
     const contract = this.getBTSCoreLogicContractObject(fromChain, web3Wrapper);
     // get the correctly formatted BTP address (btp://<BTP_NID>/<ADDRESS>
     const btpAddress = this.sdkUtils.getBTPAddress(to, toChain, isMainnet);
+    const proxyAddress = this.getBTSCoreProxyContractAddress("bsc", isMainnet);
     console.log('btpAddress')
     console.log(btpAddress)
     // create the query and tx object
     const query = contract.methods.transferNativeCoin(btpAddress);
     const tx = {
       from:from,
-      to: contract._address,
+      // to: contract._address,
+      to: proxyAddress,
       gas: 2000000,
       data: query.encodeABI(),
       value: web3Wrapper.utils.toWei(amount, "ether")
