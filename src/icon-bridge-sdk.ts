@@ -7,20 +7,19 @@ import Web3 from "web3";
 
 // SDK
 class IconBridgeSDK {
-  utils: any;
+  sdkUtils: any = utils;
   params = utils.defaultSDKParams;
   bscWeb3: any;
 
   constructor(inputParams = utils.defaultSDKParams) {
-  this.utils = utils;
-  this.params = utils.getSDKParams(inputParams)
+  this.params = this.sdkUtils.getSDKParams(inputParams)
   this.bscWeb3 = new Web3(this.params.bscProvider.hostname);
   }
 
   bsc = {
     getLogicContract: async (
       address: string,
-      memSlot: string = utils.labels.memSlot,
+      memSlot: string = this.sdkUtils.labels.memSlot,
       web3Wrapper: any = this.bscWeb3
     ) => {
       return await this.#getLogicContract(address, memSlot, web3Wrapper);
@@ -41,27 +40,20 @@ class IconBridgeSDK {
         : this.params.useMainnet;
       return this.#getBTSAbi("bsc", isMainnet)
     },
-    getBTSCoreLogicContract: () => {
+    getBTSCoreLogicContract: (chain: string = "bsc") => {
       const isMainnet: boolean | null = this.params.useMainnet == null 
         ? true 
         : this.params.useMainnet;
-      return this.#getBTSCoreLogicContract("bsc", isMainnet)
+      return this.#getBTSCoreLogicContract(chain, isMainnet)
     },
-
     getBTSCoreLogicContractAbi: () => {
       const isMainnet: boolean | null = this.params.useMainnet == null 
         ? true 
         : this.params.useMainnet;
       return this.#getAbiOf("BTSCore", "bsc", isMainnet, true)
     },
-
-    getBTSCoreLogicContractObject: () => {
-      const isMainnet: boolean | null = this.params.useMainnet == null 
-        ? true 
-        : this.params.useMainnet;
-      const contractAddress = this.#getBTSCoreLogicContract("bsc", isMainnet);
-      const abi = this.#getAbiOf("BTSCore", "bsc", isMainnet, true)
-      return this.#getContract(abi, contractAddress, this.bscWeb3)
+    getBTSCoreLogicContractObject: (chain: string) => {
+      return this.getBTSCoreLogicContractObject(chain, this.bscWeb3)
     }
   };
 
@@ -71,7 +63,7 @@ class IconBridgeSDK {
     isMainnet: boolean, 
     getLogicContract: boolean = false
   ) => {
-    return utils.getContractOfLabelFromLocalData(
+    return this.sdkUtils.getContractOfLabelFromLocalData(
       label, 
       chain, 
       isMainnet, 
@@ -100,7 +92,7 @@ class IconBridgeSDK {
 
     try {
       const memData = await web3Wrapper.eth.getStorageAt(address, memSlot);
-      result = this.utils.removeZerosFromAddress(memData)
+      result = this.sdkUtils.removeZerosFromAddress(memData)
 
     } catch (err) {
       console.log(
@@ -114,7 +106,7 @@ class IconBridgeSDK {
 
   #getContract = (abi: any, contractAddress: string, web3Wrapper: any) => {
     const contract = new web3Wrapper.eth.Contract(abi, contractAddress);
-    return contract
+    return contract;
   };
 
   #getAbiOf = (
@@ -123,7 +115,7 @@ class IconBridgeSDK {
     isMainnet: boolean,
     getLogicContract: boolean = false
   ) => {
-    return utils.getAbiOfLabelFromLocalData(
+    return this.sdkUtils.getAbiOfLabelFromLocalData(
       contractLabel,
       chain, 
       isMainnet,
@@ -135,12 +127,14 @@ class IconBridgeSDK {
     return this.#getAbiOf("BTSCore", chain, isMainnet)
   };
 
-  //#getBTSContract = (chain: string, isMainnet: boolean) => {
-  //  //TODO: incomplete implementation fo this method
-  //  const abi = this.#getBTSAbi(chain, isMainnet)
-  //  const contractAddress = utils.getContractOf("BTSCore", chain, isMainnet)
-  //  console.log(abi, contractAddress)
-  //}
+  getBTSCoreLogicContractObject = (chain: string, web3Wrapper: any) => {
+    const isMainnet: boolean | null = this.params.useMainnet == null 
+      ? true 
+      : this.params.useMainnet;
+    const contractAddress = this.#getBTSCoreLogicContract(chain, isMainnet);
+    const abi = this.#getAbiOf("BTSCore", chain, isMainnet, true)
+    return this.#getContract(abi, contractAddress, web3Wrapper)
+  }
 }
 
 export = IconBridgeSDK;

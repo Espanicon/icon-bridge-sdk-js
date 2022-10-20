@@ -12,31 +12,79 @@ class IconBridgeSDKNode extends IconBridgeSDK {
     );
     this.bsc = {
       ...this.bsc,
-      transferNativeCoin: (
-        amount: number,
+      transferNativeCoin: async (
+        amount: string,
         from: string,
         to: string,
-        privateKey: string
+        privateKey: string,
+        toChain:string,
       ) => {
-        return this.#transferNativeCoin(amount, from, to, privateKey)
+        return await this.#transferNativeCoin(
+          amount,
+          from,
+          to,
+          privateKey, 
+          toChain,
+          "bsc",
+          this.bscWeb3
+        )
       }
     };
   }
 
-  #transferNativeCoin = (
-    amount: number,
+  #transferNativeCoin = async (
+    amount: string,
     from: string,
     to: string,
-    privateKey: string
+    privateKey: string,
+    toChain: string,
+    fromChain: string,
+    web3Wrapper: any
   ) => {
-    const foo = [amount, from, to, privateKey]
-    console.log(foo)
-    
-    const account = this.bscWeb3.eth.accounts.privateKeyToAccount(privateKey);
-    this.bscWeb3.eth.accounts.wallet.add(account);
-    // this.bscWeb3.eth.defaultAccount = account.address
-    console.log('accounts')
-    console.log(this.bscWeb3.eth.accounts.wallet)
+    const isMainnet = this.params.useMainnet == null 
+      ? true 
+      : this.params.useMainnet;
+
+    // get contract object with the methods
+    const contract = this.getBTSCoreLogicContractObject(fromChain, web3Wrapper);
+    // get the correctly formatted BTP address (btp://<BTP_NID>/<ADDRESS>
+    const btpAddress = this.sdkUtils.getBTPAddress(to, toChain, isMainnet);
+    console.log('btpAddress')
+    console.log(btpAddress)
+    // create the query and tx object
+    const query = contract.methods.transferNativeCoin(btpAddress);
+    const tx = {
+      from:from,
+      to: contract._address,
+      gas: 2000000,
+      data: query.encodeABI(),
+      value: web3Wrapper.utils.toWei(amount, "ether")
+    }
+    // get the account object with the tx methods
+    // const account = web3Wrapper.eth.accounts.privateKeyToAccount(privateKey);
+    // this.bscWeb3.eth.accounts.wallet.add(account);
+    //
+    // console.log('accounts')
+    // console.log(account)
+    // console.log('tx')
+    // console.log(tx)
+    //
+    // create the signed tx
+    const signedTx = await web3Wrapper.eth.accounts.signTransaction(
+      tx,
+      privateKey
+    )
+    // console.log('signed tx')
+    // console.log(signedTx)
+    // get tx receipt
+    const receipt = await web3Wrapper.eth.sendSignedTransaction(
+      signedTx.rawTransaction
+    )
+
+    console.log('receipt')
+    console.log(receipt)
+    return receipt.transactionHash
+
   }
 }
 export = IconBridgeSDKNode;

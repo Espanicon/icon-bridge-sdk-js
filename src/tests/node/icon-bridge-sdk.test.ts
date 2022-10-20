@@ -7,7 +7,7 @@ async function iconBridgeSDKTests() {
   // Test 1: fetch logic contract of a proxy contract (BTSCore) on the
   // BSC Mainnet
   console.log("Running test on sdk.bsc.getLogicContract()");
-  const a = sdkMainnet.utils.contracts.bsc.mainnet.BTSCore.address;
+  const a = sdkMainnet.sdkUtils.contracts.bsc.mainnet.BTSCore.address;
   const b = await sdkMainnet.bsc.getLogicContract(a);
   console.log("testing mainnet");
   console.log("proxy contract");
@@ -17,7 +17,7 @@ async function iconBridgeSDKTests() {
 
   // Test 2: fetch logic contract of a proxy contract (BTSCore) on the
   // BSC Testnet
-  const a1 = sdkTestnet.utils.contracts.bsc.testnet.BTSCore.address;
+  const a1 = sdkTestnet.sdkUtils.contracts.bsc.testnet.BTSCore.address;
   const b1 = await sdkTestnet.bsc.getLogicContract(a1);
   console.log("testing testnet");
   console.log("proxy contract");
