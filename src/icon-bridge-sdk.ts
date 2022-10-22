@@ -22,7 +22,11 @@ class IconBridgeSDK {
       memSlot: string = this.sdkUtils.labels.memSlot,
       web3Wrapper: any = this.bscWeb3
     ) => {
+      try {
       return await this.#getLogicContract(address, memSlot, web3Wrapper);
+      } catch (err) {
+        throw new Error(`Error running 'getLogicContract' method.\n${err}`)
+      }
     },
     getContract: (abi: any, contractAddress: string) => {
       return this.#getContract(abi, contractAddress, this.bscWeb3)
@@ -103,20 +107,20 @@ class IconBridgeSDK {
     try {
       const memData = await web3Wrapper.eth.getStorageAt(address, memSlot);
       result = this.sdkUtils.removeZerosFromAddress(memData)
-
+      return result;
     } catch (err) {
-      console.log(
-        `Error running getLogicContract(). Params:\naddress: ${address}\nmemSlot: ${memSlot}\n`
-      );
-      console.log(err);
+      throw new Error(`Error running #getLogicContract(). Params:\naddress: ${address}\nmemSlot: ${memSlot}\n.\n${err}`)
     }
-
-    return result;
   };
 
   #getContract = (abi: any, contractAddress: string, web3Wrapper: any) => {
+    try {
     const contract = new web3Wrapper.eth.Contract(abi, contractAddress);
     return contract;
+    } catch (err) {
+
+      throw new Error(`Error running #getContract(). Params:\nabi: ${abi}\ncontractAddress: ${contractAddress}\nweb3Wrapper: ${web3Wrapper}.\n${err}`)
+    }
   };
 
   #getAbiOf = (

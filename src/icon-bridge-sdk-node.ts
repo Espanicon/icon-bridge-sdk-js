@@ -73,8 +73,7 @@ class IconBridgeSDKNode extends IconBridgeSDK {
 
       return receipt.transactionHash
     } catch (err) {
-      console.log(`Error running #transferNativeCoin.\n${err}`)
-      return null
+      throw new Error(`Error running #transferNativeCoin.\n${err}`)
     }
 
   }
