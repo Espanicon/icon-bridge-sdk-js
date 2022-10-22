@@ -29,7 +29,7 @@ class IconBridgeSDK {
       }
     },
     getContract: (abi: any, contractAddress: string) => {
-      return this.#getContract(abi, contractAddress, this.bscWeb3)
+      return this.#getContractObject(abi, contractAddress, this.bscWeb3)
     },
     getAbiOf: (contractLabel: string, getLogicContract: boolean = false) => { 
 
@@ -44,11 +44,14 @@ class IconBridgeSDK {
         : this.params.useMainnet;
       return this.#getBTSAbi("bsc", isMainnet)
     },
-    getBTSCoreLogicContract: (chain: string = "bsc") => {
+    getBTSCoreLogicContract: () => {
       const isMainnet: boolean | null = this.params.useMainnet == null 
         ? true 
         : this.params.useMainnet;
-      return this.#getBTSCoreLogicContract(chain, isMainnet)
+      return this.#getBTSCoreLogicContract('bsc', isMainnet)
+    },
+    getBTSCoreProxyContractObject: () => {
+      return this.getBTSCoreProxyContractObject('bsc', this.bscWeb3)
     },
     getBTSCoreLogicContractAbi: () => {
       const isMainnet: boolean | null = this.params.useMainnet == null 
@@ -56,8 +59,8 @@ class IconBridgeSDK {
         : this.params.useMainnet;
       return this.#getAbiOf("BTSCore", "bsc", isMainnet, true)
     },
-    getBTSCoreLogicContractObject: (chain: string) => {
-      return this.getBTSCoreLogicContractObject(chain, this.bscWeb3)
+    getBTSCoreLogicContractObject: () => {
+      return this.getBTSCoreLogicContractObject("bsc", this.bscWeb3)
     }
   };
 
@@ -113,13 +116,13 @@ class IconBridgeSDK {
     }
   };
 
-  #getContract = (abi: any, contractAddress: string, web3Wrapper: any) => {
+  #getContractObject = (abi: any, contractAddress: string, web3Wrapper: any) => {
     try {
     const contract = new web3Wrapper.eth.Contract(abi, contractAddress);
     return contract;
     } catch (err) {
 
-      throw new Error(`Error running #getContract(). Params:\nabi: ${abi}\ncontractAddress: ${contractAddress}\nweb3Wrapper: ${web3Wrapper}.\n${err}`)
+      throw new Error(`Error running #getContractObject(). Params:\nabi: ${abi}\ncontractAddress: ${contractAddress}\nweb3Wrapper: ${web3Wrapper}.\n${err}`)
     }
   };
 
@@ -141,13 +144,39 @@ class IconBridgeSDK {
     return this.#getAbiOf("BTSCore", chain, isMainnet)
   };
 
+  getContractObjectByLabel = (
+    label: string, 
+    chain: string, 
+    web3Wrapper: any,
+    getLogicContract: boolean = false
+  ) => {
+    try {
+      const isMainnet: boolean | null = this.params.useMainnet == null 
+        ? true 
+        : this.params.useMainnet;
+      const contractAddress = this.#getContractLocally(
+        label,
+        chain,
+        isMainnet,
+        getLogicContract
+      )
+  ;
+      const abi = this.#getAbiOf(label, chain, isMainnet, getLogicContract)
+      return this.#getContractObject(abi, contractAddress, web3Wrapper)
+    } catch (err) {
+      throw new Error(`Error running #getContractObjectByLabel(). Params:\nlabel: ${label}\nchain: ${chain}\nweb3Wrapper: ${web3Wrapper}\ngetLogicContract: ${getLogicContract}.\n${err}`)
+
+    }
+  };
+
+  getBTSCoreProxyContractObject = (chain: string, web3Wrapper: any) => {
+    return this.getContractObjectByLabel("BTSCore", chain, web3Wrapper, false)
+  }
+
+
   getBTSCoreLogicContractObject = (chain: string, web3Wrapper: any) => {
-    const isMainnet: boolean | null = this.params.useMainnet == null 
-      ? true 
-      : this.params.useMainnet;
-    const contractAddress = this.#getBTSCoreLogicContract(chain, isMainnet);
-    const abi = this.#getAbiOf("BTSCore", chain, isMainnet, true)
-    return this.#getContract(abi, contractAddress, web3Wrapper)
+    return this.getContractObjectByLabel("BTSCore", chain, web3Wrapper, true)
+;
   }
 }
 
