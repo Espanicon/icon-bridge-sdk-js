@@ -1,7 +1,7 @@
 {
-  "name": "icon-bridge-sdk",
+  "name": "icon-bridge-sdk-js",
   "version": "1.0.0",
-  "description": "",
+  "description": "An sdk written in JS for the ICON Bridge",
   "exports": {
     "node": {
       "require": "./dist/icon-bridge-sdk-node.js"
@@ -16,7 +16,7 @@
     "test-node": "npm run build && node ./dist/tests/node/main.mjs",
     "build-data": "tsc && node ./dist/utils/buildABIData.js"
   },
-  "author": "",
+  "author": "fidelve",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.18.9",
