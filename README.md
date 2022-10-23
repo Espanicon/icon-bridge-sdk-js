@@ -17,14 +17,14 @@ DESCRIBE HOW TO USE
 |Module | Description|
 |-------|------------|
 |IconBridge | Class object that provides the API to use the ICON Bridge |
-|IconBridge[<CHAIN>] | Methods for interacting with the ICON Bridge on each supported chain |
+|IconBridge[CHAIN] | Methods for interacting with the ICON Bridge on each supported chain |
 |IconBridge.sdkUtils | Utility functions for the SDK |
 
 ### IconBridge
 
-### IconBridge[<CHAIN>]
+### IconBridge[CHAIN]
 
-#### IconBridge[<CHAIN>].bts
+#### IconBridge[CHAIN].bts
 
 Methods for interacting with the BTS (BTP Token Service) contract available on all chains.
 
@@ -82,7 +82,7 @@ Methods for interacting with the BTS (BTP Token Service) contract available on t
 
 * updateBTSPeriphery
 
-#### IconBridge[<CHAIN>].bmc
+#### IconBridge[CHAIN].bmc
 
 Methods for interacting with the BMC (BTP Message Center) contract.
 
