@@ -17,18 +17,18 @@ class IconBridgeSDK {
   }
 
   bsc = {
-    getLogicContract: async (
+    getLogicContractAddressOnChain: async (
       address: string,
       memSlot: string = this.sdkUtils.labels.memSlot,
       web3Wrapper: any = this.bscWeb3
     ) => {
       try {
-      return await this.#getLogicContract(address, memSlot, web3Wrapper);
+      return await this.#getLogicContractAddressOnChain(address, memSlot, web3Wrapper);
       } catch (err) {
-        throw new Error(`Error running 'getLogicContract' method.\n${err}`)
+        throw new Error(`Error running 'getLogicContractAddressOnChain' method.\n${err}`)
       }
     },
-    getContract: (abi: any, contractAddress: string) => {
+    getContractObject: (abi: any, contractAddress: string) => {
       return this.#getContractObject(abi, contractAddress, this.bscWeb3)
     },
     getAbiOf: (contractLabel: string, getLogicContract: boolean = false) => { 
@@ -48,7 +48,7 @@ class IconBridgeSDK {
       const isMainnet: boolean | null = this.params.useMainnet == null 
         ? true 
         : this.params.useMainnet;
-      return this.#getBTSCoreLogicContract('bsc', isMainnet)
+      return this.#getBTSCoreLogicContractAddress('bsc', isMainnet)
     },
     getBTSCoreProxyContractObject: () => {
       return this.getBTSCoreProxyContractObject('bsc', this.bscWeb3)
@@ -61,69 +61,56 @@ class IconBridgeSDK {
     },
     getBTSCoreLogicContractObject: () => {
       return this.getBTSCoreLogicContractObject("bsc", this.bscWeb3)
-    }
-  };
+    },
 
-  #getContractLocally = (
-    label: string,
-    chain: string, 
-    isMainnet: boolean, 
-    getLogicContract: boolean = false
-  ) => {
-    return this.sdkUtils.getContractOfLabelFromLocalData(
-      label, 
-      chain, 
-      isMainnet, 
-      getLogicContract
-    )
-  };
+    // BTS specific methods
 
-  #getBTSCoreLogicContract = (
-    chain: string,
-    isMainnet: boolean,
-  ) => {
-    return this.#getContractLocally(
-      "BTSCore",
-      chain,
-      isMainnet,
-      true
-    )
-  }
-  getBTSCoreProxyContractAddress = (
-    chain: string,
-    isMainnet: boolean,
-  ) => {
-    return this.#getContractLocally(
-      "BTSCore",
-      chain,
-      isMainnet
-    )
-  }
+    balanceOf: async (
+      _owner: string, 
+      _coinName: string
+    ): Promise<string | null> => {
+      // check if class object was created for mainnet or testnet
+      const isMainnet: boolean | null = this.params.useMainnet == null 
+        ? true 
+        : this.params.useMainnet;
 
-  #getLogicContract = async (
-    address: string,
-    memSlot: string,
-    web3Wrapper: any
-  ) => {
-    let result: any = null;
+      try {
+        // get contract address and contract object
+        const BTSProxyContractAddress = this.getBTSCoreProxyContractAddress(
+          'bsc',
+          isMainnet
+        );
+        const contractObject = this.getBTSCoreLogicContractObject(
+          'bsc',
+          isMainnet
+        );
 
-    try {
-      const memData = await web3Wrapper.eth.getStorageAt(address, memSlot);
-      result = this.sdkUtils.removeZerosFromAddress(memData)
-      return result;
-    } catch (err) {
-      throw new Error(`Error running #getLogicContract(). Params:\naddress: ${address}\nmemSlot: ${memSlot}\n.\n${err}`)
-    }
-  };
+        // decoding a call to readonly method
+        const contractMethod = contractObject.methods.balanceOf(
+          _owner, 
+          _coinName
+        );
+        const encodedData = contractMethod.encodeABI();
 
-  #getContractObject = (abi: any, contractAddress: string, web3Wrapper: any) => {
-    try {
-    const contract = new web3Wrapper.eth.Contract(abi, contractAddress);
-    return contract;
-    } catch (err) {
+        // making readonly call
+        const contractMethodCallResponse = await this.bscWeb3.eth.call({
+          to: BTSProxyContractAddress,
+          data: encodedData
+        })
 
-      throw new Error(`Error running #getContractObject(). Params:\nabi: ${abi}\ncontractAddress: ${contractAddress}\nweb3Wrapper: ${web3Wrapper}.\n${err}`)
-    }
+        // parsing the hex response into utf8
+        const parsedResponse = this.bscWeb3.utils.toUtf8(
+          contractMethodCallResponse
+        )
+
+        return parsedResponse
+      } catch (err) {
+        console.log(err)
+        throw new Error(`Error running balanceOf(_owner, _coinName). Params:\n_owner: ${_owner}\n_coinName: ${_coinName}\n`)
+      }
+
+    },
+
   };
 
   #getAbiOf = (
@@ -154,7 +141,7 @@ class IconBridgeSDK {
       const isMainnet: boolean | null = this.params.useMainnet == null 
         ? true 
         : this.params.useMainnet;
-      const contractAddress = this.#getContractLocally(
+      const contractAddress = this.#getContractAddressLocally(
         label,
         chain,
         isMainnet,
@@ -166,6 +153,68 @@ class IconBridgeSDK {
     } catch (err) {
       throw new Error(`Error running #getContractObjectByLabel(). Params:\nlabel: ${label}\nchain: ${chain}\nweb3Wrapper: ${web3Wrapper}\ngetLogicContract: ${getLogicContract}.\n${err}`)
 
+    }
+  };
+
+  #getContractAddressLocally = (
+    label: string,
+    chain: string, 
+    isMainnet: boolean, 
+    getLogicContract: boolean = false
+  ) => {
+    return this.sdkUtils.getContractOfLabelFromLocalData(
+      label, 
+      chain, 
+      isMainnet, 
+      getLogicContract
+    )
+  };
+
+  #getBTSCoreLogicContractAddress = (
+    chain: string,
+    isMainnet: boolean,
+  ) => {
+    return this.#getContractAddressLocally(
+      "BTSCore",
+      chain,
+      isMainnet,
+      true
+    )
+  }
+  getBTSCoreProxyContractAddress = (
+    chain: string,
+    isMainnet: boolean,
+  ) => {
+    return this.#getContractAddressLocally(
+      "BTSCore",
+      chain,
+      isMainnet
+    )
+  }
+
+  #getLogicContractAddressOnChain = async (
+    address: string,
+    memSlot: string,
+    web3Wrapper: any
+  ) => {
+    let result: any = null;
+
+    try {
+      const memData = await web3Wrapper.eth.getStorageAt(address, memSlot);
+      result = this.sdkUtils.removeZerosFromAddress(memData)
+      return result;
+    } catch (err) {
+      throw new Error(`Error running #getLogicContractAddressOnChain(). Params:\naddress: ${address}\nmemSlot: ${memSlot}\n.\n${err}`)
+    }
+  };
+
+  #getContractObject = (abi: any, contractAddress: string, web3Wrapper: any) => {
+    try {
+    const contract = new web3Wrapper.eth.Contract(abi, contractAddress);
+    return contract;
+    } catch (err) {
+
+      throw new Error(`Error running #getContractObject(). Params:\nabi: ${abi}\ncontractAddress: ${contractAddress}\nweb3Wrapper: ${web3Wrapper}.\n${err}`)
     }
   };
 
