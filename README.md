@@ -39,7 +39,7 @@ Methods for interacting with the BTS (BTP Token Service) contract available on a
 * isOwner
 * isValidCoin
 * addOwner
-* handleRespoonseService
+* handleResponseService
 * initialize
 * mint
 * reclaim

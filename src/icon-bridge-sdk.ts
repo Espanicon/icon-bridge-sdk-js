@@ -64,60 +64,254 @@ class IconBridgeSDK {
     },
 
     // BTS specific methods
-
     balanceOf: async (
       _owner: string, 
       _coinName: string
     ): Promise<string | null> => {
-      // check if class object was created for mainnet or testnet
-      const isMainnet: boolean | null = this.params.useMainnet == null 
-        ? true 
-        : this.params.useMainnet;
-
       try {
-        // get contract address and contract object
-        const BTSProxyContractAddress = this.getBTSCoreProxyContractAddress(
-          'bsc',
-          isMainnet
-        );
-        const contractObject = this.getBTSCoreLogicContractObject(
-          'bsc',
-          isMainnet
-        );
+        const isMainnet: boolean | null = this.params.useMainnet == null 
+          ? true 
+          : this.params.useMainnet;
 
-        // decoding a call to readonly method
-        const contractMethod = contractObject.methods.balanceOf(
-          _owner, 
+        const response = await this.BTSReadonlyQuery(
+          'balanceOf',
+          'bsc', 
+          this.bscWeb3,
+          _owner,
           _coinName
         );
-        const encodedData = contractMethod.encodeABI();
 
-        // making readonly call
-        const contractMethodCallResponse = await this.bscWeb3.eth.call({
-          to: BTSProxyContractAddress,
-          data: encodedData
-        })
+        const BTSLogicContractABI = this.#getAbiOf(
+          'BTSCore',
+          'bsc',
+          isMainnet,
+          true
+        );
 
-        // parsing the hex response into utf8
-        const parsedResponse = this.bscWeb3.utils.toUtf8(
-          contractMethodCallResponse
-        )
+        const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(
+          BTSLogicContractABI[4].outputs,
+          response
+        );
 
         return parsedResponse
       } catch (err) {
         console.log(err)
-        throw new Error(`Error running balanceOf(_owner, _coinName). Params:\n_owner: ${_owner}\n_coinName: ${_coinName}\n`)
+        throw new Error(
+          `Error running balanceOf(). Params:\n_owner: ${_owner}\n_coinName: ${_coinName}\n`
+        )
       }
 
     },
 
+    coinNames: async (): Promise<string | null> => {
+      try {
+        const isMainnet: boolean | null = this.params.useMainnet == null 
+          ? true 
+          : this.params.useMainnet;
+
+        const response = await this.BTSReadonlyQuery(
+          'coinNames',
+          'bsc', 
+          this.bscWeb3
+        );
+
+        const BTSLogicContractABI = this.#getAbiOf(
+          'BTSCore',
+          'bsc',
+          isMainnet,
+          true
+        );
+
+        const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(
+          BTSLogicContractABI[7].outputs,
+          response
+        );
+
+        // return parsedResponse['_names']
+        return parsedResponse
+      } catch (err) {
+        console.log(err)
+        throw new Error(
+          `Error running coinNames(). Params:\n ** NO PARAMS**\n`
+        )
+      }
+    },
+
+    addOwner: (_owner: string): void => {
+    // index 3
+    console.log(_owner)
+    },
+    // balanceOf()
+    balanceOfBatch: (_owner: string, _coinNames: string[]): void => {
+      // index 5
+      console.log([_owner, _coinNames])
+    },
+    coinId: (_coinName: string): void => {
+      // index 6
+      console.log(_coinName)
+    },
+    // coinNames
+    feeRatio: (_coinName: string): void => {
+      // index 8
+      console.log(_coinName)
+    },
+    getAccumulatedFees: (): void => {
+      // index 9
+    },
+    getNativeCoinName: (): void => {
+      // index 10
+    },
+    getOwners: (): void => {
+      // index 11
+    },
+    handleResponseService: (
+      _requester: string,
+      _coinName: string,
+      _value: number,
+      _fee: number,
+      _rspCode: number
+    ): void => {
+      // index 12
+      console.log([_requester,_coinName, _value, _fee, _rspCode])
+    },
+    initialize: (
+      _nativeCoinName: string,
+      _feeNumerator: number,
+      _fixedFee: number
+    ): void => {
+      // index 13
+      console.log([_nativeCoinName, _feeNumerator, _fixedFee])
+    },
+    isOwner: (_owner: string): void => {
+      // index 14
+      console.log(_owner)
+    },
+    isValidCoin: (_coinName: string): void => {
+      // index 15
+      console.log(_coinName)
+    },
+    mint: (
+    _to: string,
+    _coinName: string,
+    _value: number
+    ): void => {
+      // index 16
+      console.log(_to, _coinName, _value)
+    },
+    reclaim: (_coinName: string, _value: number): void => {
+      // index 17
+      console.log(_coinName, _value)
+    },
+    refund: (_to: string, _coinName: string, _value: number): void => {
+      // index 18
+      console.log([_to, _coinName,_value])
+    },
+    register: (
+    _name: string,
+    _symbol: string,
+    _decimals: number,
+    _feeNumerator: number,
+    _fixedFee: number,
+    _addr: string
+    ): void => {
+      // index 19
+      console.log([_name, _symbol, _decimals, _feeNumerator, _fixedFee, _addr])
+    },
+    removeOwner: (_owner: string): void => {
+      // index 20
+      console.log(_owner)
+    },
+    setFeeRatio: (
+      _name: string,
+      _feeNumerator: number,
+      _fixedFee: number
+    ): void => {
+      // index 21
+      console.log([_name, _feeNumerator, _fixedFee])
+    },
+    transfer: (
+    _coinName: string,
+    _value: number,
+    _to: string
+    ): void => {
+      // index 22
+      console.log([_coinName, _value, _to])
+    },
+    transferBatch: (
+    _coinNames: string[],
+    _values: string[],
+    _to: string
+    ): void => {
+      // index 23
+      console.log([_coinNames, _values, _to])
+    },
+    transferFees: (_fa: string): void => {
+      // index 24
+      console.log(_fa)
+    },
+    transferNativeCoin: (_to: string): void => {
+      // index 25
+      console.log(_to)
+    },
+    updateBTSPeriphery: (_btsPeriphery: string): void => {
+      // index 26
+      console.log(_btsPeriphery)
+    },
   };
+
+  BTSReadonlyQuery = async (
+    methodName: string,
+    chain: string,
+    web3Wrapper: any,
+    ...rest: any[]
+  ): Promise<string | null> => {
+    // check if class object was created for mainnet or testnet
+    const isMainnet: boolean | null = this.params.useMainnet == null 
+      ? true 
+      : this.params.useMainnet;
+
+    try {
+      // get contract address and contract object
+      const BTSProxyContractAddress = this.getBTSCoreProxyContractAddress(
+        chain,
+        isMainnet
+      );
+
+      const contractObject = this.getBTSCoreLogicContractObject(
+        chain,
+        web3Wrapper
+      );
+
+      // decoding a call to readonly method
+      let encodedData = null;
+      const contractMethod = contractObject.methods[methodName];
+      if (rest.length === 0) {
+        encodedData = contractMethod().encodeABI();
+      } else {
+        encodedData = contractMethod(...rest).encodeABI();
+      }
+
+      // making readonly call
+      const contractMethodCallResponse = await web3Wrapper.eth.call({
+        to: BTSProxyContractAddress,
+        data: encodedData
+      })
+
+      return contractMethodCallResponse
+    } catch (err) {
+      console.log(err)
+      throw new Error(
+        `Error running ${methodName}(). Params:\n ** NO PARAMS**\n`
+      )
+    }
+
+  }
 
   #getAbiOf = (
     contractLabel: string,
     chain: string, 
     isMainnet: boolean,
-    getLogicContract: boolean = false
+    getLogicContract: boolean = true
   ) => {
     return this.sdkUtils.getAbiOfLabelFromLocalData(
       contractLabel,
@@ -127,8 +321,12 @@ class IconBridgeSDK {
     )
   };
 
-  #getBTSAbi = (chain: string, isMainnet: boolean) => {
-    return this.#getAbiOf("BTSCore", chain, isMainnet)
+  #getBTSAbi = (
+    chain: string,
+    isMainnet: boolean,
+    getLogicContract = true
+  ) => {
+    return this.#getAbiOf("BTSCore", chain, isMainnet, getLogicContract)
   };
 
   getContractObjectByLabel = (
