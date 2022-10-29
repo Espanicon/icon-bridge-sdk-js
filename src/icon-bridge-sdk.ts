@@ -6,33 +6,69 @@ import Web3 from "web3";
 // variables
 
 // SDK
+
+/**
+ * Class that provides the API for interacting with the ICON Bridge
+ */
 class IconBridgeSDK {
   sdkUtils: any = utils;
   params = utils.defaultSDKParams;
   bscWeb3: any;
 
+  /**
+   * Configuration object for the initialization of the library
+   * @param inputParams - initialization object.
+   */
   constructor(inputParams = utils.defaultSDKParams) {
   this.params = this.sdkUtils.getSDKParams(inputParams)
   this.bscWeb3 = new Web3(this.params.bscProvider.hostname);
   }
 
   bsc = {
+    /**
+     * Get the contract that holds the implementation code of a proxy 
+     * contract (address) on chain.
+     * @param address - proxy contract address.
+     * @param memSlot - memory slot that holds the logic contract address.
+     * @return logic contract address.
+     */
     getLogicContractAddressOnChain: async (
       address: string,
       memSlot: string = this.sdkUtils.labels.memSlot,
-      web3Wrapper: any = this.bscWeb3
     ) => {
       try {
-      return await this.#getLogicContractAddressOnChain(address, memSlot, web3Wrapper);
+      return await this.#getLogicContractAddressOnChain(
+        address,
+        memSlot, 
+        this.bscWeb3
+      );
       } catch (err) {
-        throw new Error(`Error running 'getLogicContractAddressOnChain' method.\n${err}`)
+        throw new Error(
+          `Error running 'getLogicContractAddressOnChain' method.\n${err}`
+        )
       }
     },
+
+    /**
+     * Get contract web3 object
+     * @param abi - contract ABI.
+     * @param contractAddress - Contract address.
+     * @return Contract web3 object.
+     */
     getContractObject: (abi: any, contractAddress: string) => {
       return this.#getContractObject(abi, contractAddress, this.bscWeb3)
     },
-    getAbiOf: (contractLabel: string, getLogicContract: boolean = false) => { 
 
+    /**
+     * Get ABI of a contract
+     * @param contractLabel - string label of the contract.
+     * @param getLogicContract - if true gets logic contract object else gets proxy contract object.
+     * @return ABI of the contract..
+     */
+    getAbiOf: (
+      contractLabel: string,
+      getLogicContract: boolean = false
+    ) => { 
       const isMainnet: boolean | null = this.params.useMainnet == null 
         ? true 
         : this.params.useMainnet;
@@ -137,123 +173,243 @@ class IconBridgeSDK {
       }
     },
 
-    addOwner: (_owner: string): void => {
+    addOwner: async (_owner: string): Promise<void> => {
     // index 3
     console.log(_owner)
     },
     // balanceOf()
-    balanceOfBatch: (_owner: string, _coinNames: string[]): void => {
-      // index 5
-      console.log([_owner, _coinNames])
+    balanceOfBatch: async (
+      _owner: string,
+      _coinNames: string[]
+    ): Promise<void> => {
+      try {
+        const isMainnet: boolean | null = this.params.useMainnet == null 
+          ? true 
+          : this.params.useMainnet;
+
+        const response = await this.BTSReadonlyQuery(
+          'balanceOfBatch',
+          'bsc', 
+          this.bscWeb3,
+          _owner,
+          _coinNames
+        );
+
+        const BTSLogicContractABI = this.#getAbiOf(
+          'BTSCore',
+          'bsc',
+          isMainnet,
+          true
+        );
+
+        const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(
+          BTSLogicContractABI[5].outputs,
+          response
+        );
+
+        return parsedResponse
+      } catch (err) {
+        console.log(err)
+        throw new Error(
+          `Error running balanceOfBatch(). Params:\n_owner: ${_owner}\n_coinNames: ${_coinNames}\n`
+        )
+      }
     },
-    coinId: (_coinName: string): void => {
-      // index 6
-      console.log(_coinName)
+    coinId: async (_coinName: string): Promise<void> => {
+      try {
+        const isMainnet: boolean | null = this.params.useMainnet == null 
+          ? true 
+          : this.params.useMainnet;
+
+        const response = await this.BTSReadonlyQuery(
+          'coinId',
+          'bsc', 
+          this.bscWeb3,
+          _coinName
+        );
+
+        const BTSLogicContractABI = this.#getAbiOf(
+          'BTSCore',
+          'bsc',
+          isMainnet,
+          true
+        );
+
+        const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(
+          BTSLogicContractABI[6].outputs,
+          response
+        );
+
+        return parsedResponse
+      } catch (err) {
+        console.log(err)
+        throw new Error(
+          `Error running coinId(). Params:\n_coinName: ${_coinName}\n`
+        )
+      }
     },
     // coinNames
-    feeRatio: (_coinName: string): void => {
-      // index 8
-      console.log(_coinName)
+    feeRatio: async (_coinName: string): Promise<void> => {
+      try {
+        const isMainnet: boolean | null = this.params.useMainnet == null 
+          ? true 
+          : this.params.useMainnet;
+
+        const response = await this.BTSReadonlyQuery(
+          'feeRatio',
+          'bsc', 
+          this.bscWeb3,
+          _coinName
+        );
+
+        const BTSLogicContractABI = this.#getAbiOf(
+          'BTSCore',
+          'bsc',
+          isMainnet,
+          true
+        );
+
+        const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(
+          BTSLogicContractABI[8].outputs,
+          response
+        );
+
+        return parsedResponse
+      } catch (err) {
+        console.log(err)
+        throw new Error(
+          `Error running feeRatio(). Params:\n_coinName: ${_coinName}\n`
+        )
+      }
     },
-    getAccumulatedFees: (): void => {
-      // index 9
+    getAccumulatedFees: async (): Promise<void> => {
+      try {
+        const isMainnet: boolean | null = this.params.useMainnet == null 
+          ? true 
+          : this.params.useMainnet;
+
+        const response = await this.BTSReadonlyQuery(
+          'getAccumulatedFees',
+          'bsc', 
+          this.bscWeb3
+        );
+
+        const BTSLogicContractABI = this.#getAbiOf(
+          'BTSCore',
+          'bsc',
+          isMainnet,
+          true
+        );
+
+        const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(
+          BTSLogicContractABI[9].outputs,
+          response
+        );
+
+        return parsedResponse
+      } catch (err) {
+        console.log(err)
+        throw new Error(
+          `Error running getAccumulatedFees(). Params:\n ** NO PARAMS **\n`
+        )
+      }
     },
-    getNativeCoinName: (): void => {
+    getNativeCoinName: async (): Promise<void> => {
       // index 10
     },
-    getOwners: (): void => {
+    getOwners: async (): Promise<void> => {
       // index 11
     },
-    handleResponseService: (
+    handleResponseService: async (
       _requester: string,
       _coinName: string,
       _value: number,
       _fee: number,
       _rspCode: number
-    ): void => {
+    ): Promise<void> => {
       // index 12
       console.log([_requester,_coinName, _value, _fee, _rspCode])
     },
-    initialize: (
+    initialize: async (
       _nativeCoinName: string,
       _feeNumerator: number,
       _fixedFee: number
-    ): void => {
+    ): Promise<void> => {
       // index 13
       console.log([_nativeCoinName, _feeNumerator, _fixedFee])
     },
-    isOwner: (_owner: string): void => {
+    isOwner: async (_owner: string): Promise<void> => {
       // index 14
       console.log(_owner)
     },
-    isValidCoin: (_coinName: string): void => {
+    isValidCoin: async (_coinName: string): Promise<void> => {
       // index 15
       console.log(_coinName)
     },
-    mint: (
+    mint: async (
     _to: string,
     _coinName: string,
     _value: number
-    ): void => {
+    ): Promise<void> => {
       // index 16
       console.log(_to, _coinName, _value)
     },
-    reclaim: (_coinName: string, _value: number): void => {
+    reclaim: async (_coinName: string, _value: number): Promise<void> => {
       // index 17
       console.log(_coinName, _value)
     },
-    refund: (_to: string, _coinName: string, _value: number): void => {
+    refund: async (_to: string, _coinName: string, _value: number): Promise<void> => {
       // index 18
       console.log([_to, _coinName,_value])
     },
-    register: (
+    register: async (
     _name: string,
     _symbol: string,
     _decimals: number,
     _feeNumerator: number,
     _fixedFee: number,
     _addr: string
-    ): void => {
+    ): Promise<void> => {
       // index 19
       console.log([_name, _symbol, _decimals, _feeNumerator, _fixedFee, _addr])
     },
-    removeOwner: (_owner: string): void => {
+    removeOwner: async (_owner: string): Promise<void> => {
       // index 20
       console.log(_owner)
     },
-    setFeeRatio: (
+    setFeeRatio: async (
       _name: string,
       _feeNumerator: number,
       _fixedFee: number
-    ): void => {
+    ): Promise<void> => {
       // index 21
       console.log([_name, _feeNumerator, _fixedFee])
     },
-    transfer: (
+    transfer: async (
     _coinName: string,
     _value: number,
     _to: string
-    ): void => {
+    ): Promise<void> => {
       // index 22
       console.log([_coinName, _value, _to])
     },
-    transferBatch: (
+    transferBatch: async (
     _coinNames: string[],
     _values: string[],
     _to: string
-    ): void => {
+    ): Promise<void> => {
       // index 23
       console.log([_coinNames, _values, _to])
     },
-    transferFees: (_fa: string): void => {
+    transferFees: async (_fa: string): Promise<void> => {
       // index 24
       console.log(_fa)
     },
-    transferNativeCoin: (_to: string): void => {
+    transferNativeCoin: async (_to: string): Promise<void> => {
       // index 25
       console.log(_to)
     },
-    updateBTSPeriphery: (_btsPeriphery: string): void => {
+    updateBTSPeriphery: async (_btsPeriphery: string): Promise<void> => {
       // index 26
       console.log(_btsPeriphery)
     },
