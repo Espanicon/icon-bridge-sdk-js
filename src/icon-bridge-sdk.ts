@@ -24,7 +24,12 @@ class IconBridgeSDK {
   this.bscWeb3 = new Web3(this.params.bscProvider.hostname);
   }
 
+  /**
+   * Internal class object with methods for interacting with BSC endpoint of
+   * the ICON Bridge.
+   */
   bsc = {
+
     /**
      * Get the contract that holds the implementation code of a proxy 
      * contract (address) on chain.
@@ -63,7 +68,7 @@ class IconBridgeSDK {
      * Get ABI of a contract
      * @param contractLabel - string label of the contract.
      * @param getLogicContract - if true gets logic contract object else gets proxy contract object.
-     * @return ABI of the contract..
+     * @return ABI of the contract.
      */
     getAbiOf: (
       contractLabel: string,
@@ -74,32 +79,62 @@ class IconBridgeSDK {
         : this.params.useMainnet;
       return this.#getAbiOf(contractLabel, "bsc", isMainnet, getLogicContract)
     },
+
+    /**
+     * Get ABI of BTS contract
+     * @return ABI of the contract.
+     */
     getBTSAbi: () => {
       const isMainnet: boolean | null = this.params.useMainnet == null 
         ? true 
         : this.params.useMainnet;
       return this.#getBTSAbi("bsc", isMainnet)
     },
-    getBTSCoreLogicContract: () => {
+
+    /**
+     * Get address of BTSCore implementation contract.
+     * @return Address of implementation contract.
+     */
+    getBTSCoreLogicContractAddress: () => {
       const isMainnet: boolean | null = this.params.useMainnet == null 
         ? true 
         : this.params.useMainnet;
       return this.#getBTSCoreLogicContractAddress('bsc', isMainnet)
     },
+
+    /**
+     * Get web3 object for BTSCore proxy contract.
+     * @return web3 object of contract.
+     */
     getBTSCoreProxyContractObject: () => {
       return this.getBTSCoreProxyContractObject('bsc', this.bscWeb3)
     },
+
+    /**
+     * Get ABI of BTSCore logic contract.
+     * @return ABI of BTSCore implementation contract.
+     */
     getBTSCoreLogicContractAbi: () => {
       const isMainnet: boolean | null = this.params.useMainnet == null 
         ? true 
         : this.params.useMainnet;
       return this.#getAbiOf("BTSCore", "bsc", isMainnet, true)
     },
+
+    /**
+     * Get object of BTSCore implementation contract.
+     * @return object of BTSCore implementation contract.
+     */
     getBTSCoreLogicContractObject: () => {
       return this.getBTSCoreLogicContractObject("bsc", this.bscWeb3)
     },
 
-    // BTS specific methods
+    /**
+     * Get the token balance of a wallet.
+     * @param _owner - wallet address.
+     * @param _coinName - token name.
+     * @return token balance of a wallet.
+     */
     balanceOf: async (
       _owner: string, 
       _coinName: string
@@ -138,7 +173,11 @@ class IconBridgeSDK {
       }
 
     },
-
+    
+    /**
+     * Get name of tokens.
+     * @return name of tokens.
+     */
     coinNames: async (): Promise<string | null> => {
       try {
         const isMainnet: boolean | null = this.params.useMainnet == null 
@@ -173,11 +212,23 @@ class IconBridgeSDK {
       }
     },
 
+    /**
+     * Add another Owner. Caller must be an Owner of BTP network.
+     * @param _owner - Address of new owner
+     * @return 
+     */
     addOwner: async (_owner: string): Promise<void> => {
     // index 3
     console.log(_owner)
     },
-    // balanceOf()
+
+    /**
+     * Returns a list of balance of an account. The order of request's
+     * coinNames must be the same with the order of return balance.
+     * @param _owner - Address.
+     * @param _coinNames - array of coin names.
+     * @return 
+     */
     balanceOfBatch: async (
       _owner: string,
       _coinNames: string[]
@@ -215,6 +266,12 @@ class IconBridgeSDK {
         )
       }
     },
+
+    /**
+     * Returns an id number of coin whose name is the same with given _coinName
+     * @param _coinName - name of coin.
+     * @return 
+     */
     coinId: async (_coinName: string): Promise<void> => {
       try {
         const isMainnet: boolean | null = this.params.useMainnet == null 
@@ -248,7 +305,12 @@ class IconBridgeSDK {
         )
       }
     },
-    // coinNames
+
+    /**
+     * Get fee numerator and fixed fee.
+     * @param _coinName - name of coin.
+     * @return 
+     */
     feeRatio: async (_coinName: string): Promise<void> => {
       try {
         const isMainnet: boolean | null = this.params.useMainnet == null 
@@ -282,6 +344,10 @@ class IconBridgeSDK {
         )
       }
     },
+
+    /**
+     * TODO
+     */
     getAccumulatedFees: async (): Promise<void> => {
       try {
         const isMainnet: boolean | null = this.params.useMainnet == null 
@@ -314,12 +380,24 @@ class IconBridgeSDK {
         )
       }
     },
+
+    /**
+     * TODO
+     */
     getNativeCoinName: async (): Promise<void> => {
       // index 10
     },
+
+    /**
+     * TODO
+     */
     getOwners: async (): Promise<void> => {
       // index 11
     },
+
+    /**
+     * TODO
+     */
     handleResponseService: async (
       _requester: string,
       _coinName: string,
@@ -330,6 +408,10 @@ class IconBridgeSDK {
       // index 12
       console.log([_requester,_coinName, _value, _fee, _rspCode])
     },
+
+    /**
+     * TODO
+     */
     initialize: async (
       _nativeCoinName: string,
       _feeNumerator: number,
@@ -338,14 +420,26 @@ class IconBridgeSDK {
       // index 13
       console.log([_nativeCoinName, _feeNumerator, _fixedFee])
     },
+
+    /**
+     * TODO
+     */
     isOwner: async (_owner: string): Promise<void> => {
       // index 14
       console.log(_owner)
     },
+
+    /**
+     * TODO
+     */
     isValidCoin: async (_coinName: string): Promise<void> => {
       // index 15
       console.log(_coinName)
     },
+
+    /**
+     * TODO
+     */
     mint: async (
     _to: string,
     _coinName: string,
@@ -354,14 +448,30 @@ class IconBridgeSDK {
       // index 16
       console.log(_to, _coinName, _value)
     },
+
+    /**
+     * TODO
+     */
     reclaim: async (_coinName: string, _value: number): Promise<void> => {
       // index 17
       console.log(_coinName, _value)
     },
-    refund: async (_to: string, _coinName: string, _value: number): Promise<void> => {
+
+    /**
+     * TODO
+     */
+    refund: async (
+      _to: string,
+      _coinName: string,
+      _value: number
+    ): Promise<void> => {
       // index 18
       console.log([_to, _coinName,_value])
     },
+
+    /**
+     * TODO
+     */
     register: async (
     _name: string,
     _symbol: string,
@@ -373,10 +483,18 @@ class IconBridgeSDK {
       // index 19
       console.log([_name, _symbol, _decimals, _feeNumerator, _fixedFee, _addr])
     },
+
+    /**
+     * TODO
+     */
     removeOwner: async (_owner: string): Promise<void> => {
       // index 20
       console.log(_owner)
     },
+
+    /**
+     * TODO
+     */
     setFeeRatio: async (
       _name: string,
       _feeNumerator: number,
@@ -385,6 +503,10 @@ class IconBridgeSDK {
       // index 21
       console.log([_name, _feeNumerator, _fixedFee])
     },
+
+    /**
+     * TODO
+     */
     transfer: async (
     _coinName: string,
     _value: number,
@@ -393,6 +515,10 @@ class IconBridgeSDK {
       // index 22
       console.log([_coinName, _value, _to])
     },
+
+    /**
+     * TODO
+     */
     transferBatch: async (
     _coinNames: string[],
     _values: string[],
@@ -401,20 +527,35 @@ class IconBridgeSDK {
       // index 23
       console.log([_coinNames, _values, _to])
     },
+
+    /**
+     * TODO
+     */
     transferFees: async (_fa: string): Promise<void> => {
       // index 24
       console.log(_fa)
     },
+
+    /**
+     * TODO
+     */
     transferNativeCoin: async (_to: string): Promise<void> => {
       // index 25
       console.log(_to)
     },
+
+    /**
+     * TODO
+     */
     updateBTSPeriphery: async (_btsPeriphery: string): Promise<void> => {
       // index 26
       console.log(_btsPeriphery)
     },
   };
 
+  /**
+   * TODO
+   */
   BTSReadonlyQuery = async (
     methodName: string,
     chain: string,
@@ -460,9 +601,11 @@ class IconBridgeSDK {
         `Error running ${methodName}(). Params:\n ** NO PARAMS**\n`
       )
     }
-
   }
 
+  /**
+   * TODO
+   */
   #getAbiOf = (
     contractLabel: string,
     chain: string, 
@@ -477,6 +620,9 @@ class IconBridgeSDK {
     )
   };
 
+  /**
+   * TODO
+   */
   #getBTSAbi = (
     chain: string,
     isMainnet: boolean,
@@ -485,6 +631,9 @@ class IconBridgeSDK {
     return this.#getAbiOf("BTSCore", chain, isMainnet, getLogicContract)
   };
 
+  /**
+   * TODO
+   */
   getContractObjectByLabel = (
     label: string, 
     chain: string, 
@@ -505,11 +654,15 @@ class IconBridgeSDK {
       const abi = this.#getAbiOf(label, chain, isMainnet, getLogicContract)
       return this.#getContractObject(abi, contractAddress, web3Wrapper)
     } catch (err) {
-      throw new Error(`Error running #getContractObjectByLabel(). Params:\nlabel: ${label}\nchain: ${chain}\nweb3Wrapper: ${web3Wrapper}\ngetLogicContract: ${getLogicContract}.\n${err}`)
-
+      throw new Error(
+        `Error running #getContractObjectByLabel(). Params:\nlabel: ${label}\nchain: ${chain}\nweb3Wrapper: ${web3Wrapper}\ngetLogicContract: ${getLogicContract}.\n${err}`
+      )
     }
   };
 
+  /**
+   * TODO
+   */
   #getContractAddressLocally = (
     label: string,
     chain: string, 
@@ -524,6 +677,9 @@ class IconBridgeSDK {
     )
   };
 
+  /**
+   * TODO
+   */
   #getBTSCoreLogicContractAddress = (
     chain: string,
     isMainnet: boolean,
@@ -535,6 +691,10 @@ class IconBridgeSDK {
       true
     )
   }
+
+  /**
+   * TODO
+   */
   getBTSCoreProxyContractAddress = (
     chain: string,
     isMainnet: boolean,
@@ -546,6 +706,9 @@ class IconBridgeSDK {
     )
   }
 
+  /**
+   * TODO
+   */
   #getLogicContractAddressOnChain = async (
     address: string,
     memSlot: string,
@@ -558,25 +721,40 @@ class IconBridgeSDK {
       result = this.sdkUtils.removeZerosFromAddress(memData)
       return result;
     } catch (err) {
-      throw new Error(`Error running #getLogicContractAddressOnChain(). Params:\naddress: ${address}\nmemSlot: ${memSlot}\n.\n${err}`)
+      throw new Error(
+        `Error running #getLogicContractAddressOnChain(). Params:\naddress: ${address}\nmemSlot: ${memSlot}\n.\n${err}`
+      )
     }
   };
 
-  #getContractObject = (abi: any, contractAddress: string, web3Wrapper: any) => {
+  /**
+   * TODO
+   */
+  #getContractObject = (
+    abi: any,
+    contractAddress: string,
+    web3Wrapper: any
+  ) => {
     try {
     const contract = new web3Wrapper.eth.Contract(abi, contractAddress);
     return contract;
     } catch (err) {
-
-      throw new Error(`Error running #getContractObject(). Params:\nabi: ${abi}\ncontractAddress: ${contractAddress}\nweb3Wrapper: ${web3Wrapper}.\n${err}`)
+      throw new Error(
+        `Error running #getContractObject(). Params:\nabi: ${abi}\ncontractAddress: ${contractAddress}\nweb3Wrapper: ${web3Wrapper}.\n${err}`
+      )
     }
   };
 
+  /**
+   * TODO
+   */
   getBTSCoreProxyContractObject = (chain: string, web3Wrapper: any) => {
     return this.getContractObjectByLabel("BTSCore", chain, web3Wrapper, false)
   }
 
-
+  /**
+   * TODO
+   */
   getBTSCoreLogicContractObject = (chain: string, web3Wrapper: any) => {
     return this.getContractObjectByLabel("BTSCore", chain, web3Wrapper, true)
 ;
