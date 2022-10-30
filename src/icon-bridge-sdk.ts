@@ -346,7 +346,9 @@ class IconBridgeSDK {
     },
 
     /**
-     * TODO
+     * Returns a list of accumulated fees. Only return the asset that has
+     * asset's value greater than 0.
+     * @return Array of assets.
      */
     getAccumulatedFees: async (): Promise<void> => {
       try {
@@ -382,21 +384,29 @@ class IconBridgeSDK {
     },
 
     /**
-     * TODO
+     * Returns name of native coin.
+     * @return string name of native coin.
      */
     getNativeCoinName: async (): Promise<void> => {
       // index 10
     },
 
     /**
-     * TODO
+     * Returns list of current owners.
+     * @return Array of address of current owners.
      */
     getOwners: async (): Promise<void> => {
       // index 11
     },
 
     /**
-     * TODO
+     * Handle a response of a requested service. Caller must be a 
+     * BTSPeriphery contract.
+     * @param _requester - an address of originator of a requested service.
+     * @param _coinName - name of requested coin.
+     * @param _value - amount to receive on a destination chain.
+     * @param _fee - amount of charged fee.
+     * @param _rspCode -
      */
     handleResponseService: async (
       _requester: string,
@@ -410,7 +420,8 @@ class IconBridgeSDK {
     },
 
     /**
-     * TODO
+     * TODO: no info provided on this function in the BSC smart contract code.
+     * https://testnet.bscscan.com/address/0xe020d4ad483c7ec90a24d9db502e66564ef9c236#code
      */
     initialize: async (
       _nativeCoinName: string,
@@ -422,7 +433,8 @@ class IconBridgeSDK {
     },
 
     /**
-     * TODO
+     * Checks is a especified address has owner role.
+     * @param _owner- address to check.
      */
     isOwner: async (_owner: string): Promise<void> => {
       // index 14
@@ -430,7 +442,8 @@ class IconBridgeSDK {
     },
 
     /**
-     * TODO
+     * Checks validity of a coin name.
+     * @param _coinName - coin name to check.
      */
     isValidCoin: async (_coinName: string): Promise<void> => {
       // index 15
@@ -438,7 +451,10 @@ class IconBridgeSDK {
     },
 
     /**
-     * TODO
+     * Mint the wrapped coin. Caller must be a BTSPeriphery contract.
+     * @param _to - account that receives the minted coin.
+     * @param _coinName - coin name.
+     * @param _value - minted amount.
      */
     mint: async (
     _to: string,
@@ -450,7 +466,10 @@ class IconBridgeSDK {
     },
 
     /**
-     * TODO
+     * Reclaim the token's refundable balance by an owner. Caller must be
+     * owner of coin.
+     * @param _coinName - coin name.
+     * @param _value - amount of re-claiming tokens.
      */
     reclaim: async (_coinName: string, _value: number): Promise<void> => {
       // index 17
@@ -458,7 +477,12 @@ class IconBridgeSDK {
     },
 
     /**
-     * TODO
+     * For information on this specific method check the solidity smart
+     * contract code on the following link:
+     * https://testnet.bscscan.com/address/0xe020d4ad483c7ec90a24d9db502e66564ef9c236#code#F1#L653
+     * @param _to -
+     * @param _coinName -
+     * @param _value -
      */
     refund: async (
       _to: string,
@@ -470,7 +494,14 @@ class IconBridgeSDK {
     },
 
     /**
-     * TODO
+     * Registers a wrapped coin and id number of a supporting coin. Caller
+     * must be an owner of this contract.
+     * @param _name - must be different with the native coin name.
+     * @param _symbol - symbol name for a wrapped coin.
+     * @param _decimals - decimal number.
+     * @param _feeNumerator -
+     * @param _fixedFee -
+     * @param _addr -
      */
     register: async (
     _name: string,
@@ -485,7 +516,8 @@ class IconBridgeSDK {
     },
 
     /**
-     * TODO
+     * Removing an existing owner. Caller must be an owner of BTP network.
+     * @param _owner - address of owner to be removed.
      */
     removeOwner: async (_owner: string): Promise<void> => {
       // index 20
@@ -493,7 +525,10 @@ class IconBridgeSDK {
     },
 
     /**
-     * TODO
+     * Set fee ratio. Caller must be an owner of this contract.
+     * @param _name -
+     * @param _feeNumerator -
+     * @param _fixedFee -
      */
     setFeeRatio: async (
       _name: string,
@@ -505,7 +540,11 @@ class IconBridgeSDK {
     },
 
     /**
-     * TODO
+     * Allow users to deposit an amount of wrapped native coin into the
+     * BTSCore contract.
+     * @param _coinName - given name of wrapped coin.
+     * @param _value - amount to transfer.
+     * @param _to - target BTP address.
      */
     transfer: async (
     _coinName: string,
@@ -517,7 +556,10 @@ class IconBridgeSDK {
     },
 
     /**
-     * TODO
+     * Allow users to transfer multiple coins/wrapped coins to another chain.
+     * @param _coinNames - list of coins.
+     * @param _values - list of values in same order of coins.
+     * @param _to - target BTP address.
      */
     transferBatch: async (
     _coinNames: string[],
@@ -529,7 +571,9 @@ class IconBridgeSDK {
     },
 
     /**
-     * TODO
+     * Handle request of fee gathering. Caller must be an
+     * BTSPeriphery contract.
+     * @param _fa - 
      */
     transferFees: async (_fa: string): Promise<void> => {
       // index 24
@@ -537,7 +581,8 @@ class IconBridgeSDK {
     },
 
     /**
-     * TODO
+     * Allows user to deposit native coin into a BTSCore contract.
+     * @param _to - address that receives transfer.
      */
     transferNativeCoin: async (_to: string): Promise<void> => {
       // index 25
@@ -545,7 +590,8 @@ class IconBridgeSDK {
     },
 
     /**
-     * TODO
+     * Updates BTS periphery address. Caller must be owner of contract.
+     * @param _btsPeriphery - btsPeriphery contract address.
      */
     updateBTSPeriphery: async (_btsPeriphery: string): Promise<void> => {
       // index 26
