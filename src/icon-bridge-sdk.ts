@@ -1,11 +1,21 @@
+// icon-bridge-sdk.ts
+//
 import utils from "./utils/utils";
 import Web3 from "web3";
 
 // types
+type Provider = {
+  hostname: string;
+  nid: null | number
+}
 
-// variables
+type InputParams = {
+  useMainnet: null | boolean,
+  iconProvider: Provider,
+  bscProvider: Provider
+}
 
-// SDK
+// main code
 
 /**
  * Class that provides the API for interacting with the ICON Bridge
@@ -18,8 +28,11 @@ class IconBridgeSDK {
   /**
    * Configuration object for the initialization of the library
    * @param inputParams - initialization object.
+   * @param inputParams.useMainnet - Use mainnet or testnet.
+   * @param inputParams.<PROVIDER>.hostname - chain node provider url.
+   * @param inputParams.<PROVIDER>.nid - chain node provider nid.
    */
-  constructor(inputParams = utils.defaultSDKParams) {
+  constructor(inputParams: InputParams = utils.defaultSDKParams) {
   this.params = this.sdkUtils.getSDKParams(inputParams)
   this.bscWeb3 = new Web3(this.params.bscProvider.hostname);
   }
@@ -171,7 +184,6 @@ class IconBridgeSDK {
           `Error running balanceOf(). Params:\n_owner: ${_owner}\n_coinName: ${_coinName}\n`
         )
       }
-
     },
     
     /**
@@ -600,7 +612,11 @@ class IconBridgeSDK {
   };
 
   /**
-   * TODO
+   * Make readonly query to the BTS smart contract.
+   * @param methodName - name of the smart contract method to call.
+   * @param chain - chain to use.
+   * @param web3Wrapper - object containing the web3 library to use.
+   * @param rest - Array of params to pass to method call.
    */
   BTSReadonlyQuery = async (
     methodName: string,
@@ -650,7 +666,11 @@ class IconBridgeSDK {
   }
 
   /**
-   * TODO
+   * Get ABI of a contract.
+   * @param contractLabel - string label of the contract.
+   * @param chain - chain to query.
+   * @param isMainnet - use mainnet or testnet.
+   * @param getLogicContract - get logic or proxy contract
    */
   #getAbiOf = (
     contractLabel: string,
@@ -667,7 +687,10 @@ class IconBridgeSDK {
   };
 
   /**
-   * TODO
+   * Get ABI of the BTS contract
+   * @param chain - chain to query.
+   * @param isMainnet - use mainnet or testnet.
+   * @param getLogicContract - get logic or proxy contract
    */
   #getBTSAbi = (
     chain: string,
@@ -678,7 +701,11 @@ class IconBridgeSDK {
   };
 
   /**
-   * TODO
+   * Get web3 object of a contract given a contract label.
+   * @param label -  string label of the contract.
+   * @param chain - chain to query.
+   * @param web3Wrapper - object containing the web3 library to use.
+   * @param getLogicContract - get logic or proxy contract
    */
   getContractObjectByLabel = (
     label: string, 
@@ -707,7 +734,11 @@ class IconBridgeSDK {
   };
 
   /**
-   * TODO
+   * Get contract address from local data.
+   * @param label -  string label of the contract.
+   * @param chain - chain to query.
+   * @param isMainnet - use mainnet or testnet.
+   * @param getLogicContract - get logic or proxy contract
    */
   #getContractAddressLocally = (
     label: string,
@@ -724,7 +755,9 @@ class IconBridgeSDK {
   };
 
   /**
-   * TODO
+   * Get contract address of the BTSCore implementation contract.
+   * @param chain - chain to query.
+   * @param isMainnet - use mainnet or testnet.
    */
   #getBTSCoreLogicContractAddress = (
     chain: string,
@@ -739,7 +772,9 @@ class IconBridgeSDK {
   }
 
   /**
-   * TODO
+   * Get contract address of the BTSCore proxy contract.
+   * @param chain - chain to query.
+   * @param isMainnet - use mainnet or testnet.
    */
   getBTSCoreProxyContractAddress = (
     chain: string,
@@ -753,7 +788,10 @@ class IconBridgeSDK {
   }
 
   /**
-   * TODO
+   * Get contract address of the BTSCore implementation contract on chain.
+   * @param address - address of the proxy contract.
+   * @param memSlot - memory slot where the contract is saved.
+   * @param web3Wrapper - object containing the web3 library to use.
    */
   #getLogicContractAddressOnChain = async (
     address: string,
@@ -774,7 +812,10 @@ class IconBridgeSDK {
   };
 
   /**
-   * TODO
+   * Get contract web3 object.
+   * @param abi - abi of the contract.
+   * @param contractAddress - contract address.
+   * @param web3Wrapper - object containing the web3 library to use.
    */
   #getContractObject = (
     abi: any,
@@ -792,14 +833,18 @@ class IconBridgeSDK {
   };
 
   /**
-   * TODO
+   * Get web3 object of the BTSCore proxy contract.
+   * @param chain - chain to query.
+   * @param web3Wrapper - object containing the web3 library to use.
    */
   getBTSCoreProxyContractObject = (chain: string, web3Wrapper: any) => {
     return this.getContractObjectByLabel("BTSCore", chain, web3Wrapper, false)
   }
 
   /**
-   * TODO
+   * Get web3 object of the BTSCore implementation contract.
+   * @param chain - chain to query.
+   * @param web3Wrapper - object containing the web3 library to use.
    */
   getBTSCoreLogicContractObject = (chain: string, web3Wrapper: any) => {
     return this.getContractObjectByLabel("BTSCore", chain, web3Wrapper, true)

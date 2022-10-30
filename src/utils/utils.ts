@@ -4,14 +4,20 @@ import { contracts, labels, GenericContractAddress } from "./contracts";
 import { networks, chains } from "./networks";
 import lib from "./lib";
 
+// types
+type Provider = {
+  hostname: string;
+  nid: null | number;
+};
+type InputParams = {
+  useMainnet: null | boolean;
+  iconProvider: Provider;
+  bscProvider: Provider;
+};
 // variables
 const abiDataPath = lib.abiDataPath;
 
-const defaultSDKParams: {
-  useMainnet: null | boolean;
-  iconProvider?: any;
-  bscProvider?: any;
-} = {
+const defaultSDKParams: InputParams = {
   useMainnet: null,
   iconProvider: {
     hostname: networks.mainnet.icon.provider.hostname,
