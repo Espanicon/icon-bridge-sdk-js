@@ -12,11 +12,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 const icon_bridge_sdk_1 = __importDefault(require("../../icon-bridge-sdk"));
+const sdkMainnet = new icon_bridge_sdk_1.default();
 const sdkTestnet = new icon_bridge_sdk_1.default({ useMainnet: false });
 const mainBreak = "==================================";
 const secondaryBreak = "######";
 function iconBridgeSDKTests() {
     return __awaiter(this, void 0, void 0, function* () {
+        console.log(mainBreak);
+        console.log("Running test on sdk.bsc.getLogicContractAddressOnChain()");
+        console.log(secondaryBreak);
+        const a = sdkMainnet.sdkUtils.contracts.bsc.mainnet.BTSCore.address;
+        const b = yield sdkMainnet.bsc.getLogicContractAddressOnChain(a);
+        console.log("testing mainnet");
+        console.log("proxy contract");
+        console.log(a);
+        console.log("logic contract");
+        console.log(b);
+        console.log(secondaryBreak);
         console.log(mainBreak);
         console.log("Running test on sdk.bsc.coinNames()");
         console.log(secondaryBreak);

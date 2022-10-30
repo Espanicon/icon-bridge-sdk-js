@@ -11,8 +11,13 @@ type Provider = {
 
 type InputParams = {
   useMainnet: null | boolean,
-  iconProvider: Provider,
-  bscProvider: Provider
+  iconProvider?: Provider,
+  bscProvider?: Provider
+}
+
+// variables
+const defaultParams: InputParams = {
+  useMainnet: true
 }
 
 // main code
@@ -32,7 +37,7 @@ class IconBridgeSDK {
    * @param inputParams.<PROVIDER>.hostname - chain node provider url.
    * @param inputParams.<PROVIDER>.nid - chain node provider nid.
    */
-  constructor(inputParams: InputParams = utils.defaultSDKParams) {
+  constructor(inputParams: InputParams = defaultParams ) {
   this.params = this.sdkUtils.getSDKParams(inputParams)
   this.bscWeb3 = new Web3(this.params.bscProvider.hostname);
   }

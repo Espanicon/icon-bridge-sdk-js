@@ -19,14 +19,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 var _IconBridgeSDK_getAbiOf, _IconBridgeSDK_getBTSAbi, _IconBridgeSDK_getContractAddressLocally, _IconBridgeSDK_getBTSCoreLogicContractAddress, _IconBridgeSDK_getLogicContractAddressOnChain, _IconBridgeSDK_getContractObject;
 const utils_1 = __importDefault(require("./utils/utils"));
 const web3_1 = __importDefault(require("web3"));
+const defaultParams = {
+    useMainnet: true
+};
 class IconBridgeSDK {
-    constructor(inputParams = utils_1.default.defaultSDKParams) {
+    constructor(inputParams = defaultParams) {
         this.sdkUtils = utils_1.default;
         this.params = utils_1.default.defaultSDKParams;
         this.bsc = {
-            getLogicContractAddressOnChain: (address, memSlot = this.sdkUtils.labels.memSlot, web3Wrapper = this.bscWeb3) => __awaiter(this, void 0, void 0, function* () {
+            getLogicContractAddressOnChain: (address, memSlot = this.sdkUtils.labels.memSlot) => __awaiter(this, void 0, void 0, function* () {
                 try {
-                    return yield __classPrivateFieldGet(this, _IconBridgeSDK_getLogicContractAddressOnChain, "f").call(this, address, memSlot, web3Wrapper);
+                    return yield __classPrivateFieldGet(this, _IconBridgeSDK_getLogicContractAddressOnChain, "f").call(this, address, memSlot, this.bscWeb3);
                 }
                 catch (err) {
                     throw new Error(`Error running 'getLogicContractAddressOnChain' method.\n${err}`);
@@ -47,7 +50,7 @@ class IconBridgeSDK {
                     : this.params.useMainnet;
                 return __classPrivateFieldGet(this, _IconBridgeSDK_getBTSAbi, "f").call(this, "bsc", isMainnet);
             },
-            getBTSCoreLogicContract: () => {
+            getBTSCoreLogicContractAddress: () => {
                 const isMainnet = this.params.useMainnet == null
                     ? true
                     : this.params.useMainnet;
@@ -95,69 +98,118 @@ class IconBridgeSDK {
                     throw new Error(`Error running coinNames(). Params:\n ** NO PARAMS**\n`);
                 }
             }),
-            addOwner: (_owner) => {
+            addOwner: (_owner) => __awaiter(this, void 0, void 0, function* () {
                 console.log(_owner);
-            },
-            balanceOfBatch: (_owner, _coinNames) => {
-                console.log([_owner, _coinNames]);
-            },
-            coinId: (_coinName) => {
-                console.log(_coinName);
-            },
-            feeRatio: (_coinName) => {
-                console.log(_coinName);
-            },
-            getAccumulatedFees: () => {
-            },
-            getNativeCoinName: () => {
-            },
-            getOwners: () => {
-            },
-            handleResponseService: (_requester, _coinName, _value, _fee, _rspCode) => {
+            }),
+            balanceOfBatch: (_owner, _coinNames) => __awaiter(this, void 0, void 0, function* () {
+                try {
+                    const isMainnet = this.params.useMainnet == null
+                        ? true
+                        : this.params.useMainnet;
+                    const response = yield this.BTSReadonlyQuery('balanceOfBatch', 'bsc', this.bscWeb3, _owner, _coinNames);
+                    const BTSLogicContractABI = __classPrivateFieldGet(this, _IconBridgeSDK_getAbiOf, "f").call(this, 'BTSCore', 'bsc', isMainnet, true);
+                    const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(BTSLogicContractABI[5].outputs, response);
+                    return parsedResponse;
+                }
+                catch (err) {
+                    console.log(err);
+                    throw new Error(`Error running balanceOfBatch(). Params:\n_owner: ${_owner}\n_coinNames: ${_coinNames}\n`);
+                }
+            }),
+            coinId: (_coinName) => __awaiter(this, void 0, void 0, function* () {
+                try {
+                    const isMainnet = this.params.useMainnet == null
+                        ? true
+                        : this.params.useMainnet;
+                    const response = yield this.BTSReadonlyQuery('coinId', 'bsc', this.bscWeb3, _coinName);
+                    const BTSLogicContractABI = __classPrivateFieldGet(this, _IconBridgeSDK_getAbiOf, "f").call(this, 'BTSCore', 'bsc', isMainnet, true);
+                    const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(BTSLogicContractABI[6].outputs, response);
+                    return parsedResponse;
+                }
+                catch (err) {
+                    console.log(err);
+                    throw new Error(`Error running coinId(). Params:\n_coinName: ${_coinName}\n`);
+                }
+            }),
+            feeRatio: (_coinName) => __awaiter(this, void 0, void 0, function* () {
+                try {
+                    const isMainnet = this.params.useMainnet == null
+                        ? true
+                        : this.params.useMainnet;
+                    const response = yield this.BTSReadonlyQuery('feeRatio', 'bsc', this.bscWeb3, _coinName);
+                    const BTSLogicContractABI = __classPrivateFieldGet(this, _IconBridgeSDK_getAbiOf, "f").call(this, 'BTSCore', 'bsc', isMainnet, true);
+                    const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(BTSLogicContractABI[8].outputs, response);
+                    return parsedResponse;
+                }
+                catch (err) {
+                    console.log(err);
+                    throw new Error(`Error running feeRatio(). Params:\n_coinName: ${_coinName}\n`);
+                }
+            }),
+            getAccumulatedFees: () => __awaiter(this, void 0, void 0, function* () {
+                try {
+                    const isMainnet = this.params.useMainnet == null
+                        ? true
+                        : this.params.useMainnet;
+                    const response = yield this.BTSReadonlyQuery('getAccumulatedFees', 'bsc', this.bscWeb3);
+                    const BTSLogicContractABI = __classPrivateFieldGet(this, _IconBridgeSDK_getAbiOf, "f").call(this, 'BTSCore', 'bsc', isMainnet, true);
+                    const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(BTSLogicContractABI[9].outputs, response);
+                    return parsedResponse;
+                }
+                catch (err) {
+                    console.log(err);
+                    throw new Error(`Error running getAccumulatedFees(). Params:\n ** NO PARAMS **\n`);
+                }
+            }),
+            getNativeCoinName: () => __awaiter(this, void 0, void 0, function* () {
+            }),
+            getOwners: () => __awaiter(this, void 0, void 0, function* () {
+            }),
+            handleResponseService: (_requester, _coinName, _value, _fee, _rspCode) => __awaiter(this, void 0, void 0, function* () {
                 console.log([_requester, _coinName, _value, _fee, _rspCode]);
-            },
-            initialize: (_nativeCoinName, _feeNumerator, _fixedFee) => {
+            }),
+            initialize: (_nativeCoinName, _feeNumerator, _fixedFee) => __awaiter(this, void 0, void 0, function* () {
                 console.log([_nativeCoinName, _feeNumerator, _fixedFee]);
-            },
-            isOwner: (_owner) => {
+            }),
+            isOwner: (_owner) => __awaiter(this, void 0, void 0, function* () {
                 console.log(_owner);
-            },
-            isValidCoin: (_coinName) => {
+            }),
+            isValidCoin: (_coinName) => __awaiter(this, void 0, void 0, function* () {
                 console.log(_coinName);
-            },
-            mint: (_to, _coinName, _value) => {
+            }),
+            mint: (_to, _coinName, _value) => __awaiter(this, void 0, void 0, function* () {
                 console.log(_to, _coinName, _value);
-            },
-            reclaim: (_coinName, _value) => {
+            }),
+            reclaim: (_coinName, _value) => __awaiter(this, void 0, void 0, function* () {
                 console.log(_coinName, _value);
-            },
-            refund: (_to, _coinName, _value) => {
+            }),
+            refund: (_to, _coinName, _value) => __awaiter(this, void 0, void 0, function* () {
                 console.log([_to, _coinName, _value]);
-            },
-            register: (_name, _symbol, _decimals, _feeNumerator, _fixedFee, _addr) => {
+            }),
+            register: (_name, _symbol, _decimals, _feeNumerator, _fixedFee, _addr) => __awaiter(this, void 0, void 0, function* () {
                 console.log([_name, _symbol, _decimals, _feeNumerator, _fixedFee, _addr]);
-            },
-            removeOwner: (_owner) => {
+            }),
+            removeOwner: (_owner) => __awaiter(this, void 0, void 0, function* () {
                 console.log(_owner);
-            },
-            setFeeRatio: (_name, _feeNumerator, _fixedFee) => {
+            }),
+            setFeeRatio: (_name, _feeNumerator, _fixedFee) => __awaiter(this, void 0, void 0, function* () {
                 console.log([_name, _feeNumerator, _fixedFee]);
-            },
-            transfer: (_coinName, _value, _to) => {
+            }),
+            transfer: (_coinName, _value, _to) => __awaiter(this, void 0, void 0, function* () {
                 console.log([_coinName, _value, _to]);
-            },
-            transferBatch: (_coinNames, _values, _to) => {
+            }),
+            transferBatch: (_coinNames, _values, _to) => __awaiter(this, void 0, void 0, function* () {
                 console.log([_coinNames, _values, _to]);
-            },
-            transferFees: (_fa) => {
+            }),
+            transferFees: (_fa) => __awaiter(this, void 0, void 0, function* () {
                 console.log(_fa);
-            },
-            transferNativeCoin: (_to) => {
+            }),
+            transferNativeCoin: (_to) => __awaiter(this, void 0, void 0, function* () {
                 console.log(_to);
-            },
-            updateBTSPeriphery: (_btsPeriphery) => {
+            }),
+            updateBTSPeriphery: (_btsPeriphery) => __awaiter(this, void 0, void 0, function* () {
                 console.log(_btsPeriphery);
-            },
+            }),
         };
         this.BTSReadonlyQuery = (methodName, chain, web3Wrapper, ...rest) => __awaiter(this, void 0, void 0, function* () {
             const isMainnet = this.params.useMainnet == null

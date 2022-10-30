@@ -1,10 +1,27 @@
 const IconBridgeSDK = require("./icon-bridge-sdk");
 const EspaniconSDKNode = require("@espanicon/espanicon-sdk");
-import utils from "./utils/utils";
+// import utils from "./utils/utils";
 
+// types
+type Provider = {
+  hostname: string;
+  nid: null | number
+}
+
+type InputParams = {
+  useMainnet: null | boolean;
+  iconProvider?: Provider;
+  bscProvider?: Provider
+}
+// variables
+const defaultParams = {
+  useMainnet: true
+}
+
+// code logic
 class IconBridgeSDKNode extends IconBridgeSDK {
   iconWeb3: any;
-  constructor(inputParams = utils.defaultSDKParams) {
+  constructor(inputParams: InputParams = defaultParams ) {
     super(inputParams);
     this.iconWeb3 = new EspaniconSDKNode(
       this.params.iconProvider.hostname,

@@ -1,25 +1,25 @@
 import IconBridgeSDK from "../../icon-bridge-sdk";
 
-// const sdkMainnet = new IconBridgeSDK();
+const sdkMainnet = new IconBridgeSDK();
 const sdkTestnet = new IconBridgeSDK({ useMainnet: false });
 
 const mainBreak = "==================================";
 const secondaryBreak = "######";
 
 async function iconBridgeSDKTests() {
-  // // Test 1: fetch logic contract of a proxy contract (BTSCore) on the
-  // // BSC Mainnet
-  // console.log(mainBreak);
-  // console.log("Running test on sdk.bsc.getLogicContractAddressOnChain()");
-  // console.log(secondaryBreak);
-  // const a = sdkMainnet.sdkUtils.contracts.bsc.mainnet.BTSCore.address;
-  // const b = await sdkMainnet.bsc.getLogicContractAddressOnChain(a);
-  // console.log("testing mainnet");
-  // console.log("proxy contract");
-  // console.log(a);
-  // console.log("logic contract");
-  // console.log(b);
-  // console.log(secondaryBreak);
+  // Test 1: fetch logic contract of a proxy contract (BTSCore) on the
+  // BSC Mainnet
+  console.log(mainBreak);
+  console.log("Running test on sdk.bsc.getLogicContractAddressOnChain()");
+  console.log(secondaryBreak);
+  const a = sdkMainnet.sdkUtils.contracts.bsc.mainnet.BTSCore.address;
+  const b = await sdkMainnet.bsc.getLogicContractAddressOnChain(a);
+  console.log("testing mainnet");
+  console.log("proxy contract");
+  console.log(a);
+  console.log("logic contract");
+  console.log(b);
+  console.log(secondaryBreak);
 
   // // Test 2: fetch logic contract of a proxy contract (BTSCore) on the
   // // BSC Testnet

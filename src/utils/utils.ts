@@ -69,7 +69,10 @@ function removeZerosFromAddress(address: string): string {
   return "0x" + address.slice(address.length - 40, address.length);
 }
 
-function getSDKParams(inputParams: any, defaultParams = defaultSDKParams) {
+function getSDKParams(
+  inputParams: any,
+  defaultParams: InputParams = defaultSDKParams
+): InputParams {
   //
   const result = { ...defaultParams, ...inputParams };
 

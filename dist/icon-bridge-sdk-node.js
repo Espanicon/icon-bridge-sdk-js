@@ -13,15 +13,14 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 var _IconBridgeSDKNode_transferNativeCoin;
 const IconBridgeSDK = require("./icon-bridge-sdk");
 const EspaniconSDKNode = require("@espanicon/espanicon-sdk");
-const utils_1 = __importDefault(require("./utils/utils"));
+const defaultParams = {
+    useMainnet: true
+};
 class IconBridgeSDKNode extends IconBridgeSDK {
-    constructor(inputParams = utils_1.default.defaultSDKParams) {
+    constructor(inputParams = defaultParams) {
         super(inputParams);
         _IconBridgeSDKNode_transferNativeCoin.set(this, (amount, from, to, privateKey, toChain, fromChain, web3Wrapper) => __awaiter(this, void 0, void 0, function* () {
             try {
