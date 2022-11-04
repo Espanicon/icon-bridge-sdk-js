@@ -175,7 +175,6 @@ class IconBridgeSDKBSC {
                 console.log(_btsPeriphery);
             })
         };
-        this.icon = {};
         this.params = params;
         this.bscWeb3 = bscWeb3;
         this.sdkUtils = sdkUtils;

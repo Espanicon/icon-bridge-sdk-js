@@ -12,51 +12,48 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 const icon_bridge_sdk_1 = __importDefault(require("../../icon-bridge-sdk"));
-const sdkMainnet = new icon_bridge_sdk_1.default();
+const testUtils_1 = __importDefault(require("../testUtils"));
 const sdkTestnet = new icon_bridge_sdk_1.default({ useMainnet: false });
-const mainBreak = "==================================";
-const secondaryBreak = "######";
+const testSummary = {
+    bsc: {
+        [testUtils_1.default.methodsName.general[0]]: "done",
+        [testUtils_1.default.methodsName.general[1]]: "missed",
+        [testUtils_1.default.methodsName.general[2]]: "missed",
+        [testUtils_1.default.methodsName.general[3]]: "missed",
+        [testUtils_1.default.methodsName.general[4]]: "missed",
+        [testUtils_1.default.methodsName.general[5]]: "missed",
+        [testUtils_1.default.methodsName.general[6]]: "missed",
+        [testUtils_1.default.methodsName.general[7]]: "missed",
+        [testUtils_1.default.methodsName.general[8]]: "missed",
+        [testUtils_1.default.methodsName.general[9]]: "missed",
+        [testUtils_1.default.methodsName.general[10]]: "missed",
+        [testUtils_1.default.methodsName.general[11]]: "missed",
+        [testUtils_1.default.methodsName.general[12]]: "missed",
+        [testUtils_1.default.methodsName.general[13]]: "missed",
+        [testUtils_1.default.methodsName.general[14]]: "missed",
+        [testUtils_1.default.methodsName.general[15]]: "missed",
+        [testUtils_1.default.methodsName.general[16]]: "missed",
+        [testUtils_1.default.methodsName.general[17]]: "missed",
+        [testUtils_1.default.methodsName.general[18]]: "missed",
+        [testUtils_1.default.methodsName.general[19]]: "missed",
+        [testUtils_1.default.methodsName.general[20]]: "missed",
+        [testUtils_1.default.methodsName.general[21]]: "missed",
+        [testUtils_1.default.methodsName.general[22]]: "missed"
+    }
+};
 function iconBridgeSDKTests() {
     return __awaiter(this, void 0, void 0, function* () {
-        console.log(mainBreak);
-        console.log("Running test on sdk.bsc.methods.getLogicContractAddressOnChain()");
-        console.log(secondaryBreak);
-        const a = sdkMainnet.sdkUtils.contracts.bsc.mainnet.BTSCore.address;
-        const b = yield sdkMainnet.bsc.methods.getLogicContractAddressOnChain(a);
-        console.log("testing mainnet");
-        console.log("proxy contract");
-        console.log(a);
-        console.log("logic contract");
-        console.log(b);
-        console.log(secondaryBreak);
-        console.log(mainBreak);
-        console.log("Running test on sdk.bsc.methods.coinNames()");
-        console.log(secondaryBreak);
-        const b9 = yield sdkTestnet.bsc.methods.coinNames();
-        console.log("testing testnet");
-        console.log("BTSCore.coinNames()");
-        console.log(b9);
-        console.log(secondaryBreak);
-        console.log(mainBreak);
-        console.log("Running test on sdk.bsc.methods.balanceOf()");
-        console.log(secondaryBreak);
-        const b10 = yield sdkTestnet.bsc.methods.balanceOf("0x4DeD312eB774B9828665448C55Faa8AE15353E56", "btp-0x2.icon-ICX");
-        console.log("testing testnet");
-        console.log("BTSCore.balanceOf(_owner, _coinName)");
-        console.log(b10);
-        console.log(secondaryBreak);
-        const b11 = sdkTestnet.bsc.methods.getBTSAbi();
-        console.log("testing Testnet");
-        console.log("fetched abi:");
-        b11.forEach((each, index) => {
-            if (each.type === "function") {
-                console.log(`index: ${index}`);
-                console.log(`name: ${each.name}`);
-                console.log(`inputs: ${JSON.stringify(each.inputs)}`);
-                console.log("##########");
-            }
-        });
-        console.log(secondaryBreak);
+        console.log(testUtils_1.default.lineBreak.a);
+        console.log("Testing iconBridge methods for the BSC network");
+        console.log(testUtils_1.default.lineBreak.b);
+        console.log(`Test 1: iconBridgeSDK.bsc.methods.balanceOf()`);
+        const a1 = yield sdkTestnet.bsc.methods.balanceOf("0x4DeD312eB774B9828665448C55Faa8AE15353E56", "btp-0x2.icon-ICX");
+        console.log("Result:");
+        console.log(a1);
+        console.log(testUtils_1.default.lineBreak.b);
+        console.log("Test summary:");
+        console.log(testSummary);
+        console.log(testUtils_1.default.lineBreak.a);
     });
 }
 module.exports = iconBridgeSDKTests;
