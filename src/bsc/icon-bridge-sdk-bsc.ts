@@ -614,13 +614,6 @@ class IconBridgeSDKBSC {
       console.log(_btsPeriphery);
     }
   };
-
-  // ######################################################################
-  /**
-   * Internal class object with methods for interacting with ICON endpoint of
-   * the ICON Bridge.
-   */
-  icon = {};
 }
 
 export = IconBridgeSDKBSC;
