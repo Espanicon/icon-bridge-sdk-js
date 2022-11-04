@@ -64,10 +64,10 @@ class IconBridgeSDKNode extends IconBridgeSDK {
         : this.params.useMainnet;
 
       // get contract object with the methods
-      const contract = this.getBTSCoreLogicContractObject(fromChain, web3Wrapper);
+      const contract = this.lib.getBTSCoreLogicContractObject(fromChain, web3Wrapper);
       // get the correctly formatted BTP address (btp://<BTP_NID>/<ADDRESS>
       const btpAddress = this.sdkUtils.getBTPAddress(to, toChain, isMainnet);
-      const proxyAddress = this.getBTSCoreProxyContractAddress("bsc", isMainnet);
+      const proxyAddress = this.lib.getBTSCoreProxyContractAddress("bsc", isMainnet);
       // create the query and tx object
       const query = contract.methods.transferNativeCoin(btpAddress);
       const tx = {

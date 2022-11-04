@@ -27,9 +27,9 @@ class IconBridgeSDKNode extends IconBridgeSDK {
                 const isMainnet = this.params.useMainnet == null
                     ? true
                     : this.params.useMainnet;
-                const contract = this.getBTSCoreLogicContractObject(fromChain, web3Wrapper);
+                const contract = this.lib.getBTSCoreLogicContractObject(fromChain, web3Wrapper);
                 const btpAddress = this.sdkUtils.getBTPAddress(to, toChain, isMainnet);
-                const proxyAddress = this.getBTSCoreProxyContractAddress("bsc", isMainnet);
+                const proxyAddress = this.lib.getBTSCoreProxyContractAddress("bsc", isMainnet);
                 const query = contract.methods.transferNativeCoin(btpAddress);
                 const tx = {
                     from: from,

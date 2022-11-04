@@ -37,7 +37,7 @@ async function iconBridgeSDKNodeTests() {
   // console.log(lib.sdkUtils.getBTPAddress("hx334332e43a", "icon", false));
 
   console.log("transferNativeCoin test");
-  const a = await lib.bsc.transferNativeCoin(
+  const a = await lib.bsc.methods.transferNativeCoin(
     "1",
     wallets.bsc.a.pubK,
     wallets.icon.a.pubK,

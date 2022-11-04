@@ -31,7 +31,7 @@ const wallets = {
 function iconBridgeSDKNodeTests() {
     return __awaiter(this, void 0, void 0, function* () {
         console.log("transferNativeCoin test");
-        const a = yield lib.bsc.transferNativeCoin("1", wallets.bsc.a.pubK, wallets.icon.a.pubK, wallets.bsc.a.privK, "icon");
+        const a = yield lib.bsc.methods.transferNativeCoin("1", wallets.bsc.a.pubK, wallets.icon.a.pubK, wallets.bsc.a.privK, "icon");
         console.log(a);
     });
 }

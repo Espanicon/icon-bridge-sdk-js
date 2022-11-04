@@ -19,10 +19,10 @@ const secondaryBreak = "######";
 function iconBridgeSDKTests() {
     return __awaiter(this, void 0, void 0, function* () {
         console.log(mainBreak);
-        console.log("Running test on sdk.bsc.getLogicContractAddressOnChain()");
+        console.log("Running test on sdk.bsc.methods.getLogicContractAddressOnChain()");
         console.log(secondaryBreak);
         const a = sdkMainnet.sdkUtils.contracts.bsc.mainnet.BTSCore.address;
-        const b = yield sdkMainnet.bsc.getLogicContractAddressOnChain(a);
+        const b = yield sdkMainnet.bsc.methods.getLogicContractAddressOnChain(a);
         console.log("testing mainnet");
         console.log("proxy contract");
         console.log(a);
@@ -30,22 +30,22 @@ function iconBridgeSDKTests() {
         console.log(b);
         console.log(secondaryBreak);
         console.log(mainBreak);
-        console.log("Running test on sdk.bsc.coinNames()");
+        console.log("Running test on sdk.bsc.methods.coinNames()");
         console.log(secondaryBreak);
-        const b9 = yield sdkTestnet.bsc.coinNames();
+        const b9 = yield sdkTestnet.bsc.methods.coinNames();
         console.log("testing testnet");
         console.log("BTSCore.coinNames()");
         console.log(b9);
         console.log(secondaryBreak);
         console.log(mainBreak);
-        console.log("Running test on sdk.bsc.balanceOf()");
+        console.log("Running test on sdk.bsc.methods.balanceOf()");
         console.log(secondaryBreak);
-        const b10 = yield sdkTestnet.bsc.balanceOf("0x4DeD312eB774B9828665448C55Faa8AE15353E56", "btp-0x2.icon-ICX");
+        const b10 = yield sdkTestnet.bsc.methods.balanceOf("0x4DeD312eB774B9828665448C55Faa8AE15353E56", "btp-0x2.icon-ICX");
         console.log("testing testnet");
         console.log("BTSCore.balanceOf(_owner, _coinName)");
         console.log(b10);
         console.log(secondaryBreak);
-        const b11 = sdkTestnet.bsc.getBTSAbi();
+        const b11 = sdkTestnet.bsc.methods.getBTSAbi();
         console.log("testing Testnet");
         console.log("fetched abi:");
         b11.forEach((each, index) => {
