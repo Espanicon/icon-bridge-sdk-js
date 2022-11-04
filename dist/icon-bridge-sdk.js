@@ -26,6 +26,86 @@ class IconBridgeSDK {
     constructor(inputParams = defaultParams) {
         this.sdkUtils = utils_1.default;
         this.params = utils_1.default.defaultSDKParams;
+        this.BTSReadonlyQuery = (methodName, chain, web3Wrapper, ...rest) => __awaiter(this, void 0, void 0, function* () {
+            const isMainnet = this.params.useMainnet == null
+                ? true
+                : this.params.useMainnet;
+            try {
+                const BTSProxyContractAddress = this.getBTSCoreProxyContractAddress(chain, isMainnet);
+                const contractObject = this.getBTSCoreLogicContractObject(chain, web3Wrapper);
+                let encodedData = null;
+                const contractMethod = contractObject.methods[methodName];
+                if (rest.length === 0) {
+                    encodedData = contractMethod().encodeABI();
+                }
+                else {
+                    encodedData = contractMethod(...rest).encodeABI();
+                }
+                const contractMethodCallResponse = yield web3Wrapper.eth.call({
+                    to: BTSProxyContractAddress,
+                    data: encodedData
+                });
+                return contractMethodCallResponse;
+            }
+            catch (err) {
+                console.log(err);
+                throw new Error(`Error running ${methodName}(). Params:\n ** NO PARAMS**\n`);
+            }
+        });
+        _IconBridgeSDK_getAbiOf.set(this, (contractLabel, chain, isMainnet, getLogicContract = true) => {
+            return this.sdkUtils.getAbiOfLabelFromLocalData(contractLabel, chain, isMainnet, getLogicContract);
+        });
+        _IconBridgeSDK_getBTSAbi.set(this, (chain, isMainnet, getLogicContract = true) => {
+            return __classPrivateFieldGet(this, _IconBridgeSDK_getAbiOf, "f").call(this, "BTSCore", chain, isMainnet, getLogicContract);
+        });
+        this.getContractObjectByLabel = (label, chain, web3Wrapper, getLogicContract = false) => {
+            try {
+                const isMainnet = this.params.useMainnet == null
+                    ? true
+                    : this.params.useMainnet;
+                const contractAddress = __classPrivateFieldGet(this, _IconBridgeSDK_getContractAddressLocally, "f").call(this, label, chain, isMainnet, getLogicContract);
+                const abi = __classPrivateFieldGet(this, _IconBridgeSDK_getAbiOf, "f").call(this, label, chain, isMainnet, getLogicContract);
+                return __classPrivateFieldGet(this, _IconBridgeSDK_getContractObject, "f").call(this, abi, contractAddress, web3Wrapper);
+            }
+            catch (err) {
+                throw new Error(`Error running #getContractObjectByLabel(). Params:\nlabel: ${label}\nchain: ${chain}\nweb3Wrapper: ${web3Wrapper}\ngetLogicContract: ${getLogicContract}.\n${err}`);
+            }
+        };
+        _IconBridgeSDK_getContractAddressLocally.set(this, (label, chain, isMainnet, getLogicContract = false) => {
+            return this.sdkUtils.getContractOfLabelFromLocalData(label, chain, isMainnet, getLogicContract);
+        });
+        _IconBridgeSDK_getBTSCoreLogicContractAddress.set(this, (chain, isMainnet) => {
+            return __classPrivateFieldGet(this, _IconBridgeSDK_getContractAddressLocally, "f").call(this, "BTSCore", chain, isMainnet, true);
+        });
+        this.getBTSCoreProxyContractAddress = (chain, isMainnet) => {
+            return __classPrivateFieldGet(this, _IconBridgeSDK_getContractAddressLocally, "f").call(this, "BTSCore", chain, isMainnet);
+        };
+        _IconBridgeSDK_getLogicContractAddressOnChain.set(this, (address, memSlot, web3Wrapper) => __awaiter(this, void 0, void 0, function* () {
+            let result = null;
+            try {
+                const memData = yield web3Wrapper.eth.getStorageAt(address, memSlot);
+                result = this.sdkUtils.removeZerosFromAddress(memData);
+                return result;
+            }
+            catch (err) {
+                throw new Error(`Error running #getLogicContractAddressOnChain(). Params:\naddress: ${address}\nmemSlot: ${memSlot}\n.\n${err}`);
+            }
+        }));
+        _IconBridgeSDK_getContractObject.set(this, (abi, contractAddress, web3Wrapper) => {
+            try {
+                const contract = new web3Wrapper.eth.Contract(abi, contractAddress);
+                return contract;
+            }
+            catch (err) {
+                throw new Error(`Error running #getContractObject(). Params:\nabi: ${abi}\ncontractAddress: ${contractAddress}\nweb3Wrapper: ${web3Wrapper}.\n${err}`);
+            }
+        });
+        this.getBTSCoreProxyContractObject = (chain, web3Wrapper) => {
+            return this.getContractObjectByLabel("BTSCore", chain, web3Wrapper, false);
+        };
+        this.getBTSCoreLogicContractObject = (chain, web3Wrapper) => {
+            return this.getContractObjectByLabel("BTSCore", chain, web3Wrapper, true);
+        };
         this.bsc = {
             getLogicContractAddressOnChain: (address, memSlot = this.sdkUtils.labels.memSlot) => __awaiter(this, void 0, void 0, function* () {
                 try {
@@ -211,86 +291,7 @@ class IconBridgeSDK {
                 console.log(_btsPeriphery);
             }),
         };
-        this.BTSReadonlyQuery = (methodName, chain, web3Wrapper, ...rest) => __awaiter(this, void 0, void 0, function* () {
-            const isMainnet = this.params.useMainnet == null
-                ? true
-                : this.params.useMainnet;
-            try {
-                const BTSProxyContractAddress = this.getBTSCoreProxyContractAddress(chain, isMainnet);
-                const contractObject = this.getBTSCoreLogicContractObject(chain, web3Wrapper);
-                let encodedData = null;
-                const contractMethod = contractObject.methods[methodName];
-                if (rest.length === 0) {
-                    encodedData = contractMethod().encodeABI();
-                }
-                else {
-                    encodedData = contractMethod(...rest).encodeABI();
-                }
-                const contractMethodCallResponse = yield web3Wrapper.eth.call({
-                    to: BTSProxyContractAddress,
-                    data: encodedData
-                });
-                return contractMethodCallResponse;
-            }
-            catch (err) {
-                console.log(err);
-                throw new Error(`Error running ${methodName}(). Params:\n ** NO PARAMS**\n`);
-            }
-        });
-        _IconBridgeSDK_getAbiOf.set(this, (contractLabel, chain, isMainnet, getLogicContract = true) => {
-            return this.sdkUtils.getAbiOfLabelFromLocalData(contractLabel, chain, isMainnet, getLogicContract);
-        });
-        _IconBridgeSDK_getBTSAbi.set(this, (chain, isMainnet, getLogicContract = true) => {
-            return __classPrivateFieldGet(this, _IconBridgeSDK_getAbiOf, "f").call(this, "BTSCore", chain, isMainnet, getLogicContract);
-        });
-        this.getContractObjectByLabel = (label, chain, web3Wrapper, getLogicContract = false) => {
-            try {
-                const isMainnet = this.params.useMainnet == null
-                    ? true
-                    : this.params.useMainnet;
-                const contractAddress = __classPrivateFieldGet(this, _IconBridgeSDK_getContractAddressLocally, "f").call(this, label, chain, isMainnet, getLogicContract);
-                const abi = __classPrivateFieldGet(this, _IconBridgeSDK_getAbiOf, "f").call(this, label, chain, isMainnet, getLogicContract);
-                return __classPrivateFieldGet(this, _IconBridgeSDK_getContractObject, "f").call(this, abi, contractAddress, web3Wrapper);
-            }
-            catch (err) {
-                throw new Error(`Error running #getContractObjectByLabel(). Params:\nlabel: ${label}\nchain: ${chain}\nweb3Wrapper: ${web3Wrapper}\ngetLogicContract: ${getLogicContract}.\n${err}`);
-            }
-        };
-        _IconBridgeSDK_getContractAddressLocally.set(this, (label, chain, isMainnet, getLogicContract = false) => {
-            return this.sdkUtils.getContractOfLabelFromLocalData(label, chain, isMainnet, getLogicContract);
-        });
-        _IconBridgeSDK_getBTSCoreLogicContractAddress.set(this, (chain, isMainnet) => {
-            return __classPrivateFieldGet(this, _IconBridgeSDK_getContractAddressLocally, "f").call(this, "BTSCore", chain, isMainnet, true);
-        });
-        this.getBTSCoreProxyContractAddress = (chain, isMainnet) => {
-            return __classPrivateFieldGet(this, _IconBridgeSDK_getContractAddressLocally, "f").call(this, "BTSCore", chain, isMainnet);
-        };
-        _IconBridgeSDK_getLogicContractAddressOnChain.set(this, (address, memSlot, web3Wrapper) => __awaiter(this, void 0, void 0, function* () {
-            let result = null;
-            try {
-                const memData = yield web3Wrapper.eth.getStorageAt(address, memSlot);
-                result = this.sdkUtils.removeZerosFromAddress(memData);
-                return result;
-            }
-            catch (err) {
-                throw new Error(`Error running #getLogicContractAddressOnChain(). Params:\naddress: ${address}\nmemSlot: ${memSlot}\n.\n${err}`);
-            }
-        }));
-        _IconBridgeSDK_getContractObject.set(this, (abi, contractAddress, web3Wrapper) => {
-            try {
-                const contract = new web3Wrapper.eth.Contract(abi, contractAddress);
-                return contract;
-            }
-            catch (err) {
-                throw new Error(`Error running #getContractObject(). Params:\nabi: ${abi}\ncontractAddress: ${contractAddress}\nweb3Wrapper: ${web3Wrapper}.\n${err}`);
-            }
-        });
-        this.getBTSCoreProxyContractObject = (chain, web3Wrapper) => {
-            return this.getContractObjectByLabel("BTSCore", chain, web3Wrapper, false);
-        };
-        this.getBTSCoreLogicContractObject = (chain, web3Wrapper) => {
-            return this.getContractObjectByLabel("BTSCore", chain, web3Wrapper, true);
-        };
+        this.icon = {};
         this.params = this.sdkUtils.getSDKParams(inputParams);
         this.bscWeb3 = new web3_1.default(this.params.bscProvider.hostname);
     }
