@@ -6,11 +6,11 @@ const sdkTestnet = new IconBridgeSDK({ useMainnet: false });
 const testSummary = {
   bsc: {
     [testUtils.methodsName.general[0]]: "done", // balanceOf
-    [testUtils.methodsName.general[1]]: "missed", // balanceOfBatch
-    [testUtils.methodsName.general[2]]: "missed", // coinId
-    [testUtils.methodsName.general[3]]: "missed", // coinNames
-    [testUtils.methodsName.general[4]]: "missed", // feeRatio
-    [testUtils.methodsName.general[5]]: "missed", // getAccumulatedFees
+    [testUtils.methodsName.general[1]]: "done", // balanceOfBatch
+    [testUtils.methodsName.general[2]]: "done", // coinId
+    [testUtils.methodsName.general[3]]: "done", // coinNames
+    [testUtils.methodsName.general[4]]: "done", // feeRatio
+    [testUtils.methodsName.general[5]]: "done", // getAccumulatedFees
     [testUtils.methodsName.general[6]]: "missed", // getNativeCoinName
     [testUtils.methodsName.general[7]]: "missed", // getOwners
     [testUtils.methodsName.general[8]]: "missed", // isOwner
@@ -36,18 +36,71 @@ async function iconBridgeSDKTests() {
   console.log("Testing iconBridge methods for the BSC network");
   console.log(testUtils.lineBreak.b);
 
-  // Test 1: iconBridgeSDK.bsc.methods.balanceOf()
-  console.log(`Test 1: iconBridgeSDK.bsc.methods.balanceOf()`);
-
+  // Test 1: iconBridgeSDK.bsc.methods.balanceOf(_owner, _coinName)
+  console.log(
+    `Test 1: iconBridgeSDK.bsc.methods.balanceOf(_owner: string, _coinName: string)`
+  );
   //
-  const a1 = await sdkTestnet.bsc.methods.balanceOf(
+  await testUtils.runTestOnMethod(
+    sdkTestnet.bsc.methods.balanceOf,
     "0x4DeD312eB774B9828665448C55Faa8AE15353E56",
     "btp-0x2.icon-ICX"
   );
-  console.log("Result:");
-  console.log(a1);
-  console.log(testUtils.lineBreak.b);
 
+  // Test 2: iconBridgeSDK.bsc.methods.balanceOfBatch(_owner, _coinNames)
+  console.log(
+    `Test 2: iconBridgeSDK.bsc.methods.balanceOfBatch(_owner: string, _coinNames: string[])`
+  );
+  //
+  await testUtils.runTestOnMethod(
+    sdkTestnet.bsc.methods.balanceOfBatch,
+    "0x4DeD312eB774B9828665448C55Faa8AE15353E56",
+    ["btp-0x2.icon-ICX"]
+  );
+
+  // Test 3: iconBridgeSDK.bsc.methods.coinId(_coinName)
+  console.log(`Test 3: iconBridgeSDK.bsc.methods.coinId(_coinName: string)`);
+  //
+  await testUtils.runTestOnMethod(
+    sdkTestnet.bsc.methods.coinId,
+    "btp-0x2.icon-ICX"
+  );
+
+  // Test 4: iconBridgeSDK.bsc.methods.coinNames()
+  console.log(`Test 4: iconBridgeSDK.bsc.methods.coinNames()`);
+  //
+  await testUtils.runTestOnMethod(sdkTestnet.bsc.methods.coinNames);
+
+  // Test 5: iconBridgeSDK.bsc.methods.feeRatio(_coinName)
+  console.log(`Test 5: iconBridgeSDK.bsc.methods.feeRatio(_coinName: string)`);
+  //
+  await testUtils.runTestOnMethod(
+    sdkTestnet.bsc.methods.feeRatio,
+    "btp-0x2.icon-ICX"
+  );
+
+  // Test 6: iconBridgeSDK.bsc.methods.getAccumulatedFees()
+  console.log(`Test 6: iconBridgeSDK.bsc.methods.getAccumulatedFees()`);
+  //
+  await testUtils.runTestOnMethod(sdkTestnet.bsc.methods.getAccumulatedFees);
+
+  // getNativeCoinName
+  // getOwners
+  // isOwner
+  // isValidCoin
+  // addOwner
+  // handleResponseService
+  // initialize
+  // mint
+  // reclaim
+  // refund
+  // register
+  // removeOwner
+  // setFeeRatio
+  // transfer
+  // transferBatch
+  // transferFees
+  // transferNativeCoin
   //
   console.log("Test summary:");
   console.log(testSummary);

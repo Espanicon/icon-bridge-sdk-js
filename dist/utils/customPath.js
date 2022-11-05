@@ -30,6 +30,5 @@ if (require.main === module) {
     console.log(`the module customPath.js works by assuming that it is placed in a folder inside the main project folder, usually a folder named "service" but it doesnt matter the name.\nFor this run customPath is assuming that the main folder is "${MAIN_FOLDER}".\n\nIf the following 2 paths doesnt match then customPath.js will not work properly.\nTrue path: ${testPath +
         "/TEST"}\nCalculated by customPath.js: ${customPath("TEST")}.`);
 }
-console.log(`${path_1.default.parse(__filename).base} file imported as a module`);
 exports.default = customPath;
 //# sourceMappingURL=customPath.js.map

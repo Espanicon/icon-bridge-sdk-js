@@ -17,8 +17,8 @@ const sdkTestnet = new icon_bridge_sdk_1.default({ useMainnet: false });
 const testSummary = {
     bsc: {
         [testUtils_1.default.methodsName.general[0]]: "done",
-        [testUtils_1.default.methodsName.general[1]]: "missed",
-        [testUtils_1.default.methodsName.general[2]]: "missed",
+        [testUtils_1.default.methodsName.general[1]]: "done",
+        [testUtils_1.default.methodsName.general[2]]: "done",
         [testUtils_1.default.methodsName.general[3]]: "missed",
         [testUtils_1.default.methodsName.general[4]]: "missed",
         [testUtils_1.default.methodsName.general[5]]: "missed",
@@ -46,11 +46,18 @@ function iconBridgeSDKTests() {
         console.log(testUtils_1.default.lineBreak.a);
         console.log("Testing iconBridge methods for the BSC network");
         console.log(testUtils_1.default.lineBreak.b);
-        console.log(`Test 1: iconBridgeSDK.bsc.methods.balanceOf()`);
-        const a1 = yield sdkTestnet.bsc.methods.balanceOf("0x4DeD312eB774B9828665448C55Faa8AE15353E56", "btp-0x2.icon-ICX");
-        console.log("Result:");
-        console.log(a1);
-        console.log(testUtils_1.default.lineBreak.b);
+        console.log(`Test 1: iconBridgeSDK.bsc.methods.balanceOf(_owner: string, _coinName: string)`);
+        yield testUtils_1.default.runTestOnMethod(sdkTestnet.bsc.methods.balanceOf, "0x4DeD312eB774B9828665448C55Faa8AE15353E56", "btp-0x2.icon-ICX");
+        console.log(`Test 2: iconBridgeSDK.bsc.methods.balanceOfBatch(_owner: string, _coinNames: string[])`);
+        yield testUtils_1.default.runTestOnMethod(sdkTestnet.bsc.methods.balanceOfBatch, "0x4DeD312eB774B9828665448C55Faa8AE15353E56", ["btp-0x2.icon-ICX"]);
+        console.log(`Test 3: iconBridgeSDK.bsc.methods.coinId(_coinName: string)`);
+        yield testUtils_1.default.runTestOnMethod(sdkTestnet.bsc.methods.coinId, "btp-0x2.icon-ICX");
+        console.log(`Test 4: iconBridgeSDK.bsc.methods.coinNames()`);
+        yield testUtils_1.default.runTestOnMethod(sdkTestnet.bsc.methods.coinNames);
+        console.log(`Test 5: iconBridgeSDK.bsc.methods.feeRatio(_coinName: string)`);
+        yield testUtils_1.default.runTestOnMethod(sdkTestnet.bsc.methods.feeRatio, "btp-0x2.icon-ICX");
+        console.log(`Test 6: iconBridgeSDK.bsc.methods.getAccumulatedFees()`);
+        yield testUtils_1.default.runTestOnMethod(sdkTestnet.bsc.methods.getAccumulatedFees);
         console.log("Test summary:");
         console.log(testSummary);
         console.log(testUtils_1.default.lineBreak.a);

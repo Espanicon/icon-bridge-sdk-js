@@ -53,5 +53,21 @@ const methodsName = {
   ]
 };
 
-const testUtils = { lineBreak, methodsName };
+async function runTestOnMethod(
+  methodCallback: any,
+  ...rest: any[]
+): Promise<void> {
+  let testQuery = null;
+  if (rest.length === 0) {
+    testQuery = await methodCallback();
+  } else {
+    testQuery = await methodCallback(...rest);
+  }
+
+  console.log("Result:");
+  console.log(testQuery);
+  console.log(lineBreak.a);
+}
+
+const testUtils = { lineBreak, methodsName, runTestOnMethod };
 export = testUtils;
