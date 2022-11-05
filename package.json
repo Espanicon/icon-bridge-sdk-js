@@ -1,6 +1,6 @@
 {
   "name": "icon-bridge-sdk-js",
-  "version": "1.0.0",
+  "version": "0.0.1-alpha",
   "description": "An sdk written in JS for the ICON Bridge",
   "exports": {
     "node": {

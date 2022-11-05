@@ -38,6 +38,8 @@ async function iconBridgeSDKTests() {
 
   // Test 1: iconBridgeSDK.bsc.methods.balanceOf()
   console.log(`Test 1: iconBridgeSDK.bsc.methods.balanceOf()`);
+
+  //
   const a1 = await sdkTestnet.bsc.methods.balanceOf(
     "0x4DeD312eB774B9828665448C55Faa8AE15353E56",
     "btp-0x2.icon-ICX"
@@ -45,14 +47,8 @@ async function iconBridgeSDKTests() {
   console.log("Result:");
   console.log(a1);
   console.log(testUtils.lineBreak.b);
-  // // BSC Mainnet
-  // console.log(mainBreak);
-  // console.log("Running test on sdk.bsc.methods.balanceOf()");
-  // console.log(secondaryBreak);
-  // console.log("testing testnet");
-  // console.log("BTSCore.balanceOf(_owner, _coinName)");
-  // console.log(b10);
-  // console.log(secondaryBreak);
+
+  //
   console.log("Test summary:");
   console.log(testSummary);
   console.log(testUtils.lineBreak.a);
