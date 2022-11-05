@@ -47,5 +47,5 @@ if (require.main === module) {
   );
 }
 // if the file gets imported as a module
-console.log(`${path.parse(__filename).base} file imported as a module`);
+// console.log(`${path.parse(__filename).base} file imported as a module`);
 export default customPath;
