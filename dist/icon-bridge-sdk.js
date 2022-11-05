@@ -46,6 +46,30 @@ class IconBridgeSDK {
                     throw new Error(`Error running ${methodName}(). Params:\n ** NO PARAMS**\n`);
                 }
             }),
+            BTSSendTx: (methodName, chain, web3Wrapper, ...rest) => __awaiter(this, void 0, void 0, function* () {
+                const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
+                try {
+                    const BTSProxyContractAddress = this.lib.getBTSCoreProxyContractAddress(chain, isMainnet);
+                    const contractObject = this.lib.getBTSCoreLogicContractObject(chain, web3Wrapper);
+                    let encodedData = null;
+                    const contractMethod = contractObject.methods[methodName];
+                    if (rest.length === 0) {
+                        encodedData = contractMethod().encodeABI();
+                    }
+                    else {
+                        encodedData = contractMethod(...rest).encodeABI();
+                    }
+                    const contractMethodCallResponse = yield web3Wrapper.eth.call({
+                        to: BTSProxyContractAddress,
+                        data: encodedData
+                    });
+                    return contractMethodCallResponse;
+                }
+                catch (err) {
+                    console.log(err);
+                    throw new Error(`Error running ${methodName}(). Params:\n ** NO PARAMS**\n`);
+                }
+            }),
             getAbiOf: (contractLabel, chain, isMainnet, getLogicContract = true) => {
                 return this.sdkUtils.getAbiOfLabelFromLocalData(contractLabel, chain, isMainnet, getLogicContract);
             },

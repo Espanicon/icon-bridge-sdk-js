@@ -152,12 +152,23 @@ class IconBridgeSDKBSC {
       );
     },
 
+    //TODO => this is not a readonly query, it requires a TX
+    /**
+     * Add another Owner. Caller must be an Owner of BTP network.
+     * @param _owner - Address of new owner
+     * @return
+     */
+    // addOwner: async (_owner: string): Promise<void> => {
+    //   // method on index 3
+    // },
+
     /**
      * Get the token balance of a wallet.
      * @param _owner - wallet address.
      * @param _coinName - token name.
      * @return token balance of a wallet.
      */
+
     balanceOf: async (
       _owner: string,
       _coinName: string
@@ -196,53 +207,6 @@ class IconBridgeSDKBSC {
     },
 
     /**
-     * Get name of tokens.
-     * @return name of tokens.
-     */
-    coinNames: async (): Promise<string | null> => {
-      try {
-        const isMainnet: boolean | null =
-          this.params.useMainnet == null ? true : this.params.useMainnet;
-
-        const response = await this.callbackLib.BTSReadonlyQuery(
-          "coinNames",
-          "bsc",
-          this.bscWeb3
-        );
-
-        const BTSLogicContractABI = this.callbackLib.getAbiOf(
-          "BTSCore",
-          "bsc",
-          isMainnet,
-          true
-        );
-
-        const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(
-          BTSLogicContractABI[7].outputs,
-          response
-        );
-
-        // return parsedResponse['_names']
-        return parsedResponse;
-      } catch (err) {
-        console.log(err);
-        throw new Error(
-          `Error running coinNames(). Params:\n ** NO PARAMS**\n`
-        );
-      }
-    },
-
-    /**
-     * Add another Owner. Caller must be an Owner of BTP network.
-     * @param _owner - Address of new owner
-     * @return
-     */
-    addOwner: async (_owner: string): Promise<void> => {
-      // index 3
-      console.log(_owner);
-    },
-
-    /**
      * Returns a list of balance of an account. The order of request's
      * coinNames must be the same with the order of return balance.
      * @param _owner - Address.
@@ -272,6 +236,7 @@ class IconBridgeSDKBSC {
           true
         );
 
+        console.log(BTSLogicContractABI);
         const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(
           BTSLogicContractABI[5].outputs,
           response
@@ -320,6 +285,43 @@ class IconBridgeSDKBSC {
         console.log(err);
         throw new Error(
           `Error running coinId(). Params:\n_coinName: ${_coinName}\n`
+        );
+      }
+    },
+
+    /**
+     * Get name of tokens.
+     * @return name of tokens.
+     */
+    coinNames: async (): Promise<string | null> => {
+      try {
+        const isMainnet: boolean | null =
+          this.params.useMainnet == null ? true : this.params.useMainnet;
+
+        const response = await this.callbackLib.BTSReadonlyQuery(
+          "coinNames",
+          "bsc",
+          this.bscWeb3
+        );
+
+        const BTSLogicContractABI = this.callbackLib.getAbiOf(
+          "BTSCore",
+          "bsc",
+          isMainnet,
+          true
+        );
+
+        const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(
+          BTSLogicContractABI[7].outputs,
+          response
+        );
+
+        // return parsedResponse['_names']
+        return parsedResponse;
+      } catch (err) {
+        console.log(err);
+        throw new Error(
+          `Error running coinNames(). Params:\n ** NO PARAMS**\n`
         );
       }
     },
@@ -404,7 +406,35 @@ class IconBridgeSDKBSC {
      * @return string name of native coin.
      */
     getNativeCoinName: async (): Promise<void> => {
-      // index 10
+      try {
+        const isMainnet: boolean | null =
+          this.params.useMainnet == null ? true : this.params.useMainnet;
+
+        const response = await this.callbackLib.BTSReadonlyQuery(
+          "getNativeCoinName",
+          "bsc",
+          this.bscWeb3
+        );
+
+        const BTSLogicContractABI = this.callbackLib.getAbiOf(
+          "BTSCore",
+          "bsc",
+          isMainnet,
+          true
+        );
+
+        const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(
+          BTSLogicContractABI[10].outputs,
+          response
+        );
+
+        return parsedResponse;
+      } catch (err) {
+        console.log(err);
+        throw new Error(
+          `Error running getNativeCoinName(). Params:\n ** NO PARAMS**\n`
+        );
+      }
     },
 
     /**
@@ -412,7 +442,35 @@ class IconBridgeSDKBSC {
      * @return Array of address of current owners.
      */
     getOwners: async (): Promise<void> => {
-      // index 11
+      try {
+        const isMainnet: boolean | null =
+          this.params.useMainnet == null ? true : this.params.useMainnet;
+
+        const response = await this.callbackLib.BTSReadonlyQuery(
+          "getOwners",
+          "bsc",
+          this.bscWeb3
+        );
+
+        const BTSLogicContractABI = this.callbackLib.getAbiOf(
+          "BTSCore",
+          "bsc",
+          isMainnet,
+          true
+        );
+
+        const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(
+          BTSLogicContractABI[11].outputs,
+          response
+        );
+
+        return parsedResponse;
+      } catch (err) {
+        console.log(err);
+        throw new Error(
+          `Error running getOwners(). Params:\n ** NO PARAMS**\n`
+        );
+      }
     },
 
     /**
@@ -431,30 +489,91 @@ class IconBridgeSDKBSC {
       _fee: number,
       _rspCode: number
     ): Promise<void> => {
-      // index 12
-      console.log([_requester, _coinName, _value, _fee, _rspCode]);
+      try {
+        const isMainnet: boolean | null =
+          this.params.useMainnet == null ? true : this.params.useMainnet;
+
+        const response = await this.callbackLib.BTSReadonlyQuery(
+          "handleResponseService",
+          "bsc",
+          this.bscWeb3,
+          _requester,
+          _coinName,
+          _value,
+          _fee,
+          _rspCode
+        );
+
+        const BTSLogicContractABI = this.callbackLib.getAbiOf(
+          "BTSCore",
+          "bsc",
+          isMainnet,
+          true
+        );
+
+        const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(
+          BTSLogicContractABI[12].outputs,
+          response
+        );
+
+        return parsedResponse;
+      } catch (err) {
+        console.log(err);
+        throw new Error(
+          `Error running isValidCoin(). Params:\n_coinName: ${_coinName}\n`
+        );
+      }
     },
 
+    //TODO => this is not a readonly query, it requires a TX
     /**
      * TODO: no info provided on this function in the BSC smart contract code.
      * https://testnet.bscscan.com/address/0xe020d4ad483c7ec90a24d9db502e66564ef9c236#code
      */
-    initialize: async (
-      _nativeCoinName: string,
-      _feeNumerator: number,
-      _fixedFee: number
-    ): Promise<void> => {
-      // index 13
-      console.log([_nativeCoinName, _feeNumerator, _fixedFee]);
-    },
+    // initialize: async (
+    //   _nativeCoinName: string,
+    //   _feeNumerator: number,
+    //   _fixedFee: number
+    // ): Promise<void> => {
+    //   // index 13
+    //   console.log([_nativeCoinName, _feeNumerator, _fixedFee]);
+    // },
 
     /**
      * Checks is a especified address has owner role.
      * @param _owner - address to check.
      */
     isOwner: async (_owner: string): Promise<void> => {
-      // index 14
-      console.log(_owner);
+      try {
+        const isMainnet: boolean | null =
+          this.params.useMainnet == null ? true : this.params.useMainnet;
+
+        const response = await this.callbackLib.BTSReadonlyQuery(
+          "isOwner",
+          "bsc",
+          this.bscWeb3,
+          _owner
+        );
+
+        const BTSLogicContractABI = this.callbackLib.getAbiOf(
+          "BTSCore",
+          "bsc",
+          isMainnet,
+          true
+        );
+
+        const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(
+          BTSLogicContractABI[14].outputs,
+          response
+        );
+
+        return parsedResponse;
+      } catch (err) {
+        console.log(err);
+        throw new Error(
+          `Error running isOwner(). Params:\n_owner: ${_owner}\n`
+        );
+      }
     },
 
     /**
@@ -462,24 +581,53 @@ class IconBridgeSDKBSC {
      * @param _coinName - coin name to check.
      */
     isValidCoin: async (_coinName: string): Promise<void> => {
-      // index 15
-      console.log(_coinName);
+      try {
+        const isMainnet: boolean | null =
+          this.params.useMainnet == null ? true : this.params.useMainnet;
+
+        const response = await this.callbackLib.BTSReadonlyQuery(
+          "isValidCoin",
+          "bsc",
+          this.bscWeb3,
+          _coinName
+        );
+
+        const BTSLogicContractABI = this.callbackLib.getAbiOf(
+          "BTSCore",
+          "bsc",
+          isMainnet,
+          true
+        );
+
+        const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(
+          BTSLogicContractABI[15].outputs,
+          response
+        );
+
+        return parsedResponse;
+      } catch (err) {
+        console.log(err);
+        throw new Error(
+          `Error running isValidCoin(). Params:\n_coinName: ${_coinName}\n`
+        );
+      }
     },
 
+    //TODO => this is not a readonly query, it requires a TX
     /**
      * Mint the wrapped coin. Caller must be a BTSPeriphery contract.
      * @param _to - account that receives the minted coin.
      * @param _coinName - coin name.
      * @param _value - minted amount.
      */
-    mint: async (
-      _to: string,
-      _coinName: string,
-      _value: number
-    ): Promise<void> => {
-      // index 16
-      console.log(_to, _coinName, _value);
-    },
+    // mint: async (
+    //   _to: string,
+    //   _coinName: string,
+    //   _value: number
+    // ): Promise<void> => {
+    //   // index 16
+    //   console.log(_to, _coinName, _value);
+    // },
 
     /**
      * Reclaim the token's refundable balance by an owner. Caller must be

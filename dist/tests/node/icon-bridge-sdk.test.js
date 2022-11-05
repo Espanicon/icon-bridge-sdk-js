@@ -22,10 +22,10 @@ const testSummary = {
         [testUtils_1.default.methodsName.general[3]]: "done",
         [testUtils_1.default.methodsName.general[4]]: "done",
         [testUtils_1.default.methodsName.general[5]]: "done",
-        [testUtils_1.default.methodsName.general[6]]: "missed",
-        [testUtils_1.default.methodsName.general[7]]: "missed",
-        [testUtils_1.default.methodsName.general[8]]: "missed",
-        [testUtils_1.default.methodsName.general[9]]: "missed",
+        [testUtils_1.default.methodsName.general[6]]: "done",
+        [testUtils_1.default.methodsName.general[7]]: "done",
+        [testUtils_1.default.methodsName.general[8]]: "done",
+        [testUtils_1.default.methodsName.general[9]]: "done",
         [testUtils_1.default.methodsName.general[10]]: "missed",
         [testUtils_1.default.methodsName.general[11]]: "missed",
         [testUtils_1.default.methodsName.general[12]]: "missed",
@@ -58,6 +58,14 @@ function iconBridgeSDKTests() {
         yield testUtils_1.default.runTestOnMethod(sdkTestnet.bsc.methods.feeRatio, "btp-0x2.icon-ICX");
         console.log(`Test 6: iconBridgeSDK.bsc.methods.getAccumulatedFees()`);
         yield testUtils_1.default.runTestOnMethod(sdkTestnet.bsc.methods.getAccumulatedFees);
+        console.log(`Test 7: iconBridgeSDK.bsc.methods.getNativeCoinName()`);
+        yield testUtils_1.default.runTestOnMethod(sdkTestnet.bsc.methods.getNativeCoinName);
+        console.log(`Test 8: iconBridgeSDK.bsc.methods.getOwners()`);
+        yield testUtils_1.default.runTestOnMethod(sdkTestnet.bsc.methods.getOwners);
+        console.log(`Test 9: iconBridgeSDK.bsc.methods.isOwner(_isOwner: string)`);
+        yield testUtils_1.default.runTestOnMethod(sdkTestnet.bsc.methods.isOwner, "0x4DeD312eB774B9828665448C55Faa8AE15353E56");
+        console.log(`Test 10: iconBridgeSDK.bsc.methods.isValidCoin(_coinName: string)`);
+        yield testUtils_1.default.runTestOnMethod(sdkTestnet.bsc.methods.isValidCoin, "btp-0x2.icon-ICX");
         console.log("Test summary:");
         console.log(testSummary);
         console.log(testUtils_1.default.lineBreak.a);

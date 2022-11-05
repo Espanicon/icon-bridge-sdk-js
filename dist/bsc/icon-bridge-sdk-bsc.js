@@ -57,27 +57,12 @@ class IconBridgeSDKBSC {
                     throw new Error(`Error running balanceOf(). Params:\n_owner: ${_owner}\n_coinName: ${_coinName}\n`);
                 }
             }),
-            coinNames: () => __awaiter(this, void 0, void 0, function* () {
-                try {
-                    const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
-                    const response = yield this.callbackLib.BTSReadonlyQuery("coinNames", "bsc", this.bscWeb3);
-                    const BTSLogicContractABI = this.callbackLib.getAbiOf("BTSCore", "bsc", isMainnet, true);
-                    const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(BTSLogicContractABI[7].outputs, response);
-                    return parsedResponse;
-                }
-                catch (err) {
-                    console.log(err);
-                    throw new Error(`Error running coinNames(). Params:\n ** NO PARAMS**\n`);
-                }
-            }),
-            addOwner: (_owner) => __awaiter(this, void 0, void 0, function* () {
-                console.log(_owner);
-            }),
             balanceOfBatch: (_owner, _coinNames) => __awaiter(this, void 0, void 0, function* () {
                 try {
                     const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
                     const response = yield this.callbackLib.BTSReadonlyQuery("balanceOfBatch", "bsc", this.bscWeb3, _owner, _coinNames);
                     const BTSLogicContractABI = this.callbackLib.getAbiOf("BTSCore", "bsc", isMainnet, true);
+                    console.log(BTSLogicContractABI);
                     const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(BTSLogicContractABI[5].outputs, response);
                     return parsedResponse;
                 }
@@ -97,6 +82,19 @@ class IconBridgeSDKBSC {
                 catch (err) {
                     console.log(err);
                     throw new Error(`Error running coinId(). Params:\n_coinName: ${_coinName}\n`);
+                }
+            }),
+            coinNames: () => __awaiter(this, void 0, void 0, function* () {
+                try {
+                    const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
+                    const response = yield this.callbackLib.BTSReadonlyQuery("coinNames", "bsc", this.bscWeb3);
+                    const BTSLogicContractABI = this.callbackLib.getAbiOf("BTSCore", "bsc", isMainnet, true);
+                    const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(BTSLogicContractABI[7].outputs, response);
+                    return parsedResponse;
+                }
+                catch (err) {
+                    console.log(err);
+                    throw new Error(`Error running coinNames(). Params:\n ** NO PARAMS**\n`);
                 }
             }),
             feeRatio: (_coinName) => __awaiter(this, void 0, void 0, function* () {
@@ -126,23 +124,69 @@ class IconBridgeSDKBSC {
                 }
             }),
             getNativeCoinName: () => __awaiter(this, void 0, void 0, function* () {
+                try {
+                    const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
+                    const response = yield this.callbackLib.BTSReadonlyQuery("getNativeCoinName", "bsc", this.bscWeb3);
+                    const BTSLogicContractABI = this.callbackLib.getAbiOf("BTSCore", "bsc", isMainnet, true);
+                    const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(BTSLogicContractABI[10].outputs, response);
+                    return parsedResponse;
+                }
+                catch (err) {
+                    console.log(err);
+                    throw new Error(`Error running getNativeCoinName(). Params:\n ** NO PARAMS**\n`);
+                }
             }),
             getOwners: () => __awaiter(this, void 0, void 0, function* () {
-            }),
-            handleResponseService: (_requester, _coinName, _value, _fee, _rspCode) => __awaiter(this, void 0, void 0, function* () {
-                console.log([_requester, _coinName, _value, _fee, _rspCode]);
-            }),
-            initialize: (_nativeCoinName, _feeNumerator, _fixedFee) => __awaiter(this, void 0, void 0, function* () {
-                console.log([_nativeCoinName, _feeNumerator, _fixedFee]);
+                try {
+                    const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
+                    const response = yield this.callbackLib.BTSReadonlyQuery("getOwners", "bsc", this.bscWeb3);
+                    const BTSLogicContractABI = this.callbackLib.getAbiOf("BTSCore", "bsc", isMainnet, true);
+                    const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(BTSLogicContractABI[11].outputs, response);
+                    return parsedResponse;
+                }
+                catch (err) {
+                    console.log(err);
+                    throw new Error(`Error running getOwners(). Params:\n ** NO PARAMS**\n`);
+                }
             }),
             isOwner: (_owner) => __awaiter(this, void 0, void 0, function* () {
-                console.log(_owner);
+                try {
+                    const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
+                    const response = yield this.callbackLib.BTSReadonlyQuery("isOwner", "bsc", this.bscWeb3, _owner);
+                    const BTSLogicContractABI = this.callbackLib.getAbiOf("BTSCore", "bsc", isMainnet, true);
+                    const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(BTSLogicContractABI[14].outputs, response);
+                    return parsedResponse;
+                }
+                catch (err) {
+                    console.log(err);
+                    throw new Error(`Error running isOwner(). Params:\n_owner: ${_owner}\n`);
+                }
             }),
             isValidCoin: (_coinName) => __awaiter(this, void 0, void 0, function* () {
-                console.log(_coinName);
+                try {
+                    const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
+                    const response = yield this.callbackLib.BTSReadonlyQuery("isValidCoin", "bsc", this.bscWeb3, _coinName);
+                    const BTSLogicContractABI = this.callbackLib.getAbiOf("BTSCore", "bsc", isMainnet, true);
+                    const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(BTSLogicContractABI[15].outputs, response);
+                    return parsedResponse;
+                }
+                catch (err) {
+                    console.log(err);
+                    throw new Error(`Error running isValidCoin(). Params:\n_coinName: ${_coinName}\n`);
+                }
             }),
-            mint: (_to, _coinName, _value) => __awaiter(this, void 0, void 0, function* () {
-                console.log(_to, _coinName, _value);
+            handleResponseService: (_requester, _coinName, _value, _fee, _rspCode) => __awaiter(this, void 0, void 0, function* () {
+                try {
+                    const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
+                    const response = yield this.callbackLib.BTSReadonlyQuery("handleResponseService", "bsc", this.bscWeb3, _requester, _coinName, _value, _fee, _rspCode);
+                    const BTSLogicContractABI = this.callbackLib.getAbiOf("BTSCore", "bsc", isMainnet, true);
+                    const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(BTSLogicContractABI[11].outputs, response);
+                    return parsedResponse;
+                }
+                catch (err) {
+                    console.log(err);
+                    throw new Error(`Error running isValidCoin(). Params:\n_coinName: ${_coinName}\n`);
+                }
             }),
             reclaim: (_coinName, _value) => __awaiter(this, void 0, void 0, function* () {
                 console.log(_coinName, _value);
