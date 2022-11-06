@@ -162,16 +162,6 @@ class IconBridgeSDKBSC {
    * the ICON Bridge.
    */
   superMethods = {
-    //TODO => this is not a readonly query, it requires a TX
-    /**
-     * Add another Owner. Caller must be an Owner of BTP network.
-     * @param _owner - Address of new owner
-     * @return
-     */
-    // addOwner: async (_owner: string): Promise<void> => {
-    //   // method on index 3
-    // },
-
     /**
      * Get the token balance of a wallet.
      * @param _owner - wallet address.
@@ -325,7 +315,6 @@ class IconBridgeSDKBSC {
           response
         );
 
-        // return parsedResponse['_names']
         return parsedResponse;
       } catch (err) {
         const errorResult = new Exception(
@@ -487,20 +476,6 @@ class IconBridgeSDKBSC {
       }
     },
 
-    //TODO => this is not a readonly query, it requires a TX
-    /**
-     * TODO: no info provided on this function in the BSC smart contract code.
-     * https://testnet.bscscan.com/address/0xe020d4ad483c7ec90a24d9db502e66564ef9c236#code
-     */
-    // initialize: async (
-    //   _nativeCoinName: string,
-    //   _feeNumerator: number,
-    //   _fixedFee: number
-    // ): Promise<void> => {
-    //   // index 13
-    //   console.log([_nativeCoinName, _feeNumerator, _fixedFee]);
-    // },
-
     /**
      * Checks is a especified address has owner role.
      * @param _owner - address to check.
@@ -575,203 +550,6 @@ class IconBridgeSDKBSC {
         );
         return { error: errorResult.toString() };
       }
-    },
-
-    /**
-     * Reclaim the token's refundable balance by an owner. Caller must be
-     * owner of coin.
-     * @param _coinName - coin name.
-     * @param _value - amount of re-claiming tokens.
-     */
-    reclaim: async (_coinName: string, _value: number): Promise<any> => {
-      try {
-        const isMainnet: boolean | null =
-          this.params.useMainnet == null ? true : this.params.useMainnet;
-
-        const response = await this.callbackLib.BTSReadonlyQuery(
-          "reclaim",
-          "bsc",
-          this.bscWeb3,
-          _coinName,
-          _value
-        );
-
-        const BTSLogicContractABI = this.callbackLib.getAbiOf(
-          "BTSCore",
-          "bsc",
-          isMainnet,
-          true
-        );
-
-        const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(
-          BTSLogicContractABI[17].outputs,
-          response
-        );
-
-        return parsedResponse;
-      } catch (err) {
-        const errorResult = new Exception(
-          err,
-          `Error running reclaim(). Params:\n_coinName: ${_coinName}\n_value: ${_value}\n`
-        );
-        return { error: errorResult.toString() };
-      }
-    },
-
-    /**
-     * For information on this specific method check the solidity smart
-     * contract code on the following link:
-     * https://testnet.bscscan.com/address/0xe020d4ad483c7ec90a24d9db502e66564ef9c236#code#F1#L653
-     * @param _to -
-     * @param _coinName -
-     * @param _value -
-     */
-    refund: async (
-      _to: string,
-      _coinName: string,
-      _value: number
-    ): Promise<any> => {
-      // index 18
-      console.log([_to, _coinName, _value]);
-    },
-
-    /**
-     * Registers a wrapped coin and id number of a supporting coin. Caller
-     * must be an owner of this contract.
-     * @param _name - must be different with the native coin name.
-     * @param _symbol - symbol name for a wrapped coin.
-     * @param _decimals - decimal number.
-     * @param _feeNumerator -
-     * @param _fixedFee -
-     * @param _addr -
-     */
-    register: async (
-      _name: string,
-      _symbol: string,
-      _decimals: number,
-      _feeNumerator: number,
-      _fixedFee: number,
-      _addr: string
-    ): Promise<any> => {
-      try {
-        const isMainnet: boolean | null =
-          this.params.useMainnet == null ? true : this.params.useMainnet;
-
-        const response = await this.callbackLib.BTSReadonlyQuery(
-          "register",
-          "bsc",
-          this.bscWeb3,
-          _name,
-          _symbol,
-          _decimals,
-          _feeNumerator,
-          _fixedFee,
-          _addr
-        );
-
-        const BTSLogicContractABI = this.callbackLib.getAbiOf(
-          "BTSCore",
-          "bsc",
-          isMainnet,
-          true
-        );
-
-        const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(
-          BTSLogicContractABI[19].outputs,
-          response
-        );
-
-        return parsedResponse;
-      } catch (err) {
-        const errorResult = new Exception(
-          err,
-          `Error running register(). Params:\n_name: ${_name}\n_symbol: ${_symbol}\n_decimals: ${_decimals}\n_feeNumerator: ${_feeNumerator}\n_fixedFee: ${_fixedFee}\n_adrr: ${_addr}\n`
-        );
-        return { error: errorResult.toString() };
-      }
-    },
-
-    /**
-     * Removing an existing owner. Caller must be an owner of BTP network.
-     * @param _owner - address of owner to be removed.
-     */
-    removeOwner: async (_owner: string): Promise<any> => {
-      // index 20
-      console.log(_owner);
-    },
-
-    /**
-     * Set fee ratio. Caller must be an owner of this contract.
-     * @param _name -
-     * @param _feeNumerator -
-     * @param _fixedFee -
-     */
-    setFeeRatio: async (
-      _name: string,
-      _feeNumerator: number,
-      _fixedFee: number
-    ): Promise<any> => {
-      // index 21
-      console.log([_name, _feeNumerator, _fixedFee]);
-    },
-
-    /**
-     * Allow users to deposit an amount of wrapped native coin into the
-     * BTSCore contract.
-     * @param _coinName - given name of wrapped coin.
-     * @param _value - amount to transfer.
-     * @param _to - target BTP address.
-     */
-    transfer: async (
-      _coinName: string,
-      _value: number,
-      _to: string
-    ): Promise<any> => {
-      // index 22
-      console.log([_coinName, _value, _to]);
-    },
-
-    /**
-     * Allow users to transfer multiple coins/wrapped coins to another chain.
-     * @param _coinNames - list of coins.
-     * @param _values - list of values in same order of coins.
-     * @param _to - target BTP address.
-     */
-    transferBatch: async (
-      _coinNames: string[],
-      _values: string[],
-      _to: string
-    ): Promise<any> => {
-      // index 23
-      console.log([_coinNames, _values, _to]);
-    },
-
-    /**
-     * Handle request of fee gathering. Caller must be an
-     * BTSPeriphery contract.
-     * @param _fa -
-     */
-    transferFees: async (_fa: string): Promise<any> => {
-      // index 24
-      console.log(_fa);
-    },
-
-    /**
-     * Allows user to deposit native coin into a BTSCore contract.
-     * @param _to - address that receives transfer.
-     */
-    transferNativeCoin: async (_to: string): Promise<any> => {
-      // index 25
-      console.log(_to);
-    },
-
-    /**
-     * Updates BTS periphery address. Caller must be owner of contract.
-     * @param _btsPeriphery - btsPeriphery contract address.
-     */
-    updateBTSPeriphery: async (_btsPeriphery: string): Promise<any> => {
-      // index 26
-      console.log(_btsPeriphery);
     }
   };
 }

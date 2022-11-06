@@ -38,7 +38,7 @@ function iconBridgeSDKTests() {
         console.log(`Test 2: iconBridgeSDK.bsc.methods.balanceOfBatch(_owner: string, _coinNames: string[])`);
         yield testUtils_1.default.runTestOnMethod(sdkTestnet.bsc.methods.balanceOfBatch, false, "0x4DeD312eB774B9828665448C55Faa8AE15353E56", ["btp-0x2.icon-ICX"]);
         console.log(`Test 3: iconBridgeSDK.bsc.methods.coinId(_coinName: string)`);
-        yield testUtils_1.default.runTestOnMethod(sdkTestnet.bsc.methods.coinId, false, "btp-0x2.icon-IC");
+        yield testUtils_1.default.runTestOnMethod(sdkTestnet.bsc.methods.coinId, false, "btp-0x2.icon-ICX");
         console.log(`Test 4: iconBridgeSDK.bsc.methods.coinNames()`);
         yield testUtils_1.default.runTestOnMethod(sdkTestnet.bsc.methods.coinNames, false);
         console.log(`Test 5: iconBridgeSDK.bsc.methods.feeRatio(_coinName: string)`);
@@ -59,4 +59,4 @@ function iconBridgeSDKTests() {
     });
 }
 module.exports = iconBridgeSDKTests;
-//# sourceMappingURL=icon-bridge-sdk.test.js.map
+//# sourceMappingURL=icon-bridge-sdk-readonly.test.js.map

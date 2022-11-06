@@ -7,15 +7,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import iconBridgeSDKTests from "./icon-bridge-sdk.test.js";
+import sdkReadonlyTests from "./icon-bridge-sdk-readonly.test.js";
 import iconBridgeSDKWebTests from "./icon-bridge-sdk-web.test.mjs";
 import iconBridgeSDKNodeTests from "./icon-bridge-sdk-node.test.js";
 function runTests() {
     return __awaiter(this, void 0, void 0, function* () {
-        const foo = [iconBridgeSDKTests, iconBridgeSDKWebTests, iconBridgeSDKNodeTests];
+        const foo = [sdkReadonlyTests, iconBridgeSDKWebTests, iconBridgeSDKNodeTests];
         console.log('#disregard this log', foo.length);
-        console.log('Test on iconBridgeSDKTests');
-        yield iconBridgeSDKTests();
+        console.log('Test Module: Running tests on readonly methods.');
+        yield sdkReadonlyTests();
     });
 }
 runTests();

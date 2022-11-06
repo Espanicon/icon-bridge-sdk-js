@@ -1,16 +1,16 @@
-import iconBridgeSDKTests from "./icon-bridge-sdk.test.js";
+import sdkReadonlyTests from "./icon-bridge-sdk-readonly.test.js";
 import iconBridgeSDKWebTests from "./icon-bridge-sdk-web.test.mjs";
 import iconBridgeSDKNodeTests from "./icon-bridge-sdk-node.test.js";
 
 async function runTests() {
   // next block code is to silence typescript error of no unused var
-  const foo = [iconBridgeSDKTests, iconBridgeSDKWebTests, iconBridgeSDKNodeTests];
+  const foo = [sdkReadonlyTests, iconBridgeSDKWebTests, iconBridgeSDKNodeTests];
   console.log('#disregard this log', foo.length)
   //
 
   // Test for iconBridgeSDKTests module
-  console.log('Test on iconBridgeSDKTests')
-  await iconBridgeSDKTests();
+  console.log('Test Module: Running tests on readonly methods.')
+  await sdkReadonlyTests();
 
   // Test for iconBridgeSDKWebTests
   // console.log('Test on iconBridgeSDKWebTests')
