@@ -55,13 +55,18 @@ const methodsName = {
 
 async function runTestOnMethod(
   methodCallback: any,
+  bypass: boolean,
   ...rest: any[]
 ): Promise<void> {
   let testQuery = null;
-  if (rest.length === 0) {
-    testQuery = await methodCallback();
+  if (bypass === true) {
+    testQuery = "Test bypassed";
   } else {
-    testQuery = await methodCallback(...rest);
+    if (rest.length === 0) {
+      testQuery = await methodCallback();
+    } else {
+      testQuery = await methodCallback(...rest);
+    }
   }
 
   console.log("Result:");

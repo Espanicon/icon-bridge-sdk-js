@@ -67,6 +67,7 @@ async function iconBridgeSDKTests() {
   //
   await testUtils.runTestOnMethod(
     sdkTestnet.bsc.methods.balanceOf,
+    true,
     "0x4DeD312eB774B9828665448C55Faa8AE15353E56",
     "btp-0x2.icon-ICX"
   );
@@ -78,6 +79,7 @@ async function iconBridgeSDKTests() {
   //
   await testUtils.runTestOnMethod(
     sdkTestnet.bsc.methods.balanceOfBatch,
+    true,
     "0x4DeD312eB774B9828665448C55Faa8AE15353E56",
     ["btp-0x2.icon-ICX"]
   );
@@ -87,42 +89,51 @@ async function iconBridgeSDKTests() {
   //
   await testUtils.runTestOnMethod(
     sdkTestnet.bsc.methods.coinId,
+    true,
     "btp-0x2.icon-ICX"
   );
 
   // Test 4: iconBridgeSDK.bsc.methods.coinNames()
   console.log(`Test 4: iconBridgeSDK.bsc.methods.coinNames()`);
   //
-  await testUtils.runTestOnMethod(sdkTestnet.bsc.methods.coinNames);
+  await testUtils.runTestOnMethod(sdkTestnet.bsc.methods.coinNames, true);
 
   // Test 5: iconBridgeSDK.bsc.methods.feeRatio(_coinName)
   console.log(`Test 5: iconBridgeSDK.bsc.methods.feeRatio(_coinName: string)`);
   //
   await testUtils.runTestOnMethod(
     sdkTestnet.bsc.methods.feeRatio,
+    true,
     "btp-0x2.icon-ICX"
   );
 
   // Test 6: iconBridgeSDK.bsc.methods.getAccumulatedFees()
   console.log(`Test 6: iconBridgeSDK.bsc.methods.getAccumulatedFees()`);
   //
-  await testUtils.runTestOnMethod(sdkTestnet.bsc.methods.getAccumulatedFees);
+  await testUtils.runTestOnMethod(
+    sdkTestnet.bsc.methods.getAccumulatedFees,
+    true
+  );
 
   // Test 7: iconBridgeSDK.bsc.methods.getNativeCoinName()
   console.log(`Test 7: iconBridgeSDK.bsc.methods.getNativeCoinName()`);
   //
-  await testUtils.runTestOnMethod(sdkTestnet.bsc.methods.getNativeCoinName);
+  await testUtils.runTestOnMethod(
+    sdkTestnet.bsc.methods.getNativeCoinName,
+    true
+  );
 
   // Test 8: iconBridgeSDK.bsc.methods.getOwners()
   console.log(`Test 8: iconBridgeSDK.bsc.methods.getOwners()`);
   //
-  await testUtils.runTestOnMethod(sdkTestnet.bsc.methods.getOwners);
+  await testUtils.runTestOnMethod(sdkTestnet.bsc.methods.getOwners, true);
 
   // Test 9: iconBridgeSDK.bsc.methods.isOwner(_owner)
   console.log(`Test 9: iconBridgeSDK.bsc.methods.isOwner(_isOwner: string)`);
   //
   await testUtils.runTestOnMethod(
     sdkTestnet.bsc.methods.isOwner,
+    true,
     "0x4DeD312eB774B9828665448C55Faa8AE15353E56"
   );
 
@@ -133,6 +144,7 @@ async function iconBridgeSDKTests() {
   //
   await testUtils.runTestOnMethod(
     sdkTestnet.bsc.methods.isValidCoin,
+    true,
     "btp-0x2.icon-ICX"
   );
 
@@ -144,20 +156,6 @@ async function iconBridgeSDKTests() {
   //  sdkTestnet.bsc.methods.addOwner,
   //  "0x4DeD312eB774B9828665448C55Faa8AE15353E56"
   //);
-
-  // Test 12: iconBridgeSDK.bsc.methods.handleResponseService(_requester, _coinName, _value, _fee, _rspCode)
-  console.log(
-    `Test 12: iconBridgeSDK.bsc.methods.handleResponseService(_requester, _coinName, _value, _fee, _rspCode)`
-  );
-  //
-  await testUtils.runTestOnMethod(
-    sdkTestnet.bsc.methods.handleResponseService,
-    "0x4DeD312eB774B9828665448C55Faa8AE15353E56",
-    "btp-0x2.icon-ICX",
-    20000000000000,
-    2000,
-    232
-  );
 
   //// Test 13: iconBridgeSDK.bsc.methods.initialize(_nativeCoinName, _feeNumerator, _fixedFee)
   //console.log(
@@ -171,29 +169,16 @@ async function iconBridgeSDKTests() {
   //  2000
   //);
 
-  //// Test 14: iconBridgeSDK.bsc.methods.mint(_to, _coinName, _value)
-  //console.log(
-  //  `Test 14: iconBridgeSDK.bsc.methods.mint(_to, _coinName, _value)`
-  //);
-  ////
-  //await testUtils.runTestOnMethod(
-  //  sdkTestnet.bsc.methods.mint,
-  //  "0x4DeD312eB774B9828665448C55Faa8AE15353E56",
-  //  "btp-0x2.icon-ICX",
-  //  20000000000
-  //);
+  // Test 15: iconBridgeSDK.bsc.methods.reclaim(
+  console.log(`Test 15: iconBridgeSDK.bsc.methods.reclaim(_coinName, _value)`);
+  //
+  await testUtils.runTestOnMethod(
+    sdkTestnet.bsc.methods.reclaim,
+    false,
+    "btp-0x2.icon-ICX",
+    20000000000
+  );
 
-  //// Test 15: iconBridgeSDK.bsc.methods.reclaim(
-  //console.log(
-  //  `Test 15: iconBridgeSDK.bsc.methods.reclaim(`
-  //);
-  ////
-  //await testUtils.runTestOnMethod(
-  //  sdkTestnet.bsc.methods.reclaim,
-  //  "0x4DeD312eB774B9828665448C55Faa8AE15353E56",
-  //  "btp-0x2.icon-ICX",
-  //  20000000000
-  //);
   //// Test 16: iconBridgeSDK.bsc.methods.refund(
   //console.log(
   //  `Test 16: iconBridgeSDK.bsc.methods.refund(`

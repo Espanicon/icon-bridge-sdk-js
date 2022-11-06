@@ -1,5 +1,6 @@
 // icon-bridge-sdk-bsc.ts
 //
+const Exception = require("../../utils/exception");
 
 // types
 type Provider = {
@@ -178,10 +179,7 @@ class IconBridgeSDKBSC {
      * @return token balance of a wallet.
      */
 
-    balanceOf: async (
-      _owner: string,
-      _coinName: string
-    ): Promise<string | null> => {
+    balanceOf: async (_owner: string, _coinName: string): Promise<any> => {
       try {
         const isMainnet: boolean | null =
           this.params.useMainnet == null ? true : this.params.useMainnet;
@@ -208,10 +206,11 @@ class IconBridgeSDKBSC {
 
         return parsedResponse;
       } catch (err) {
-        console.log(err);
-        throw new Error(
+        const errorResult = new Exception(
+          err,
           `Error running balanceOf(). Params:\n_owner: ${_owner}\n_coinName: ${_coinName}\n`
         );
+        return { error: errorResult.toString() };
       }
     },
 
@@ -225,7 +224,7 @@ class IconBridgeSDKBSC {
     balanceOfBatch: async (
       _owner: string,
       _coinNames: string[]
-    ): Promise<void> => {
+    ): Promise<any> => {
       try {
         const isMainnet: boolean | null =
           this.params.useMainnet == null ? true : this.params.useMainnet;
@@ -252,10 +251,11 @@ class IconBridgeSDKBSC {
 
         return parsedResponse;
       } catch (err) {
-        console.log(err);
-        throw new Error(
+        const errorResult = new Exception(
+          err,
           `Error running balanceOfBatch(). Params:\n_owner: ${_owner}\n_coinNames: ${_coinNames}\n`
         );
+        return { error: errorResult.toString() };
       }
     },
 
@@ -264,7 +264,7 @@ class IconBridgeSDKBSC {
      * @param _coinName - name of coin.
      * @return
      */
-    coinId: async (_coinName: string): Promise<void> => {
+    coinId: async (_coinName: string): Promise<any> => {
       try {
         const isMainnet: boolean | null =
           this.params.useMainnet == null ? true : this.params.useMainnet;
@@ -290,10 +290,11 @@ class IconBridgeSDKBSC {
 
         return parsedResponse;
       } catch (err) {
-        console.log(err);
-        throw new Error(
+        const errorResult = new Exception(
+          err,
           `Error running coinId(). Params:\n_coinName: ${_coinName}\n`
         );
+        return { error: errorResult.toString() };
       }
     },
 
@@ -301,7 +302,7 @@ class IconBridgeSDKBSC {
      * Get name of tokens.
      * @return name of tokens.
      */
-    coinNames: async (): Promise<string | null> => {
+    coinNames: async (): Promise<any> => {
       try {
         const isMainnet: boolean | null =
           this.params.useMainnet == null ? true : this.params.useMainnet;
@@ -327,10 +328,11 @@ class IconBridgeSDKBSC {
         // return parsedResponse['_names']
         return parsedResponse;
       } catch (err) {
-        console.log(err);
-        throw new Error(
+        const errorResult = new Exception(
+          err,
           `Error running coinNames(). Params:\n ** NO PARAMS**\n`
         );
+        return { error: errorResult.toString() };
       }
     },
 
@@ -339,7 +341,7 @@ class IconBridgeSDKBSC {
      * @param _coinName - name of coin.
      * @return
      */
-    feeRatio: async (_coinName: string): Promise<void> => {
+    feeRatio: async (_coinName: string): Promise<any> => {
       try {
         const isMainnet: boolean | null =
           this.params.useMainnet == null ? true : this.params.useMainnet;
@@ -365,10 +367,11 @@ class IconBridgeSDKBSC {
 
         return parsedResponse;
       } catch (err) {
-        console.log(err);
-        throw new Error(
+        const errorResult = new Exception(
+          err,
           `Error running feeRatio(). Params:\n_coinName: ${_coinName}\n`
         );
+        return { error: errorResult.toString() };
       }
     },
 
@@ -377,7 +380,7 @@ class IconBridgeSDKBSC {
      * asset's value greater than 0.
      * @return Array of assets.
      */
-    getAccumulatedFees: async (): Promise<void> => {
+    getAccumulatedFees: async (): Promise<any> => {
       try {
         const isMainnet: boolean | null =
           this.params.useMainnet == null ? true : this.params.useMainnet;
@@ -402,10 +405,11 @@ class IconBridgeSDKBSC {
 
         return parsedResponse;
       } catch (err) {
-        console.log(err);
-        throw new Error(
+        const errorResult = new Exception(
+          err,
           `Error running getAccumulatedFees(). Params:\n ** NO PARAMS **\n`
         );
+        return { error: errorResult.toString() };
       }
     },
 
@@ -413,7 +417,7 @@ class IconBridgeSDKBSC {
      * Returns name of native coin.
      * @return string name of native coin.
      */
-    getNativeCoinName: async (): Promise<void> => {
+    getNativeCoinName: async (): Promise<any> => {
       try {
         const isMainnet: boolean | null =
           this.params.useMainnet == null ? true : this.params.useMainnet;
@@ -438,10 +442,11 @@ class IconBridgeSDKBSC {
 
         return parsedResponse;
       } catch (err) {
-        console.log(err);
-        throw new Error(
+        const errorResult = new Exception(
+          err,
           `Error running getNativeCoinName(). Params:\n ** NO PARAMS**\n`
         );
+        return { error: errorResult.toString() };
       }
     },
 
@@ -449,7 +454,7 @@ class IconBridgeSDKBSC {
      * Returns list of current owners.
      * @return Array of address of current owners.
      */
-    getOwners: async (): Promise<void> => {
+    getOwners: async (): Promise<any> => {
       try {
         const isMainnet: boolean | null =
           this.params.useMainnet == null ? true : this.params.useMainnet;
@@ -474,62 +479,11 @@ class IconBridgeSDKBSC {
 
         return parsedResponse;
       } catch (err) {
-        console.log(err);
-        throw new Error(
+        const errorResult = new Exception(
+          err,
           `Error running getOwners(). Params:\n ** NO PARAMS**\n`
         );
-      }
-    },
-
-    /**
-     * Handle a response of a requested service. Caller must be a
-     * BTSPeriphery contract.
-     * @param _requester - an address of originator of a requested service.
-     * @param _coinName - name of requested coin.
-     * @param _value - amount to receive on a destination chain.
-     * @param _fee - amount of charged fee.
-     * @param _rspCode -
-     */
-    handleResponseService: async (
-      _requester: string,
-      _coinName: string,
-      _value: number,
-      _fee: number,
-      _rspCode: number
-    ): Promise<void> => {
-      try {
-        const isMainnet: boolean | null =
-          this.params.useMainnet == null ? true : this.params.useMainnet;
-
-        const response = await this.callbackLib.BTSReadonlyQuery(
-          "handleResponseService",
-          "bsc",
-          this.bscWeb3,
-          _requester,
-          _coinName,
-          _value,
-          _fee,
-          _rspCode
-        );
-
-        const BTSLogicContractABI = this.callbackLib.getAbiOf(
-          "BTSCore",
-          "bsc",
-          isMainnet,
-          true
-        );
-
-        const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(
-          BTSLogicContractABI[12].outputs,
-          response
-        );
-
-        return parsedResponse;
-      } catch (err) {
-        console.log(err);
-        throw new Error(
-          `Error running handleResponseService(). Params:\n_requester: ${_requester}\n_coinName: ${_coinName}\n_value: ${_value}\n_fee: ${_fee}\n_rspCode: ${_rspCode}\n`
-        );
+        return { error: errorResult.toString() };
       }
     },
 
@@ -551,7 +505,7 @@ class IconBridgeSDKBSC {
      * Checks is a especified address has owner role.
      * @param _owner - address to check.
      */
-    isOwner: async (_owner: string): Promise<void> => {
+    isOwner: async (_owner: string): Promise<any> => {
       try {
         const isMainnet: boolean | null =
           this.params.useMainnet == null ? true : this.params.useMainnet;
@@ -577,10 +531,11 @@ class IconBridgeSDKBSC {
 
         return parsedResponse;
       } catch (err) {
-        console.log(err);
-        throw new Error(
+        const errorResult = new Exception(
+          err,
           `Error running isOwner(). Params:\n_owner: ${_owner}\n`
         );
+        return { error: errorResult.toString() };
       }
     },
 
@@ -588,7 +543,7 @@ class IconBridgeSDKBSC {
      * Checks validity of a coin name.
      * @param _coinName - coin name to check.
      */
-    isValidCoin: async (_coinName: string): Promise<void> => {
+    isValidCoin: async (_coinName: string): Promise<any> => {
       try {
         const isMainnet: boolean | null =
           this.params.useMainnet == null ? true : this.params.useMainnet;
@@ -614,28 +569,13 @@ class IconBridgeSDKBSC {
 
         return parsedResponse;
       } catch (err) {
-        console.log(err);
-        throw new Error(
+        const errorResult = new Exception(
+          err,
           `Error running isValidCoin(). Params:\n_coinName: ${_coinName}\n`
         );
+        return { error: errorResult.toString() };
       }
     },
-
-    //TODO => this is not a readonly query, it requires a TX
-    /**
-     * Mint the wrapped coin. Caller must be a BTSPeriphery contract.
-     * @param _to - account that receives the minted coin.
-     * @param _coinName - coin name.
-     * @param _value - minted amount.
-     */
-    // mint: async (
-    //   _to: string,
-    //   _coinName: string,
-    //   _value: number
-    // ): Promise<void> => {
-    //   // index 16
-    //   console.log(_to, _coinName, _value);
-    // },
 
     /**
      * Reclaim the token's refundable balance by an owner. Caller must be
@@ -643,9 +583,39 @@ class IconBridgeSDKBSC {
      * @param _coinName - coin name.
      * @param _value - amount of re-claiming tokens.
      */
-    reclaim: async (_coinName: string, _value: number): Promise<void> => {
-      // index 17
-      console.log(_coinName, _value);
+    reclaim: async (_coinName: string, _value: number): Promise<any> => {
+      try {
+        const isMainnet: boolean | null =
+          this.params.useMainnet == null ? true : this.params.useMainnet;
+
+        const response = await this.callbackLib.BTSReadonlyQuery(
+          "reclaim",
+          "bsc",
+          this.bscWeb3,
+          _coinName,
+          _value
+        );
+
+        const BTSLogicContractABI = this.callbackLib.getAbiOf(
+          "BTSCore",
+          "bsc",
+          isMainnet,
+          true
+        );
+
+        const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(
+          BTSLogicContractABI[17].outputs,
+          response
+        );
+
+        return parsedResponse;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running reclaim(). Params:\n_coinName: ${_coinName}\n_value: ${_value}\n`
+        );
+        return { error: errorResult.toString() };
+      }
     },
 
     /**
@@ -660,7 +630,7 @@ class IconBridgeSDKBSC {
       _to: string,
       _coinName: string,
       _value: number
-    ): Promise<void> => {
+    ): Promise<any> => {
       // index 18
       console.log([_to, _coinName, _value]);
     },
@@ -682,7 +652,7 @@ class IconBridgeSDKBSC {
       _feeNumerator: number,
       _fixedFee: number,
       _addr: string
-    ): Promise<void> => {
+    ): Promise<any> => {
       // index 19
       console.log([_name, _symbol, _decimals, _feeNumerator, _fixedFee, _addr]);
     },
@@ -691,7 +661,7 @@ class IconBridgeSDKBSC {
      * Removing an existing owner. Caller must be an owner of BTP network.
      * @param _owner - address of owner to be removed.
      */
-    removeOwner: async (_owner: string): Promise<void> => {
+    removeOwner: async (_owner: string): Promise<any> => {
       // index 20
       console.log(_owner);
     },
@@ -706,7 +676,7 @@ class IconBridgeSDKBSC {
       _name: string,
       _feeNumerator: number,
       _fixedFee: number
-    ): Promise<void> => {
+    ): Promise<any> => {
       // index 21
       console.log([_name, _feeNumerator, _fixedFee]);
     },
@@ -722,7 +692,7 @@ class IconBridgeSDKBSC {
       _coinName: string,
       _value: number,
       _to: string
-    ): Promise<void> => {
+    ): Promise<any> => {
       // index 22
       console.log([_coinName, _value, _to]);
     },
@@ -737,7 +707,7 @@ class IconBridgeSDKBSC {
       _coinNames: string[],
       _values: string[],
       _to: string
-    ): Promise<void> => {
+    ): Promise<any> => {
       // index 23
       console.log([_coinNames, _values, _to]);
     },
@@ -747,7 +717,7 @@ class IconBridgeSDKBSC {
      * BTSPeriphery contract.
      * @param _fa -
      */
-    transferFees: async (_fa: string): Promise<void> => {
+    transferFees: async (_fa: string): Promise<any> => {
       // index 24
       console.log(_fa);
     },
@@ -756,7 +726,7 @@ class IconBridgeSDKBSC {
      * Allows user to deposit native coin into a BTSCore contract.
      * @param _to - address that receives transfer.
      */
-    transferNativeCoin: async (_to: string): Promise<void> => {
+    transferNativeCoin: async (_to: string): Promise<any> => {
       // index 25
       console.log(_to);
     },
@@ -765,7 +735,7 @@ class IconBridgeSDKBSC {
      * Updates BTS periphery address. Caller must be owner of contract.
      * @param _btsPeriphery - btsPeriphery contract address.
      */
-    updateBTSPeriphery: async (_btsPeriphery: string): Promise<void> => {
+    updateBTSPeriphery: async (_btsPeriphery: string): Promise<any> => {
       // index 26
       console.log(_btsPeriphery);
     }

@@ -73,40 +73,40 @@ class IconBridgeSDK {
       const isMainnet: boolean | null =
         this.params.useMainnet == null ? true : this.params.useMainnet;
 
-      try {
-        // get contract address and contract object
-        const BTSProxyContractAddress = this.lib.getBTSCoreProxyContractAddress(
-          chain,
-          isMainnet
-        );
+      // try {
+      // get contract address and contract object
+      const BTSProxyContractAddress = this.lib.getBTSCoreProxyContractAddress(
+        chain,
+        isMainnet
+      );
 
-        const contractObject = this.lib.getBTSCoreLogicContractObject(
-          chain,
-          web3Wrapper
-        );
+      const contractObject = this.lib.getBTSCoreLogicContractObject(
+        chain,
+        web3Wrapper
+      );
 
-        // decoding a call to readonly method
-        let encodedData = null;
-        const contractMethod = contractObject.methods[methodName];
-        if (rest.length === 0) {
-          encodedData = contractMethod().encodeABI();
-        } else {
-          encodedData = contractMethod(...rest).encodeABI();
-        }
-
-        // making readonly call
-        const contractMethodCallResponse = await web3Wrapper.eth.call({
-          to: BTSProxyContractAddress,
-          data: encodedData
-        });
-
-        return contractMethodCallResponse;
-      } catch (err) {
-        console.log(err);
-        throw new Error(
-          `Error running ${methodName}(). Params:\n ** NO PARAMS**\n`
-        );
+      // decoding a call to readonly method
+      let encodedData = null;
+      const contractMethod = contractObject.methods[methodName];
+      if (rest.length === 0) {
+        encodedData = contractMethod().encodeABI();
+      } else {
+        encodedData = contractMethod(...rest).encodeABI();
       }
+
+      // making readonly call
+      const contractMethodCallResponse = await web3Wrapper.eth.call({
+        to: BTSProxyContractAddress,
+        data: encodedData
+      });
+
+      return contractMethodCallResponse;
+      // } catch (err) {
+      //   console.log(err);
+      //   throw new Error(
+      //     `Error running ${methodName}(). Params:\n ** NO PARAMS**\n`
+      //   );
+      // }
     },
 
     /**

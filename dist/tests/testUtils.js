@@ -61,14 +61,19 @@ const methodsName = {
         "isRestrictionEnabled"
     ]
 };
-function runTestOnMethod(methodCallback, ...rest) {
+function runTestOnMethod(methodCallback, bypass, ...rest) {
     return __awaiter(this, void 0, void 0, function* () {
         let testQuery = null;
-        if (rest.length === 0) {
-            testQuery = yield methodCallback();
+        if (bypass === true) {
+            testQuery = "Test bypassed";
         }
         else {
-            testQuery = yield methodCallback(...rest);
+            if (rest.length === 0) {
+                testQuery = yield methodCallback();
+            }
+            else {
+                testQuery = yield methodCallback(...rest);
+            }
         }
         console.log("Result:");
         console.log(testQuery);

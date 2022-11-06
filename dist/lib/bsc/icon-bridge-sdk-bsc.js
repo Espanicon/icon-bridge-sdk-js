@@ -8,6 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+const Exception = require("../../utils/exception");
 class IconBridgeSDKBSC {
     constructor(params, bscWeb3, sdkUtils, callbackLib) {
         this.superMethods = {
@@ -20,8 +21,8 @@ class IconBridgeSDKBSC {
                     return parsedResponse;
                 }
                 catch (err) {
-                    console.log(err);
-                    throw new Error(`Error running balanceOf(). Params:\n_owner: ${_owner}\n_coinName: ${_coinName}\n`);
+                    const errorResult = new Exception(err, `Error running balanceOf(). Params:\n_owner: ${_owner}\n_coinName: ${_coinName}\n`);
+                    return { error: errorResult.toString() };
                 }
             }),
             balanceOfBatch: (_owner, _coinNames) => __awaiter(this, void 0, void 0, function* () {
@@ -33,8 +34,8 @@ class IconBridgeSDKBSC {
                     return parsedResponse;
                 }
                 catch (err) {
-                    console.log(err);
-                    throw new Error(`Error running balanceOfBatch(). Params:\n_owner: ${_owner}\n_coinNames: ${_coinNames}\n`);
+                    const errorResult = new Exception(err, `Error running balanceOfBatch(). Params:\n_owner: ${_owner}\n_coinNames: ${_coinNames}\n`);
+                    return { error: errorResult.toString() };
                 }
             }),
             coinId: (_coinName) => __awaiter(this, void 0, void 0, function* () {
@@ -46,8 +47,8 @@ class IconBridgeSDKBSC {
                     return parsedResponse;
                 }
                 catch (err) {
-                    console.log(err);
-                    throw new Error(`Error running coinId(). Params:\n_coinName: ${_coinName}\n`);
+                    const errorResult = new Exception(err, `Error running coinId(). Params:\n_coinName: ${_coinName}\n`);
+                    return { error: errorResult.toString() };
                 }
             }),
             coinNames: () => __awaiter(this, void 0, void 0, function* () {
@@ -59,8 +60,8 @@ class IconBridgeSDKBSC {
                     return parsedResponse;
                 }
                 catch (err) {
-                    console.log(err);
-                    throw new Error(`Error running coinNames(). Params:\n ** NO PARAMS**\n`);
+                    const errorResult = new Exception(err, `Error running coinNames(). Params:\n ** NO PARAMS**\n`);
+                    return { error: errorResult.toString() };
                 }
             }),
             feeRatio: (_coinName) => __awaiter(this, void 0, void 0, function* () {
@@ -72,8 +73,8 @@ class IconBridgeSDKBSC {
                     return parsedResponse;
                 }
                 catch (err) {
-                    console.log(err);
-                    throw new Error(`Error running feeRatio(). Params:\n_coinName: ${_coinName}\n`);
+                    const errorResult = new Exception(err, `Error running feeRatio(). Params:\n_coinName: ${_coinName}\n`);
+                    return { error: errorResult.toString() };
                 }
             }),
             getAccumulatedFees: () => __awaiter(this, void 0, void 0, function* () {
@@ -85,8 +86,8 @@ class IconBridgeSDKBSC {
                     return parsedResponse;
                 }
                 catch (err) {
-                    console.log(err);
-                    throw new Error(`Error running getAccumulatedFees(). Params:\n ** NO PARAMS **\n`);
+                    const errorResult = new Exception(err, `Error running getAccumulatedFees(). Params:\n ** NO PARAMS **\n`);
+                    return { error: errorResult.toString() };
                 }
             }),
             getNativeCoinName: () => __awaiter(this, void 0, void 0, function* () {
@@ -98,8 +99,8 @@ class IconBridgeSDKBSC {
                     return parsedResponse;
                 }
                 catch (err) {
-                    console.log(err);
-                    throw new Error(`Error running getNativeCoinName(). Params:\n ** NO PARAMS**\n`);
+                    const errorResult = new Exception(err, `Error running getNativeCoinName(). Params:\n ** NO PARAMS**\n`);
+                    return { error: errorResult.toString() };
                 }
             }),
             getOwners: () => __awaiter(this, void 0, void 0, function* () {
@@ -111,21 +112,8 @@ class IconBridgeSDKBSC {
                     return parsedResponse;
                 }
                 catch (err) {
-                    console.log(err);
-                    throw new Error(`Error running getOwners(). Params:\n ** NO PARAMS**\n`);
-                }
-            }),
-            handleResponseService: (_requester, _coinName, _value, _fee, _rspCode) => __awaiter(this, void 0, void 0, function* () {
-                try {
-                    const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
-                    const response = yield this.callbackLib.BTSReadonlyQuery("handleResponseService", "bsc", this.bscWeb3, _requester, _coinName, _value, _fee, _rspCode);
-                    const BTSLogicContractABI = this.callbackLib.getAbiOf("BTSCore", "bsc", isMainnet, true);
-                    const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(BTSLogicContractABI[12].outputs, response);
-                    return parsedResponse;
-                }
-                catch (err) {
-                    console.log(err);
-                    throw new Error(`Error running handleResponseService(). Params:\n_requester: ${_requester}\n_coinName: ${_coinName}\n_value: ${_value}\n_fee: ${_fee}\n_rspCode: ${_rspCode}\n`);
+                    const errorResult = new Exception(err, `Error running getOwners(). Params:\n ** NO PARAMS**\n`);
+                    return { error: errorResult.toString() };
                 }
             }),
             isOwner: (_owner) => __awaiter(this, void 0, void 0, function* () {
@@ -137,8 +125,8 @@ class IconBridgeSDKBSC {
                     return parsedResponse;
                 }
                 catch (err) {
-                    console.log(err);
-                    throw new Error(`Error running isOwner(). Params:\n_owner: ${_owner}\n`);
+                    const errorResult = new Exception(err, `Error running isOwner(). Params:\n_owner: ${_owner}\n`);
+                    return { error: errorResult.toString() };
                 }
             }),
             isValidCoin: (_coinName) => __awaiter(this, void 0, void 0, function* () {
@@ -150,12 +138,22 @@ class IconBridgeSDKBSC {
                     return parsedResponse;
                 }
                 catch (err) {
-                    console.log(err);
-                    throw new Error(`Error running isValidCoin(). Params:\n_coinName: ${_coinName}\n`);
+                    const errorResult = new Exception(err, `Error running isValidCoin(). Params:\n_coinName: ${_coinName}\n`);
+                    return { error: errorResult.toString() };
                 }
             }),
             reclaim: (_coinName, _value) => __awaiter(this, void 0, void 0, function* () {
-                console.log(_coinName, _value);
+                try {
+                    const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
+                    const response = yield this.callbackLib.BTSReadonlyQuery("reclaim", "bsc", this.bscWeb3, _coinName, _value);
+                    const BTSLogicContractABI = this.callbackLib.getAbiOf("BTSCore", "bsc", isMainnet, true);
+                    const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(BTSLogicContractABI[17].outputs, response);
+                    return parsedResponse;
+                }
+                catch (err) {
+                    const errorResult = new Exception(err, `Error running reclaim(). Params:\n_coinName: ${_coinName}\n_value: ${_value}\n`);
+                    return { error: errorResult.toString() };
+                }
             }),
             refund: (_to, _coinName, _value) => __awaiter(this, void 0, void 0, function* () {
                 console.log([_to, _coinName, _value]);
