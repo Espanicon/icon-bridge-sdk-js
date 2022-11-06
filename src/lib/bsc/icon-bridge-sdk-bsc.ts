@@ -653,8 +653,42 @@ class IconBridgeSDKBSC {
       _fixedFee: number,
       _addr: string
     ): Promise<any> => {
-      // index 19
-      console.log([_name, _symbol, _decimals, _feeNumerator, _fixedFee, _addr]);
+      try {
+        const isMainnet: boolean | null =
+          this.params.useMainnet == null ? true : this.params.useMainnet;
+
+        const response = await this.callbackLib.BTSReadonlyQuery(
+          "register",
+          "bsc",
+          this.bscWeb3,
+          _name,
+          _symbol,
+          _decimals,
+          _feeNumerator,
+          _fixedFee,
+          _addr
+        );
+
+        const BTSLogicContractABI = this.callbackLib.getAbiOf(
+          "BTSCore",
+          "bsc",
+          isMainnet,
+          true
+        );
+
+        const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(
+          BTSLogicContractABI[19].outputs,
+          response
+        );
+
+        return parsedResponse;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running register(). Params:\n_name: ${_name}\n_symbol: ${_symbol}\n_decimals: ${_decimals}\n_feeNumerator: ${_feeNumerator}\n_fixedFee: ${_fixedFee}\n_adrr: ${_addr}\n`
+        );
+        return { error: errorResult.toString() };
+      }
     },
 
     /**

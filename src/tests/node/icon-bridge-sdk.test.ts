@@ -25,39 +25,41 @@ const testSummary = {
     // isOwner
     [testUtils.methodsName.general[8]]: "done",
     // isValidCoin
-    [testUtils.methodsName.general[9]]: "done",
-    // addOwner: this is a method that requires a signed tx
-    [testUtils.methodsName.general[10]]: "done",
+    [testUtils.methodsName.general[9]]: "done"
+    // addOwner: not readonly
+    // [testUtils.methodsName.general[10]]: "done",
     // handleResponseService: can only be called by BTSPeriphery
-    [testUtils.methodsName.general[11]]: "missed",
-    // initialize
-    [testUtils.methodsName.general[12]]: "missed",
+    // [testUtils.methodsName.general[11]]: "missed",
+    // initialize: not readonly
+    // [testUtils.methodsName.general[12]]: "missed",
     // mint: can only be called by BTSPeriphery
-    [testUtils.methodsName.general[13]]: "missed",
-    // reclaim
-    [testUtils.methodsName.general[14]]: "missed",
-    // refund
-    [testUtils.methodsName.general[15]]: "missed",
-    // register
-    [testUtils.methodsName.general[16]]: "missed",
-    // removeOwner
-    [testUtils.methodsName.general[17]]: "missed",
-    // setFeeRatio
-    [testUtils.methodsName.general[18]]: "missed",
-    // transfer
-    [testUtils.methodsName.general[19]]: "missed",
-    // transferBatch
-    [testUtils.methodsName.general[20]]: "missed",
-    // transferFees
-    [testUtils.methodsName.general[21]]: "missed",
-    // transferNativeCoin
-    [testUtils.methodsName.general[22]]: "missed"
+    // [testUtils.methodsName.general[13]]: "missed",
+    // reclaim: not readonly
+    // [testUtils.methodsName.general[14]]: "missed",
+    // refund: can only be called by BTSCore
+    // [testUtils.methodsName.general[15]]: "missed",
+    // register: can only be called by contract owner
+    // [testUtils.methodsName.general[16]]: "missed",
+    // removeOwner: can only be called by contract owner
+    // [testUtils.methodsName.general[17]]: "missed",
+    // setFeeRatio: can only be called by contract owner
+    // [testUtils.methodsName.general[18]]: "missed",
+    // transfer: not readonly
+    // [testUtils.methodsName.general[19]]: "missed",
+    // transferBatch: not readonly
+    // [testUtils.methodsName.general[20]]: "missed",
+    // transferFees: can only be called by BTSPeriphery
+    // [testUtils.methodsName.general[21]]: "missed",
+    // transferNativeCoin: not readonly
+    // [testUtils.methodsName.general[22]]: "missed"
   }
 };
 
 async function iconBridgeSDKTests() {
   console.log(testUtils.lineBreak.a);
-  console.log("Testing iconBridge methods for the BSC network");
+  console.log(
+    "Testing iconBridge methods for the BSC network. Readonly Methods."
+  );
   console.log(testUtils.lineBreak.b);
 
   // Test 1: iconBridgeSDK.bsc.methods.balanceOf(_owner, _coinName)
@@ -67,7 +69,7 @@ async function iconBridgeSDKTests() {
   //
   await testUtils.runTestOnMethod(
     sdkTestnet.bsc.methods.balanceOf,
-    true,
+    false,
     "0x4DeD312eB774B9828665448C55Faa8AE15353E56",
     "btp-0x2.icon-ICX"
   );
@@ -79,7 +81,7 @@ async function iconBridgeSDKTests() {
   //
   await testUtils.runTestOnMethod(
     sdkTestnet.bsc.methods.balanceOfBatch,
-    true,
+    false,
     "0x4DeD312eB774B9828665448C55Faa8AE15353E56",
     ["btp-0x2.icon-ICX"]
   );
@@ -89,21 +91,21 @@ async function iconBridgeSDKTests() {
   //
   await testUtils.runTestOnMethod(
     sdkTestnet.bsc.methods.coinId,
-    true,
+    false,
     "btp-0x2.icon-ICX"
   );
 
   // Test 4: iconBridgeSDK.bsc.methods.coinNames()
   console.log(`Test 4: iconBridgeSDK.bsc.methods.coinNames()`);
   //
-  await testUtils.runTestOnMethod(sdkTestnet.bsc.methods.coinNames, true);
+  await testUtils.runTestOnMethod(sdkTestnet.bsc.methods.coinNames, false);
 
   // Test 5: iconBridgeSDK.bsc.methods.feeRatio(_coinName)
   console.log(`Test 5: iconBridgeSDK.bsc.methods.feeRatio(_coinName: string)`);
   //
   await testUtils.runTestOnMethod(
     sdkTestnet.bsc.methods.feeRatio,
-    true,
+    false,
     "btp-0x2.icon-ICX"
   );
 
@@ -112,7 +114,7 @@ async function iconBridgeSDKTests() {
   //
   await testUtils.runTestOnMethod(
     sdkTestnet.bsc.methods.getAccumulatedFees,
-    true
+    false
   );
 
   // Test 7: iconBridgeSDK.bsc.methods.getNativeCoinName()
@@ -120,20 +122,20 @@ async function iconBridgeSDKTests() {
   //
   await testUtils.runTestOnMethod(
     sdkTestnet.bsc.methods.getNativeCoinName,
-    true
+    false
   );
 
   // Test 8: iconBridgeSDK.bsc.methods.getOwners()
   console.log(`Test 8: iconBridgeSDK.bsc.methods.getOwners()`);
   //
-  await testUtils.runTestOnMethod(sdkTestnet.bsc.methods.getOwners, true);
+  await testUtils.runTestOnMethod(sdkTestnet.bsc.methods.getOwners, false);
 
   // Test 9: iconBridgeSDK.bsc.methods.isOwner(_owner)
   console.log(`Test 9: iconBridgeSDK.bsc.methods.isOwner(_isOwner: string)`);
   //
   await testUtils.runTestOnMethod(
     sdkTestnet.bsc.methods.isOwner,
-    true,
+    false,
     "0x4DeD312eB774B9828665448C55Faa8AE15353E56"
   );
 
@@ -144,129 +146,9 @@ async function iconBridgeSDKTests() {
   //
   await testUtils.runTestOnMethod(
     sdkTestnet.bsc.methods.isValidCoin,
-    true,
+    false,
     "btp-0x2.icon-ICX"
   );
-
-  // TODO: this is not a readonly query
-  //// Test 11: iconBridgeSDK.bsc.methods.addOwner(_owner)
-  //console.log(`Test 11: iconBridgeSDK.bsc.methods.addOwner(_owner: string)`);
-  ////
-  //await testUtils.runTestOnMethod(
-  //  sdkTestnet.bsc.methods.addOwner,
-  //  "0x4DeD312eB774B9828665448C55Faa8AE15353E56"
-  //);
-
-  //// Test 13: iconBridgeSDK.bsc.methods.initialize(_nativeCoinName, _feeNumerator, _fixedFee)
-  //console.log(
-  //  `Test 13: iconBridgeSDK.bsc.methods.initialize(_nativeCoinName, _feeNumerator,  _fixedFee)`
-  //);
-  ////
-  //await testUtils.runTestOnMethod(
-  //  sdkTestnet.bsc.methods.initialize,
-  //  "btp-0x2.icon-ICX",
-  //  20000000000000,
-  //  2000
-  //);
-
-  // Test 15: iconBridgeSDK.bsc.methods.reclaim(
-  console.log(`Test 15: iconBridgeSDK.bsc.methods.reclaim(_coinName, _value)`);
-  //
-  await testUtils.runTestOnMethod(
-    sdkTestnet.bsc.methods.reclaim,
-    false,
-    "btp-0x2.icon-ICX",
-    20000000000
-  );
-
-  //// Test 16: iconBridgeSDK.bsc.methods.refund(
-  //console.log(
-  //  `Test 16: iconBridgeSDK.bsc.methods.refund(`
-  //);
-  ////
-  //await testUtils.runTestOnMethod(
-  //  sdkTestnet.bsc.methods.refund,
-  //  "0x4DeD312eB774B9828665448C55Faa8AE15353E56",
-  //  "btp-0x2.icon-ICX",
-  //  20000000000
-  //);
-  //// Test 17: iconBridgeSDK.bsc.methods.register(
-  //console.log(
-  //  `Test 17: iconBridgeSDK.bsc.methods.register(`
-  //);
-  ////
-  //await testUtils.runTestOnMethod(
-  //  sdkTestnet.bsc.methods.register,
-  //  "0x4DeD312eB774B9828665448C55Faa8AE15353E56",
-  //  "btp-0x2.icon-ICX",
-  //  20000000000
-  //);
-  //// Test 18: iconBridgeSDK.bsc.methods.removeOwner(
-  //console.log(
-  //  `Test 18: iconBridgeSDK.bsc.methods.removeOwner(`
-  //);
-  ////
-  //await testUtils.runTestOnMethod(
-  //  sdkTestnet.bsc.methods.removeOwner,
-  //  "0x4DeD312eB774B9828665448C55Faa8AE15353E56",
-  //  "btp-0x2.icon-ICX",
-  //  20000000000
-  //);
-  //// Test 19: iconBridgeSDK.bsc.methods.setFeeRatio(
-  //console.log(
-  //  `Test 19: iconBridgeSDK.bsc.methods.setFeeRatio(`
-  //);
-  ////
-  //await testUtils.runTestOnMethod(
-  //  sdkTestnet.bsc.methods.setFeeRatio,
-  //  "0x4DeD312eB774B9828665448C55Faa8AE15353E56",
-  //  "btp-0x2.icon-ICX",
-  //  20000000000
-  //);
-  //// Test 20: iconBridgeSDK.bsc.methods.transfer(
-  //console.log(
-  //  `Test 20: iconBridgeSDK.bsc.methods.transfer(`
-  //);
-  ////
-  //await testUtils.runTestOnMethod(
-  //  sdkTestnet.bsc.methods.transfer,
-  //  "0x4DeD312eB774B9828665448C55Faa8AE15353E56",
-  //  "btp-0x2.icon-ICX",
-  //  20000000000
-  //);
-  //// Test 21: iconBridgeSDK.bsc.methods.transferBatch(
-  //console.log(
-  //  `Test 21: iconBridgeSDK.bsc.transferBatch(`
-  //);
-  ////
-  //await testUtils.runTestOnMethod(
-  //  sdkTestnet.bsc.methods.transferBatch,
-  //  "0x4DeD312eB774B9828665448C55Faa8AE15353E56",
-  //  "btp-0x2.icon-ICX",
-  //  20000000000
-  //);
-  //// Test 22: iconBridgeSDK.bsc.methods.transferFees(
-  //console.log(
-  //  `Test 22: iconBridgeSDK.bsc.methods.transferFees(`
-  //);
-  ////
-  //await testUtils.runTestOnMethod(
-  //  sdkTestnet.bsc.methods.transferFees,
-  //  "0x4DeD312eB774B9828665448C55Faa8AE15353E56",
-  //  "btp-0x2.icon-ICX",
-  //  20000000000
-  //);
-  //// Test 23: iconBridgeSDK.bsc.methods.transferNativeCoin(
-  //console.log(
-  //  `Test 23: iconBridgeSDK.bsc.methods.transferNativeCoin(`
-  //);
-  ////
-  //await testUtils.runTestOnMethod(
-  //  sdkTestnet.bsc.methods.trasnferNativeCoin,
-  //  "0x4DeD312eB774B9828665448C55Faa8AE15353E56",
-  //  "btp-0x2.icon-ICX",
-  //  20000000000
-  //);
 
   //
   console.log("Test summary:");
