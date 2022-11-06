@@ -1,8 +1,8 @@
 // icon-bridge-sdk.ts
 //
-import utils from "./utils/utils";
+import utils from "../utils/utils";
 import Web3 from "web3";
-import IconBridgeSDKBSC from "./bsc/icon-bridge-sdk-bsc";
+// import IconBridgeSDKBSC from "./bsc/icon-bridge-sdk-bsc";
 
 // types
 type Provider = {
@@ -42,12 +42,12 @@ class IconBridgeSDK {
   constructor(inputParams: InputParams = defaultParams) {
     this.params = this.sdkUtils.getSDKParams(inputParams);
     this.bscWeb3 = new Web3(this.params.bscProvider.hostname);
-    this.bsc = new IconBridgeSDKBSC(
-      this.params,
-      this.bscWeb3,
-      this.sdkUtils,
-      this.lib
-    );
+    // this.bsc = new IconBridgeSDKBSC(
+    //   this.params,
+    //   this.bscWeb3,
+    //   this.sdkUtils,
+    //   this.lib
+    // );
   }
 
   // ######################################################################
@@ -64,59 +64,6 @@ class IconBridgeSDK {
      * @param rest - Array of params to pass to method call.
      */
     BTSReadonlyQuery: async (
-      methodName: string,
-      chain: string,
-      web3Wrapper: any,
-      ...rest: any[]
-    ): Promise<string | null> => {
-      // check if class object was created for mainnet or testnet
-      const isMainnet: boolean | null =
-        this.params.useMainnet == null ? true : this.params.useMainnet;
-
-      try {
-        // get contract address and contract object
-        const BTSProxyContractAddress = this.lib.getBTSCoreProxyContractAddress(
-          chain,
-          isMainnet
-        );
-
-        const contractObject = this.lib.getBTSCoreLogicContractObject(
-          chain,
-          web3Wrapper
-        );
-
-        // decoding a call to readonly method
-        let encodedData = null;
-        const contractMethod = contractObject.methods[methodName];
-        if (rest.length === 0) {
-          encodedData = contractMethod().encodeABI();
-        } else {
-          encodedData = contractMethod(...rest).encodeABI();
-        }
-
-        // making readonly call
-        const contractMethodCallResponse = await web3Wrapper.eth.call({
-          to: BTSProxyContractAddress,
-          data: encodedData
-        });
-
-        return contractMethodCallResponse;
-      } catch (err) {
-        console.log(err);
-        throw new Error(
-          `Error running ${methodName}(). Params:\n ** NO PARAMS**\n`
-        );
-      }
-    },
-
-    /**
-     * Make transaction method to the BTS smart contract.
-     * @param methodName - name of the smart contract method to call.
-     * @param chain - chain to use.
-     * @param web3Wrapper - object containing the web3 library to use.
-     * @param rest - Array of params to pass to method call.
-     */
-    BTSSendTx: async (
       methodName: string,
       chain: string,
       web3Wrapper: any,

@@ -1,5 +1,5 @@
 import EspaniconSDKWeb from "@espanicon/espanicon-sdk";
-import IconBridgeSDK from "./icon-bridge-sdk.js";
+import IconBridgeSDK from "./lib/icon-bridge-sdk.js";
 const defaultParams = {
     useMainnet: true
 };

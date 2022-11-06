@@ -1,33 +1,57 @@
-import IconBridgeSDK from "../../icon-bridge-sdk";
+import IconBridgeSDK from "../../icon-bridge-sdk-node";
 import testUtils from "../testUtils";
 
 // const sdkMainnet = new IconBridgeSDK();
 const sdkTestnet = new IconBridgeSDK({ useMainnet: false });
+
 const testSummary = {
   bsc: {
-    [testUtils.methodsName.general[0]]: "done", // balanceOf
-    [testUtils.methodsName.general[1]]: "done", // balanceOfBatch
-    [testUtils.methodsName.general[2]]: "done", // coinId
-    [testUtils.methodsName.general[3]]: "done", // coinNames
-    [testUtils.methodsName.general[4]]: "done", // feeRatio
-    [testUtils.methodsName.general[5]]: "done", // getAccumulatedFees
-    [testUtils.methodsName.general[6]]: "done", // getNativeCoinName
-    [testUtils.methodsName.general[7]]: "done", // getOwners
-    [testUtils.methodsName.general[8]]: "done", // isOwner
-    [testUtils.methodsName.general[9]]: "done", // isValidCoin
-    [testUtils.methodsName.general[10]]: "done", // addOwner (tx)
-    [testUtils.methodsName.general[11]]: "missed", // handleResponseService
-    [testUtils.methodsName.general[12]]: "missed", // initialize
-    [testUtils.methodsName.general[13]]: "missed", // mint
-    [testUtils.methodsName.general[14]]: "missed", // reclaim
-    [testUtils.methodsName.general[15]]: "missed", // refund
-    [testUtils.methodsName.general[16]]: "missed", // register
-    [testUtils.methodsName.general[17]]: "missed", // removeOwner
-    [testUtils.methodsName.general[18]]: "missed", // setFeeRatio
-    [testUtils.methodsName.general[19]]: "missed", // transfer
-    [testUtils.methodsName.general[20]]: "missed", // transferBatch
-    [testUtils.methodsName.general[21]]: "missed", // transferFees
-    [testUtils.methodsName.general[22]]: "missed" // transferNativeCoin
+    // balanceOf
+    [testUtils.methodsName.general[0]]: "done",
+    // balanceOfBatch
+    [testUtils.methodsName.general[1]]: "done",
+    // coinNames
+    [testUtils.methodsName.general[2]]: "done",
+    // coinNames
+    [testUtils.methodsName.general[3]]: "done",
+    // feeRatio
+    [testUtils.methodsName.general[4]]: "done",
+    // getAccumulatedFees
+    [testUtils.methodsName.general[5]]: "done",
+    // getNativeCoinName
+    [testUtils.methodsName.general[6]]: "done",
+    // getOwners
+    [testUtils.methodsName.general[7]]: "done",
+    // isOwner
+    [testUtils.methodsName.general[8]]: "done",
+    // isValidCoin
+    [testUtils.methodsName.general[9]]: "done",
+    // addOwner: this is a method that requires a signed tx
+    [testUtils.methodsName.general[10]]: "done",
+    // handleResponseService: can only be called by BTSPeriphery
+    [testUtils.methodsName.general[11]]: "missed",
+    // initialize
+    [testUtils.methodsName.general[12]]: "missed",
+    // mint: can only be called by BTSPeriphery
+    [testUtils.methodsName.general[13]]: "missed",
+    // reclaim
+    [testUtils.methodsName.general[14]]: "missed",
+    // refund
+    [testUtils.methodsName.general[15]]: "missed",
+    // register
+    [testUtils.methodsName.general[16]]: "missed",
+    // removeOwner
+    [testUtils.methodsName.general[17]]: "missed",
+    // setFeeRatio
+    [testUtils.methodsName.general[18]]: "missed",
+    // transfer
+    [testUtils.methodsName.general[19]]: "missed",
+    // transferBatch
+    [testUtils.methodsName.general[20]]: "missed",
+    // transferFees
+    [testUtils.methodsName.general[21]]: "missed",
+    // transferNativeCoin
+    [testUtils.methodsName.general[22]]: "missed"
   }
 };
 
@@ -121,19 +145,19 @@ async function iconBridgeSDKTests() {
   //  "0x4DeD312eB774B9828665448C55Faa8AE15353E56"
   //);
 
-  //// Test 12: iconBridgeSDK.bsc.methods.handleResponseService(_requester, _coinName, _value, _fee, _rspCode)
-  //console.log(
-  //  `Test 12: iconBridgeSDK.bsc.methods.handleResponseService(_requester, _coinName, _value, _fee, _rspCode)`
-  //);
-  ////
-  //await testUtils.runTestOnMethod(
-  //  sdkTestnet.bsc.methods.handleResponseService,
-  //  "0x4DeD312eB774B9828665448C55Faa8AE15353E56",
-  //  "btp-0x2.icon-ICX",
-  //  20000000000000,
-  //  2000,
-  //  232
-  //);
+  // Test 12: iconBridgeSDK.bsc.methods.handleResponseService(_requester, _coinName, _value, _fee, _rspCode)
+  console.log(
+    `Test 12: iconBridgeSDK.bsc.methods.handleResponseService(_requester, _coinName, _value, _fee, _rspCode)`
+  );
+  //
+  await testUtils.runTestOnMethod(
+    sdkTestnet.bsc.methods.handleResponseService,
+    "0x4DeD312eB774B9828665448C55Faa8AE15353E56",
+    "btp-0x2.icon-ICX",
+    20000000000000,
+    2000,
+    232
+  );
 
   //// Test 13: iconBridgeSDK.bsc.methods.initialize(_nativeCoinName, _feeNumerator, _fixedFee)
   //console.log(

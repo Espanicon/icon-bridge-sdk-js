@@ -1,98 +1,108 @@
-const IconBridgeSDK = require("./icon-bridge-sdk");
+const IconBridgeSDK = require("./lib/icon-bridge-sdk");
 const EspaniconSDKNode = require("@espanicon/espanicon-sdk");
-// import utils from "./utils/utils";
+const bscNodeBridge = require("./lib/bsc/icon-bridge-sdk-node-bsc");
 
 // types
 type Provider = {
   hostname: string;
-  nid: null | number
-}
+  nid: null | number;
+};
 
 type InputParams = {
   useMainnet: null | boolean;
   iconProvider?: Provider;
-  bscProvider?: Provider
-}
+  bscProvider?: Provider;
+};
 // variables
 const defaultParams = {
   useMainnet: true
-}
+};
 
 // code logic
 class IconBridgeSDKNode extends IconBridgeSDK {
   iconWeb3: any;
-  constructor(inputParams: InputParams = defaultParams ) {
+  bsc: any;
+
+  constructor(inputParams: InputParams = defaultParams) {
     super(inputParams);
     this.iconWeb3 = new EspaniconSDKNode(
       this.params.iconProvider.hostname,
       this.params.iconProvider.nid
     );
-    this.bsc = {
-      ...this.bsc,
-      transferNativeCoin: async (
-        amount: string,
-        from: string,
-        to: string,
-        privateKey: string,
-        toChain:string,
-      ) => {
-        return await this.#transferNativeCoin(
-          amount,
-          from,
-          to,
-          privateKey, 
-          toChain,
-          "bsc",
-          this.bscWeb3
-        )
-      }
-    };
-  }
-
-  #transferNativeCoin = async (
-    amount: string,
-    from: string,
-    to: string,
-    privateKey: string,
-    toChain: string,
-    fromChain: string,
-    web3Wrapper: any
-  ) => {
-    try {
-      const isMainnet = this.params.useMainnet == null 
-        ? true 
-        : this.params.useMainnet;
-
-      // get contract object with the methods
-      const contract = this.lib.getBTSCoreLogicContractObject(fromChain, web3Wrapper);
-      // get the correctly formatted BTP address (btp://<BTP_NID>/<ADDRESS>
-      const btpAddress = this.sdkUtils.getBTPAddress(to, toChain, isMainnet);
-      const proxyAddress = this.lib.getBTSCoreProxyContractAddress("bsc", isMainnet);
-      // create the query and tx object
-      const query = contract.methods.transferNativeCoin(btpAddress);
-      const tx = {
-        from:from,
-        // to: contract._address,
-        to: proxyAddress,
-        gas: 2000000,
-        data: query.encodeABI(),
-        value: web3Wrapper.utils.toWei(amount, "ether")
-      }
-      // create the signed tx
-      const signedTx = await web3Wrapper.eth.accounts.signTransaction(
-        tx,
-        privateKey
-      )
-      // get tx receipt
-      const receipt = await web3Wrapper.eth.sendSignedTransaction(
-        signedTx.rawTransaction
-      )
-
-      return receipt.transactionHash
-    } catch (err) {
-      throw new Error(`Error running #transferNativeCoin.\n${err}`)
-    }
-
+    this.bsc = new bscNodeBridge(
+      this.params,
+      this.bscWeb3,
+      this.sdkUtils,
+      this.lib
+    );
   }
 }
 export = IconBridgeSDKNode;
+
+// import utils from "./utils/utils";
+
+//     this.bsc = {
+//       ...this.bsc,
+//       transferNativeCoin: async (
+//         amount: string,
+//         from: string,
+//         to: string,
+//         privateKey: string,
+//         toChain:string,
+//       ) => {
+//         return await this.#transferNativeCoin(
+//           amount,
+//           from,
+//           to,
+//           privateKey,
+//           toChain,
+//           "bsc",
+//           this.bscWeb3
+//         )
+//       }
+//     };
+//   }
+
+//   #transferNativeCoin = async (
+//     amount: string,
+//     from: string,
+//     to: string,
+//     privateKey: string,
+//     toChain: string,
+//     fromChain: string,
+//     web3Wrapper: any
+//   ) => {
+//     try {
+//       const isMainnet = this.params.useMainnet == null
+//         ? true
+//         : this.params.useMainnet;
+
+//       // get contract object with the methods
+//       const contract = this.lib.getBTSCoreLogicContractObject(fromChain, web3Wrapper);
+//       // get the correctly formatted BTP address (btp://<BTP_NID>/<ADDRESS>
+//       const btpAddress = this.sdkUtils.getBTPAddress(to, toChain, isMainnet);
+//       const proxyAddress = this.lib.getBTSCoreProxyContractAddress("bsc", isMainnet);
+//       // create the query and tx object
+//       const query = contract.methods.transferNativeCoin(btpAddress);
+//       const tx = {
+//         from:from,
+//         // to: contract._address,
+//         to: proxyAddress,
+//         gas: 2000000,
+//         data: query.encodeABI(),
+//         value: web3Wrapper.utils.toWei(amount, "ether")
+//       }
+//       // create the signed tx
+//       const signedTx = await web3Wrapper.eth.accounts.signTransaction(
+//         tx,
+//         privateKey
+//       )
+//       // get tx receipt
+//       const receipt = await web3Wrapper.eth.sendSignedTransaction(
+//         signedTx.rawTransaction
+//       )
+//       return receipt.transactionHash
+//     } catch (err) {
+//       throw new Error(`Error running #transferNativeCoin.\n${err}`)
+//     }
+//   }

@@ -11,9 +11,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-const utils_1 = __importDefault(require("./utils/utils"));
+const utils_1 = __importDefault(require("../utils/utils"));
 const web3_1 = __importDefault(require("web3"));
-const icon_bridge_sdk_bsc_1 = __importDefault(require("./bsc/icon-bridge-sdk-bsc"));
 const defaultParams = {
     useMainnet: true
 };
@@ -23,30 +22,6 @@ class IconBridgeSDK {
         this.params = utils_1.default.defaultSDKParams;
         this.lib = {
             BTSReadonlyQuery: (methodName, chain, web3Wrapper, ...rest) => __awaiter(this, void 0, void 0, function* () {
-                const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
-                try {
-                    const BTSProxyContractAddress = this.lib.getBTSCoreProxyContractAddress(chain, isMainnet);
-                    const contractObject = this.lib.getBTSCoreLogicContractObject(chain, web3Wrapper);
-                    let encodedData = null;
-                    const contractMethod = contractObject.methods[methodName];
-                    if (rest.length === 0) {
-                        encodedData = contractMethod().encodeABI();
-                    }
-                    else {
-                        encodedData = contractMethod(...rest).encodeABI();
-                    }
-                    const contractMethodCallResponse = yield web3Wrapper.eth.call({
-                        to: BTSProxyContractAddress,
-                        data: encodedData
-                    });
-                    return contractMethodCallResponse;
-                }
-                catch (err) {
-                    console.log(err);
-                    throw new Error(`Error running ${methodName}(). Params:\n ** NO PARAMS**\n`);
-                }
-            }),
-            BTSSendTx: (methodName, chain, web3Wrapper, ...rest) => __awaiter(this, void 0, void 0, function* () {
                 const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
                 try {
                     const BTSProxyContractAddress = this.lib.getBTSCoreProxyContractAddress(chain, isMainnet);
@@ -125,7 +100,6 @@ class IconBridgeSDK {
         };
         this.params = this.sdkUtils.getSDKParams(inputParams);
         this.bscWeb3 = new web3_1.default(this.params.bscProvider.hostname);
-        this.bsc = new icon_bridge_sdk_bsc_1.default(this.params, this.bscWeb3, this.sdkUtils, this.lib);
     }
 }
 module.exports = IconBridgeSDK;

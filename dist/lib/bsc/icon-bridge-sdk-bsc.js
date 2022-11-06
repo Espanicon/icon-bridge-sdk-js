@@ -10,40 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 class IconBridgeSDKBSC {
     constructor(params, bscWeb3, sdkUtils, callbackLib) {
-        this.methods = {
-            getLogicContractAddressOnChain: (address, memSlot = this.sdkUtils.labels.memSlot) => __awaiter(this, void 0, void 0, function* () {
-                try {
-                    return yield this.callbackLib.getLogicContractAddressOnChain(address, memSlot, this.bscWeb3);
-                }
-                catch (err) {
-                    throw new Error(`Error running 'getLogicContractAddressOnChain' method.\n${err}`);
-                }
-            }),
-            getContractObject: (abi, contractAddress) => {
-                return this.callbackLib.getContractObject(abi, contractAddress, this.bscWeb3);
-            },
-            getAbiOf: (contractLabel, getLogicContract = false) => {
-                const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
-                return this.callbackLib.getAbiOf(contractLabel, "bsc", isMainnet, getLogicContract);
-            },
-            getBTSAbi: () => {
-                const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
-                return this.callbackLib.getBTSAbi("bsc", isMainnet);
-            },
-            getBTSCoreLogicContractAddress: () => {
-                const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
-                return this.callbackLib.getBTSCoreLogicContractAddress("bsc", isMainnet);
-            },
-            getBTSCoreProxyContractObject: () => {
-                return this.callbackLib.getBTSCoreProxyContractObject("bsc", this.bscWeb3);
-            },
-            getBTSCoreLogicContractAbi: () => {
-                const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
-                return this.callbackLib.getAbiOf("BTSCore", "bsc", isMainnet, true);
-            },
-            getBTSCoreLogicContractObject: () => {
-                return this.callbackLib.getBTSCoreLogicContractObject("bsc", this.bscWeb3);
-            },
+        this.superMethods = {
             balanceOf: (_owner, _coinName) => __awaiter(this, void 0, void 0, function* () {
                 try {
                     const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
@@ -62,7 +29,6 @@ class IconBridgeSDKBSC {
                     const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
                     const response = yield this.callbackLib.BTSReadonlyQuery("balanceOfBatch", "bsc", this.bscWeb3, _owner, _coinNames);
                     const BTSLogicContractABI = this.callbackLib.getAbiOf("BTSCore", "bsc", isMainnet, true);
-                    console.log(BTSLogicContractABI);
                     const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(BTSLogicContractABI[5].outputs, response);
                     return parsedResponse;
                 }
@@ -149,6 +115,19 @@ class IconBridgeSDKBSC {
                     throw new Error(`Error running getOwners(). Params:\n ** NO PARAMS**\n`);
                 }
             }),
+            handleResponseService: (_requester, _coinName, _value, _fee, _rspCode) => __awaiter(this, void 0, void 0, function* () {
+                try {
+                    const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
+                    const response = yield this.callbackLib.BTSReadonlyQuery("handleResponseService", "bsc", this.bscWeb3, _requester, _coinName, _value, _fee, _rspCode);
+                    const BTSLogicContractABI = this.callbackLib.getAbiOf("BTSCore", "bsc", isMainnet, true);
+                    const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(BTSLogicContractABI[12].outputs, response);
+                    return parsedResponse;
+                }
+                catch (err) {
+                    console.log(err);
+                    throw new Error(`Error running handleResponseService(). Params:\n_requester: ${_requester}\n_coinName: ${_coinName}\n_value: ${_value}\n_fee: ${_fee}\n_rspCode: ${_rspCode}\n`);
+                }
+            }),
             isOwner: (_owner) => __awaiter(this, void 0, void 0, function* () {
                 try {
                     const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
@@ -168,19 +147,6 @@ class IconBridgeSDKBSC {
                     const response = yield this.callbackLib.BTSReadonlyQuery("isValidCoin", "bsc", this.bscWeb3, _coinName);
                     const BTSLogicContractABI = this.callbackLib.getAbiOf("BTSCore", "bsc", isMainnet, true);
                     const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(BTSLogicContractABI[15].outputs, response);
-                    return parsedResponse;
-                }
-                catch (err) {
-                    console.log(err);
-                    throw new Error(`Error running isValidCoin(). Params:\n_coinName: ${_coinName}\n`);
-                }
-            }),
-            handleResponseService: (_requester, _coinName, _value, _fee, _rspCode) => __awaiter(this, void 0, void 0, function* () {
-                try {
-                    const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
-                    const response = yield this.callbackLib.BTSReadonlyQuery("handleResponseService", "bsc", this.bscWeb3, _requester, _coinName, _value, _fee, _rspCode);
-                    const BTSLogicContractABI = this.callbackLib.getAbiOf("BTSCore", "bsc", isMainnet, true);
-                    const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(BTSLogicContractABI[11].outputs, response);
                     return parsedResponse;
                 }
                 catch (err) {

@@ -11,9 +11,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-const icon_bridge_sdk_1 = __importDefault(require("../../icon-bridge-sdk"));
+const icon_bridge_sdk_node_1 = __importDefault(require("../../icon-bridge-sdk-node"));
 const testUtils_1 = __importDefault(require("../testUtils"));
-const sdkTestnet = new icon_bridge_sdk_1.default({ useMainnet: false });
+const sdkTestnet = new icon_bridge_sdk_node_1.default({ useMainnet: false });
 const testSummary = {
     bsc: {
         [testUtils_1.default.methodsName.general[0]]: "done",
@@ -26,7 +26,7 @@ const testSummary = {
         [testUtils_1.default.methodsName.general[7]]: "done",
         [testUtils_1.default.methodsName.general[8]]: "done",
         [testUtils_1.default.methodsName.general[9]]: "done",
-        [testUtils_1.default.methodsName.general[10]]: "missed",
+        [testUtils_1.default.methodsName.general[10]]: "done",
         [testUtils_1.default.methodsName.general[11]]: "missed",
         [testUtils_1.default.methodsName.general[12]]: "missed",
         [testUtils_1.default.methodsName.general[13]]: "missed",
@@ -66,6 +66,8 @@ function iconBridgeSDKTests() {
         yield testUtils_1.default.runTestOnMethod(sdkTestnet.bsc.methods.isOwner, "0x4DeD312eB774B9828665448C55Faa8AE15353E56");
         console.log(`Test 10: iconBridgeSDK.bsc.methods.isValidCoin(_coinName: string)`);
         yield testUtils_1.default.runTestOnMethod(sdkTestnet.bsc.methods.isValidCoin, "btp-0x2.icon-ICX");
+        console.log(`Test 12: iconBridgeSDK.bsc.methods.handleResponseService(_requester, _coinName, _value, _fee, _rspCode)`);
+        yield testUtils_1.default.runTestOnMethod(sdkTestnet.bsc.methods.handleResponseService, "0x4DeD312eB774B9828665448C55Faa8AE15353E56", "btp-0x2.icon-ICX", 20000000000000, 2000, 232);
         console.log("Test summary:");
         console.log(testSummary);
         console.log(testUtils_1.default.lineBreak.a);
