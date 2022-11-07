@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 const icon_bridge_sdk_node_1 = __importDefault(require("../../icon-bridge-sdk-node"));
 const testUtils_1 = __importDefault(require("../testUtils"));
 const sdkTestnet = new icon_bridge_sdk_node_1.default({ useMainnet: false });
+console.log(sdkTestnet);
 const testSummary = {
     bsc: {
         [testUtils_1.default.methodsName.general[0]]: "done",

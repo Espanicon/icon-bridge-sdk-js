@@ -162,9 +162,19 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
      * Allows user to deposit native coin into a BTSCore contract.
      * @param _to - address that receives transfer.
      */
-    transferNativeCoin: async (_to: string): Promise<void> => {
-      // index 25
-      console.log(_to);
+    transferNativeCoin: async (
+      _to: string,
+      from: string,
+      pk: string,
+      amount: number,
+    ): Promise<any> => {
+      return await this.#signBTSCoreTx(
+        from,
+        pk,
+        "transferNativeCoin",
+        amount,
+        _to
+      )
     },
 
     /**
@@ -217,6 +227,35 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
     //   console.log(_fa);
     // }
   };
+
+  #signBTSCoreTx = async (
+    from: string,
+    pk: string,
+    methodName: string,
+    amount: null | number = null,
+    ...rest: any[]
+  ): Promise<string | null> => {
+    if (rest.length === 0) {
+      return await this.callbackLib.signBTSCoreTx(
+        from,
+        pk,
+        methodName,
+        amount,
+        "bsc",
+        this.bscWeb3,
+        ...rest
+      )
+    } else {
+      return await this.callbackLib.signBTSCoreTx(
+        from,
+        pk,
+        methodName,
+        amount,
+        "bsc",
+        this.bscWeb3
+      )
+    }
+  }
 }
 
 export = IconBridgeSDKNodeBSC;

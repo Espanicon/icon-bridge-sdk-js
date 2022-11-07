@@ -16,6 +16,14 @@ type InputParams = {
   bscProvider?: Provider;
 };
 
+type Tx = {
+  from: string;
+  to: string;
+  gas: number;
+  data: object;
+  value?: number;
+};
+
 // variables
 const defaultParams: InputParams = {
   useMainnet: true
@@ -73,7 +81,6 @@ class IconBridgeSDK {
       const isMainnet: boolean | null =
         this.params.useMainnet == null ? true : this.params.useMainnet;
 
-      // try {
       // get contract address and contract object
       const BTSProxyContractAddress = this.lib.getBTSCoreProxyContractAddress(
         chain,
@@ -101,12 +108,72 @@ class IconBridgeSDK {
       });
 
       return contractMethodCallResponse;
-      // } catch (err) {
-      //   console.log(err);
-      //   throw new Error(
-      //     `Error running ${methodName}(). Params:\n ** NO PARAMS**\n`
-      //   );
-      // }
+    },
+
+    /**
+     * Make a signed transaction to a method in the  BTS smart contract.
+     * @param from - public address of origination wallet.
+     * @param pk - private key of origination wallet.
+     * @param methodName - name of the smart contract method to call.
+     * @param chain - chain to use.
+     * @param web3Wrapper - object containing the web3 library to use.
+     * @param rest - Array of params to pass to method call.
+     */
+    signBTSCoreTx: async (
+      from: string,
+      pk: string,
+      methodName: string,
+      amount: null | number = null,
+      chain: string,
+      web3Wrapper: any,
+      ...rest: any[]
+    ): Promise<string | null> => {
+      // check if class object was created for mainnet or testnet
+      const isMainnet: boolean | null =
+        this.params.useMainnet == null ? true : this.params.useMainnet;
+
+      // get contract address
+      const BTSProxyContractAddress = this.lib.getBTSCoreProxyContractAddress(
+        chain,
+        isMainnet
+      );
+
+      // get BTSCore logic contract web3 object
+      const contractObject = this.lib.getBTSCoreLogicContractObject(
+        chain,
+        web3Wrapper
+      );
+
+      // decoding a call to readonly method
+      let encodedData = null;
+      const contractMethod = contractObject.methods[methodName];
+      if (rest.length === 0) {
+        encodedData = contractMethod().encodeABI();
+      } else {
+        encodedData = contractMethod(...rest).encodeABI();
+      }
+
+      // get tx object
+      const tx: Tx = {
+        from: from,
+        to: BTSProxyContractAddress,
+        gas: 2000000,
+        data: encodedData
+      };
+
+      if (amount != null) {
+        tx["value"] = web3Wrapper.utils.toWei(amount, "ether");
+      }
+
+      // create the signed tx
+      const signedTx = await web3Wrapper.eth.accounts.signedTransaction(tx, pk);
+
+      // get tx receipt
+      const receipt = await web3Wrapper.eth.sendSignedTransaction(
+        signedTx.rawTransaction
+      );
+
+      return receipt.transactionHash;
     },
 
     /**

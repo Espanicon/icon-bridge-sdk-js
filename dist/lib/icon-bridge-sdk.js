@@ -39,6 +39,31 @@ class IconBridgeSDK {
                 });
                 return contractMethodCallResponse;
             }),
+            signBTSCoreTx: (from, pk, methodName, amount = null, chain, web3Wrapper, ...rest) => __awaiter(this, void 0, void 0, function* () {
+                const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
+                const BTSProxyContractAddress = this.lib.getBTSCoreProxyContractAddress(chain, isMainnet);
+                const contractObject = this.lib.getBTSCoreLogicContractObject(chain, web3Wrapper);
+                let encodedData = null;
+                const contractMethod = contractObject.methods[methodName];
+                if (rest.length === 0) {
+                    encodedData = contractMethod().encodeABI();
+                }
+                else {
+                    encodedData = contractMethod(...rest).encodeABI();
+                }
+                const tx = {
+                    from: from,
+                    to: BTSProxyContractAddress,
+                    gas: 2000000,
+                    data: encodedData
+                };
+                if (amount != null) {
+                    tx["value"] = web3Wrapper.utils.toWei(amount, "ether");
+                }
+                const signedTx = yield web3Wrapper.eth.accounts.signedTransaction(tx, pk);
+                const receipt = yield web3Wrapper.eth.sendSignedTransaction(signedTx.rawTransaction);
+                return receipt.transactionHash;
+            }),
             getAbiOf: (contractLabel, chain, isMainnet, getLogicContract = true) => {
                 return this.sdkUtils.getAbiOfLabelFromLocalData(contractLabel, chain, isMainnet, getLogicContract);
             },

@@ -141,56 +141,6 @@ class IconBridgeSDKBSC {
                     const errorResult = new Exception(err, `Error running isValidCoin(). Params:\n_coinName: ${_coinName}\n`);
                     return { error: errorResult.toString() };
                 }
-            }),
-            reclaim: (_coinName, _value) => __awaiter(this, void 0, void 0, function* () {
-                try {
-                    const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
-                    const response = yield this.callbackLib.BTSReadonlyQuery("reclaim", "bsc", this.bscWeb3, _coinName, _value);
-                    const BTSLogicContractABI = this.callbackLib.getAbiOf("BTSCore", "bsc", isMainnet, true);
-                    const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(BTSLogicContractABI[17].outputs, response);
-                    return parsedResponse;
-                }
-                catch (err) {
-                    const errorResult = new Exception(err, `Error running reclaim(). Params:\n_coinName: ${_coinName}\n_value: ${_value}\n`);
-                    return { error: errorResult.toString() };
-                }
-            }),
-            refund: (_to, _coinName, _value) => __awaiter(this, void 0, void 0, function* () {
-                console.log([_to, _coinName, _value]);
-            }),
-            register: (_name, _symbol, _decimals, _feeNumerator, _fixedFee, _addr) => __awaiter(this, void 0, void 0, function* () {
-                try {
-                    const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
-                    const response = yield this.callbackLib.BTSReadonlyQuery("register", "bsc", this.bscWeb3, _name, _symbol, _decimals, _feeNumerator, _fixedFee, _addr);
-                    const BTSLogicContractABI = this.callbackLib.getAbiOf("BTSCore", "bsc", isMainnet, true);
-                    const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(BTSLogicContractABI[19].outputs, response);
-                    return parsedResponse;
-                }
-                catch (err) {
-                    const errorResult = new Exception(err, `Error running register(). Params:\n_name: ${_name}\n_symbol: ${_symbol}\n_decimals: ${_decimals}\n_feeNumerator: ${_feeNumerator}\n_fixedFee: ${_fixedFee}\n_adrr: ${_addr}\n`);
-                    return { error: errorResult.toString() };
-                }
-            }),
-            removeOwner: (_owner) => __awaiter(this, void 0, void 0, function* () {
-                console.log(_owner);
-            }),
-            setFeeRatio: (_name, _feeNumerator, _fixedFee) => __awaiter(this, void 0, void 0, function* () {
-                console.log([_name, _feeNumerator, _fixedFee]);
-            }),
-            transfer: (_coinName, _value, _to) => __awaiter(this, void 0, void 0, function* () {
-                console.log([_coinName, _value, _to]);
-            }),
-            transferBatch: (_coinNames, _values, _to) => __awaiter(this, void 0, void 0, function* () {
-                console.log([_coinNames, _values, _to]);
-            }),
-            transferFees: (_fa) => __awaiter(this, void 0, void 0, function* () {
-                console.log(_fa);
-            }),
-            transferNativeCoin: (_to) => __awaiter(this, void 0, void 0, function* () {
-                console.log(_to);
-            }),
-            updateBTSPeriphery: (_btsPeriphery) => __awaiter(this, void 0, void 0, function* () {
-                console.log(_btsPeriphery);
             })
         };
         this.params = params;

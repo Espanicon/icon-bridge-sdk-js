@@ -3,6 +3,7 @@ import testUtils from "../testUtils";
 
 // const sdkMainnet = new IconBridgeSDK();
 const sdkTestnet = new IconBridgeSDK({ useMainnet: false });
+console.log(sdkTestnet);
 
 const testSummary = {
   bsc: {
