@@ -1,5 +1,5 @@
 require("dotenv").config();
-import sdk from "../../icon-bridge-sdk-node.js";
+const sdk = require("../../icon-bridge-sdk-node");
 
 const lib = new sdk({ useMainnet: false });
 const wallets = {
