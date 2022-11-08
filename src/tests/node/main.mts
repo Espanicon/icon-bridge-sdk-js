@@ -1,6 +1,6 @@
 import sdkReadonlyTests from "./icon-bridge-sdk-readonly.test.js";
+import sdkNonReadonlyTests from "./icon-bridge-sdk-non-readonly.test.js";
 import iconBridgeSDKWebTests from "./icon-bridge-sdk-web.test.mjs";
-import iconBridgeSDKNodeTests from "./icon-bridge-sdk-node.test.js";
 
 async function runTests() {
   // next block code is to silence typescript error of no unused var
