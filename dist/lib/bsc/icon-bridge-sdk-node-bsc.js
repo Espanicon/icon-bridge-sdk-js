@@ -15,6 +15,7 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
 };
 var _IconBridgeSDKNodeBSC_localMethods, _IconBridgeSDKNodeBSC_signBTSCoreTx;
 const baseBSCSDK = require("./icon-bridge-sdk-bsc");
+const Exception = require("../../utils/exception");
 class IconBridgeSDKNodeBSC extends baseBSCSDK {
     constructor(params, bscWeb3, sdkUtils, callbackLib) {
         super(params, bscWeb3, sdkUtils, callbackLib);
@@ -43,19 +44,27 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
             transferBatch: (_coinNames, _values, _to) => __awaiter(this, void 0, void 0, function* () {
                 console.log([_coinNames, _values, _to]);
             }),
-            transferNativeCoin: (_to, from, pk, amount) => __awaiter(this, void 0, void 0, function* () {
-                return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_signBTSCoreTx, "f").call(this, from, pk, "transferNativeCoin", amount, _to);
+            transferNativeCoin: (targetAddress, targetChain = 'icon', from, pk, amount, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
+                try {
+                    const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
+                    const btpAddress = this.sdkUtils.getBTPAddress(targetAddress, targetChain, isMainnet);
+                    return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_signBTSCoreTx, "f").call(this, from, pk, "transferNativeCoin", amount, gas, btpAddress);
+                }
+                catch (err) {
+                    const errorResult = new Exception(err, `Error running transferNativeCoin(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\npk: ${pk}\namount: ${amount}\ngas: ${gas}\n`);
+                    return { error: errorResult.toString() };
+                }
             }),
             updateBTSPeriphery: (_btsPeriphery) => __awaiter(this, void 0, void 0, function* () {
                 console.log(_btsPeriphery);
             }),
         });
-        _IconBridgeSDKNodeBSC_signBTSCoreTx.set(this, (from, pk, methodName, amount = null, ...rest) => __awaiter(this, void 0, void 0, function* () {
+        _IconBridgeSDKNodeBSC_signBTSCoreTx.set(this, (from, pk, methodName, amount = null, gas = null, ...rest) => __awaiter(this, void 0, void 0, function* () {
             if (rest.length === 0) {
-                return yield this.callbackLib.signBTSCoreTx(from, pk, methodName, amount, "bsc", this.bscWeb3, ...rest);
+                return yield this.callbackLib.signBTSCoreTx(from, pk, methodName, amount, "bsc", this.bscWeb3, gas);
             }
             else {
-                return yield this.callbackLib.signBTSCoreTx(from, pk, methodName, amount, "bsc", this.bscWeb3);
+                return yield this.callbackLib.signBTSCoreTx(from, pk, methodName, amount, "bsc", this.bscWeb3, gas, ...rest);
             }
         }));
         this.params = params;

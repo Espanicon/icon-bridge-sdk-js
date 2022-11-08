@@ -126,6 +126,7 @@ class IconBridgeSDK {
       amount: null | number = null,
       chain: string,
       web3Wrapper: any,
+      gas: number | null = null,
       ...rest: any[]
     ): Promise<string | null> => {
       // check if class object was created for mainnet or testnet
@@ -157,7 +158,7 @@ class IconBridgeSDK {
       const tx: Tx = {
         from: from,
         to: BTSProxyContractAddress,
-        gas: 2000000,
+        gas: gas == null ? 2000000 : gas,
         data: encodedData
       };
 
@@ -166,7 +167,7 @@ class IconBridgeSDK {
       }
 
       // create the signed tx
-      const signedTx = await web3Wrapper.eth.accounts.signedTransaction(tx, pk);
+      const signedTx = await web3Wrapper.eth.accounts.signTransaction(tx, pk);
 
       // get tx receipt
       const receipt = await web3Wrapper.eth.sendSignedTransaction(

@@ -8,14 +8,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import sdkReadonlyTests from "./icon-bridge-sdk-readonly.test.js";
+import sdkNonReadonlyTests from "./icon-bridge-sdk-non-readonly.test.js";
 import iconBridgeSDKWebTests from "./icon-bridge-sdk-web.test.mjs";
-import iconBridgeSDKNodeTests from "./icon-bridge-sdk-node.test.js";
 function runTests() {
     return __awaiter(this, void 0, void 0, function* () {
-        const foo = [sdkReadonlyTests, iconBridgeSDKWebTests, iconBridgeSDKNodeTests];
+        const foo = [sdkReadonlyTests, iconBridgeSDKWebTests, sdkNonReadonlyTests];
         console.log('#disregard this log', foo.length);
         console.log('Test Module: Running tests on readonly methods.');
         yield sdkReadonlyTests();
+        console.log('Test Module: Running tests on non-readonly methods.');
+        yield sdkNonReadonlyTests();
     });
 }
 runTests();

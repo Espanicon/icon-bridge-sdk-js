@@ -8,12 +8,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 require("dotenv").config();
-const icon_bridge_sdk_node_js_1 = __importDefault(require("../../icon-bridge-sdk-node.js"));
-const lib = new icon_bridge_sdk_node_js_1.default({ useMainnet: false });
+const sdk = require("../../icon-bridge-sdk-node");
+const testUtils = require("../testUtils");
+const lib = new sdk({ useMainnet: false });
 const wallets = {
     icon: {
         a: {
@@ -30,10 +28,12 @@ const wallets = {
 };
 function iconBridgeSDKNodeTests() {
     return __awaiter(this, void 0, void 0, function* () {
-        console.log("transferNativeCoin test");
-        const a = yield lib.bsc.methods.transferNativeCoin("1", wallets.bsc.a.pubK, wallets.icon.a.pubK, wallets.bsc.a.privK, "icon");
-        console.log(a);
+        console.log(testUtils.lineBreak.a);
+        console.log("Testing iconBridge methods for the BSC network. Non readonly Methods.");
+        console.log(testUtils.lineBreak.b);
+        console.log("Test 1: iconBridgeSDK.bsc.methods.transferNativeCoin(targetAddress, targetChain, from, pk, amount, gas)");
+        yield testUtils.runTestOnMethod(lib.bsc.methods.transferNativeCoin, false, wallets.icon.a.pubK, "icon", wallets.bsc.a.pubK, wallets.bsc.a.privK, "0.01");
     });
 }
 module.exports = iconBridgeSDKNodeTests;
-//# sourceMappingURL=icon-bridge-sdk-node.test.js.map
+//# sourceMappingURL=icon-bridge-sdk-non-readonly.test.js.map

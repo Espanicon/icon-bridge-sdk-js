@@ -1,6 +1,7 @@
 // icon-bridge-sdk-node-bsc.ts
 //
 const baseBSCSDK = require("./icon-bridge-sdk-bsc");
+const Exception = require("../../utils/exception");
 
 // types
 type Provider = {
@@ -160,21 +161,45 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
     
     /**
      * Allows user to deposit native coin into a BTSCore contract.
-     * @param _to - address that receives transfer.
+     * @param targetAddress - address that receives transfer.
+     * @param targetChain - chain that receives transfer.
+     * @param from - public address of origin.
+     * @param pk - private key of origin.
+     * @param amount - amount of native coin to send.
+     * @param gas - transfer fee amount.
      */
     transferNativeCoin: async (
-      _to: string,
+      targetAddress: string,
+      targetChain: string = 'icon',
       from: string,
       pk: string,
-      amount: number,
+      amount: string,
+      gas: number | null = 2000000
     ): Promise<any> => {
-      return await this.#signBTSCoreTx(
-        from,
-        pk,
-        "transferNativeCoin",
-        amount,
-        _to
-      )
+      try {
+        const isMainnet: boolean | null =
+          this.params.useMainnet == null ? true : this.params.useMainnet;
+
+        const btpAddress = this.sdkUtils.getBTPAddress(
+          targetAddress,
+          targetChain,
+          isMainnet
+        )
+        return await this.#signBTSCoreTx(
+          from,
+          pk,
+          "transferNativeCoin",
+          amount,
+          gas,
+          btpAddress
+        )
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running transferNativeCoin(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\npk: ${pk}\namount: ${amount}\ngas: ${gas}\n`
+        )
+        return { error: errorResult.toString() };
+      }
     },
 
     /**
@@ -232,7 +257,8 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
     from: string,
     pk: string,
     methodName: string,
-    amount: null | number = null,
+    amount: null | string = null,
+    gas: number | null = null,
     ...rest: any[]
   ): Promise<string | null> => {
     if (rest.length === 0) {
@@ -243,7 +269,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
         amount,
         "bsc",
         this.bscWeb3,
-        ...rest
+        gas
       )
     } else {
       return await this.callbackLib.signBTSCoreTx(
@@ -252,7 +278,9 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
         methodName,
         amount,
         "bsc",
-        this.bscWeb3
+        this.bscWeb3,
+        gas,
+        ...rest
       )
     }
   }

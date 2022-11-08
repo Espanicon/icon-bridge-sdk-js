@@ -39,7 +39,7 @@ class IconBridgeSDK {
                 });
                 return contractMethodCallResponse;
             }),
-            signBTSCoreTx: (from, pk, methodName, amount = null, chain, web3Wrapper, ...rest) => __awaiter(this, void 0, void 0, function* () {
+            signBTSCoreTx: (from, pk, methodName, amount = null, chain, web3Wrapper, gas = null, ...rest) => __awaiter(this, void 0, void 0, function* () {
                 const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
                 const BTSProxyContractAddress = this.lib.getBTSCoreProxyContractAddress(chain, isMainnet);
                 const contractObject = this.lib.getBTSCoreLogicContractObject(chain, web3Wrapper);
@@ -54,13 +54,13 @@ class IconBridgeSDK {
                 const tx = {
                     from: from,
                     to: BTSProxyContractAddress,
-                    gas: 2000000,
+                    gas: gas == null ? 2000000 : gas,
                     data: encodedData
                 };
                 if (amount != null) {
                     tx["value"] = web3Wrapper.utils.toWei(amount, "ether");
                 }
-                const signedTx = yield web3Wrapper.eth.accounts.signedTransaction(tx, pk);
+                const signedTx = yield web3Wrapper.eth.accounts.signTransaction(tx, pk);
                 const receipt = yield web3Wrapper.eth.sendSignedTransaction(signedTx.rawTransaction);
                 return receipt.transactionHash;
             }),
