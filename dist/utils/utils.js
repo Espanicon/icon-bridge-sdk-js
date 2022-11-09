@@ -91,12 +91,16 @@ function getContractOfLabelFromLocalData(label, chain, isMainnet, getLogicContra
 function getAbiOfLabelFromLocalData(label, chain, isMainnet, getLogicContract = false) {
     return lib_1.default.getAbiOfLabelFromLocalData(label, chain, isMainnet, getLogicContract);
 }
+function getTokenLabelFromTokenName(tokenName) {
+    return tokenName;
+}
 const utils = {
     networks: networks_1.networks,
     contracts: contracts_1.contracts,
     getBTPAddress,
     abiDataPath,
     labels: contracts_1.labels,
+    tokenLabels: contracts_1.tokenLabels,
     getContractOf,
     removeZerosFromAddress,
     GenericContractAddress: contracts_1.GenericContractAddress,
@@ -104,7 +108,8 @@ const utils = {
     getSDKParams,
     getFormattedHostname,
     getContractOfLabelFromLocalData,
-    getAbiOfLabelFromLocalData
+    getAbiOfLabelFromLocalData,
+    getTokenLabelFromTokenName
 };
 module.exports = utils;
 //# sourceMappingURL=utils.js.map

@@ -43,11 +43,11 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
     this.callbackLib = callbackLib;
     this.methods = {
       ...this.superMethods,
-      ...this.#localMethods
+      ...this.localMethods
     };
   }
 
-  #localMethods = {
+  private localMethods = {
     /**
      * Add another Owner. Caller must be an Owner of BTP network.
      * @param _owner - Address of new owner
@@ -55,7 +55,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
      */
     addOwner: async (_owner: string): Promise<any> => {
       // method on index 3
-      console.log(_owner)
+      console.log(_owner);
     },
 
     /**
@@ -129,19 +129,335 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
     },
 
     /**
-     * Allow users to deposit an amount of wrapped native coin into the
+     * Allow users to deposit an amount of BUSD token into the
      * BTSCore contract.
+     * @param targetAddress - address of receiver.
+     * @param targetChain - receiver chain.
+     * @param from - address of sender.
+     * @param pk - private key of sender.
      * @param _coinName - given name of wrapped coin.
      * @param _value - amount to transfer.
-     * @param _to - target BTP address.
+     * @param gas - transfer fee amount.
+     */
+    transferBUSD: async (
+      targetAddress: string,
+      targetChain: string = "icon",
+      from: string,
+      pk: string,
+      _coinName: string,
+      _value: string,
+      gas: number | null = 2000000
+    ): Promise<any> => {
+      //
+      const foo = [
+        targetAddress,
+        targetChain,
+        from,
+        pk,
+        _coinName,
+        _value,
+        gas
+      ];
+      console.log(foo);
+    },
+
+    /**
+     * Allow users to deposit an amount of USDT token into the
+     * BTSCore contract.
+     * @param targetAddress - address of receiver.
+     * @param targetChain - receiver chain.
+     * @param from - address of sender.
+     * @param pk - private key of sender.
+     * @param _coinName - given name of wrapped coin.
+     * @param _value - amount to transfer.
+     * @param gas - transfer fee amount.
+     */
+    transferUSDT: async (
+      targetAddress: string,
+      targetChain: string = "icon",
+      from: string,
+      pk: string,
+      _coinName: string,
+      _value: string,
+      gas: number | null = 2000000
+    ): Promise<any> => {
+      //
+      const foo = [
+        targetAddress,
+        targetChain,
+        from,
+        pk,
+        _coinName,
+        _value,
+        gas
+      ];
+      console.log(foo);
+    },
+
+    /**
+     * Allow users to deposit an amount of USDC token into the
+     * BTSCore contract.
+     * @param targetAddress - address of receiver.
+     * @param targetChain - receiver chain.
+     * @param from - address of sender.
+     * @param pk - private key of sender.
+     * @param _coinName - given name of wrapped coin.
+     * @param _value - amount to transfer.
+     * @param gas - transfer fee amount.
+     */
+    transferUSDC: async (
+      targetAddress: string,
+      targetChain: string = "icon",
+      from: string,
+      pk: string,
+      _coinName: string,
+      _value: string,
+      gas: number | null = 2000000
+    ): Promise<any> => {
+      //
+      const foo = [
+        targetAddress,
+        targetChain,
+        from,
+        pk,
+        _coinName,
+        _value,
+        gas
+      ];
+      console.log(foo);
+    },
+
+    /**
+     * Allow users to deposit an amount of BTCB token into the
+     * BTSCore contract.
+     * @param targetAddress - address of receiver.
+     * @param targetChain - receiver chain.
+     * @param from - address of sender.
+     * @param pk - private key of sender.
+     * @param _coinName - given name of wrapped coin.
+     * @param _value - amount to transfer.
+     * @param gas - transfer fee amount.
+     */
+    transferBTCB: async (
+      targetAddress: string,
+      targetChain: string = "icon",
+      from: string,
+      pk: string,
+      _coinName: string,
+      _value: string,
+      gas: number | null = 2000000
+    ): Promise<any> => {
+      //
+      const foo = [
+        targetAddress,
+        targetChain,
+        from,
+        pk,
+        _coinName,
+        _value,
+        gas
+      ];
+      console.log(foo);
+    },
+
+    /**
+     * Allow users to deposit an amount of ETH token into the
+     * BTSCore contract.
+     * @param targetAddress - address of receiver.
+     * @param targetChain - receiver chain.
+     * @param from - address of sender.
+     * @param pk - private key of sender.
+     * @param _coinName - given name of wrapped coin.
+     * @param _value - amount to transfer.
+     * @param gas - transfer fee amount.
+     */
+    transferETH: async (
+      targetAddress: string,
+      targetChain: string = "icon",
+      from: string,
+      pk: string,
+      _coinName: string,
+      _value: string,
+      gas: number | null = 2000000
+    ): Promise<any> => {
+      //
+      const foo = [
+        targetAddress,
+        targetChain,
+        from,
+        pk,
+        _coinName,
+        _value,
+        gas
+      ];
+      console.log(foo);
+    },
+
+    /**
+     * Allow users to deposit an amount of ICX token into the
+     * BTSCore contract.
+     * @param targetAddress - address of receiver.
+     * @param targetChain - receiver chain.
+     * @param from - address of sender.
+     * @param pk - private key of sender.
+     * @param _coinName - given name of wrapped coin.
+     * @param _value - amount to transfer.
+     * @param gas - transfer fee amount.
+     */
+    transferICX: async (
+      targetAddress: string,
+      targetChain: string = "icon",
+      from: string,
+      pk: string,
+      _coinName: string,
+      _value: string,
+      gas: number | null = 2000000
+    ): Promise<any> => {
+      //
+      const foo = [
+        targetAddress,
+        targetChain,
+        from,
+        pk,
+        _coinName,
+        _value,
+        gas
+      ];
+      console.log(foo);
+    },
+
+    /**
+     * Allow users to deposit an amount of sICX token into the
+     * BTSCore contract.
+     * @param targetAddress - address of receiver.
+     * @param targetChain - receiver chain.
+     * @param from - address of sender.
+     * @param pk - private key of sender.
+     * @param _coinName - given name of wrapped coin.
+     * @param _value - amount to transfer.
+     * @param gas - transfer fee amount.
+     */
+    transferSICX: async (
+      targetAddress: string,
+      targetChain: string = "icon",
+      from: string,
+      pk: string,
+      _coinName: string,
+      _value: string,
+      gas: number | null = 2000000
+    ): Promise<any> => {
+      //
+      const foo = [
+        targetAddress,
+        targetChain,
+        from,
+        pk,
+        _coinName,
+        _value,
+        gas
+      ];
+      console.log(foo);
+    },
+
+    /**
+     * Allow users to deposit an amount of bnUSD token into the
+     * BTSCore contract.
+     * @param targetAddress - address of receiver.
+     * @param targetChain - receiver chain.
+     * @param from - address of sender.
+     * @param pk - private key of sender.
+     * @param _coinName - given name of wrapped coin.
+     * @param _value - amount to transfer.
+     * @param gas - transfer fee amount.
+     */
+    transferbnUSD: async (
+      targetAddress: string,
+      targetChain: string = "icon",
+      from: string,
+      pk: string,
+      _coinName: string,
+      _value: string,
+      gas: number | null = 2000000
+    ): Promise<any> => {
+      //
+      const foo = [
+        targetAddress,
+        targetChain,
+        from,
+        pk,
+        _coinName,
+        _value,
+        gas
+      ];
+      console.log(foo);
+    },
+
+    /**
+     * Allow users to deposit an amount of wrapped native coin into the
+     * BTSCore contract.
+     * BTSCore contract.
+     * @param targetAddress - address of receiver.
+     * @param targetChain - receiver chain.
+     * @param from - address of sender.
+     * @param pk - private key of sender.
+     * @param _coinName - given name of wrapped coin.
+     * @param _value - amount to transfer.
+     * @param tokenContractAddress - contract address of the token to be sent.
+     * @param tokenContractAbi - contract abi of the token to be sent.
+     * @param gas - transfer fee amount.
      */
     transfer: async (
+      targetAddress: string,
+      targetChain: string = "icon",
+      from: string,
+      pk: string,
       _coinName: string,
-      _value: number,
-      _to: string
-    ): Promise<void> => {
-      // index 22
-      console.log([_coinName, _value, _to]);
+      _value: string,
+      tokenContractAddress: string,
+      tokenContractAbi: any[],
+      gas: number | null = 2000000
+    ): Promise<any> => {
+      const foo = [tokenContractAddress, tokenContractAbi];
+      console.log(foo);
+      try {
+        const isMainnet: boolean | null =
+          this.params.useMainnet == null ? true : this.params.useMainnet;
+
+        // first approve the contract to make transfer
+        // const response = await this.approveBTSCoreForTransfer(
+        //   from,
+        //   pk,
+        //   _value,
+        //   tokenContractAddress,
+        //   tokenContractAbi,
+        //   gas
+        // );
+
+        const btpAddress = this.sdkUtils.getBTPAddress(
+          targetAddress,
+          targetChain,
+          isMainnet
+        );
+
+        const valueInWei = this.bscWeb3.utils.toWei(_value, "ether");
+
+        return await this.signBTSCoreTx(
+          from,
+          pk,
+          "transfer",
+          null,
+          gas,
+          _coinName,
+          valueInWei,
+          btpAddress
+        );
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running transfer(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\npk: ${pk}\n_coinName: ${_coinName}\n_value: ${_value}\n`
+        );
+        return { error: errorResult.toString() };
+      }
     },
 
     /**
@@ -158,7 +474,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       // index 23
       console.log([_coinNames, _values, _to]);
     },
-    
+
     /**
      * Allows user to deposit native coin into a BTSCore contract.
      * @param targetAddress - address that receives transfer.
@@ -170,7 +486,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
      */
     transferNativeCoin: async (
       targetAddress: string,
-      targetChain: string = 'icon',
+      targetChain: string = "icon",
       from: string,
       pk: string,
       amount: string,
@@ -184,20 +500,20 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
           targetAddress,
           targetChain,
           isMainnet
-        )
-        return await this.#signBTSCoreTx(
+        );
+        return await this.signBTSCoreTx(
           from,
           pk,
           "transferNativeCoin",
           amount,
           gas,
           btpAddress
-        )
+        );
       } catch (err) {
         const errorResult = new Exception(
           err,
           `Error running transferNativeCoin(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\npk: ${pk}\namount: ${amount}\ngas: ${gas}\n`
-        )
+        );
         return { error: errorResult.toString() };
       }
     },
@@ -209,7 +525,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
     updateBTSPeriphery: async (_btsPeriphery: string): Promise<void> => {
       // index 26
       console.log(_btsPeriphery);
-    },
+    }
     ///////////////////////////////////////////////////////////////////
     //
     // The following methods can only be called by BTSCore and/or
@@ -224,7 +540,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
     //   // index 24
     //   console.log(_fa);
     // },
-    
+
     /**
      * For information on this specific method check the solidity smart
      * contract code on the following link:
@@ -253,7 +569,37 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
     // }
   };
 
-  #signBTSCoreTx = async (
+  //private approveBTSCoreForTransfer = async (
+  //  from: string,
+  //  pk: string,
+  //  amount: string,
+  //  tokenContractAddress: string,
+  //  tokenContractAbi: any[],
+  //  gas: number | null = null
+  //) => {
+  //  //
+  //  const isMainnet: boolean | null =
+  //    this.params.useMainnet == null ? true : this.params.useMainnet;
+
+  //  const btsCoreAddress = this.callbackLib.getBTSCoreProxyContractAddress(
+  //    "bsc",
+  //    isMainnet
+  //  );
+
+  //  return await this.callbackLib.approveTransfer(
+  //    from,
+  //    pk,
+  //    btsCoreAddress,
+  //    amount,
+  //    tokenContractAddress,
+  //    tokenContractAbi,
+  //    "bsc",
+  //    this.bscWeb3,
+  //    gas
+  //  );
+  //};
+
+  private signBTSCoreTx = async (
     from: string,
     pk: string,
     methodName: string,
@@ -270,7 +616,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
         "bsc",
         this.bscWeb3,
         gas
-      )
+      );
     } else {
       return await this.callbackLib.signBTSCoreTx(
         from,
@@ -281,9 +627,9 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
         this.bscWeb3,
         gas,
         ...rest
-      )
+      );
     }
-  }
+  };
 }
 
 export = IconBridgeSDKNodeBSC;

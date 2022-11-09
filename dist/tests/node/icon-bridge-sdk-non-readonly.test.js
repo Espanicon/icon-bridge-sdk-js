@@ -33,6 +33,8 @@ function iconBridgeSDKNodeTests() {
         console.log(testUtils.lineBreak.b);
         console.log("Test 1: iconBridgeSDK.bsc.methods.transferNativeCoin(targetAddress, targetChain, from, pk, amount, gas)");
         yield testUtils.runTestOnMethod(lib.bsc.methods.transferNativeCoin, false, wallets.icon.a.pubK, "icon", wallets.bsc.a.pubK, wallets.bsc.a.privK, "0.01");
+        console.log("Test 1: iconBridgeSDK.bsc.methods.transfer(targetAddress, targetChain, from, pk, _coinName, _value, gas)");
+        yield testUtils.runTestOnMethod(lib.bsc.methods.transfer, true, wallets.icon.a.pubK, "icon", wallets.bsc.a.pubK, wallets.bsc.a.privK, "btp-0x2.icon-ICX", "10", 10000000);
     });
 }
 module.exports = iconBridgeSDKNodeTests;

@@ -8,18 +8,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, state, kind, f) {
-    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
-    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
-    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
-};
-var _IconBridgeSDKNodeBSC_localMethods, _IconBridgeSDKNodeBSC_signBTSCoreTx;
 const baseBSCSDK = require("./icon-bridge-sdk-bsc");
 const Exception = require("../../utils/exception");
 class IconBridgeSDKNodeBSC extends baseBSCSDK {
     constructor(params, bscWeb3, sdkUtils, callbackLib) {
         super(params, bscWeb3, sdkUtils, callbackLib);
-        _IconBridgeSDKNodeBSC_localMethods.set(this, {
+        this.localMethods = {
             addOwner: (_owner) => __awaiter(this, void 0, void 0, function* () {
                 console.log(_owner);
             }),
@@ -38,17 +32,124 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
             setFeeRatio: (_name, _feeNumerator, _fixedFee) => __awaiter(this, void 0, void 0, function* () {
                 console.log([_name, _feeNumerator, _fixedFee]);
             }),
-            transfer: (_coinName, _value, _to) => __awaiter(this, void 0, void 0, function* () {
-                console.log([_coinName, _value, _to]);
+            transferBUSD: (targetAddress, targetChain = "icon", from, pk, _coinName, _value, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
+                const foo = [
+                    targetAddress,
+                    targetChain,
+                    from,
+                    pk,
+                    _coinName,
+                    _value,
+                    gas
+                ];
+                console.log(foo);
+            }),
+            transferUSDT: (targetAddress, targetChain = "icon", from, pk, _coinName, _value, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
+                const foo = [
+                    targetAddress,
+                    targetChain,
+                    from,
+                    pk,
+                    _coinName,
+                    _value,
+                    gas
+                ];
+                console.log(foo);
+            }),
+            transferUSDC: (targetAddress, targetChain = "icon", from, pk, _coinName, _value, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
+                const foo = [
+                    targetAddress,
+                    targetChain,
+                    from,
+                    pk,
+                    _coinName,
+                    _value,
+                    gas
+                ];
+                console.log(foo);
+            }),
+            transferBTCB: (targetAddress, targetChain = "icon", from, pk, _coinName, _value, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
+                const foo = [
+                    targetAddress,
+                    targetChain,
+                    from,
+                    pk,
+                    _coinName,
+                    _value,
+                    gas
+                ];
+                console.log(foo);
+            }),
+            transferETH: (targetAddress, targetChain = "icon", from, pk, _coinName, _value, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
+                const foo = [
+                    targetAddress,
+                    targetChain,
+                    from,
+                    pk,
+                    _coinName,
+                    _value,
+                    gas
+                ];
+                console.log(foo);
+            }),
+            transferICX: (targetAddress, targetChain = "icon", from, pk, _coinName, _value, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
+                const foo = [
+                    targetAddress,
+                    targetChain,
+                    from,
+                    pk,
+                    _coinName,
+                    _value,
+                    gas
+                ];
+                console.log(foo);
+            }),
+            transferSICX: (targetAddress, targetChain = "icon", from, pk, _coinName, _value, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
+                const foo = [
+                    targetAddress,
+                    targetChain,
+                    from,
+                    pk,
+                    _coinName,
+                    _value,
+                    gas
+                ];
+                console.log(foo);
+            }),
+            transferbnUSD: (targetAddress, targetChain = "icon", from, pk, _coinName, _value, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
+                const foo = [
+                    targetAddress,
+                    targetChain,
+                    from,
+                    pk,
+                    _coinName,
+                    _value,
+                    gas
+                ];
+                console.log(foo);
+            }),
+            transfer: (targetAddress, targetChain = "icon", from, pk, _coinName, _value, tokenContractAddress, tokenContractAbi, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
+                const foo = [tokenContractAddress, tokenContractAbi];
+                console.log(foo);
+                try {
+                    const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
+                    const btpAddress = this.sdkUtils.getBTPAddress(targetAddress, targetChain, isMainnet);
+                    const valueInWei = this.bscWeb3.utils.toWei(_value, "ether");
+                    return yield this.signBTSCoreTx(from, pk, "transfer", null, gas, _coinName, valueInWei, btpAddress);
+                }
+                catch (err) {
+                    const errorResult = new Exception(err, `Error running transfer(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\npk: ${pk}\n_coinName: ${_coinName}\n_value: ${_value}\n`);
+                    return { error: errorResult.toString() };
+                }
             }),
             transferBatch: (_coinNames, _values, _to) => __awaiter(this, void 0, void 0, function* () {
                 console.log([_coinNames, _values, _to]);
             }),
-            transferNativeCoin: (targetAddress, targetChain = 'icon', from, pk, amount, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
+            transferNativeCoin: (targetAddress, targetChain = "icon", from, pk, amount, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
                 try {
                     const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
                     const btpAddress = this.sdkUtils.getBTPAddress(targetAddress, targetChain, isMainnet);
-                    return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_signBTSCoreTx, "f").call(this, from, pk, "transferNativeCoin", amount, gas, btpAddress);
+                    return yield this.signBTSCoreTx(from, pk, "transferNativeCoin", amount, gas, btpAddress);
                 }
                 catch (err) {
                     const errorResult = new Exception(err, `Error running transferNativeCoin(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\npk: ${pk}\namount: ${amount}\ngas: ${gas}\n`);
@@ -57,23 +158,22 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
             }),
             updateBTSPeriphery: (_btsPeriphery) => __awaiter(this, void 0, void 0, function* () {
                 console.log(_btsPeriphery);
-            }),
-        });
-        _IconBridgeSDKNodeBSC_signBTSCoreTx.set(this, (from, pk, methodName, amount = null, gas = null, ...rest) => __awaiter(this, void 0, void 0, function* () {
+            })
+        };
+        this.signBTSCoreTx = (from, pk, methodName, amount = null, gas = null, ...rest) => __awaiter(this, void 0, void 0, function* () {
             if (rest.length === 0) {
                 return yield this.callbackLib.signBTSCoreTx(from, pk, methodName, amount, "bsc", this.bscWeb3, gas);
             }
             else {
                 return yield this.callbackLib.signBTSCoreTx(from, pk, methodName, amount, "bsc", this.bscWeb3, gas, ...rest);
             }
-        }));
+        });
         this.params = params;
         this.bscWeb3 = bscWeb3;
         this.sdkUtils = sdkUtils;
         this.callbackLib = callbackLib;
-        this.methods = Object.assign(Object.assign({}, this.superMethods), __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_localMethods, "f"));
+        this.methods = Object.assign(Object.assign({}, this.superMethods), this.localMethods);
     }
 }
-_IconBridgeSDKNodeBSC_localMethods = new WeakMap(), _IconBridgeSDKNodeBSC_signBTSCoreTx = new WeakMap();
 module.exports = IconBridgeSDKNodeBSC;
 //# sourceMappingURL=icon-bridge-sdk-node-bsc.js.map

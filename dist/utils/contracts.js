@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.contracts = exports.GenericContractAddress = exports.labels = void 0;
+exports.contracts = exports.GenericContractAddress = exports.tokenLabels = exports.labels = void 0;
 exports.labels = {
     sicx: "sICX",
     bnusd: "bnUSD",
@@ -19,6 +19,17 @@ exports.labels = {
     icx: "ICX",
     memSlot: "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc"
 };
+exports.tokenLabels = [
+    exports.labels.sicx,
+    exports.labels.bnusd,
+    exports.labels.bnb,
+    exports.labels.busd,
+    exports.labels.usdt,
+    exports.labels.usdc,
+    exports.labels.btcb,
+    exports.labels.eth,
+    exports.labels.icx
+];
 class GenericContractAddress {
     constructor(address) {
         this.address = this.validated(address);

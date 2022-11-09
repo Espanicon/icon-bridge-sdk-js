@@ -70,8 +70,12 @@ function parseAbiResponse(abi) {
 function getAbiBatch(batch, isMainnet = true) {
     return __awaiter(this, void 0, void 0, function* () {
         const objKeys = Object.keys(batch);
+        objKeys.push("genericToken");
         const result = {};
         for (const eachKey of objKeys) {
+            if (eachKey === "genericToken") {
+                continue;
+            }
             const abi = yield getAbi(batch[eachKey].address, isMainnet);
             const parsedAbi = parseAbiResponse(abi);
             const implementation = {
@@ -104,6 +108,17 @@ function getAbiBatch(batch, isMainnet = true) {
                     address: address,
                     implementation: implementation
                 };
+                if (result["genericToken"] == null &&
+                    utils_1.default.tokenLabels.includes(eachKey)) {
+                    result["genericToken"] = {
+                        abi: parsedAbi,
+                        address: null,
+                        implementation: {
+                            abi: null,
+                            address: null
+                        }
+                    };
+                }
             }
         }
         return result;

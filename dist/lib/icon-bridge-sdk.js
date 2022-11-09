@@ -43,26 +43,17 @@ class IconBridgeSDK {
                 const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
                 const BTSProxyContractAddress = this.lib.getBTSCoreProxyContractAddress(chain, isMainnet);
                 const contractObject = this.lib.getBTSCoreLogicContractObject(chain, web3Wrapper);
-                let encodedData = null;
-                const contractMethod = contractObject.methods[methodName];
                 if (rest.length === 0) {
-                    encodedData = contractMethod().encodeABI();
+                    return yield this.signTx(from, pk, methodName, BTSProxyContractAddress, contractObject, web3Wrapper, amount, gas);
                 }
                 else {
-                    encodedData = contractMethod(...rest).encodeABI();
+                    return yield this.signTx(from, pk, methodName, BTSProxyContractAddress, contractObject, web3Wrapper, amount, gas, ...rest);
                 }
-                const tx = {
-                    from: from,
-                    to: BTSProxyContractAddress,
-                    gas: gas == null ? 2000000 : gas,
-                    data: encodedData
-                };
-                if (amount != null) {
-                    tx["value"] = web3Wrapper.utils.toWei(amount, "ether");
-                }
-                const signedTx = yield web3Wrapper.eth.accounts.signTransaction(tx, pk);
-                const receipt = yield web3Wrapper.eth.sendSignedTransaction(signedTx.rawTransaction);
-                return receipt.transactionHash;
+            }),
+            approveTransfer: (from, pk, spender, rawAmount, tokenContractAddress, tokenContractAbi, chain, web3Wrapper, gas = null) => __awaiter(this, void 0, void 0, function* () {
+                const valueInWei = web3Wrapper.utils.toWei(rawAmount, "ether");
+                const contractObject = this.lib.getContractObject(tokenContractAbi, tokenContractAddress, web3Wrapper);
+                return yield this.signTx(from, pk, "approve", tokenContractAddress, contractObject, web3Wrapper, null, gas, spender, valueInWei);
             }),
             getAbiOf: (contractLabel, chain, isMainnet, getLogicContract = true) => {
                 return this.sdkUtils.getAbiOfLabelFromLocalData(contractLabel, chain, isMainnet, getLogicContract);
@@ -78,7 +69,7 @@ class IconBridgeSDK {
                     return this.lib.getContractObject(abi, contractAddress, web3Wrapper);
                 }
                 catch (err) {
-                    throw new Error(`Error running #getContractObjectByLabel(). Params:\nlabel: ${label}\nchain: ${chain}\nweb3Wrapper: ${web3Wrapper}\ngetLogicContract: ${getLogicContract}.\n${err}`);
+                    throw new Error(`Error running getContractObjectByLabel(). Params:\nlabel: ${label}\nchain: ${chain}\nweb3Wrapper: ${web3Wrapper}\ngetLogicContract: ${getLogicContract}.\n${err}`);
                 }
             },
             getContractAddressLocally: (label, chain, isMainnet, getLogicContract = false) => {
@@ -98,7 +89,7 @@ class IconBridgeSDK {
                     return result;
                 }
                 catch (err) {
-                    throw new Error(`Error running #getLogicContractAddressOnChain(). Params:\naddress: ${address}\nmemSlot: ${memSlot}\n.\n${err}`);
+                    throw new Error(`Error running getLogicContractAddressOnChain(). Params:\naddress: ${address}\nmemSlot: ${memSlot}\n.\n${err}`);
                 }
             }),
             getContractObject: (abi, contractAddress, web3Wrapper) => {
@@ -107,7 +98,7 @@ class IconBridgeSDK {
                     return contract;
                 }
                 catch (err) {
-                    throw new Error(`Error running #getContractObject(). Params:\nabi: ${abi}\ncontractAddress: ${contractAddress}\nweb3Wrapper: ${web3Wrapper}.\n${err}`);
+                    throw new Error(`Error running getContractObject(). Params:\nabi: ${abi}\ncontractAddress: ${contractAddress}\nweb3Wrapper: ${web3Wrapper}.\n${err}`);
                 }
             },
             getBTSCoreProxyContractObject: (chain, web3Wrapper) => {
@@ -117,6 +108,28 @@ class IconBridgeSDK {
                 return this.lib.getContractObjectByLabel("BTSCore", chain, web3Wrapper, true);
             }
         };
+        this.signTx = (from, pk, methodName, contractAddress, contractObject, web3Wrapper, amount = null, gas = null, ...rest) => __awaiter(this, void 0, void 0, function* () {
+            let encodedData = null;
+            const contractMethod = contractObject.methods[methodName];
+            if (rest.length === 0) {
+                encodedData = contractMethod().encodeABI();
+            }
+            else {
+                encodedData = contractMethod(...rest).encodeABI();
+            }
+            const tx = {
+                from: from,
+                to: contractAddress,
+                gas: gas == null ? 2000000 : gas,
+                data: encodedData
+            };
+            if (amount != null) {
+                tx["value"] = web3Wrapper.utils.toWei(amount, "ether");
+            }
+            const signedTx = yield web3Wrapper.eth.accounts.signTransaction(tx, pk);
+            const receipt = yield web3Wrapper.eth.sendSignedTransaction(signedTx.rawTransaction);
+            return receipt.transactionHash;
+        });
         this.params = this.sdkUtils.getSDKParams(inputParams);
         this.bscWeb3 = new web3_1.default(this.params.bscProvider.hostname);
     }

@@ -145,36 +145,76 @@ class IconBridgeSDK {
         web3Wrapper
       );
 
-      // decoding a call to readonly method
-      let encodedData = null;
-      const contractMethod = contractObject.methods[methodName];
       if (rest.length === 0) {
-        encodedData = contractMethod().encodeABI();
+        return await this.signTx(
+          from,
+          pk,
+          methodName,
+          BTSProxyContractAddress,
+          contractObject,
+          web3Wrapper,
+          amount,
+          gas
+        );
       } else {
-        encodedData = contractMethod(...rest).encodeABI();
+        return await this.signTx(
+          from,
+          pk,
+          methodName,
+          BTSProxyContractAddress,
+          contractObject,
+          web3Wrapper,
+          amount,
+          gas,
+          ...rest
+        );
       }
+    },
 
-      // get tx object
-      const tx: Tx = {
-        from: from,
-        to: BTSProxyContractAddress,
-        gas: gas == null ? 2000000 : gas,
-        data: encodedData
-      };
+    /**
+     * Approves contract to be able to make transfer on behave of wallet.
+     * @param from - public address of origination wallet.
+     * @param pk - private key of origination wallet.
+     * @param spender - BTSCore contract address for the specific chain.
+     * @param rawAmount - amount to send.
+     * @param tokenContractAddress - contract address of the token to transfer
+     * @param tokenContractAbi - abi of the token to transfer
+     * @param chain - chain to use.
+     * @param web3Wrapper - object containing the web3 library to use.
+     * @param gas - gas for tx fee
+     */
+    approveTransfer: async (
+      from: string,
+      pk: string,
+      spender: string,
+      rawAmount: string,
+      tokenContractAddress: string,
+      tokenContractAbi: any[],
+      chain: string,
+      web3Wrapper: any,
+      gas: number | null = null
+    ) => {
+      const valueInWei = web3Wrapper.utils.toWei(rawAmount, "ether");
 
-      if (amount != null) {
-        tx["value"] = web3Wrapper.utils.toWei(amount, "ether");
-      }
-
-      // create the signed tx
-      const signedTx = await web3Wrapper.eth.accounts.signTransaction(tx, pk);
-
-      // get tx receipt
-      const receipt = await web3Wrapper.eth.sendSignedTransaction(
-        signedTx.rawTransaction
+      // get BTSCore logic contract web3 object
+      const contractObject = this.lib.getContractObject(
+        tokenContractAbi,
+        tokenContractAddress,
+        web3Wrapper
       );
 
-      return receipt.transactionHash;
+      return await this.signTx(
+        from,
+        pk,
+        "approve",
+        tokenContractAddress,
+        contractObject,
+        web3Wrapper,
+        null,
+        gas,
+        spender,
+        valueInWei
+      );
     },
 
     /**
@@ -246,7 +286,7 @@ class IconBridgeSDK {
         return this.lib.getContractObject(abi, contractAddress, web3Wrapper);
       } catch (err) {
         throw new Error(
-          `Error running #getContractObjectByLabel(). Params:\nlabel: ${label}\nchain: ${chain}\nweb3Wrapper: ${web3Wrapper}\ngetLogicContract: ${getLogicContract}.\n${err}`
+          `Error running getContractObjectByLabel(). Params:\nlabel: ${label}\nchain: ${chain}\nweb3Wrapper: ${web3Wrapper}\ngetLogicContract: ${getLogicContract}.\n${err}`
         );
       }
     },
@@ -320,7 +360,7 @@ class IconBridgeSDK {
         return result;
       } catch (err) {
         throw new Error(
-          `Error running #getLogicContractAddressOnChain(). Params:\naddress: ${address}\nmemSlot: ${memSlot}\n.\n${err}`
+          `Error running getLogicContractAddressOnChain(). Params:\naddress: ${address}\nmemSlot: ${memSlot}\n.\n${err}`
         );
       }
     },
@@ -341,7 +381,7 @@ class IconBridgeSDK {
         return contract;
       } catch (err) {
         throw new Error(
-          `Error running #getContractObject(). Params:\nabi: ${abi}\ncontractAddress: ${contractAddress}\nweb3Wrapper: ${web3Wrapper}.\n${err}`
+          `Error running getContractObject(). Params:\nabi: ${abi}\ncontractAddress: ${contractAddress}\nweb3Wrapper: ${web3Wrapper}.\n${err}`
         );
       }
     },
@@ -373,6 +413,61 @@ class IconBridgeSDK {
         true
       );
     }
+  };
+
+  /**
+   * Make a signed transaction to a method in the  BTS smart contract.
+   * @param from - public address of origination wallet.
+   * @param pk - private key of origination wallet.
+   * @param methodName - name of the smart contract method to call.
+   * @param contractAddress -
+   * @param contractObject -
+   * @param web3Wrapper - object containing the web3 library to use.
+   * @param amount -
+   * @param gas -
+   * @param rest -
+   */
+  private signTx = async (
+    from: string,
+    pk: string,
+    methodName: string,
+    contractAddress: string,
+    contractObject: { methods: any },
+    web3Wrapper: any,
+    amount: null | number = null,
+    gas: number | null = null,
+    ...rest: any[]
+  ): Promise<string | null> => {
+    // decoding a call to readonly method
+    let encodedData = null;
+    const contractMethod = contractObject.methods[methodName];
+    if (rest.length === 0) {
+      encodedData = contractMethod().encodeABI();
+    } else {
+      encodedData = contractMethod(...rest).encodeABI();
+    }
+
+    // get tx object
+    const tx: Tx = {
+      from: from,
+      to: contractAddress,
+      gas: gas == null ? 2000000 : gas,
+      data: encodedData
+    };
+
+    if (amount != null) {
+      tx["value"] = web3Wrapper.utils.toWei(amount, "ether");
+    }
+
+    // create the signed tx
+    const signedTx = await web3Wrapper.eth.accounts.signTransaction(tx, pk);
+
+    // get tx receipt
+    const receipt = await web3Wrapper.eth.sendSignedTransaction(
+      signedTx.rawTransaction
+    );
+
+    return receipt.transactionHash;
   };
 }
 

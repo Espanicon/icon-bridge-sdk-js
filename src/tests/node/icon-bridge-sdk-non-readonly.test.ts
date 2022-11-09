@@ -24,6 +24,7 @@ async function iconBridgeSDKNodeTests() {
     "Testing iconBridge methods for the BSC network. Non readonly Methods."
   );
   console.log(testUtils.lineBreak.b);
+
   // Test 1: iconBridgeSDK.bsc.methods.transferNativeCoin(targetAddress, targetChain, from, pk, amount, gas)
   console.log(
     "Test 1: iconBridgeSDK.bsc.methods.transferNativeCoin(targetAddress, targetChain, from, pk, amount, gas)"
@@ -36,6 +37,22 @@ async function iconBridgeSDKNodeTests() {
     wallets.bsc.a.pubK,
     wallets.bsc.a.privK,
     "0.01"
+  );
+
+  // Test 2: iconBridgeSDK.bsc.methods.transfer(targetAddress, targetChain, from, pk, _coinName, _value, gas)
+  console.log(
+    "Test 1: iconBridgeSDK.bsc.methods.transfer(targetAddress, targetChain, from, pk, _coinName, _value, gas)"
+  );
+  await testUtils.runTestOnMethod(
+    lib.bsc.methods.transfer,
+    true,
+    wallets.icon.a.pubK,
+    "icon",
+    wallets.bsc.a.pubK,
+    wallets.bsc.a.privK,
+    "btp-0x2.icon-ICX",
+    "10",
+    10000000
   );
   // console.log("IconBridgeSDKNode");
   // console.log(lib.bsc);

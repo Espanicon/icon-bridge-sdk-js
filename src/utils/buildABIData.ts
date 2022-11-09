@@ -98,9 +98,14 @@ async function getAbiBatch(
   isMainnet: boolean = true
 ): Promise<Result> {
   const objKeys = Object.keys(batch);
+  objKeys.push("genericToken");
   const result: Result = {};
 
   for (const eachKey of objKeys) {
+    if (eachKey === "genericToken") {
+      // utils.networks.tokenLabels
+      continue;
+    }
     const abi = await getAbi(batch[eachKey].address, isMainnet);
     const parsedAbi = parseAbiResponse(abi);
     const implementation: {
@@ -146,6 +151,20 @@ async function getAbiBatch(
         address: address,
         implementation: implementation
       };
+
+      if (
+        result["genericToken"] == null &&
+        utils.tokenLabels.includes(eachKey)
+      ) {
+        result["genericToken"] = {
+          abi: parsedAbi,
+          address: null,
+          implementation: {
+            abi: null,
+            address: null
+          }
+        };
+      }
     }
   }
 

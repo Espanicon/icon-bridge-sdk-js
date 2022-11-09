@@ -19,6 +19,18 @@ export const labels = {
   memSlot: "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc"
 } as const;
 
+export const tokenLabels: string[] = [
+  labels.sicx,
+  labels.bnusd,
+  labels.bnb,
+  labels.busd,
+  labels.usdt,
+  labels.usdc,
+  labels.btcb,
+  labels.eth,
+  labels.icx
+];
+
 export type TokenKeys = keyof typeof labels;
 export type TokenValues = typeof labels[TokenKeys];
 
@@ -220,4 +232,3 @@ export const contracts = {
     }
   }
 };
-

@@ -1,6 +1,11 @@
 // utils/utils.ts
 //
-import { contracts, labels, GenericContractAddress } from "./contracts";
+import {
+  contracts,
+  labels,
+  GenericContractAddress,
+  tokenLabels
+} from "./contracts";
 import { networks, chains } from "./networks";
 import lib from "./lib";
 
@@ -158,6 +163,16 @@ function getAbiOfLabelFromLocalData(
   );
 }
 
+function getTokenLabelFromTokenName(tokenName: string) {
+  // let tokenLabel = null;
+
+  // switch (tokenName) {
+
+  // }
+  // return tokenLabel;
+  return tokenName;
+}
+
 // exports
 const utils = {
   networks,
@@ -165,6 +180,7 @@ const utils = {
   getBTPAddress,
   abiDataPath,
   labels,
+  tokenLabels,
   getContractOf,
   removeZerosFromAddress,
   GenericContractAddress,
@@ -172,7 +188,8 @@ const utils = {
   getSDKParams,
   getFormattedHostname,
   getContractOfLabelFromLocalData,
-  getAbiOfLabelFromLocalData
+  getAbiOfLabelFromLocalData,
+  getTokenLabelFromTokenName
 };
 
 export = utils;
