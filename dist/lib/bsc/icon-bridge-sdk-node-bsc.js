@@ -127,7 +127,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
                 ];
                 console.log(foo);
             }),
-            transferbnUSD: (targetAddress, targetChain = "icon", from, pk, _coinName, _value, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
+            transferBnUSD: (targetAddress, targetChain = "icon", from, pk, _coinName, _value, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
                 const foo = [
                     targetAddress,
                     targetChain,

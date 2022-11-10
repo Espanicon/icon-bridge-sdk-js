@@ -403,7 +403,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
      * @param _value - amount to transfer.
      * @param gas - transfer fee amount.
      */
-    transferbnUSD: async (
+    transferBnUSD: async (
       targetAddress: string,
       targetChain: string = "icon",
       from: string,
