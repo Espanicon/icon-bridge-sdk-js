@@ -300,7 +300,6 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
      * @param targetChain - receiver chain.
      * @param from - address of sender.
      * @param pk - private key of sender.
-     * @param _coinName - given name of wrapped coin.
      * @param _value - amount to transfer.
      * @param gas - transfer fee amount.
      */
@@ -309,21 +308,55 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       targetChain: string = "icon",
       from: string,
       pk: string,
-      _coinName: string,
       _value: string,
       gas: number | null = 2000000
     ): Promise<any> => {
       //
-      const foo = [
-        targetAddress,
-        targetChain,
-        from,
-        pk,
-        _coinName,
-        _value,
-        gas
-      ];
-      console.log(foo);
+      try {
+        let isMainnet = null;
+        let coinName = null;
+        if (this.params.useMainnet === false) {
+          isMainnet = false;
+          coinName = this.sdkUtils.tokenNames.bsc.testnet[
+            this.sdkUtils.labels.icx
+          ];
+        } else if (
+          this.params.useMainnet === true ||
+          this.params.useMainnet == null
+        ) {
+          isMainnet = true;
+          coinName = this.sdkUtils.tokenNames.bsc.mainnet[
+            this.sdkUtils.labels.icx
+          ];
+        }
+        const abi = this.sdkUtils.genericAbi;
+        const tokenContractAddress = this.callbackLib.getContractAddressLocally(
+          this.sdkUtils.labels.icx,
+          "bsc",
+          isMainnet,
+          false
+        );
+
+        const request = await this.transfer(
+          targetAddress,
+          targetChain,
+          from,
+          pk,
+          coinName,
+          _value,
+          tokenContractAddress,
+          abi,
+          gas
+        );
+
+        return request;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running transferICX(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\npk: ${pk}\n_value: ${_value}\n`
+        );
+        return { error: errorResult.toString() };
+      }
     },
 
     /**
@@ -417,39 +450,17 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       tokenContractAbi: any[],
       gas: number | null = 2000000
     ): Promise<any> => {
-      const foo = [tokenContractAddress, tokenContractAbi];
-      console.log(foo);
       try {
-        const isMainnet: boolean | null =
-          this.params.useMainnet == null ? true : this.params.useMainnet;
-
-        // first approve the contract to make transfer
-        // const response = await this.approveBTSCoreForTransfer(
-        //   from,
-        //   pk,
-        //   _value,
-        //   tokenContractAddress,
-        //   tokenContractAbi,
-        //   gas
-        // );
-
-        const btpAddress = this.sdkUtils.getBTPAddress(
+        return await this.transfer(
           targetAddress,
           targetChain,
-          isMainnet
-        );
-
-        const valueInWei = this.bscWeb3.utils.toWei(_value, "ether");
-
-        return await this.signBTSCoreTx(
           from,
           pk,
-          "transfer",
-          null,
-          gas,
           _coinName,
-          valueInWei,
-          btpAddress
+          _value,
+          tokenContractAddress,
+          tokenContractAbi,
+          gas
         );
       } catch (err) {
         const errorResult = new Exception(
@@ -569,36 +580,53 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
     // }
   };
 
-  //private approveBTSCoreForTransfer = async (
-  //  from: string,
-  //  pk: string,
-  //  amount: string,
-  //  tokenContractAddress: string,
-  //  tokenContractAbi: any[],
-  //  gas: number | null = null
-  //) => {
-  //  //
-  //  const isMainnet: boolean | null =
-  //    this.params.useMainnet == null ? true : this.params.useMainnet;
+  /**
+   * Sign a tx to the BTSCore contract.
+   * @param from - address of sender.
+   * @param pk - private key of sender.
+   * @param amount - amount to approve.
+   * @param tokenContractAddress - Contract address of the token to approve.
+   * @param tokenContractAbi - Contract abi of the token to approve.
+   * @param gas - transfer fee amount.
+   */
+  private approveBTSCoreForTransfer = async (
+    from: string,
+    pk: string,
+    amount: string,
+    tokenContractAddress: string,
+    tokenContractAbi: any[],
+    gas: number | null = null
+  ) => {
+    //
+    const isMainnet: boolean | null =
+      this.params.useMainnet == null ? true : this.params.useMainnet;
 
-  //  const btsCoreAddress = this.callbackLib.getBTSCoreProxyContractAddress(
-  //    "bsc",
-  //    isMainnet
-  //  );
+    const btsCoreAddress = this.callbackLib.getBTSCoreProxyContractAddress(
+      "bsc",
+      isMainnet
+    );
 
-  //  return await this.callbackLib.approveTransfer(
-  //    from,
-  //    pk,
-  //    btsCoreAddress,
-  //    amount,
-  //    tokenContractAddress,
-  //    tokenContractAbi,
-  //    "bsc",
-  //    this.bscWeb3,
-  //    gas
-  //  );
-  //};
+    return await this.callbackLib.approveTransfer(
+      from,
+      pk,
+      btsCoreAddress,
+      amount,
+      tokenContractAddress,
+      tokenContractAbi,
+      "bsc",
+      this.bscWeb3,
+      gas
+    );
+  };
 
+  /**
+   * Sign a tx to the BTSCore contract.
+   * @param from - address of sender.
+   * @param pk - private key of sender.
+   * @param methodName -
+   * @param amount -
+   * @param gas - transfer fee amount.
+   */
   private signBTSCoreTx = async (
     from: string,
     pk: string,
@@ -629,6 +657,73 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
         ...rest
       );
     }
+  };
+  /**
+   * Allow users to deposit an amount of wrapped native coin into the
+   * BTSCore contract.
+   * @param targetAddress - address of receiver.
+   * @param targetChain - receiver chain.
+   * @param from - address of sender.
+   * @param pk - private key of sender.
+   * @param _coinName - given name of wrapped coin.
+   * @param _value - amount to transfer.
+   * @param tokenContractAddress - contract address of the token to be sent.
+   * @param tokenContractAbi - contract abi of the token to be sent.
+   * @param gas - transfer fee amount.
+   */
+  private transfer = async (
+    targetAddress: string,
+    targetChain: string = "icon",
+    from: string,
+    pk: string,
+    _coinName: string,
+    _value: string,
+    tokenContractAddress: string,
+    tokenContractAbi: any[],
+    gas: number | null = 2000000
+  ): Promise<any> => {
+    const bar = false;
+    if (bar) {
+      const foo = [tokenContractAddress, tokenContractAbi];
+      console.log(foo);
+    }
+    const isMainnet: boolean | null =
+      this.params.useMainnet == null ? true : this.params.useMainnet;
+
+    // first approve the contract to make transfer
+    const response = await this.approveBTSCoreForTransfer(
+      from,
+      pk,
+      _value,
+      tokenContractAddress,
+      tokenContractAbi,
+      gas
+    );
+
+    const btpAddress = this.sdkUtils.getBTPAddress(
+      targetAddress,
+      targetChain,
+      isMainnet
+    );
+
+    const valueInWei = this.bscWeb3.utils.toWei(_value, "ether");
+
+    // token transaction after approval
+    const response2 = await this.signBTSCoreTx(
+      from,
+      pk,
+      "transfer",
+      null,
+      gas,
+      _coinName,
+      valueInWei,
+      btpAddress
+    );
+
+    return {
+      approvalTx: response,
+      tokenTx: response2
+    };
   };
 }
 

@@ -4,7 +4,9 @@ import {
   contracts,
   labels,
   GenericContractAddress,
-  tokenLabels
+  tokenLabels,
+  genericAbi,
+  tokenNames
 } from "./contracts";
 import { networks, chains } from "./networks";
 import lib from "./lib";
@@ -179,8 +181,10 @@ const utils = {
   contracts,
   getBTPAddress,
   abiDataPath,
+  genericAbi,
   labels,
   tokenLabels,
+  tokenNames,
   getContractOf,
   removeZerosFromAddress,
   GenericContractAddress,

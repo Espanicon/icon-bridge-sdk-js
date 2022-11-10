@@ -31,7 +31,7 @@ async function iconBridgeSDKNodeTests() {
   );
   await testUtils.runTestOnMethod(
     lib.bsc.methods.transferNativeCoin,
-    false,
+    true,
     wallets.icon.a.pubK,
     "icon",
     wallets.bsc.a.pubK,
@@ -51,6 +51,21 @@ async function iconBridgeSDKNodeTests() {
     wallets.bsc.a.pubK,
     wallets.bsc.a.privK,
     "btp-0x2.icon-ICX",
+    "10",
+    10000000
+  );
+
+  // Test 3: iconBridgeSDK.bsc.methods.transferICX(targetAddress, targetChain, from, pk, _coinName, _value, gas)
+  console.log(
+    "Test 1: iconBridgeSDK.bsc.methods.transferICX(targetAddress, targetChain, from, pk, _coinName, _value, gas)"
+  );
+  await testUtils.runTestOnMethod(
+    lib.bsc.methods.transferICX,
+    false,
+    wallets.icon.a.pubK,
+    "icon",
+    wallets.bsc.a.pubK,
+    wallets.bsc.a.privK,
     "10",
     10000000
   );
