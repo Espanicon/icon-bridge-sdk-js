@@ -103,7 +103,7 @@ The SDK by default uses the following RPC endpoints for testnet and mainnet on B
 * Testnet: https://data-seed-prebsc-1-s1.binance.org:8545
 
 If you are getting this error the RPC endpoint is most likely down, you can change the endpoint you want to use like in the following example:
-```
+```js
 const SDK = new IconBridgeSDK({
   useMainnet: false,
   bscProvider: { hostname: "https://data-seed-prebsc-2-s1.binance.org:8545" }
