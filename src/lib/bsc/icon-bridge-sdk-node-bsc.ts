@@ -135,7 +135,6 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
      * @param targetChain - receiver chain.
      * @param from - address of sender.
      * @param pk - private key of sender.
-     * @param _coinName - given name of wrapped coin.
      * @param _value - amount to transfer.
      * @param gas - transfer fee amount.
      */
@@ -144,21 +143,28 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       targetChain: string = "icon",
       from: string,
       pk: string,
-      _coinName: string,
       _value: string,
       gas: number | null = 2000000
     ): Promise<any> => {
       //
-      const foo = [
-        targetAddress,
-        targetChain,
-        from,
-        pk,
-        _coinName,
-        _value,
-        gas
-      ];
-      console.log(foo);
+      try {
+        const tokenLabel = this.sdkUtils.labels.busd;
+        return await this.transferToken(
+          targetAddress,
+          targetChain,
+          from,
+          pk,
+          _value,
+          tokenLabel,
+          gas
+        );
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running transferBUSD(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\npk: ${pk}\n_value: ${_value}\n`
+        );
+        return { error: errorResult.toString() };
+      }
     },
 
     /**
@@ -168,7 +174,6 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
      * @param targetChain - receiver chain.
      * @param from - address of sender.
      * @param pk - private key of sender.
-     * @param _coinName - given name of wrapped coin.
      * @param _value - amount to transfer.
      * @param gas - transfer fee amount.
      */
@@ -177,21 +182,28 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       targetChain: string = "icon",
       from: string,
       pk: string,
-      _coinName: string,
       _value: string,
       gas: number | null = 2000000
     ): Promise<any> => {
       //
-      const foo = [
-        targetAddress,
-        targetChain,
-        from,
-        pk,
-        _coinName,
-        _value,
-        gas
-      ];
-      console.log(foo);
+      try {
+        const tokenLabel = this.sdkUtils.labels.usdt;
+        return await this.transferToken(
+          targetAddress,
+          targetChain,
+          from,
+          pk,
+          _value,
+          tokenLabel,
+          gas
+        );
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running transferUSDT(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\npk: ${pk}\n_value: ${_value}\n`
+        );
+        return { error: errorResult.toString() };
+      }
     },
 
     /**
@@ -201,7 +213,6 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
      * @param targetChain - receiver chain.
      * @param from - address of sender.
      * @param pk - private key of sender.
-     * @param _coinName - given name of wrapped coin.
      * @param _value - amount to transfer.
      * @param gas - transfer fee amount.
      */
@@ -210,21 +221,27 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       targetChain: string = "icon",
       from: string,
       pk: string,
-      _coinName: string,
       _value: string,
       gas: number | null = 2000000
     ): Promise<any> => {
-      //
-      const foo = [
-        targetAddress,
-        targetChain,
-        from,
-        pk,
-        _coinName,
-        _value,
-        gas
-      ];
-      console.log(foo);
+      try {
+        const tokenLabel = this.sdkUtils.labels.usdc;
+        return await this.transferToken(
+          targetAddress,
+          targetChain,
+          from,
+          pk,
+          _value,
+          tokenLabel,
+          gas
+        );
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running transferUSDC(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\npk: ${pk}\n_value: ${_value}\n`
+        );
+        return { error: errorResult.toString() };
+      }
     },
 
     /**
@@ -234,7 +251,6 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
      * @param targetChain - receiver chain.
      * @param from - address of sender.
      * @param pk - private key of sender.
-     * @param _coinName - given name of wrapped coin.
      * @param _value - amount to transfer.
      * @param gas - transfer fee amount.
      */
@@ -243,21 +259,27 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       targetChain: string = "icon",
       from: string,
       pk: string,
-      _coinName: string,
       _value: string,
       gas: number | null = 2000000
     ): Promise<any> => {
-      //
-      const foo = [
-        targetAddress,
-        targetChain,
-        from,
-        pk,
-        _coinName,
-        _value,
-        gas
-      ];
-      console.log(foo);
+      try {
+        const tokenLabel = this.sdkUtils.labels.btcb;
+        return await this.transferToken(
+          targetAddress,
+          targetChain,
+          from,
+          pk,
+          _value,
+          tokenLabel,
+          gas
+        );
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running transferBTCB(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\npk: ${pk}\n_value: ${_value}\n`
+        );
+        return { error: errorResult.toString() };
+      }
     },
 
     /**
@@ -267,7 +289,6 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
      * @param targetChain - receiver chain.
      * @param from - address of sender.
      * @param pk - private key of sender.
-     * @param _coinName - given name of wrapped coin.
      * @param _value - amount to transfer.
      * @param gas - transfer fee amount.
      */
@@ -276,21 +297,27 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       targetChain: string = "icon",
       from: string,
       pk: string,
-      _coinName: string,
       _value: string,
       gas: number | null = 2000000
     ): Promise<any> => {
-      //
-      const foo = [
-        targetAddress,
-        targetChain,
-        from,
-        pk,
-        _coinName,
-        _value,
-        gas
-      ];
-      console.log(foo);
+      try {
+        const tokenLabel = this.sdkUtils.labels.eth;
+        return await this.transferToken(
+          targetAddress,
+          targetChain,
+          from,
+          pk,
+          _value,
+          tokenLabel,
+          gas
+        );
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running transferETH(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\npk: ${pk}\n_value: ${_value}\n`
+        );
+        return { error: errorResult.toString() };
+      }
     },
 
     /**
@@ -313,43 +340,16 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
     ): Promise<any> => {
       //
       try {
-        let isMainnet = null;
-        let coinName = null;
-        if (this.params.useMainnet === false) {
-          isMainnet = false;
-          coinName = this.sdkUtils.tokenNames.bsc.testnet[
-            this.sdkUtils.labels.icx
-          ];
-        } else if (
-          this.params.useMainnet === true ||
-          this.params.useMainnet == null
-        ) {
-          isMainnet = true;
-          coinName = this.sdkUtils.tokenNames.bsc.mainnet[
-            this.sdkUtils.labels.icx
-          ];
-        }
-        const abi = this.sdkUtils.genericAbi;
-        const tokenContractAddress = this.callbackLib.getContractAddressLocally(
-          this.sdkUtils.labels.icx,
-          "bsc",
-          isMainnet,
-          false
-        );
-
-        const request = await this.transfer(
+        const tokenLabel = this.sdkUtils.labels.icx;
+        return await this.transferToken(
           targetAddress,
           targetChain,
           from,
           pk,
-          coinName,
           _value,
-          tokenContractAddress,
-          abi,
+          tokenLabel,
           gas
         );
-
-        return request;
       } catch (err) {
         const errorResult = new Exception(
           err,
@@ -366,7 +366,6 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
      * @param targetChain - receiver chain.
      * @param from - address of sender.
      * @param pk - private key of sender.
-     * @param _coinName - given name of wrapped coin.
      * @param _value - amount to transfer.
      * @param gas - transfer fee amount.
      */
@@ -375,21 +374,27 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       targetChain: string = "icon",
       from: string,
       pk: string,
-      _coinName: string,
       _value: string,
       gas: number | null = 2000000
     ): Promise<any> => {
-      //
-      const foo = [
-        targetAddress,
-        targetChain,
-        from,
-        pk,
-        _coinName,
-        _value,
-        gas
-      ];
-      console.log(foo);
+      try {
+        const tokenLabel = this.sdkUtils.labels.sicx;
+        return await this.transferToken(
+          targetAddress,
+          targetChain,
+          from,
+          pk,
+          _value,
+          tokenLabel,
+          gas
+        );
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running transferSICX(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\npk: ${pk}\n_value: ${_value}\n`
+        );
+        return { error: errorResult.toString() };
+      }
     },
 
     /**
@@ -399,7 +404,6 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
      * @param targetChain - receiver chain.
      * @param from - address of sender.
      * @param pk - private key of sender.
-     * @param _coinName - given name of wrapped coin.
      * @param _value - amount to transfer.
      * @param gas - transfer fee amount.
      */
@@ -408,21 +412,27 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       targetChain: string = "icon",
       from: string,
       pk: string,
-      _coinName: string,
       _value: string,
       gas: number | null = 2000000
     ): Promise<any> => {
-      //
-      const foo = [
-        targetAddress,
-        targetChain,
-        from,
-        pk,
-        _coinName,
-        _value,
-        gas
-      ];
-      console.log(foo);
+      try {
+        const tokenLabel = this.sdkUtils.labels.bnusd;
+        return await this.transferToken(
+          targetAddress,
+          targetChain,
+          from,
+          pk,
+          _value,
+          tokenLabel,
+          gas
+        );
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running transferBnUSD(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\npk: ${pk}\n_value: ${_value}\n`
+        );
+        return { error: errorResult.toString() };
+      }
     },
 
     /**
@@ -658,6 +668,63 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       );
     }
   };
+
+  /**
+   * Allow users to deposit an amount of token into the
+   * BTSCore contract.
+   * @param targetAddress - address of receiver.
+   * @param targetChain - receiver chain.
+   * @param from - address of sender.
+   * @param pk - private key of sender.
+   * @param _value - amount to transfer.
+   * @param tokenLabel - token to transfer.
+   * @param gas - transfer fee amount.
+   */
+  private transferToken = async (
+    targetAddress: string,
+    targetChain: string = "icon",
+    from: string,
+    pk: string,
+    _value: string,
+    tokenLabel: string,
+    gas: number | null = 2000000
+  ): Promise<any> => {
+    //
+    let isMainnet = null;
+    let coinName = null;
+    if (this.params.useMainnet === false) {
+      isMainnet = false;
+      coinName = this.sdkUtils.tokenNames.bsc.testnet[tokenLabel];
+    } else if (
+      this.params.useMainnet === true ||
+      this.params.useMainnet == null
+    ) {
+      isMainnet = true;
+      coinName = this.sdkUtils.tokenNames.bsc.mainnet[tokenLabel];
+    }
+    const abi = this.sdkUtils.genericAbi;
+    const tokenContractAddress = this.callbackLib.getContractAddressLocally(
+      tokenLabel,
+      "bsc",
+      isMainnet,
+      false
+    );
+
+    const request = await this.transfer(
+      targetAddress,
+      targetChain,
+      from,
+      pk,
+      coinName,
+      _value,
+      tokenContractAddress,
+      abi,
+      gas
+    );
+
+    return request;
+  };
+
   /**
    * Allow users to deposit an amount of wrapped native coin into the
    * BTSCore contract.

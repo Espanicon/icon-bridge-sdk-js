@@ -32,112 +32,85 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
             setFeeRatio: (_name, _feeNumerator, _fixedFee) => __awaiter(this, void 0, void 0, function* () {
                 console.log([_name, _feeNumerator, _fixedFee]);
             }),
-            transferBUSD: (targetAddress, targetChain = "icon", from, pk, _coinName, _value, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
-                const foo = [
-                    targetAddress,
-                    targetChain,
-                    from,
-                    pk,
-                    _coinName,
-                    _value,
-                    gas
-                ];
-                console.log(foo);
+            transferBUSD: (targetAddress, targetChain = "icon", from, pk, _value, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
+                try {
+                    const tokenLabel = this.sdkUtils.labels.busd;
+                    return yield this.transferToken(targetAddress, targetChain, from, pk, _value, tokenLabel, gas);
+                }
+                catch (err) {
+                    const errorResult = new Exception(err, `Error running transferBUSD(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\npk: ${pk}\n_value: ${_value}\n`);
+                    return { error: errorResult.toString() };
+                }
             }),
-            transferUSDT: (targetAddress, targetChain = "icon", from, pk, _coinName, _value, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
-                const foo = [
-                    targetAddress,
-                    targetChain,
-                    from,
-                    pk,
-                    _coinName,
-                    _value,
-                    gas
-                ];
-                console.log(foo);
+            transferUSDT: (targetAddress, targetChain = "icon", from, pk, _value, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
+                try {
+                    const tokenLabel = this.sdkUtils.labels.usdt;
+                    return yield this.transferToken(targetAddress, targetChain, from, pk, _value, tokenLabel, gas);
+                }
+                catch (err) {
+                    const errorResult = new Exception(err, `Error running transferUSDT(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\npk: ${pk}\n_value: ${_value}\n`);
+                    return { error: errorResult.toString() };
+                }
             }),
-            transferUSDC: (targetAddress, targetChain = "icon", from, pk, _coinName, _value, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
-                const foo = [
-                    targetAddress,
-                    targetChain,
-                    from,
-                    pk,
-                    _coinName,
-                    _value,
-                    gas
-                ];
-                console.log(foo);
+            transferUSDC: (targetAddress, targetChain = "icon", from, pk, _value, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
+                try {
+                    const tokenLabel = this.sdkUtils.labels.usdc;
+                    return yield this.transferToken(targetAddress, targetChain, from, pk, _value, tokenLabel, gas);
+                }
+                catch (err) {
+                    const errorResult = new Exception(err, `Error running transferUSDC(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\npk: ${pk}\n_value: ${_value}\n`);
+                    return { error: errorResult.toString() };
+                }
             }),
-            transferBTCB: (targetAddress, targetChain = "icon", from, pk, _coinName, _value, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
-                const foo = [
-                    targetAddress,
-                    targetChain,
-                    from,
-                    pk,
-                    _coinName,
-                    _value,
-                    gas
-                ];
-                console.log(foo);
+            transferBTCB: (targetAddress, targetChain = "icon", from, pk, _value, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
+                try {
+                    const tokenLabel = this.sdkUtils.labels.btcb;
+                    return yield this.transferToken(targetAddress, targetChain, from, pk, _value, tokenLabel, gas);
+                }
+                catch (err) {
+                    const errorResult = new Exception(err, `Error running transferBTCB(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\npk: ${pk}\n_value: ${_value}\n`);
+                    return { error: errorResult.toString() };
+                }
             }),
-            transferETH: (targetAddress, targetChain = "icon", from, pk, _coinName, _value, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
-                const foo = [
-                    targetAddress,
-                    targetChain,
-                    from,
-                    pk,
-                    _coinName,
-                    _value,
-                    gas
-                ];
-                console.log(foo);
+            transferETH: (targetAddress, targetChain = "icon", from, pk, _value, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
+                try {
+                    const tokenLabel = this.sdkUtils.labels.eth;
+                    return yield this.transferToken(targetAddress, targetChain, from, pk, _value, tokenLabel, gas);
+                }
+                catch (err) {
+                    const errorResult = new Exception(err, `Error running transferETH(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\npk: ${pk}\n_value: ${_value}\n`);
+                    return { error: errorResult.toString() };
+                }
             }),
             transferICX: (targetAddress, targetChain = "icon", from, pk, _value, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
                 try {
-                    let isMainnet = null;
-                    let coinName = null;
-                    if (this.params.useMainnet === false) {
-                        isMainnet = false;
-                        coinName = this.sdkUtils.tokenNames.bsc.testnet[this.sdkUtils.labels.icx];
-                    }
-                    else if (this.params.useMainnet === true ||
-                        this.params.useMainnet == null) {
-                        isMainnet = true;
-                        coinName = this.sdkUtils.tokenNames.bsc.mainnet[this.sdkUtils.labels.icx];
-                    }
-                    const abi = this.sdkUtils.genericAbi;
-                    const tokenContractAddress = this.callbackLib.getContractAddressLocally(this.sdkUtils.labels.icx, "bsc", isMainnet, false);
-                    const request = yield this.transfer(targetAddress, targetChain, from, pk, coinName, _value, tokenContractAddress, abi, gas);
-                    return request;
+                    const tokenLabel = this.sdkUtils.labels.icx;
+                    return yield this.transferToken(targetAddress, targetChain, from, pk, _value, tokenLabel, gas);
                 }
                 catch (err) {
                     const errorResult = new Exception(err, `Error running transferICX(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\npk: ${pk}\n_value: ${_value}\n`);
                     return { error: errorResult.toString() };
                 }
             }),
-            transferSICX: (targetAddress, targetChain = "icon", from, pk, _coinName, _value, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
-                const foo = [
-                    targetAddress,
-                    targetChain,
-                    from,
-                    pk,
-                    _coinName,
-                    _value,
-                    gas
-                ];
-                console.log(foo);
+            transferSICX: (targetAddress, targetChain = "icon", from, pk, _value, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
+                try {
+                    const tokenLabel = this.sdkUtils.labels.sicx;
+                    return yield this.transferToken(targetAddress, targetChain, from, pk, _value, tokenLabel, gas);
+                }
+                catch (err) {
+                    const errorResult = new Exception(err, `Error running transferSICX(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\npk: ${pk}\n_value: ${_value}\n`);
+                    return { error: errorResult.toString() };
+                }
             }),
-            transferBnUSD: (targetAddress, targetChain = "icon", from, pk, _coinName, _value, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
-                const foo = [
-                    targetAddress,
-                    targetChain,
-                    from,
-                    pk,
-                    _coinName,
-                    _value,
-                    gas
-                ];
-                console.log(foo);
+            transferBnUSD: (targetAddress, targetChain = "icon", from, pk, _value, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
+                try {
+                    const tokenLabel = this.sdkUtils.labels.bnusd;
+                    return yield this.transferToken(targetAddress, targetChain, from, pk, _value, tokenLabel, gas);
+                }
+                catch (err) {
+                    const errorResult = new Exception(err, `Error running transferBnUSD(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\npk: ${pk}\n_value: ${_value}\n`);
+                    return { error: errorResult.toString() };
+                }
             }),
             transfer: (targetAddress, targetChain = "icon", from, pk, _coinName, _value, tokenContractAddress, tokenContractAbi, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
                 try {
@@ -178,6 +151,23 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
             else {
                 return yield this.callbackLib.signBTSCoreTx(from, pk, methodName, amount, "bsc", this.bscWeb3, gas, ...rest);
             }
+        });
+        this.transferToken = (targetAddress, targetChain = "icon", from, pk, _value, tokenLabel, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
+            let isMainnet = null;
+            let coinName = null;
+            if (this.params.useMainnet === false) {
+                isMainnet = false;
+                coinName = this.sdkUtils.tokenNames.bsc.testnet[tokenLabel];
+            }
+            else if (this.params.useMainnet === true ||
+                this.params.useMainnet == null) {
+                isMainnet = true;
+                coinName = this.sdkUtils.tokenNames.bsc.mainnet[tokenLabel];
+            }
+            const abi = this.sdkUtils.genericAbi;
+            const tokenContractAddress = this.callbackLib.getContractAddressLocally(tokenLabel, "bsc", isMainnet, false);
+            const request = yield this.transfer(targetAddress, targetChain, from, pk, coinName, _value, tokenContractAddress, abi, gas);
+            return request;
         });
         this.transfer = (targetAddress, targetChain = "icon", from, pk, _coinName, _value, tokenContractAddress, tokenContractAbi, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
             const bar = false;

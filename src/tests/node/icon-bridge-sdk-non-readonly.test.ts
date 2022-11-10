@@ -41,7 +41,7 @@ async function iconBridgeSDKNodeTests() {
 
   // Test 2: iconBridgeSDK.bsc.methods.transfer(targetAddress, targetChain, from, pk, _coinName, _value, gas)
   console.log(
-    "Test 1: iconBridgeSDK.bsc.methods.transfer(targetAddress, targetChain, from, pk, _coinName, _value, gas)"
+    "Test 2: iconBridgeSDK.bsc.methods.transfer(targetAddress, targetChain, from, pk, _coinName, _value, gas)"
   );
   await testUtils.runTestOnMethod(
     lib.bsc.methods.transfer,
@@ -57,10 +57,115 @@ async function iconBridgeSDKNodeTests() {
 
   // Test 3: iconBridgeSDK.bsc.methods.transferICX(targetAddress, targetChain, from, pk, _coinName, _value, gas)
   console.log(
-    "Test 1: iconBridgeSDK.bsc.methods.transferICX(targetAddress, targetChain, from, pk, _coinName, _value, gas)"
+    "Test 3: iconBridgeSDK.bsc.methods.transferICX(targetAddress, targetChain, from, pk, _coinName, _value, gas)"
   );
   await testUtils.runTestOnMethod(
     lib.bsc.methods.transferICX,
+    false,
+    wallets.icon.a.pubK,
+    "icon",
+    wallets.bsc.a.pubK,
+    wallets.bsc.a.privK,
+    "10",
+    10000000
+  );
+
+  // Test 4: iconBridgeSDK.bsc.methods.transferBnUSD(targetAddress, targetChain, from, pk, _coinName, _value, gas)
+  console.log(
+    "Test 4: iconBridgeSDK.bsc.methods.transferBnUSD(targetAddress, targetChain, from, pk, _coinName, _value, gas)"
+  );
+  await testUtils.runTestOnMethod(
+    lib.bsc.methods.transferBnUSD,
+    false,
+    wallets.icon.a.pubK,
+    "icon",
+    wallets.bsc.a.pubK,
+    wallets.bsc.a.privK,
+    "10",
+    10000000
+  );
+
+  // Test 5: iconBridgeSDK.bsc.methods.transferSICX(targetAddress, targetChain, from, pk, _coinName, _value, gas)
+  console.log(
+    "Test 5: iconBridgeSDK.bsc.methods.transferSICX(targetAddress, targetChain, from, pk, _coinName, _value, gas)"
+  );
+  await testUtils.runTestOnMethod(
+    lib.bsc.methods.transferSICX,
+    false,
+    wallets.icon.a.pubK,
+    "icon",
+    wallets.bsc.a.pubK,
+    wallets.bsc.a.privK,
+    "10",
+    10000000
+  );
+
+  // Test 6: iconBridgeSDK.bsc.methods.transferETH(targetAddress, targetChain, from, pk, _coinName, _value, gas)
+  console.log(
+    "Test 6: iconBridgeSDK.bsc.methods.transferETH(targetAddress, targetChain, from, pk, _coinName, _value, gas)"
+  );
+  await testUtils.runTestOnMethod(
+    lib.bsc.methods.transferETH,
+    false,
+    wallets.icon.a.pubK,
+    "icon",
+    wallets.bsc.a.pubK,
+    wallets.bsc.a.privK,
+    "10",
+    10000000
+  );
+
+  // Test 7: iconBridgeSDK.bsc.methods.transferBTCB(targetAddress, targetChain, from, pk, _coinName, _value, gas)
+  console.log(
+    "Test 7: iconBridgeSDK.bsc.methods.transferBTCB(targetAddress, targetChain, from, pk, _coinName, _value, gas)"
+  );
+  await testUtils.runTestOnMethod(
+    lib.bsc.methods.transferBTCB,
+    false,
+    wallets.icon.a.pubK,
+    "icon",
+    wallets.bsc.a.pubK,
+    wallets.bsc.a.privK,
+    "10",
+    10000000
+  );
+
+  // Test 8: iconBridgeSDK.bsc.methods.transferUSDC(targetAddress, targetChain, from, pk, _coinName, _value, gas)
+  console.log(
+    "Test 8: iconBridgeSDK.bsc.methods.transferUSDC(targetAddress, targetChain, from, pk, _coinName, _value, gas)"
+  );
+  await testUtils.runTestOnMethod(
+    lib.bsc.methods.transferUSDC,
+    false,
+    wallets.icon.a.pubK,
+    "icon",
+    wallets.bsc.a.pubK,
+    wallets.bsc.a.privK,
+    "10",
+    10000000
+  );
+
+  // Test 9: iconBridgeSDK.bsc.methods.transferUSDT(targetAddress, targetChain, from, pk, _coinName, _value, gas)
+  console.log(
+    "Test 9: iconBridgeSDK.bsc.methods.transferUSDT(targetAddress, targetChain, from, pk, _coinName, _value, gas)"
+  );
+  await testUtils.runTestOnMethod(
+    lib.bsc.methods.transferUSDT,
+    false,
+    wallets.icon.a.pubK,
+    "icon",
+    wallets.bsc.a.pubK,
+    wallets.bsc.a.privK,
+    "10",
+    10000000
+  );
+
+  // Test 10: iconBridgeSDK.bsc.methods.transferBUSD(targetAddress, targetChain, from, pk, _coinName, _value, gas)
+  console.log(
+    "Test 10: iconBridgeSDK.bsc.methods.transferBUSD(targetAddress, targetChain, from, pk, _coinName, _value, gas)"
+  );
+  await testUtils.runTestOnMethod(
+    lib.bsc.methods.transferBUSD,
     false,
     wallets.icon.a.pubK,
     "icon",
