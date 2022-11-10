@@ -14,8 +14,14 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
     constructor(params, bscWeb3, sdkUtils, callbackLib) {
         super(params, bscWeb3, sdkUtils, callbackLib);
         this.localMethods = {
-            addOwner: (_owner) => __awaiter(this, void 0, void 0, function* () {
-                console.log(_owner);
+            addOwner: (from, pk, _owner, gas = null) => __awaiter(this, void 0, void 0, function* () {
+                try {
+                    return yield this.signBTSCoreTx(from, pk, "addOwner", null, gas, _owner);
+                }
+                catch (err) {
+                    const errorResult = new Exception(err, `Error running addOwner(). Params:\nfrom: ${from}\npk: ${pk}\n_owner: ${_owner}\n`);
+                    return { error: errorResult.toString() };
+                }
             }),
             initialize: (_nativeCoinName, _feeNumerator, _fixedFee) => __awaiter(this, void 0, void 0, function* () {
                 console.log([_nativeCoinName, _feeNumerator, _fixedFee]);

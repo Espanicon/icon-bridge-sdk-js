@@ -50,12 +50,34 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
   private localMethods = {
     /**
      * Add another Owner. Caller must be an Owner of BTP network.
+     * @param from - address of sender.
+     * @param pk - private key of sender.
      * @param _owner - Address of new owner
+     * @param gas - transfer fee amount.
      * @return
      */
-    addOwner: async (_owner: string): Promise<any> => {
-      // method on index 3
-      console.log(_owner);
+    addOwner: async (
+      from: string,
+      pk: string,
+      _owner: string,
+      gas: number | null = null
+    ): Promise<any> => {
+      try {
+        return await this.signBTSCoreTx(
+          from,
+          pk,
+          "addOwner",
+          null,
+          gas,
+          _owner
+        );
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running addOwner(). Params:\nfrom: ${from}\npk: ${pk}\n_owner: ${_owner}\n`
+        );
+        return { error: errorResult.toString() };
+      }
     },
 
     /**

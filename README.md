@@ -87,3 +87,25 @@ Methods for interacting with the BTS (BTP Token Service) contract available on t
 Methods for interacting with the BMC (BTP Message Center) contract.
 
 ### IconBridge.sdkUtils
+
+## Troubleshooting
+### When calling methods on the BSC chain I get an error with `Invalid JSON RPC response: {"size": 0, "timeout": 0}`
+
+Error example:
+```
+Result:
+{
+  error: 'Error running addOwner(). Params:\n' + 'from: {ADDRESS}\n' + 'pk: {PRIVATE_KEY}\n' + '_owner: {ADDRESS}\n' + '.\n' + 'Invalid JSON RPC response: {"size":0,"timeout":0}'
+}
+```
+The SDK by default uses the following RPC endpoints for testnet and mainnet on BSC chains:
+* Mainnet: https://bsc-dataseed.binance.org
+* Testnet: https://data-seed-prebsc-1-s1.binance.org:8545
+
+If you are getting this error the RPC endpoint is most likely down, you can change the endpoint you want to use like in the following example:
+```
+const SDK = new IconBridgeSDK({
+  useMainnet: false,
+  bscProvider: { hostname: "https://data-seed-prebsc-2-s1.binance.org:8545" }
+});
+```

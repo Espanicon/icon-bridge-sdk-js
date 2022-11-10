@@ -42,38 +42,48 @@ function removeZerosFromAddress(address) {
     return "0x" + address.slice(address.length - 40, address.length);
 }
 function getSDKParams(inputParams, defaultParams = defaultSDKParams) {
-    const result = Object.assign(Object.assign({}, defaultParams), inputParams);
-    if (result.useMainnet == null || result.useMainnet === true) {
-        result.useMainnet = true;
-        result.iconProvider = {
-            hostname: networks_1.networks.mainnet.icon.provider.hostname,
-            nid: networks_1.networks.mainnet.icon.provider.nid
-        };
-        result.bscProvider = {
-            hostname: networks_1.networks.mainnet.bsc.provider.hostname,
-            nid: networks_1.networks.mainnet.bsc.provider.nid
-        };
-    }
-    else if (result.useMainnet === false) {
-        result.iconProvider = {
-            hostname: networks_1.networks.testnet.icon.provider.hostname,
-            nid: networks_1.networks.testnet.icon.provider.nid
-        };
-        result.bscProvider = {
-            hostname: networks_1.networks.testnet.bsc.provider.hostname,
-            nid: networks_1.networks.testnet.bsc.provider.nid
-        };
-    }
-    else {
-        result.useMainnet = true;
-        result.iconProvider = {
-            hostname: networks_1.networks.mainnet.icon.provider.hostname,
-            nid: networks_1.networks.mainnet.icon.provider.nid
-        };
-        result.bscProvider = {
-            hostname: networks_1.networks.mainnet.bsc.provider.hostname,
-            nid: networks_1.networks.mainnet.bsc.provider.nid
-        };
+    const result = Object.assign({}, defaultParams);
+    result.useMainnet = true;
+    result.iconProvider = {
+        hostname: networks_1.networks.mainnet.icon.provider.hostname,
+        nid: networks_1.networks.mainnet.icon.provider.nid
+    };
+    result.bscProvider = {
+        hostname: networks_1.networks.mainnet.bsc.provider.hostname,
+        nid: networks_1.networks.mainnet.bsc.provider.nid
+    };
+    if (inputParams != null && typeof inputParams === "object") {
+        if (inputParams.useMainnet != null) {
+            if (inputParams.useMainnet === false) {
+                result.useMainnet = false;
+                result.iconProvider = {
+                    hostname: networks_1.networks.testnet.icon.provider.hostname,
+                    nid: networks_1.networks.testnet.icon.provider.nid
+                };
+                result.bscProvider = {
+                    hostname: networks_1.networks.testnet.bsc.provider.hostname,
+                    nid: networks_1.networks.testnet.bsc.provider.nid
+                };
+            }
+        }
+        if (inputParams.iconProvider != null &&
+            typeof inputParams.iconProvider === "object") {
+            if (typeof inputParams.iconProvider.hostname === "string") {
+                result.iconProvider.hostname = inputParams.iconProvider.hostname;
+            }
+            if (inputParams.iconProvider.nid != null) {
+                result.iconProvider.nid = inputParams.iconProvider.nid;
+            }
+        }
+        if (inputParams.bscProvider != null &&
+            typeof inputParams.bscProvider === "object") {
+            if (typeof inputParams.bscProvider.hostname === "string") {
+                result.bscProvider.hostname = inputParams.bscProvider.hostname;
+            }
+            if (inputParams.bscProvider.nid != null) {
+                result.bscProvider.nid = inputParams.iconProvider.nid;
+            }
+        }
     }
     return result;
 }

@@ -157,6 +157,19 @@ class IconBridgeSDK {
           gas
         );
       } else {
+        // const foo = [
+        //   from,
+        //   pk,
+        //   methodName,
+        //   BTSProxyContractAddress,
+        //   contractObject,
+        //   // web3Wrapper,
+        //   amount,
+        //   gas,
+        //   ...rest
+        // ];
+        // console.log("signTx");
+        // console.log(foo);
         return await this.signTx(
           from,
           pk,

@@ -2,7 +2,10 @@ require("dotenv").config();
 const sdk = require("../../icon-bridge-sdk-node");
 const testUtils = require("../testUtils");
 
-const lib = new sdk({ useMainnet: false });
+const lib = new sdk({
+  useMainnet: false,
+  bscProvider: { hostname: "https://data-seed-prebsc-2-s1.binance.org:8545" }
+});
 const wallets = {
   icon: {
     a: {
@@ -61,7 +64,7 @@ async function iconBridgeSDKNodeTests() {
   );
   await testUtils.runTestOnMethod(
     lib.bsc.methods.transferICX,
-    false,
+    true,
     wallets.icon.a.pubK,
     "icon",
     wallets.bsc.a.pubK,
@@ -76,7 +79,7 @@ async function iconBridgeSDKNodeTests() {
   );
   await testUtils.runTestOnMethod(
     lib.bsc.methods.transferBnUSD,
-    false,
+    true,
     wallets.icon.a.pubK,
     "icon",
     wallets.bsc.a.pubK,
@@ -91,7 +94,7 @@ async function iconBridgeSDKNodeTests() {
   );
   await testUtils.runTestOnMethod(
     lib.bsc.methods.transferSICX,
-    false,
+    true,
     wallets.icon.a.pubK,
     "icon",
     wallets.bsc.a.pubK,
@@ -106,7 +109,7 @@ async function iconBridgeSDKNodeTests() {
   );
   await testUtils.runTestOnMethod(
     lib.bsc.methods.transferETH,
-    false,
+    true,
     wallets.icon.a.pubK,
     "icon",
     wallets.bsc.a.pubK,
@@ -121,7 +124,7 @@ async function iconBridgeSDKNodeTests() {
   );
   await testUtils.runTestOnMethod(
     lib.bsc.methods.transferBTCB,
-    false,
+    true,
     wallets.icon.a.pubK,
     "icon",
     wallets.bsc.a.pubK,
@@ -136,7 +139,7 @@ async function iconBridgeSDKNodeTests() {
   );
   await testUtils.runTestOnMethod(
     lib.bsc.methods.transferUSDC,
-    false,
+    true,
     wallets.icon.a.pubK,
     "icon",
     wallets.bsc.a.pubK,
@@ -151,7 +154,7 @@ async function iconBridgeSDKNodeTests() {
   );
   await testUtils.runTestOnMethod(
     lib.bsc.methods.transferUSDT,
-    false,
+    true,
     wallets.icon.a.pubK,
     "icon",
     wallets.bsc.a.pubK,
@@ -166,12 +169,25 @@ async function iconBridgeSDKNodeTests() {
   );
   await testUtils.runTestOnMethod(
     lib.bsc.methods.transferBUSD,
-    false,
+    true,
     wallets.icon.a.pubK,
     "icon",
     wallets.bsc.a.pubK,
     wallets.bsc.a.privK,
     "10",
+    10000000
+  );
+
+  // Test 11: iconBridgeSDK.bsc.methods.addOwner(from, pk, _owner, gas)
+  console.log(
+    "Test 11: iconBridgeSDK.bsc.methods.addOwner(from, pk, _owner, gas)"
+  );
+  await testUtils.runTestOnMethod(
+    lib.bsc.methods.addOwner,
+    false,
+    wallets.bsc.a.pubK,
+    wallets.bsc.a.privK,
+    wallets.bsc.a.pubK,
     10000000
   );
   // console.log("IconBridgeSDKNode");
