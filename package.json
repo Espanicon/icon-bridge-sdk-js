@@ -45,7 +45,7 @@
     "webpack-dev-server": "^4.9.3"
   },
   "dependencies": {
-    "@espanicon/espanicon-sdk": "github:Espanicon/espanicon-sdk#dev",
+    "@espanicon/espanicon-sdk": "github:Espanicon/espanicon-sdk",
     "dotenv": "^16.0.3",
     "web3": "^1.8.0"
   }
