@@ -76,20 +76,11 @@ function removeZerosFromAddress(address: string): string {
   return "0x" + address.slice(address.length - 40, address.length);
 }
 
-// const defaultSDKParams: InputParams = {
-//   useMainnet: null,
-//   iconProvider: {
-//     hostname: networks.mainnet.icon.provider.hostname,
-//     nid: null
-//   },
-//   bscProvider: { hostname: networks.mainnet.bsc.provider.hostname, nid: null }
-// };
 function getSDKParams(
   inputParams: any,
   defaultParams: InputParams = defaultSDKParams
 ): InputParams {
   //
-  // const result = { ...defaultParams, ...inputParams };
   const result = { ...defaultParams };
   result.useMainnet = true;
   result.iconProvider = {
@@ -146,43 +137,6 @@ function getSDKParams(
       }
     }
   }
-  //if (result.useMainnet == null || result.useMainnet === true) {
-  //  // useMainnet default value = null, use default providers or the
-  //  // ones submitted by the user
-  //  //
-  //  // use predifined icon and bsc providers for mainnet
-  //  result.useMainnet = true;
-  //  result.iconProvider = {
-  //    hostname: networks.mainnet.icon.provider.hostname,
-  //    nid: networks.mainnet.icon.provider.nid
-  //  };
-  //  result.bscProvider = {
-  //    hostname: networks.mainnet.bsc.provider.hostname,
-  //    nid: networks.mainnet.bsc.provider.nid
-  //  };
-  //} else if (result.useMainnet === false) {
-  //  // use predifined icon and bsc providers for testnet
-  //  result.iconProvider = {
-  //    hostname: networks.testnet.icon.provider.hostname,
-  //    nid: networks.testnet.icon.provider.nid
-  //  };
-  //  result.bscProvider = {
-  //    hostname: networks.testnet.bsc.provider.hostname,
-  //    nid: networks.testnet.bsc.provider.nid
-  //  };
-  //} else {
-  //  // should never happen, default to using mainnet
-  //  result.useMainnet = true;
-  //  result.iconProvider = {
-  //    hostname: networks.mainnet.icon.provider.hostname,
-  //    nid: networks.mainnet.icon.provider.nid
-  //  };
-  //  result.bscProvider = {
-  //    hostname: networks.mainnet.bsc.provider.hostname,
-  //    nid: networks.mainnet.bsc.provider.nid
-  //  };
-  //}
-
   return result;
 }
 
