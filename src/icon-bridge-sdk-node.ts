@@ -5,7 +5,7 @@ const bscNodeBridge = require("./lib/bsc/icon-bridge-sdk-node-bsc");
 // types
 type Provider = {
   hostname: string;
-  nid: null | number;
+  nid?: null | number;
 };
 
 type InputParams = {

@@ -184,7 +184,7 @@ async function iconBridgeSDKNodeTests() {
   );
   await testUtils.runTestOnMethod(
     lib.bsc.methods.addOwner,
-    false,
+    true,
     wallets.bsc.a.pubK,
     wallets.bsc.a.privK,
     wallets.bsc.a.pubK,
@@ -197,7 +197,7 @@ async function iconBridgeSDKNodeTests() {
   );
   await testUtils.runTestOnMethod(
     lib.bsc.methods.initialize,
-    false,
+    true,
     wallets.bsc.a.pubK,
     wallets.bsc.a.privK,
     "BNB",
@@ -212,7 +212,7 @@ async function iconBridgeSDKNodeTests() {
   );
   await testUtils.runTestOnMethod(
     lib.bsc.methods.reclaim,
-    false,
+    true,
     wallets.bsc.a.pubK,
     wallets.bsc.a.privK,
     "btp-0x2.icon-ICX",
@@ -226,7 +226,7 @@ async function iconBridgeSDKNodeTests() {
   );
   await testUtils.runTestOnMethod(
     lib.bsc.methods.register,
-    false,
+    true,
     wallets.bsc.a.pubK,
     wallets.bsc.a.privK,
     "fooCoin",
@@ -244,7 +244,7 @@ async function iconBridgeSDKNodeTests() {
   );
   await testUtils.runTestOnMethod(
     lib.bsc.methods.removeOwner,
-    false,
+    true,
     wallets.bsc.a.pubK,
     wallets.bsc.a.privK,
     wallets.bsc.a.pubK,
@@ -257,7 +257,7 @@ async function iconBridgeSDKNodeTests() {
   );
   await testUtils.runTestOnMethod(
     lib.bsc.methods.setFeeRatio,
-    false,
+    true,
     wallets.bsc.a.pubK,
     wallets.bsc.a.privK,
     "btp-0x2.icon-ICX",
@@ -272,7 +272,7 @@ async function iconBridgeSDKNodeTests() {
   );
   await testUtils.runTestOnMethod(
     lib.bsc.methods.updateBTSPeriphery,
-    false,
+    true,
     wallets.bsc.a.pubK,
     wallets.bsc.a.privK,
     "0x4DeD312eB774B9828665448C55Faa8AE15353E56",

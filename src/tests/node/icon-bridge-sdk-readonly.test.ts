@@ -2,7 +2,10 @@ import IconBridgeSDK from "../../icon-bridge-sdk-node";
 import testUtils from "../testUtils";
 
 // const sdkMainnet = new IconBridgeSDK();
-const sdkTestnet = new IconBridgeSDK({ useMainnet: false });
+const sdkTestnet = new IconBridgeSDK({
+  useMainnet: false,
+  bscProvider: { hostname: "https://data-seed-prebsc-2-s1.binance.org:8545" }
+});
 
 const testSummary = {
   bsc: {
@@ -69,9 +72,9 @@ async function iconBridgeSDKTests() {
   //
   await testUtils.runTestOnMethod(
     sdkTestnet.bsc.methods.balanceOf,
-    true,
+    false,
     "0x4DeD312eB774B9828665448C55Faa8AE15353E56",
-    "btp-0x2.icon-ICX"
+    "btp-0x2.icon-bnUSD"
   );
 
   // Test 2: iconBridgeSDK.bsc.methods.balanceOfBatch(_owner, _coinNames)
