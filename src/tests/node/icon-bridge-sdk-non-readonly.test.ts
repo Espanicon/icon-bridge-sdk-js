@@ -190,6 +190,95 @@ async function iconBridgeSDKNodeTests() {
     wallets.bsc.a.pubK,
     10000000
   );
+
+  // Test 12: iconBridgeSDK.bsc.methods.initialize(from, pk, _owner, gas)
+  console.log(
+    "Test 12: iconBridgeSDK.bsc.methods.initialize(from, pk, _owner, gas)"
+  );
+  await testUtils.runTestOnMethod(
+    lib.bsc.methods.initialize,
+    false,
+    wallets.bsc.a.pubK,
+    wallets.bsc.a.privK,
+    "BNB",
+    10000,
+    100,
+    10000000
+  );
+
+  // Test 13: iconBridgeSDK.bsc.methods.reclaim(from, pk, _owner, gas)
+  console.log(
+    "Test 13: iconBridgeSDK.bsc.methods.reclaim(from, pk, _owner, gas)"
+  );
+  await testUtils.runTestOnMethod(
+    lib.bsc.methods.reclaim,
+    false,
+    wallets.bsc.a.pubK,
+    wallets.bsc.a.privK,
+    "btp-0x2.icon-ICX",
+    "10",
+    10000000
+  );
+
+  // Test 14: iconBridgeSDK.bsc.methods.register(from, pk, _owner, gas)
+  console.log(
+    "Test 14: iconBridgeSDK.bsc.methods.register(from, pk, _owner, gas)"
+  );
+  await testUtils.runTestOnMethod(
+    lib.bsc.methods.register,
+    false,
+    wallets.bsc.a.pubK,
+    wallets.bsc.a.privK,
+    "fooCoin",
+    "fooCoin",
+    18,
+    10,
+    10,
+    "0x4DeD312eB774B9828665448C55Faa8AE15353E56",
+    10000000
+  );
+
+  // Test 15: iconBridgeSDK.bsc.methods.removeOwner(from, pk, _owner, gas)
+  console.log(
+    "Test 15: iconBridgeSDK.bsc.methods.removeOwner(from, pk, _owner, gas)"
+  );
+  await testUtils.runTestOnMethod(
+    lib.bsc.methods.removeOwner,
+    false,
+    wallets.bsc.a.pubK,
+    wallets.bsc.a.privK,
+    wallets.bsc.a.pubK,
+    10000000
+  );
+
+  // Test 16: iconBridgeSDK.bsc.methods.setFeeRatio(from, pk, _owner, gas)
+  console.log(
+    "Test 16: iconBridgeSDK.bsc.methods.setFeeRatio(from, pk, _owner, gas)"
+  );
+  await testUtils.runTestOnMethod(
+    lib.bsc.methods.setFeeRatio,
+    false,
+    wallets.bsc.a.pubK,
+    wallets.bsc.a.privK,
+    "btp-0x2.icon-ICX",
+    100,
+    10,
+    10000000
+  );
+
+  // Test 17: iconBridgeSDK.bsc.methods.updateBTSPeriphery(from, pk, _owner, gas)
+  console.log(
+    "Test 17: iconBridgeSDK.bsc.methods.updateBTSPeriphery(from, pk, _owner, gas)"
+  );
+  await testUtils.runTestOnMethod(
+    lib.bsc.methods.updateBTSPeriphery,
+    false,
+    wallets.bsc.a.pubK,
+    wallets.bsc.a.privK,
+    "0x4DeD312eB774B9828665448C55Faa8AE15353E56",
+    10000000
+  );
+
   // console.log("IconBridgeSDKNode");
   // console.log(lib.bsc);
 

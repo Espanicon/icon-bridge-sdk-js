@@ -23,20 +23,50 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
                     return { error: errorResult.toString() };
                 }
             }),
-            initialize: (_nativeCoinName, _feeNumerator, _fixedFee) => __awaiter(this, void 0, void 0, function* () {
-                console.log([_nativeCoinName, _feeNumerator, _fixedFee]);
+            initialize: (from, pk, _nativeCoinName, _feeNumerator, _fixedFee, gas = null) => __awaiter(this, void 0, void 0, function* () {
+                try {
+                    return yield this.signBTSCoreTx(from, pk, "initialize", null, gas, _nativeCoinName, _feeNumerator, _fixedFee);
+                }
+                catch (err) {
+                    const errorResult = new Exception(err, `Error running initialize(). Params:\nfrom: ${from}\npk: ${pk}\n_nativeCoinName: ${_nativeCoinName}\n_feeNumerator: ${_feeNumerator}\n_fixedFee: ${_fixedFee}\n`);
+                    return { error: errorResult.toString() };
+                }
             }),
-            reclaim: (_coinName, _value) => __awaiter(this, void 0, void 0, function* () {
-                console.log(_coinName, _value);
+            reclaim: (from, pk, _coinName, _value, gas = null) => __awaiter(this, void 0, void 0, function* () {
+                try {
+                    return yield this.signBTSCoreTx(from, pk, "reclaim", null, gas, _coinName, _value);
+                }
+                catch (err) {
+                    const errorResult = new Exception(err, `Error running reclaim(). Params:\nfrom: ${from}\npk: ${pk}\n_coinName: ${_coinName}\n_value: ${_value}\n`);
+                    return { error: errorResult.toString() };
+                }
             }),
-            register: (_name, _symbol, _decimals, _feeNumerator, _fixedFee, _addr) => __awaiter(this, void 0, void 0, function* () {
-                console.log([_name, _symbol, _decimals, _feeNumerator, _fixedFee, _addr]);
+            register: (from, pk, _name, _symbol, _decimals, _feeNumerator, _fixedFee, _addr, gas = null) => __awaiter(this, void 0, void 0, function* () {
+                try {
+                    return yield this.signBTSCoreTx(from, pk, "register", null, gas, _name, _symbol, _decimals, _feeNumerator, _fixedFee, _addr);
+                }
+                catch (err) {
+                    const errorResult = new Exception(err, `Error running register(). Params:\nfrom: ${from}\npk: ${pk}\n_name: ${_name}\n_symbol: ${_symbol}\n_decimals: ${_decimals}\n_feeNumerator: ${_feeNumerator}\n_fixedFee: ${_fixedFee}\n_addr: ${_addr}\n`);
+                    return { error: errorResult.toString() };
+                }
             }),
-            removeOwner: (_owner) => __awaiter(this, void 0, void 0, function* () {
-                console.log(_owner);
+            removeOwner: (from, pk, _owner, gas = null) => __awaiter(this, void 0, void 0, function* () {
+                try {
+                    return yield this.signBTSCoreTx(from, pk, "removeOwner", null, gas, _owner);
+                }
+                catch (err) {
+                    const errorResult = new Exception(err, `Error running removeOwner(). Params:\nfrom: ${from}\npk: ${pk}\n_owner: ${_owner}\n`);
+                    return { error: errorResult.toString() };
+                }
             }),
-            setFeeRatio: (_name, _feeNumerator, _fixedFee) => __awaiter(this, void 0, void 0, function* () {
-                console.log([_name, _feeNumerator, _fixedFee]);
+            setFeeRatio: (from, pk, _name, _feeNumerator, _fixedFee, gas = null) => __awaiter(this, void 0, void 0, function* () {
+                try {
+                    return yield this.signBTSCoreTx(from, pk, "setFeeRatio", null, gas, _name, _feeNumerator, _fixedFee);
+                }
+                catch (err) {
+                    const errorResult = new Exception(err, `Error running setFeeRatio(). Params:\nfrom: ${from}\npk: ${pk}\n_name: ${_name}\n_feeNumerator: ${_feeNumerator}\n_fixedFee: ${_fixedFee}\n`);
+                    return { error: errorResult.toString() };
+                }
             }),
             transferBUSD: (targetAddress, targetChain = "icon", from, pk, _value, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
                 try {
@@ -141,8 +171,14 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
                     return { error: errorResult.toString() };
                 }
             }),
-            updateBTSPeriphery: (_btsPeriphery) => __awaiter(this, void 0, void 0, function* () {
-                console.log(_btsPeriphery);
+            updateBTSPeriphery: (from, pk, _btsPeriphery, gas = null) => __awaiter(this, void 0, void 0, function* () {
+                try {
+                    return yield this.signBTSCoreTx(from, pk, "updateBTSPeriphery", null, gas, _btsPeriphery);
+                }
+                catch (err) {
+                    const errorResult = new Exception(err, `Error running updateBTSPeriphery(). Params:\nfrom: ${from}\npk: ${pk}\n_btsPeriphery: ${_btsPeriphery}\n`);
+                    return { error: errorResult.toString() };
+                }
             })
         };
         this.approveBTSCoreForTransfer = (from, pk, amount, tokenContractAddress, tokenContractAbi, gas = null) => __awaiter(this, void 0, void 0, function* () {
