@@ -1,6 +1,7 @@
 // icon-bridge-sdk-icon.ts
 //
-// const Exception = require("../../utils/exception");
+const Exception = require("../../utils/exception");
+const EspaniconSDK = require("@espanicon/espanicon-sdk");
 
 // types
 type Provider = {
@@ -21,23 +22,19 @@ type InputParams = {
  */
 class IconBridgeSDKIcon {
   params: any;
-  iconWeb3: any;
   sdkUtils: any;
-  callbackLib: any;
+  iconWeb3: any;
 
   /**
    * Constructor
    */
-  constructor(
-    params: InputParams,
-    iconWeb3: any,
-    sdkUtils: any,
-    callbackLib: any
-  ) {
+  constructor(params: InputParams, sdkUtils: any) {
     this.params = params;
-    this.iconWeb3 = iconWeb3;
     this.sdkUtils = sdkUtils;
-    this.callbackLib = callbackLib;
+    this.iconWeb3 = new EspaniconSDK(
+      this.params.iconProvider.hostname,
+      this.params.iconProvider.nid
+    );
   }
 
   // ######################################################################
@@ -52,36 +49,42 @@ class IconBridgeSDKIcon {
      * @param _coinName - token name.
      * @return token balance of a wallet.
      */
-    // balanceOf: async (_owner: string, _coinName: string): Promise<any> => {
-    //   try {
-    //     const isMainnet: boolean | null =
-    //       this.params.useMainnet == null ? true : this.params.useMainnet;
-    //     const response = await this.callbackLib.BTSReadonlyQuery(
-    //       "balanceOf",
-    //       "bsc",
-    //       this.bscWeb3,
-    //       _owner,
-    //       _coinName
-    //     );
-    //     const BTSLogicContractABI = this.callbackLib.getAbiOf(
-    //       "BTSCore",
-    //       "bsc",
-    //       isMainnet,
-    //       true
-    //     );
-    //     const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(
-    //       BTSLogicContractABI[4].outputs,
-    //       response
-    //     );
-    //     return parsedResponse;
-    //   } catch (err) {
-    //     const errorResult = new Exception(
-    //       err,
-    //       `Error running balanceOf(). Params:\n_owner: ${_owner}\n_coinName: ${_coinName}\n`
-    //     );
-    //     return { error: errorResult.toString() };
-    //   }
-    // }
+    balanceOf: async (_owner: string, _coinName: string): Promise<any> => {
+      try {
+        // get BTS Contract
+        const isMainnet: boolean | null =
+          this.params.useMainnet == null ? true : this.params.useMainnet;
+
+        const btsContract = this.sdkUtils.getContractOf(
+          "bts",
+          "icon",
+          isMainnet
+        );
+
+        // make RPC JSON object
+        const JSONRPCObject = this.iconWeb3.makeICXCallRequestObj(
+          "balanceOf",
+          { _owner: _owner, _coinName: _coinName },
+          null,
+          btsContract
+        );
+
+        // make query
+        const request = await this.iconWeb3.queryMethod(
+          this.iconWeb3.scores.apiRoutes.v3,
+          JSONRPCObject,
+          this.iconWeb3.apiNode
+        );
+
+        return request;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running balanceOf(). Params:\n_owner: ${_owner}\n_coinName: ${_coinName}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    }
   };
 }
 

@@ -2,7 +2,6 @@
 //
 import utils from "../utils/utils";
 import Web3 from "web3";
-// import IconBridgeSDKBSC from "./bsc/icon-bridge-sdk-bsc";
 
 // types
 type Provider = {
@@ -50,12 +49,6 @@ class IconBridgeSDK {
   constructor(inputParams: InputParams = defaultParams) {
     this.params = this.sdkUtils.getSDKParams(inputParams);
     this.bscWeb3 = new Web3(this.params.bscProvider.hostname);
-    // this.bsc = new IconBridgeSDKBSC(
-    //   this.params,
-    //   this.bscWeb3,
-    //   this.sdkUtils,
-    //   this.lib
-    // );
   }
 
   // ######################################################################
@@ -157,19 +150,6 @@ class IconBridgeSDK {
           gas
         );
       } else {
-        // const foo = [
-        //   from,
-        //   pk,
-        //   methodName,
-        //   BTSProxyContractAddress,
-        //   contractObject,
-        //   // web3Wrapper,
-        //   amount,
-        //   gas,
-        //   ...rest
-        // ];
-        // console.log("signTx");
-        // console.log(foo);
         return await this.signTx(
           from,
           pk,

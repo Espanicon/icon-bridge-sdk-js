@@ -7,57 +7,6 @@ const sdkTestnet = new IconBridgeSDK({
   bscProvider: { hostname: "https://data-seed-prebsc-2-s1.binance.org:8545" }
 });
 
-const testSummary = {
-  bsc: {
-    // balanceOf
-    [testUtils.methodsName.general[0]]: "done",
-    // balanceOfBatch
-    [testUtils.methodsName.general[1]]: "done",
-    // coinNames
-    [testUtils.methodsName.general[2]]: "done",
-    // coinNames
-    [testUtils.methodsName.general[3]]: "done",
-    // feeRatio
-    [testUtils.methodsName.general[4]]: "done",
-    // getAccumulatedFees
-    [testUtils.methodsName.general[5]]: "done",
-    // getNativeCoinName
-    [testUtils.methodsName.general[6]]: "done",
-    // getOwners
-    [testUtils.methodsName.general[7]]: "done",
-    // isOwner
-    [testUtils.methodsName.general[8]]: "done",
-    // isValidCoin
-    [testUtils.methodsName.general[9]]: "done"
-    // addOwner: not readonly
-    // [testUtils.methodsName.general[10]]: "done",
-    // handleResponseService: can only be called by BTSPeriphery
-    // [testUtils.methodsName.general[11]]: "missed",
-    // initialize: not readonly
-    // [testUtils.methodsName.general[12]]: "missed",
-    // mint: can only be called by BTSPeriphery
-    // [testUtils.methodsName.general[13]]: "missed",
-    // reclaim: not readonly
-    // [testUtils.methodsName.general[14]]: "missed",
-    // refund: can only be called by BTSCore
-    // [testUtils.methodsName.general[15]]: "missed",
-    // register: can only be called by contract owner
-    // [testUtils.methodsName.general[16]]: "missed",
-    // removeOwner: can only be called by contract owner
-    // [testUtils.methodsName.general[17]]: "missed",
-    // setFeeRatio: can only be called by contract owner
-    // [testUtils.methodsName.general[18]]: "missed",
-    // transfer: not readonly
-    // [testUtils.methodsName.general[19]]: "missed",
-    // transferBatch: not readonly
-    // [testUtils.methodsName.general[20]]: "missed",
-    // transferFees: can only be called by BTSPeriphery
-    // [testUtils.methodsName.general[21]]: "missed",
-    // transferNativeCoin: not readonly
-    // [testUtils.methodsName.general[22]]: "missed"
-  }
-};
-
 async function iconBridgeSDKTests() {
   console.log(testUtils.lineBreak.a);
   console.log(
@@ -153,10 +102,71 @@ async function iconBridgeSDKTests() {
     "btp-0x2.icon-ICX"
   );
 
+  // Test 11: iconBridgeSDK.icon.methods.balanceOf(_coinName)
+  console.log(
+    `Test 11: iconBridgeSDK.icon.methods.balanceOf(_coinName: string)`
+  );
   //
-  console.log("Test summary:");
-  console.log(testSummary);
-  console.log(testUtils.lineBreak.a);
+  await testUtils.runTestOnMethod(
+    sdkTestnet.icon.methods.balanceOf,
+    false,
+    "hx0169e03001a3fa4012092ad4a4ddf2d07681f063",
+    "btp-0x2.icon-bnUSD"
+  );
 }
 
 export = iconBridgeSDKTests;
+//const testSummary = {
+//  bsc: {
+//    // balanceOf
+//    [testUtils.methodsName.general[0]]: "done",
+//    // balanceOfBatch
+//    [testUtils.methodsName.general[1]]: "done",
+//    // coinNames
+//    [testUtils.methodsName.general[2]]: "done",
+//    // coinNames
+//    [testUtils.methodsName.general[3]]: "done",
+//    // feeRatio
+//    [testUtils.methodsName.general[4]]: "done",
+//    // getAccumulatedFees
+//    [testUtils.methodsName.general[5]]: "done",
+//    // getNativeCoinName
+//    [testUtils.methodsName.general[6]]: "done",
+//    // getOwners
+//    [testUtils.methodsName.general[7]]: "done",
+//    // isOwner
+//    [testUtils.methodsName.general[8]]: "done",
+//    // isValidCoin
+//    [testUtils.methodsName.general[9]]: "done"
+//    // addOwner: not readonly
+//    // [testUtils.methodsName.general[10]]: "done",
+//    // handleResponseService: can only be called by BTSPeriphery
+//    // [testUtils.methodsName.general[11]]: "missed",
+//    // initialize: not readonly
+//    // [testUtils.methodsName.general[12]]: "missed",
+//    // mint: can only be called by BTSPeriphery
+//    // [testUtils.methodsName.general[13]]: "missed",
+//    // reclaim: not readonly
+//    // [testUtils.methodsName.general[14]]: "missed",
+//    // refund: can only be called by BTSCore
+//    // [testUtils.methodsName.general[15]]: "missed",
+//    // register: can only be called by contract owner
+//    // [testUtils.methodsName.general[16]]: "missed",
+//    // removeOwner: can only be called by contract owner
+//    // [testUtils.methodsName.general[17]]: "missed",
+//    // setFeeRatio: can only be called by contract owner
+//    // [testUtils.methodsName.general[18]]: "missed",
+//    // transfer: not readonly
+//    // [testUtils.methodsName.general[19]]: "missed",
+//    // transferBatch: not readonly
+//    // [testUtils.methodsName.general[20]]: "missed",
+//    // transferFees: can only be called by BTSPeriphery
+//    // [testUtils.methodsName.general[21]]: "missed",
+//    // transferNativeCoin: not readonly
+//    // [testUtils.methodsName.general[22]]: "missed"
+//  }
+//};
+//  //
+//  console.log("Test summary:");
+//  console.log(testSummary);
+//  console.log(testUtils.lineBreak.a);

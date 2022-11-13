@@ -17,20 +17,6 @@ const sdkTestnet = new icon_bridge_sdk_node_1.default({
     useMainnet: false,
     bscProvider: { hostname: "https://data-seed-prebsc-2-s1.binance.org:8545" }
 });
-const testSummary = {
-    bsc: {
-        [testUtils_1.default.methodsName.general[0]]: "done",
-        [testUtils_1.default.methodsName.general[1]]: "done",
-        [testUtils_1.default.methodsName.general[2]]: "done",
-        [testUtils_1.default.methodsName.general[3]]: "done",
-        [testUtils_1.default.methodsName.general[4]]: "done",
-        [testUtils_1.default.methodsName.general[5]]: "done",
-        [testUtils_1.default.methodsName.general[6]]: "done",
-        [testUtils_1.default.methodsName.general[7]]: "done",
-        [testUtils_1.default.methodsName.general[8]]: "done",
-        [testUtils_1.default.methodsName.general[9]]: "done"
-    }
-};
 function iconBridgeSDKTests() {
     return __awaiter(this, void 0, void 0, function* () {
         console.log(testUtils_1.default.lineBreak.a);
@@ -56,9 +42,8 @@ function iconBridgeSDKTests() {
         yield testUtils_1.default.runTestOnMethod(sdkTestnet.bsc.methods.isOwner, true, "0x4DeD312eB774B9828665448C55Faa8AE15353E56");
         console.log(`Test 10: iconBridgeSDK.bsc.methods.isValidCoin(_coinName: string)`);
         yield testUtils_1.default.runTestOnMethod(sdkTestnet.bsc.methods.isValidCoin, true, "btp-0x2.icon-ICX");
-        console.log("Test summary:");
-        console.log(testSummary);
-        console.log(testUtils_1.default.lineBreak.a);
+        console.log(`Test 11: iconBridgeSDK.icon.methods.balanceOf(_coinName: string)`);
+        yield testUtils_1.default.runTestOnMethod(sdkTestnet.icon.methods.balanceOf, false, "hx0169e03001a3fa4012092ad4a4ddf2d07681f063", "btp-0x2.icon-bnUSD");
     });
 }
 module.exports = iconBridgeSDKTests;

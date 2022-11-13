@@ -47,13 +47,13 @@ function iconBridgeSDKNodeTests() {
         console.log("Test 6: iconBridgeSDK.bsc.methods.transferETH(targetAddress, targetChain, from, pk, _coinName, _value, gas)");
         yield testUtils.runTestOnMethod(lib.bsc.methods.transferETH, true, wallets.icon.a.pubK, "icon", wallets.bsc.a.pubK, wallets.bsc.a.privK, "10", 10000000);
         console.log("Test 7: iconBridgeSDK.bsc.methods.transferBTCB(targetAddress, targetChain, from, pk, _coinName, _value, gas)");
-        yield testUtils.runTestOnMethod(lib.bsc.methods.transferBTCB, true, wallets.icon.a.pubK, "icon", wallets.bsc.a.pubK, wallets.bsc.a.privK, "10", 10000000);
+        yield testUtils.runTestOnMethod(lib.bsc.methods.transferBTCB, true, wallets.icon.a.pubK, "icon", wallets.bsc.a.pubK, wallets.bsc.a.privK, "0.05", 10000000);
         console.log("Test 8: iconBridgeSDK.bsc.methods.transferUSDC(targetAddress, targetChain, from, pk, _coinName, _value, gas)");
         yield testUtils.runTestOnMethod(lib.bsc.methods.transferUSDC, true, wallets.icon.a.pubK, "icon", wallets.bsc.a.pubK, wallets.bsc.a.privK, "10", 10000000);
         console.log("Test 9: iconBridgeSDK.bsc.methods.transferUSDT(targetAddress, targetChain, from, pk, _coinName, _value, gas)");
         yield testUtils.runTestOnMethod(lib.bsc.methods.transferUSDT, true, wallets.icon.a.pubK, "icon", wallets.bsc.a.pubK, wallets.bsc.a.privK, "10", 10000000);
         console.log("Test 10: iconBridgeSDK.bsc.methods.transferBUSD(targetAddress, targetChain, from, pk, _coinName, _value, gas)");
-        yield testUtils.runTestOnMethod(lib.bsc.methods.transferBUSD, true, wallets.icon.a.pubK, "icon", wallets.bsc.a.pubK, wallets.bsc.a.privK, "10", 10000000);
+        yield testUtils.runTestOnMethod(lib.bsc.methods.transferBUSD, true, wallets.icon.a.pubK, "icon", wallets.bsc.a.pubK, wallets.bsc.a.privK, "9", 10000000);
         console.log("Test 11: iconBridgeSDK.bsc.methods.addOwner(from, pk, _owner, gas)");
         yield testUtils.runTestOnMethod(lib.bsc.methods.addOwner, true, wallets.bsc.a.pubK, wallets.bsc.a.privK, wallets.bsc.a.pubK, 10000000);
         console.log("Test 12: iconBridgeSDK.bsc.methods.initialize(from, pk, _owner, gas)");

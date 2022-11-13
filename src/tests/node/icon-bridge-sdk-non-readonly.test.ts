@@ -129,7 +129,7 @@ async function iconBridgeSDKNodeTests() {
     "icon",
     wallets.bsc.a.pubK,
     wallets.bsc.a.privK,
-    "10",
+    "0.05",
     10000000
   );
 
@@ -174,7 +174,7 @@ async function iconBridgeSDKNodeTests() {
     "icon",
     wallets.bsc.a.pubK,
     wallets.bsc.a.privK,
-    "10",
+    "9",
     10000000
   );
 
