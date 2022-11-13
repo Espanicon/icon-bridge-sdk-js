@@ -21,7 +21,7 @@ async function iconBridgeSDKTests() {
   //
   await testUtils.runTestOnMethod(
     sdkTestnet.bsc.methods.balanceOf,
-    false,
+    true,
     "0x4DeD312eB774B9828665448C55Faa8AE15353E56",
     "btp-0x2.icon-bnUSD"
   );
@@ -109,9 +109,156 @@ async function iconBridgeSDKTests() {
   //
   await testUtils.runTestOnMethod(
     sdkTestnet.icon.methods.balanceOf,
-    false,
+    true,
     "hx0169e03001a3fa4012092ad4a4ddf2d07681f063",
     "btp-0x2.icon-bnUSD"
+  );
+
+  // Test 12: iconBridgeSDK.icon.methods.name()
+  console.log(`Test 12: iconBridgeSDK.icon.methods.name()`);
+  //
+  await testUtils.runTestOnMethod(sdkTestnet.icon.methods.name, true);
+
+  // Test 13: iconBridgeSDK.icon.methods.feeRatio()
+  console.log(`Test 13: iconBridgeSDK.icon.methods.feeRatio(_name)`);
+  //
+  await testUtils.runTestOnMethod(
+    sdkTestnet.icon.methods.feeRatio,
+    true,
+    "btp-0x2.icon-bnUSD"
+  );
+
+  // Test 14: iconBridgeSDK.icon.methods.getTokenLimit()
+  console.log(`Test 14: iconBridgeSDK.icon.methods.getTokenLimit(_name)`);
+  //
+  await testUtils.runTestOnMethod(
+    sdkTestnet.icon.methods.getTokenLimit,
+    true,
+    "btp-0x2.icon-bnUSD"
+  );
+
+  // Test 15: iconBridgeSDK.icon.methods.getTokenLimitTxn()
+  console.log(`Test 15: iconBridgeSDK.icon.methods.getTokenLimitTxn(_sn)`);
+  //
+  await testUtils.runTestOnMethod(
+    sdkTestnet.icon.methods.getTokenLimitTxn,
+    true,
+    "0x63"
+  );
+
+  // Test 16: iconBridgeSDK.icon.methods.getSn()
+  console.log(`Test 16: iconBridgeSDK.icon.methods.getSn()`);
+  //
+  await testUtils.runTestOnMethod(sdkTestnet.icon.methods.getSn, true);
+
+  // Test 17: iconBridgeSDK.icon.methods.isUserBlackListed()
+  console.log(
+    `Test 17: iconBridgeSDK.icon.methods.isUserBlackListed(_net, _address)`
+  );
+  //
+  await testUtils.runTestOnMethod(
+    sdkTestnet.icon.methods.isUserBlackListed,
+    true,
+    "icon",
+    "hx0169e03001a3fa4012092ad4a4ddf2d07681f063"
+  );
+
+  // Test 18: iconBridgeSDK.icon.methods.getBlackListedUsers()
+  console.log(
+    `Test 18: iconBridgeSDK.icon.methods.getBlackListedUsers(_net, _start, _end)`
+  );
+  //
+  await testUtils.runTestOnMethod(
+    sdkTestnet.icon.methods.getBlackListedUsers,
+    true,
+    "icon",
+    "0x0",
+    "0x1"
+  );
+
+  // Test 19: iconBridgeSDK.icon.methods.getRegisteredTokensCount()
+  console.log(`Test 19: iconBridgeSDK.icon.methods.getRegisteredTokensCount()`);
+  //
+  await testUtils.runTestOnMethod(
+    sdkTestnet.icon.methods.getRegisteredTokensCount,
+    true
+  );
+
+  // Test 20: iconBridgeSDK.icon.methods.tokenLimitStatus()
+  console.log(
+    `Test 20: iconBridgeSDK.icon.methods.tokenLimitStatus(_net, _coinName)`
+  );
+  //
+  await testUtils.runTestOnMethod(
+    sdkTestnet.icon.methods.tokenLimitStatus,
+    true,
+    "icon",
+    "btp-0x2.icon-bnUSD"
+  );
+
+  // Test 21: iconBridgeSDK.icon.methods.coinNames()
+  console.log(`Test 21: iconBridgeSDK.icon.methods.coinNames()`);
+  //
+  await testUtils.runTestOnMethod(sdkTestnet.icon.methods.coinNames, true);
+
+  // Test 22: iconBridgeSDK.icon.methods.coinId()
+  console.log(`Test 22: iconBridgeSDK.icon.methods.coinId(_coinName)`);
+  //
+  await testUtils.runTestOnMethod(
+    sdkTestnet.icon.methods.coinId,
+    true,
+    "btp-0x2.icon-bnUSD"
+  );
+
+  // Test 23: iconBridgeSDK.icon.methods.balanceOfBatch()
+  console.log(
+    `Test 23: iconBridgeSDK.icon.methods.balanceOfBatch(_owner, _coinNames)`
+  );
+  //
+  await testUtils.runTestOnMethod(
+    sdkTestnet.icon.methods.balanceOfBatch,
+    true,
+    "hx0169e03001a3fa4012092ad4a4ddf2d07681f063",
+    ["btp-0x2.icon-bnUSD"]
+  );
+
+  // Test 24: iconBridgeSDK.icon.methods.getAccumulatedFees()
+  console.log(`Test 24: iconBridgeSDK.icon.methods.getAccumulatedFees()`);
+  //
+  await testUtils.runTestOnMethod(
+    sdkTestnet.icon.methods.getAccumulatedFees,
+    true
+  );
+
+  // Test 25: iconBridgeSDK.icon.methods.getTransaction()
+  console.log(`Test 25: iconBridgeSDK.icon.methods.getTransaction(_sn)`);
+  //
+  await testUtils.runTestOnMethod(
+    sdkTestnet.icon.methods.getTransaction,
+    true,
+    "0x63"
+  );
+
+  // Test 26: iconBridgeSDK.icon.methods.getOwners()
+  console.log(`Test 26: iconBridgeSDK.icon.methods.getOwners()`);
+  //
+  await testUtils.runTestOnMethod(sdkTestnet.icon.methods.getOwners, true);
+
+  // Test 27: iconBridgeSDK.icon.methods.isOwner()
+  console.log(`Test 27: iconBridgeSDK.icon.methods.isOwner(_addr)`);
+  //
+  await testUtils.runTestOnMethod(
+    sdkTestnet.icon.methods.isOwner,
+    true,
+    "hx0169e03001a3fa4012092ad4a4ddf2d07681f063"
+  );
+
+  // Test 28: iconBridgeSDK.icon.methods.isRestrictionEnabled()
+  console.log(`Test 28: iconBridgeSDK.icon.methods.isRestrictionEnabled()`);
+  //
+  await testUtils.runTestOnMethod(
+    sdkTestnet.icon.methods.isRestrictionEnabled,
+    true
   );
 }
 
