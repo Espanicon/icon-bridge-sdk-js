@@ -47,6 +47,7 @@
   "dependencies": {
     "@espanicon/espanicon-sdk": "github:Espanicon/espanicon-sdk",
     "dotenv": "^16.0.3",
+    "icon-sdk-js": "^1.2.8",
     "web3": "^1.8.0"
   }
 }
