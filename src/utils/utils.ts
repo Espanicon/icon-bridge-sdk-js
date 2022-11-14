@@ -139,11 +139,13 @@ function getSDKParams(
   }
   return result;
 }
-
+/*
+ * for the 'queryMethod' method in the Espanicon library to work properly
+ * the 'hostname' param must not have the url protocol in the string
+ * i.e: must be 'api.espanicon.team' instead of 'https://api.espanicon.team'
+ * @param hostname - url to parse
+ */
 function getFormattedHostname(hostname: string): string {
-  // for the 'queryMethod' method in the Espanicon library to work properly
-  // the 'hostname' param must not have the url protocol in the string
-  // i.e: must be 'api.espanicon.team' instead of 'https://api.espanicon.team'
   let temp: string = hostname;
 
   if (temp[temp.length - 1] === "/") {
