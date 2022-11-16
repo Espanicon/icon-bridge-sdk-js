@@ -121,7 +121,15 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
      *
      */
     addOwner: async (): Promise<any> => {
-      //
+      try {
+        return null;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running addOwner(). Params:\nnull: ${null}\n`
+        );
+        return { error: errorResult.toString() };
+      }
     },
 
     /*
@@ -129,6 +137,15 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
      */
     handleResponseService: async (): Promise<any> => {
       //
+      try {
+        return null;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running handleResponseService(). Params:\nnull: ${null}\n`
+        );
+        return { error: errorResult.toString() };
+      }
     },
 
     /*
@@ -136,6 +153,15 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
      */
     initialize: async (): Promise<any> => {
       //
+      try {
+        return null;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running initialize(). Params:\nnull: ${null}\n`
+        );
+        return { error: errorResult.toString() };
+      }
     },
 
     /*
@@ -143,6 +169,15 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
      */
     mint: async (): Promise<any> => {
       //
+      try {
+        return null;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running mint(). Params:\nnull: ${null}\n`
+        );
+        return { error: errorResult.toString() };
+      }
     },
 
     /*
@@ -150,6 +185,15 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
      */
     reclaim: async (): Promise<any> => {
       //
+      try {
+        return null;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running reclaim(). Params:\nnull: ${null}\n`
+        );
+        return { error: errorResult.toString() };
+      }
     },
 
     /*
@@ -157,6 +201,15 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
      */
     refund: async (): Promise<any> => {
       //
+      try {
+        return null;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running refund(). Params:\nnull: ${null}\n`
+        );
+        return { error: errorResult.toString() };
+      }
     },
 
     /*
@@ -164,6 +217,15 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
      */
     register: async (): Promise<any> => {
       //
+      try {
+        return null;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running register(). Params:\nnull: ${null}\n`
+        );
+        return { error: errorResult.toString() };
+      }
     },
 
     /*
@@ -171,6 +233,15 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
      */
     removeOwner: async (): Promise<any> => {
       //
+      try {
+        return null;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running removeOwner(). Params:\nnull: ${null}\n`
+        );
+        return { error: errorResult.toString() };
+      }
     },
 
     /*
@@ -178,6 +249,15 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
      */
     setFeeRatio: async (): Promise<any> => {
       //
+      try {
+        return null;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running setFeeRatio(). Params:\nnull: ${null}\n`
+        );
+        return { error: errorResult.toString() };
+      }
     },
 
     /*
@@ -185,6 +265,15 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
      */
     transfer: async (): Promise<any> => {
       //
+      try {
+        return null;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running transfer(). Params:\nnull: ${null}\n`
+        );
+        return { error: errorResult.toString() };
+      }
     },
 
     /*
@@ -192,6 +281,15 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
      */
     transferBatch: async (): Promise<any> => {
       //
+      try {
+        return null;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running transferBatch(). Params:\nnull: ${null}\n`
+        );
+        return { error: errorResult.toString() };
+      }
     },
 
     /*
@@ -199,6 +297,15 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
      */
     transferFees: async (): Promise<any> => {
       //
+      try {
+        return null;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running transferFees(). Params:\nnull: ${null}\n`
+        );
+        return { error: errorResult.toString() };
+      }
     },
 
     /*
@@ -206,6 +313,15 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
      */
     setTokenLimit: async (): Promise<any> => {
       //
+      try {
+        return null;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running setTokenLimit(). Params:\nnull: ${null}\n`
+        );
+        return { error: errorResult.toString() };
+      }
     },
 
     /*
@@ -213,6 +329,15 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
      */
     addBlacklistAddress: async (): Promise<any> => {
       //
+      try {
+        return null;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running addBlacklistAddress(). Params:\nnull: ${null}\n`
+        );
+        return { error: errorResult.toString() };
+      }
     },
 
     /*
@@ -220,6 +345,15 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
      */
     removeBlacklistAddress: async (): Promise<any> => {
       //
+      try {
+        return null;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running removeBlacklistAdress(). Params:\nnull: ${null}\n`
+        );
+        return { error: errorResult.toString() };
+      }
     },
 
     /*
@@ -227,6 +361,15 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
      */
     tokenFallback: async (): Promise<any> => {
       //
+      try {
+        return null;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running tokenFallback(). Params:\nnull: ${null}\n`
+        );
+        return { error: errorResult.toString() };
+      }
     },
 
     /*
@@ -234,6 +377,15 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
      */
     handleBTPMessage: async (): Promise<any> => {
       //
+      try {
+        return null;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running handleBTPMessage(). Params:\nnull: ${null}\n`
+        );
+        return { error: errorResult.toString() };
+      }
     },
 
     /*
@@ -241,6 +393,15 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
      */
     handleBTPError: async (): Promise<any> => {
       //
+      try {
+        return null;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running handleBTPError(). Params:\nnull: ${null}\n`
+        );
+        return { error: errorResult.toString() };
+      }
     },
 
     /*
@@ -248,6 +409,15 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
      */
     handleFeeGathering: async (): Promise<any> => {
       //
+      try {
+        return null;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running handleFeeGathering(). Params:\nnull: ${null}\n`
+        );
+        return { error: errorResult.toString() };
+      }
     },
 
     /*
@@ -255,6 +425,15 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
      */
     addRestrictions: async (): Promise<any> => {
       //
+      try {
+        return null;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running addRestrictions(). Params:\nnull: ${null}\n`
+        );
+        return { error: errorResult.toString() };
+      }
     },
 
     /*
@@ -262,6 +441,15 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
      */
     disableRestrictions: async (): Promise<any> => {
       //
+      try {
+        return null;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running disableRestrictions(). Params:\nnull: ${null}\n`
+        );
+        return { error: errorResult.toString() };
+      }
     }
   };
 
