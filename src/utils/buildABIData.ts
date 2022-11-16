@@ -14,6 +14,7 @@ const lib = new EspaniconSDKNode(
 );
 const bscLib = new web3(utils.networks.mainnet.bsc.provider.hostname);
 const bscLibTestnet = new web3(utils.networks.testnet.bsc.provider.hostname);
+let count = 0;
 
 // types
 interface Query {
@@ -44,7 +45,7 @@ interface Result {
 }
 
 // functions
-function sleep(time: number = 6000): Promise<void> {
+function sleep(time: number = 2000): Promise<void> {
   return new Promise(resolve => setTimeout(resolve, time));
 }
 
@@ -65,8 +66,14 @@ async function getAbi(
   }
 
   try {
-    console.log("\nBeginning time pause..");
-    await sleep();
+    if (count < 4) {
+      console.log("\nBypassing time pause.");
+      count += 1;
+    } else {
+      count = 0;
+      console.log("\nBeginning time pause.");
+      await sleep();
+    }
     const parsedHostname = utils.getFormattedHostname(hostname);
     console.log("making query");
     console.log(`url: ${parsedHostname}${route}`);
@@ -172,9 +179,10 @@ async function getAbiBatch(
 }
 
 async function getAbiDataOfAllChains(): Promise<string | null> {
-  const result: { bsc: any } = { bsc: null };
+  const result: { bsc: any; icon: any } = { bsc: null, icon: null };
 
-  result.bsc = await getMainnetAndTestnetAbi();
+  result.bsc = await getMainnetAndTestnetAbiForBSC();
+  result.icon = getMainnetAndTestnetDataForICON();
 
   try {
     const stringResult = JSON.stringify(result);
@@ -186,7 +194,11 @@ async function getAbiDataOfAllChains(): Promise<string | null> {
   }
 }
 
-async function getMainnetAndTestnetAbi(): Promise<any> {
+function getMainnetAndTestnetDataForICON() {
+  return utils.contracts.icon;
+}
+
+async function getMainnetAndTestnetAbiForBSC(): Promise<any> {
   const mainnetAbi = await getAbiBatch(utils.contracts.bsc.mainnet);
   const testnetAbi = await getAbiBatch(utils.contracts.bsc.testnet, false);
 
@@ -222,4 +234,3 @@ async function runAsync(filePath: string): Promise<void> {
 if (require.main === module) {
   runAsync(customPath(dataPath));
 }
-export = getMainnetAndTestnetAbi;

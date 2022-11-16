@@ -68,6 +68,8 @@ function iconBridgeSDKNodeTests() {
         yield testUtils.runTestOnMethod(lib.bsc.methods.setFeeRatio, true, wallets.bsc.a.pubK, wallets.bsc.a.privK, "btp-0x2.icon-ICX", 100, 10, 10000000);
         console.log("Test 17: iconBridgeSDK.bsc.methods.updateBTSPeriphery(from, pk, _owner, gas)");
         yield testUtils.runTestOnMethod(lib.bsc.methods.updateBTSPeriphery, true, wallets.bsc.a.pubK, wallets.bsc.a.privK, "0x4DeD312eB774B9828665448C55Faa8AE15353E56", 10000000);
+        console.log("Test 18: iconBridgeSDK.icon.methods.transferNativeCoin(targetAddress, targetChain, from, pk, amount, stepLimit)");
+        yield testUtils.runTestOnMethod(lib.icon.methods.transferNativeCoin, false, wallets.bsc.a.pubK, "bsc", wallets.icon.a.pubK, wallets.icon.a.privK, 100);
     });
 }
 module.exports = iconBridgeSDKNodeTests;

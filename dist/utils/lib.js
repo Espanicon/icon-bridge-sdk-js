@@ -95,6 +95,9 @@ function getDataFromLocalData(label, chain, isMainnet, getAbi, getLogicContract 
             }
         }
     }
+    else {
+        throw new Error(`Error while getting local data. Chain "${chain}" is not included in [${allChains}]`);
+    }
     return result;
 }
 function getContractOfLabelFromLocalData(label, chain, isMainnet, getLogicContract = false) {

@@ -194,6 +194,18 @@ function getTokenLabelFromTokenName(tokenName: string) {
   return tokenName;
 }
 
+/*
+ * Returns a random number between 1 and 1000
+ */
+function getRandNonce() {
+  const result = Math.ceil(Math.random() * 1000);
+
+  if (result === 0) {
+    return 1;
+  }
+
+  return result;
+}
 // exports
 const utils = {
   networks,
@@ -212,7 +224,8 @@ const utils = {
   getFormattedHostname,
   getContractOfLabelFromLocalData,
   getAbiOfLabelFromLocalData,
-  getTokenLabelFromTokenName
+  getTokenLabelFromTokenName,
+  getRandNonce
 };
 
 export = utils;

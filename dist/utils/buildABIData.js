@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 require("dotenv").config();
 const web3_1 = __importDefault(require("web3"));
 const utils_1 = __importDefault(require("./utils"));
@@ -22,7 +23,8 @@ const dataPath = utils_1.default.abiDataPath;
 const lib = new EspaniconSDKNode(utils_1.default.networks.mainnet.icon.provider.hostname, utils_1.default.networks.mainnet.icon.provider.nid);
 const bscLib = new web3_1.default(utils_1.default.networks.mainnet.bsc.provider.hostname);
 const bscLibTestnet = new web3_1.default(utils_1.default.networks.testnet.bsc.provider.hostname);
-function sleep(time = 6000) {
+let count = 0;
+function sleep(time = 2000) {
     return new Promise(resolve => setTimeout(resolve, time));
 }
 function getAbi(contract, isMainnet = true) {
@@ -38,8 +40,15 @@ function getAbi(contract, isMainnet = true) {
             hostname = `${utils_1.default.networks.testnet.bsc.tracker.hostname}`;
         }
         try {
-            console.log("\nBeginning time pause..");
-            yield sleep();
+            if (count < 4) {
+                console.log("\nBypassing time pause.");
+                count += 1;
+            }
+            else {
+                count = 0;
+                console.log("\nBeginning time pause.");
+                yield sleep();
+            }
             const parsedHostname = utils_1.default.getFormattedHostname(hostname);
             console.log("making query");
             console.log(`url: ${parsedHostname}${route}`);
@@ -126,8 +135,9 @@ function getAbiBatch(batch, isMainnet = true) {
 }
 function getAbiDataOfAllChains() {
     return __awaiter(this, void 0, void 0, function* () {
-        const result = { bsc: null };
-        result.bsc = yield getMainnetAndTestnetAbi();
+        const result = { bsc: null, icon: null };
+        result.bsc = yield getMainnetAndTestnetAbiForBSC();
+        result.icon = getMainnetAndTestnetDataForICON();
         try {
             const stringResult = JSON.stringify(result);
             return stringResult;
@@ -139,7 +149,10 @@ function getAbiDataOfAllChains() {
         }
     });
 }
-function getMainnetAndTestnetAbi() {
+function getMainnetAndTestnetDataForICON() {
+    return utils_1.default.contracts.icon;
+}
+function getMainnetAndTestnetAbiForBSC() {
     return __awaiter(this, void 0, void 0, function* () {
         const mainnetAbi = yield getAbiBatch(utils_1.default.contracts.bsc.mainnet);
         const testnetAbi = yield getAbiBatch(utils_1.default.contracts.bsc.testnet, false);
@@ -175,5 +188,4 @@ function runAsync(filePath) {
 if (require.main === module) {
     runAsync((0, customPath_1.default)(dataPath));
 }
-module.exports = getMainnetAndTestnetAbi;
 //# sourceMappingURL=buildABIData.js.map

@@ -104,6 +104,13 @@ function getAbiOfLabelFromLocalData(label, chain, isMainnet, getLogicContract = 
 function getTokenLabelFromTokenName(tokenName) {
     return tokenName;
 }
+function getRandNonce() {
+    const result = Math.ceil(Math.random() * 1000);
+    if (result === 0) {
+        return 1;
+    }
+    return result;
+}
 const utils = {
     networks: networks_1.networks,
     contracts: contracts_1.contracts,
@@ -121,7 +128,8 @@ const utils = {
     getFormattedHostname,
     getContractOfLabelFromLocalData,
     getAbiOfLabelFromLocalData,
-    getTokenLabelFromTokenName
+    getTokenLabelFromTokenName,
+    getRandNonce
 };
 module.exports = utils;
 //# sourceMappingURL=utils.js.map

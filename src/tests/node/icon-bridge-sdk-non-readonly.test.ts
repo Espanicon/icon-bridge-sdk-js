@@ -279,23 +279,19 @@ async function iconBridgeSDKNodeTests() {
     10000000
   );
 
-  // console.log("IconBridgeSDKNode");
-  // console.log(lib.bsc);
-
-  // console.log("BTSCore contract");
-  // console.log(lib.bsc.getBTSCoreLogicContract());
-
-  // console.log("BTSCore contract");
-  // console.log(lib.bsc.getBTSCoreLogicContractAbi());
-
-  // console.log("BTSCore contract");
-  // console.log(lib.bsc.getBTSCoreLogicContractObject());
-
-  // console.log("getBTPAddress test");
-  // console.log(lib.sdkUtils.getBTPAddress("0x334332e43a", "bsc", true));
-  // console.log(lib.sdkUtils.getBTPAddress("0x334332e43a", "bsc", false));
-  // console.log(lib.sdkUtils.getBTPAddress("hx334332e43a", "icon", true));
-  // console.log(lib.sdkUtils.getBTPAddress("hx334332e43a", "icon", false));
+  // Test 18: iconBridgeSDK.icon.methods.transferNativeCoin(targetAddress, targetChain, from, pk, amount, stepLimit)
+  console.log(
+    "Test 18: iconBridgeSDK.icon.methods.transferNativeCoin(targetAddress, targetChain, from, pk, amount, stepLimit)"
+  );
+  await testUtils.runTestOnMethod(
+    lib.icon.methods.transferNativeCoin,
+    true,
+    wallets.bsc.a.pubK,
+    "bsc",
+    wallets.icon.a.pubK,
+    wallets.icon.a.privK,
+    100
+  );
 
   // console.log("transferNativeCoin test");
   // const a = await lib.bsc.methods.transferNativeCoin(
