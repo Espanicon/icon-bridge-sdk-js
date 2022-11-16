@@ -115,6 +115,153 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
         );
         return { error: errorResult.toString() };
       }
+    },
+
+    /*
+     *
+     */
+    addOwner: async (): Promise<any> => {
+      //
+    },
+
+    /*
+     *
+     */
+    handleResponseService: async (): Promise<any> => {
+      //
+    },
+
+    /*
+     *
+     */
+    initialize: async (): Promise<any> => {
+      //
+    },
+
+    /*
+     *
+     */
+    mint: async (): Promise<any> => {
+      //
+    },
+
+    /*
+     *
+     */
+    reclaim: async (): Promise<any> => {
+      //
+    },
+
+    /*
+     *
+     */
+    refund: async (): Promise<any> => {
+      //
+    },
+
+    /*
+     *
+     */
+    register: async (): Promise<any> => {
+      //
+    },
+
+    /*
+     *
+     */
+    removeOwner: async (): Promise<any> => {
+      //
+    },
+
+    /*
+     *
+     */
+    setFeeRatio: async (): Promise<any> => {
+      //
+    },
+
+    /*
+     *
+     */
+    transfer: async (): Promise<any> => {
+      //
+    },
+
+    /*
+     *
+     */
+    transferBatch: async (): Promise<any> => {
+      //
+    },
+
+    /*
+     *
+     */
+    transferFees: async (): Promise<any> => {
+      //
+    },
+
+    /*
+     *
+     */
+    setTokenLimit: async (): Promise<any> => {
+      //
+    },
+
+    /*
+     *
+     */
+    addBlacklistAddress: async (): Promise<any> => {
+      //
+    },
+
+    /*
+     *
+     */
+    removeBlacklistAddress: async (): Promise<any> => {
+      //
+    },
+
+    /*
+     *
+     */
+    tokenFallback: async (): Promise<any> => {
+      //
+    },
+
+    /*
+     *
+     */
+    handleBTPMessage: async (): Promise<any> => {
+      //
+    },
+
+    /*
+     *
+     */
+    handleBTPError: async (): Promise<any> => {
+      //
+    },
+
+    /*
+     *
+     */
+    handleFeeGathering: async (): Promise<any> => {
+      //
+    },
+
+    /*
+     *
+     */
+    addRestrictions: async (): Promise<any> => {
+      //
+    },
+
+    /*
+     *
+     */
+    disableRestrictions: async (): Promise<any> => {
+      //
     }
   };
 

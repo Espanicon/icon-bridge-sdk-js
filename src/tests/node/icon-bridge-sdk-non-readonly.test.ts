@@ -292,16 +292,6 @@ async function iconBridgeSDKNodeTests() {
     wallets.icon.a.privK,
     100
   );
-
-  // console.log("transferNativeCoin test");
-  // const a = await lib.bsc.methods.transferNativeCoin(
-  //   "1",
-  //   wallets.bsc.a.pubK,
-  //   wallets.icon.a.pubK,
-  //   wallets.bsc.a.privK,
-  //   "icon"
-  // );
-  // console.log(a);
 }
 
 export = iconBridgeSDKNodeTests;
