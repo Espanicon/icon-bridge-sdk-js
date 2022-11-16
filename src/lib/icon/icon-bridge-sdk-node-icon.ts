@@ -120,69 +120,6 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     /*
      *
      */
-    addOwner: async (): Promise<any> => {
-      try {
-        return null;
-      } catch (err) {
-        const errorResult = new Exception(
-          err,
-          `Error running addOwner(). Params:\nnull: ${null}\n`
-        );
-        return { error: errorResult.toString() };
-      }
-    },
-
-    /*
-     *
-     */
-    handleResponseService: async (): Promise<any> => {
-      //
-      try {
-        return null;
-      } catch (err) {
-        const errorResult = new Exception(
-          err,
-          `Error running handleResponseService(). Params:\nnull: ${null}\n`
-        );
-        return { error: errorResult.toString() };
-      }
-    },
-
-    /*
-     *
-     */
-    initialize: async (): Promise<any> => {
-      //
-      try {
-        return null;
-      } catch (err) {
-        const errorResult = new Exception(
-          err,
-          `Error running initialize(). Params:\nnull: ${null}\n`
-        );
-        return { error: errorResult.toString() };
-      }
-    },
-
-    /*
-     *
-     */
-    mint: async (): Promise<any> => {
-      //
-      try {
-        return null;
-      } catch (err) {
-        const errorResult = new Exception(
-          err,
-          `Error running mint(). Params:\nnull: ${null}\n`
-        );
-        return { error: errorResult.toString() };
-      }
-    },
-
-    /*
-     *
-     */
     reclaim: async (): Promise<any> => {
       //
       try {
@@ -191,70 +128,6 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
         const errorResult = new Exception(
           err,
           `Error running reclaim(). Params:\nnull: ${null}\n`
-        );
-        return { error: errorResult.toString() };
-      }
-    },
-
-    /*
-     *
-     */
-    refund: async (): Promise<any> => {
-      //
-      try {
-        return null;
-      } catch (err) {
-        const errorResult = new Exception(
-          err,
-          `Error running refund(). Params:\nnull: ${null}\n`
-        );
-        return { error: errorResult.toString() };
-      }
-    },
-
-    /*
-     *
-     */
-    register: async (): Promise<any> => {
-      //
-      try {
-        return null;
-      } catch (err) {
-        const errorResult = new Exception(
-          err,
-          `Error running register(). Params:\nnull: ${null}\n`
-        );
-        return { error: errorResult.toString() };
-      }
-    },
-
-    /*
-     *
-     */
-    removeOwner: async (): Promise<any> => {
-      //
-      try {
-        return null;
-      } catch (err) {
-        const errorResult = new Exception(
-          err,
-          `Error running removeOwner(). Params:\nnull: ${null}\n`
-        );
-        return { error: errorResult.toString() };
-      }
-    },
-
-    /*
-     *
-     */
-    setFeeRatio: async (): Promise<any> => {
-      //
-      try {
-        return null;
-      } catch (err) {
-        const errorResult = new Exception(
-          err,
-          `Error running setFeeRatio(). Params:\nnull: ${null}\n`
         );
         return { error: errorResult.toString() };
       }
@@ -292,17 +165,84 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       }
     },
 
+    //
+    // The following methods can only be called by the contract owner
+    //
+
     /*
      *
      */
-    transferFees: async (): Promise<any> => {
+    addOwner: async (): Promise<any> => {
+      try {
+        return null;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running addOwner(). Params:\nnull: ${null}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /*
+     *
+     */
+    removeOwner: async (): Promise<any> => {
       //
       try {
         return null;
       } catch (err) {
         const errorResult = new Exception(
           err,
-          `Error running transferFees(). Params:\nnull: ${null}\n`
+          `Error running removeOwner(). Params:\nnull: ${null}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /*
+     *
+     */
+    register: async (): Promise<any> => {
+      //
+      try {
+        return null;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running register(). Params:\nnull: ${null}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /*
+     *
+     */
+    setFeeRatio: async (): Promise<any> => {
+      //
+      try {
+        return null;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running setFeeRatio(). Params:\nnull: ${null}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /*
+     *
+     */
+    removeBlacklistAddress: async (): Promise<any> => {
+      //
+      try {
+        return null;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running removeBlacklistAdress(). Params:\nnull: ${null}\n`
         );
         return { error: errorResult.toString() };
       }
@@ -343,19 +283,118 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     /*
      *
      */
-    removeBlacklistAddress: async (): Promise<any> => {
+    addRestrictions: async (): Promise<any> => {
       //
       try {
         return null;
       } catch (err) {
         const errorResult = new Exception(
           err,
-          `Error running removeBlacklistAdress(). Params:\nnull: ${null}\n`
+          `Error running addRestrictions(). Params:\nnull: ${null}\n`
         );
         return { error: errorResult.toString() };
       }
     },
 
+    /*
+     *
+     */
+    disableRestrictions: async (): Promise<any> => {
+      //
+      try {
+        return null;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running disableRestrictions(). Params:\nnull: ${null}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    //
+    // The following methods cannot be called by anyone even contract owners
+    //
+
+    /*
+     *
+     */
+    refund: async (): Promise<any> => {
+      //
+      try {
+        return null;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running refund(). Params:\nnull: ${null}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /*
+     *
+     */
+    handleResponseService: async (): Promise<any> => {
+      //
+      try {
+        return null;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running handleResponseService(). Params:\nnull: ${null}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /*
+     *
+     */
+    initialize: async (): Promise<any> => {
+      //
+      try {
+        return null;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running initialize(). Params:\nnull: ${null}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /*
+     *
+     */
+    transferFees: async (): Promise<any> => {
+      //
+      try {
+        return null;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running transferFees(). Params:\nnull: ${null}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /*
+     *
+     */
+    mint: async (): Promise<any> => {
+      //
+      try {
+        return null;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running mint(). Params:\nnull: ${null}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
     /*
      *
      */
@@ -415,38 +454,6 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
         const errorResult = new Exception(
           err,
           `Error running handleFeeGathering(). Params:\nnull: ${null}\n`
-        );
-        return { error: errorResult.toString() };
-      }
-    },
-
-    /*
-     *
-     */
-    addRestrictions: async (): Promise<any> => {
-      //
-      try {
-        return null;
-      } catch (err) {
-        const errorResult = new Exception(
-          err,
-          `Error running addRestrictions(). Params:\nnull: ${null}\n`
-        );
-        return { error: errorResult.toString() };
-      }
-    },
-
-    /*
-     *
-     */
-    disableRestrictions: async (): Promise<any> => {
-      //
-      try {
-        return null;
-      } catch (err) {
-        const errorResult = new Exception(
-          err,
-          `Error running disableRestrictions(). Params:\nnull: ${null}\n`
         );
         return { error: errorResult.toString() };
       }
