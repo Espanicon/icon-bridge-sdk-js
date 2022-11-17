@@ -118,11 +118,12 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     },
 
     /*
-     *
-     * @param _coinName -
-     * @param _value -
-     * @param from - public address of origin.
-     * @param pk - private key of origin.
+     * Reclaim the tokens refundable balance by an owner. Caller must be
+     * owner of coin.
+     * @param _coinName - coin name.
+     * @param _value - amount of re-claiming tokens.
+     * @param from - address of sender.
+     * @param pk - private key of sender.
      * @param stepLimit - max gas to pay.
      */
     reclaim: async (
@@ -158,17 +159,17 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       } catch (err) {
         const errorResult = new Exception(
           err,
-          `Error running reclaim(). Params:\nnull: ${null}\n`
+          `Error running reclaim(). Params:\n_coinName: ${_coinName}\n_value: ${_value}\nfrom: ${from}\npk: ${pk}`
         );
         return { error: errorResult.toString() };
       }
     },
 
     /*
-     *
-     * @param _coinName -
-     * @param _value -
-     * @param _to -
+     * Allow users to transfer token between chains.
+     * @param _coinName - name of coin.
+     * @param _value - amount to transfers.
+     * @param _to - receiver address BTP formatted.
      * @param from - public address of origin.
      * @param pk - private key of origin.
      * @param stepLimit - max gas to pay.
@@ -189,17 +190,17 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       } catch (err) {
         const errorResult = new Exception(
           err,
-          `Error running transfer(). Params:\nnull: ${null}\n`
+          `Error running transfer(). Params:\n_coinName: ${_coinName}\n_value: ${_value}\n_to: ${_to}\nfrom: ${from}\npk: ${pk}\n`
         );
         return { error: errorResult.toString() };
       }
     },
 
     /*
-     *
-     * @param _coinNames -
-     * @param _values -
-     * @param _to -
+     * Allow user to transfer a batch of tokens.
+     * @param _coinNames - names of tokens to transfer.
+     * @param _values - amounts to transfer.
+     * @param _to - receiver address BTP formatted.
      * @param from - public address of origin.
      * @param pk - private key of origin.
      * @param stepLimit - max gas to pay.
@@ -220,7 +221,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       } catch (err) {
         const errorResult = new Exception(
           err,
-          `Error running transferBatch(). Params:\nnull: ${null}\n`
+          `Error running transferBatch(). Params:\n_coinNames: ${_coinNames}\n_values: ${_values}\n_to: ${_to}\nfrom: ${from}\npk: ${pk}\n`
         );
         return { error: errorResult.toString() };
       }
@@ -231,8 +232,8 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     //
 
     /*
-     *
-     * @param _addr -
+     * Add another Owner. Caller must be an Owner of BTP network.
+     * @param _addr - address of new owner.
      * @param from - public address of origin.
      * @param pk - private key of origin.
      * @param stepLimit - max gas to pay.
@@ -244,21 +245,39 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       stepLimit: string | null = null
     ): Promise<any> => {
       try {
-        const foo = [_addr, from, pk, stepLimit];
-        console.log(foo);
-        return null;
+        const isMainnet: boolean =
+          this.params.useMainnet == null ? true : this.params.useMainnet;
+
+        const btsContract = this.sdkUtils.getContractOfLabelFromLocalData(
+          "bts",
+          "icon",
+          isMainnet,
+          false
+        );
+
+        const txRequest = await this.makeTxRequest(
+          from,
+          btsContract,
+          pk,
+          "addOwner",
+          { _addr: _addr },
+          0,
+          stepLimit
+        );
+
+        return txRequest;
       } catch (err) {
         const errorResult = new Exception(
           err,
-          `Error running addOwner(). Params:\nnull: ${null}\n`
+          `Error running addOwner(). Params:\n_addr: ${_addr}\nfrom: ${from}\npk: ${pk}\n`
         );
         return { error: errorResult.toString() };
       }
     },
 
     /*
-     *
-     * @param _addr -
+     * Remove an existing owner. Caller must be an owner of BTP network.
+     * @param _addr - address of owner to remove.
      * @param from - public address of origin.
      * @param pk - private key of origin.
      * @param stepLimit - max gas to pay.
@@ -271,23 +290,42 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     ): Promise<any> => {
       //
       try {
-        const foo = [_addr, from, pk, stepLimit];
-        console.log(foo);
-        return null;
+        const isMainnet: boolean =
+          this.params.useMainnet == null ? true : this.params.useMainnet;
+
+        const btsContract = this.sdkUtils.getContractOfLabelFromLocalData(
+          "bts",
+          "icon",
+          isMainnet,
+          false
+        );
+
+        const txRequest = await this.makeTxRequest(
+          from,
+          btsContract,
+          pk,
+          "removeOwner",
+          { _addr: _addr },
+          0,
+          stepLimit
+        );
+
+        return txRequest;
       } catch (err) {
         const errorResult = new Exception(
           err,
-          `Error running removeOwner(). Params:\nnull: ${null}\n`
+          `Error running removeOwner(). Params:\n_addr: ${_addr}\nfrom: ${from}\npk: ${pk}\n`
         );
         return { error: errorResult.toString() };
       }
     },
 
     /*
-     *
-     * @param _name -
-     * @param _symbol -
-     * @param _decimals -
+     * Registers a wrapped coin and id number of a supporting coin. Caller
+     * must be an owner of this contract.
+     * @param _name - must be different with the native coin name.
+     * @param _symbol - symbol name of wrapped coin.
+     * @param _decimals - decimal number.
      * @param _feeNumerator -
      * @param _fixedFee -
      * @param _addr -
@@ -308,30 +346,45 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     ): Promise<any> => {
       //
       try {
-        const foo = [
-          _name,
-          _symbol,
-          _decimals,
-          _feeNumerator,
-          _fixedFee,
-          _addr,
+        const isMainnet: boolean =
+          this.params.useMainnet == null ? true : this.params.useMainnet;
+
+        const btsContract = this.sdkUtils.getContractOfLabelFromLocalData(
+          "bts",
+          "icon",
+          isMainnet,
+          false
+        );
+
+        const txRequest = await this.makeTxRequest(
           from,
+          btsContract,
           pk,
+          "register",
+          {
+            _name: _name,
+            _symbol: _symbol,
+            _decimals: _decimals,
+            _feeNumerator: _feeNumerator,
+            _fixedFee: _fixedFee,
+            _addr: _addr
+          },
+          0,
           stepLimit
-        ];
-        console.log(foo);
-        return null;
+        );
+
+        return txRequest;
       } catch (err) {
         const errorResult = new Exception(
           err,
-          `Error running register(). Params:\nnull: ${null}\n`
+          `Error running register(). Params:\n_name: ${_name}\n_symbol: ${_symbol}\n_decimals: ${_decimals}\n_feeNumerator: ${_feeNumerator}\n_fixedFee: ${_fixedFee}\n_addr: ${_addr}\nfrom: ${from}\npk: ${pk}\n`
         );
         return { error: errorResult.toString() };
       }
     },
 
     /*
-     *
+     * Set fee ratio. Caller must be owner of this contract.
      * @param _name -
      * @param _feeNumerator -
      * @param _fixedFee -
@@ -349,21 +402,40 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     ): Promise<any> => {
       //
       try {
-        const foo = [_name, _feeNumerator, _fixedFee, from, pk, stepLimit];
-        console.log(foo);
-        return null;
+        const isMainnet: boolean =
+          this.params.useMainnet == null ? true : this.params.useMainnet;
+
+        const btsContract = this.sdkUtils.getContractOfLabelFromLocalData(
+          "bts",
+          "icon",
+          isMainnet,
+          false
+        );
+
+        const txRequest = await this.makeTxRequest(
+          from,
+          btsContract,
+          pk,
+          "setFeeRatio",
+          { _name: _name, _feeNumerator: _feeNumerator, _fixedFee: _fixedFee },
+          0,
+          stepLimit
+        );
+
+        return txRequest;
       } catch (err) {
         const errorResult = new Exception(
           err,
-          `Error running setFeeRatio(). Params:\nnull: ${null}\n`
+          `Error running setFeeRatio(). Params:\n_name: ${_name}\n_feeNumerator: ${_feeNumerator}\n_fixedFee: ${_fixedFee}\nfrom: ${from}\npk: ${pk}\n`
         );
         return { error: errorResult.toString() };
       }
     },
 
     /*
+     * Removes blacklisted addresses.
      * @param _net -
-     * @param _addresses -
+     * @param _addresses - addresses to remove from blacklist.
      * @param from - public address of origin.
      * @param pk - private key of origin.
      * @param stepLimit - max gas to pay.
@@ -377,20 +449,39 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     ): Promise<any> => {
       //
       try {
-        const foo = [_net, _addresses, from, pk, stepLimit];
-        console.log(foo);
-        return null;
+        const isMainnet: boolean =
+          this.params.useMainnet == null ? true : this.params.useMainnet;
+
+        const btsContract = this.sdkUtils.getContractOfLabelFromLocalData(
+          "bts",
+          "icon",
+          isMainnet,
+          false
+        );
+
+        const txRequest = await this.makeTxRequest(
+          from,
+          btsContract,
+          pk,
+          "removeBlacklistAddress",
+          { _net: _net, _addresses: _addresses },
+          0,
+          stepLimit
+        );
+
+        return txRequest;
       } catch (err) {
         const errorResult = new Exception(
           err,
-          `Error running removeBlacklistAdress(). Params:\nnull: ${null}\n`
+          `Error running removeBlacklistAddress(). Params:\n_net: ${_net}\n_addresses: ${_addresses}\nfrom: ${from}\npk: ${pk}\n`
         );
         return { error: errorResult.toString() };
       }
     },
 
     /*
-     * @param _coinNames -
+     * Set token limit. Caller must be owner of this contract.
+     * @param _coinNames - names of coins.
      * @param _tokenLimits -
      * @param from - public address of origin.
      * @param pk - private key of origin.
@@ -405,21 +496,40 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     ): Promise<any> => {
       //
       try {
-        const foo = [_coinNames, _tokenLimits, from, pk, stepLimit];
-        console.log(foo);
-        return null;
+        const isMainnet: boolean =
+          this.params.useMainnet == null ? true : this.params.useMainnet;
+
+        const btsContract = this.sdkUtils.getContractOfLabelFromLocalData(
+          "bts",
+          "icon",
+          isMainnet,
+          false
+        );
+
+        const txRequest = await this.makeTxRequest(
+          from,
+          btsContract,
+          pk,
+          "setTokenLimit",
+          { _coinNames: _coinNames, _tokenLimits: _tokenLimits },
+          0,
+          stepLimit
+        );
+
+        return txRequest;
       } catch (err) {
         const errorResult = new Exception(
           err,
-          `Error running setTokenLimit(). Params:\nnull: ${null}\n`
+          `Error running setTokenLimit(). Params:\n_coinNames: ${_coinNames}\n_tokenLimits: ${_tokenLimits}\nfrom: ${from}\npk: ${pk}\n`
         );
         return { error: errorResult.toString() };
       }
     },
 
     /*
+     * Adds addresses to blacklist. Caller must be owner of this contract.
      * @param _net -
-     * @param _addresses -
+     * @param _addresses - list of addresses to blacklist.
      * @param from - public address of origin.
      * @param pk - private key of origin.
      * @param stepLimit - max gas to pay.
@@ -433,45 +543,117 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     ): Promise<any> => {
       //
       try {
-        const foo = [_net, _addresses, from, pk, stepLimit];
-        console.log(foo);
-        return null;
+        const isMainnet: boolean =
+          this.params.useMainnet == null ? true : this.params.useMainnet;
+
+        const btsContract = this.sdkUtils.getContractOfLabelFromLocalData(
+          "bts",
+          "icon",
+          isMainnet,
+          false
+        );
+
+        const txRequest = await this.makeTxRequest(
+          from,
+          btsContract,
+          pk,
+          "addBlacklistAddress",
+          { _net: _net, _addresses: _addresses },
+          0,
+          stepLimit
+        );
+
+        return txRequest;
       } catch (err) {
         const errorResult = new Exception(
           err,
-          `Error running addBlacklistAddress(). Params:\nnull: ${null}\n`
+          `Error running addBlacklistAddress(). Params:\n_net: ${_net}\n_addresses: ${_addresses}\nfrom: ${from}\npk: ${pk}\n`
         );
         return { error: errorResult.toString() };
       }
     },
 
     /*
-     *
+     * Add restriction. Caller must be owner of this contract.
+     * @param from - public address of origin.
+     * @param pk - private key of origin.
+     * @param stepLimit - max gas to pay.
      */
-    addRestriction: async (): Promise<any> => {
+    addRestriction: async (
+      from: string,
+      pk: string,
+      stepLimit: string | null = null
+    ): Promise<any> => {
       //
       try {
-        return null;
+        const isMainnet: boolean =
+          this.params.useMainnet == null ? true : this.params.useMainnet;
+
+        const btsContract = this.sdkUtils.getContractOfLabelFromLocalData(
+          "bts",
+          "icon",
+          isMainnet,
+          false
+        );
+
+        const txRequest = await this.makeTxRequest(
+          from,
+          btsContract,
+          pk,
+          "addRestriction",
+          null,
+          0,
+          stepLimit
+        );
+
+        return txRequest;
       } catch (err) {
         const errorResult = new Exception(
           err,
-          `Error running addRestrictions(). Params:\nnull: ${null}\n`
+          `Error running addRestrictions(). Params:\nfrom: ${from}\npk: ${pk}\n`
         );
         return { error: errorResult.toString() };
       }
     },
 
     /*
-     *
+     * Disable restrictions. Caller must be owner of this contract.
+     * @param from - public address of origin.
+     * @param pk - private key of origin.
+     * @param stepLimit - max gas to pay.
      */
-    disableRestrictions: async (): Promise<any> => {
+    disableRestrictions: async (
+      from: string,
+      pk: string,
+      stepLimit: string | null = null
+    ): Promise<any> => {
       //
       try {
-        return null;
+        const isMainnet: boolean =
+          this.params.useMainnet == null ? true : this.params.useMainnet;
+
+        const btsContract = this.sdkUtils.getContractOfLabelFromLocalData(
+          "bts",
+          "icon",
+          isMainnet,
+          false
+        );
+
+        const txRequest = await this.makeTxRequest(
+          from,
+          btsContract,
+          pk,
+          "disableRestrictions",
+          null,
+          0,
+          stepLimit
+        );
+
+        return txRequest;
       } catch (err) {
         const errorResult = new Exception(
           err,
-          `Error running disableRestrictions(). Params:\nnull: ${null}\n`
+          `Error running disableRestrictions(). Params:\nfrom: ${from}\npk: ${pk}\n`
         );
         return { error: errorResult.toString() };
       }
