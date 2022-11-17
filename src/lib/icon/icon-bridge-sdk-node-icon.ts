@@ -98,11 +98,11 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
         );
 
         const txRequest = await this.makeTxRequest(
-          "transferNativeCoin",
-          { _to: btpAddress },
           from,
           btsContract,
           pk,
+          "transferNativeCoin",
+          { _to: btpAddress },
           amount,
           stepLimit
         );
@@ -119,11 +119,42 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
 
     /*
      *
+     * @param _coinName -
+     * @param _value -
+     * @param from - public address of origin.
+     * @param pk - private key of origin.
+     * @param stepLimit - max gas to pay.
      */
-    reclaim: async (): Promise<any> => {
+    reclaim: async (
+      _coinName: string,
+      _value: string,
+      from: string,
+      pk: string,
+      stepLimit: string | null = null
+    ): Promise<any> => {
       //
       try {
-        return null;
+        const isMainnet: boolean =
+          this.params.useMainnet == null ? true : this.params.useMainnet;
+
+        const btsContract = this.sdkUtils.getContractOfLabelFromLocalData(
+          "bts",
+          "icon",
+          isMainnet,
+          false
+        );
+
+        const txRequest = await this.makeTxRequest(
+          from,
+          btsContract,
+          pk,
+          "transferNativeCoin",
+          { _coinName: _coinName, _value: _value },
+          0,
+          stepLimit
+        );
+
+        return txRequest;
       } catch (err) {
         const errorResult = new Exception(
           err,
@@ -135,10 +166,25 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
 
     /*
      *
+     * @param _coinName -
+     * @param _value -
+     * @param _to -
+     * @param from - public address of origin.
+     * @param pk - private key of origin.
+     * @param stepLimit - max gas to pay.
      */
-    transfer: async (): Promise<any> => {
+    transfer: async (
+      _coinName: string,
+      _value: string,
+      _to: string,
+      from: string,
+      pk: string,
+      stepLimit: string | null = null
+    ): Promise<any> => {
       //
       try {
+        const foo = [_coinName, _value, _to, from, pk, stepLimit];
+        console.log(foo);
         return null;
       } catch (err) {
         const errorResult = new Exception(
@@ -151,10 +197,25 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
 
     /*
      *
+     * @param _coinNames -
+     * @param _values -
+     * @param _to -
+     * @param from - public address of origin.
+     * @param pk - private key of origin.
+     * @param stepLimit - max gas to pay.
      */
-    transferBatch: async (): Promise<any> => {
+    transferBatch: async (
+      _coinNames: string[],
+      _values: string[],
+      _to: string,
+      from: string,
+      pk: string,
+      stepLimit: string | null = null
+    ): Promise<any> => {
       //
       try {
+        const foo = [_coinNames, _values, _to, from, pk, stepLimit];
+        console.log(foo);
         return null;
       } catch (err) {
         const errorResult = new Exception(
@@ -171,9 +232,20 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
 
     /*
      *
+     * @param _addr -
+     * @param from - public address of origin.
+     * @param pk - private key of origin.
+     * @param stepLimit - max gas to pay.
      */
-    addOwner: async (): Promise<any> => {
+    addOwner: async (
+      _addr: string,
+      from: string,
+      pk: string,
+      stepLimit: string | null = null
+    ): Promise<any> => {
       try {
+        const foo = [_addr, from, pk, stepLimit];
+        console.log(foo);
         return null;
       } catch (err) {
         const errorResult = new Exception(
@@ -186,10 +258,21 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
 
     /*
      *
+     * @param _addr -
+     * @param from - public address of origin.
+     * @param pk - private key of origin.
+     * @param stepLimit - max gas to pay.
      */
-    removeOwner: async (): Promise<any> => {
+    removeOwner: async (
+      _addr: string,
+      from: string,
+      pk: string,
+      stepLimit: string | null = null
+    ): Promise<any> => {
       //
       try {
+        const foo = [_addr, from, pk, stepLimit];
+        console.log(foo);
         return null;
       } catch (err) {
         const errorResult = new Exception(
@@ -202,10 +285,41 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
 
     /*
      *
+     * @param _name -
+     * @param _symbol -
+     * @param _decimals -
+     * @param _feeNumerator -
+     * @param _fixedFee -
+     * @param _addr -
+     * @param from - public address of origin.
+     * @param pk - private key of origin.
+     * @param stepLimit - max gas to pay.
      */
-    register: async (): Promise<any> => {
+    register: async (
+      _name: string,
+      _symbol: string,
+      _decimals: string,
+      _feeNumerator: string,
+      _fixedFee: string,
+      _addr: string,
+      from: string,
+      pk: string,
+      stepLimit: string | null = null
+    ): Promise<any> => {
       //
       try {
+        const foo = [
+          _name,
+          _symbol,
+          _decimals,
+          _feeNumerator,
+          _fixedFee,
+          _addr,
+          from,
+          pk,
+          stepLimit
+        ];
+        console.log(foo);
         return null;
       } catch (err) {
         const errorResult = new Exception(
@@ -218,10 +332,25 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
 
     /*
      *
+     * @param _name -
+     * @param _feeNumerator -
+     * @param _fixedFee -
+     * @param from - public address of origin.
+     * @param pk - private key of origin.
+     * @param stepLimit - max gas to pay.
      */
-    setFeeRatio: async (): Promise<any> => {
+    setFeeRatio: async (
+      _name: string,
+      _feeNumerator: string,
+      _fixedFee: string,
+      from: string,
+      pk: string,
+      stepLimit: string | null = null
+    ): Promise<any> => {
       //
       try {
+        const foo = [_name, _feeNumerator, _fixedFee, from, pk, stepLimit];
+        console.log(foo);
         return null;
       } catch (err) {
         const errorResult = new Exception(
@@ -233,11 +362,23 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     },
 
     /*
-     *
+     * @param _net -
+     * @param _addresses -
+     * @param from - public address of origin.
+     * @param pk - private key of origin.
+     * @param stepLimit - max gas to pay.
      */
-    removeBlacklistAddress: async (): Promise<any> => {
+    removeBlacklistAddress: async (
+      _net: string,
+      _addresses: string[],
+      from: string,
+      pk: string,
+      stepLimit: string | null = null
+    ): Promise<any> => {
       //
       try {
+        const foo = [_net, _addresses, from, pk, stepLimit];
+        console.log(foo);
         return null;
       } catch (err) {
         const errorResult = new Exception(
@@ -249,11 +390,23 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     },
 
     /*
-     *
+     * @param _coinNames -
+     * @param _tokenLimits -
+     * @param from - public address of origin.
+     * @param pk - private key of origin.
+     * @param stepLimit - max gas to pay.
      */
-    setTokenLimit: async (): Promise<any> => {
+    setTokenLimit: async (
+      _coinNames: string[],
+      _tokenLimits: string[],
+      from: string,
+      pk: string,
+      stepLimit: string | null = null
+    ): Promise<any> => {
       //
       try {
+        const foo = [_coinNames, _tokenLimits, from, pk, stepLimit];
+        console.log(foo);
         return null;
       } catch (err) {
         const errorResult = new Exception(
@@ -265,11 +418,23 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     },
 
     /*
-     *
+     * @param _net -
+     * @param _addresses -
+     * @param from - public address of origin.
+     * @param pk - private key of origin.
+     * @param stepLimit - max gas to pay.
      */
-    addBlacklistAddress: async (): Promise<any> => {
+    addBlacklistAddress: async (
+      _net: string,
+      _addresses: string[],
+      from: string,
+      pk: string,
+      stepLimit: string | null = null
+    ): Promise<any> => {
       //
       try {
+        const foo = [_net, _addresses, from, pk, stepLimit];
+        console.log(foo);
         return null;
       } catch (err) {
         const errorResult = new Exception(
@@ -283,7 +448,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     /*
      *
      */
-    addRestrictions: async (): Promise<any> => {
+    addRestriction: async (): Promise<any> => {
       //
       try {
         return null;
@@ -310,154 +475,154 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
         );
         return { error: errorResult.toString() };
       }
-    },
+    }
 
     //
     // The following methods cannot be called by anyone even contract owners
     //
 
-    /*
-     *
-     */
-    refund: async (): Promise<any> => {
-      //
-      try {
-        return null;
-      } catch (err) {
-        const errorResult = new Exception(
-          err,
-          `Error running refund(). Params:\nnull: ${null}\n`
-        );
-        return { error: errorResult.toString() };
-      }
-    },
+    ///*
+    // *
+    // */
+    //refund: async (): Promise<any> => {
+    //  //
+    //  try {
+    //    return null;
+    //  } catch (err) {
+    //    const errorResult = new Exception(
+    //      err,
+    //      `Error running refund(). Params:\nnull: ${null}\n`
+    //    );
+    //    return { error: errorResult.toString() };
+    //  }
+    //},
 
-    /*
-     *
-     */
-    handleResponseService: async (): Promise<any> => {
-      //
-      try {
-        return null;
-      } catch (err) {
-        const errorResult = new Exception(
-          err,
-          `Error running handleResponseService(). Params:\nnull: ${null}\n`
-        );
-        return { error: errorResult.toString() };
-      }
-    },
+    ///*
+    // *
+    // */
+    //handleResponseService: async (): Promise<any> => {
+    //  //
+    //  try {
+    //    return null;
+    //  } catch (err) {
+    //    const errorResult = new Exception(
+    //      err,
+    //      `Error running handleResponseService(). Params:\nnull: ${null}\n`
+    //    );
+    //    return { error: errorResult.toString() };
+    //  }
+    //},
 
-    /*
-     *
-     */
-    initialize: async (): Promise<any> => {
-      //
-      try {
-        return null;
-      } catch (err) {
-        const errorResult = new Exception(
-          err,
-          `Error running initialize(). Params:\nnull: ${null}\n`
-        );
-        return { error: errorResult.toString() };
-      }
-    },
+    ///*
+    // *
+    // */
+    //initialize: async (): Promise<any> => {
+    //  //
+    //  try {
+    //    return null;
+    //  } catch (err) {
+    //    const errorResult = new Exception(
+    //      err,
+    //      `Error running initialize(). Params:\nnull: ${null}\n`
+    //    );
+    //    return { error: errorResult.toString() };
+    //  }
+    //},
 
-    /*
-     *
-     */
-    transferFees: async (): Promise<any> => {
-      //
-      try {
-        return null;
-      } catch (err) {
-        const errorResult = new Exception(
-          err,
-          `Error running transferFees(). Params:\nnull: ${null}\n`
-        );
-        return { error: errorResult.toString() };
-      }
-    },
+    ///*
+    // *
+    // */
+    //transferFees: async (): Promise<any> => {
+    //  //
+    //  try {
+    //    return null;
+    //  } catch (err) {
+    //    const errorResult = new Exception(
+    //      err,
+    //      `Error running transferFees(). Params:\nnull: ${null}\n`
+    //    );
+    //    return { error: errorResult.toString() };
+    //  }
+    //},
 
-    /*
-     *
-     */
-    mint: async (): Promise<any> => {
-      //
-      try {
-        return null;
-      } catch (err) {
-        const errorResult = new Exception(
-          err,
-          `Error running mint(). Params:\nnull: ${null}\n`
-        );
-        return { error: errorResult.toString() };
-      }
-    },
-    /*
-     *
-     */
-    tokenFallback: async (): Promise<any> => {
-      //
-      try {
-        return null;
-      } catch (err) {
-        const errorResult = new Exception(
-          err,
-          `Error running tokenFallback(). Params:\nnull: ${null}\n`
-        );
-        return { error: errorResult.toString() };
-      }
-    },
+    ///*
+    // *
+    // */
+    //mint: async (): Promise<any> => {
+    //  //
+    //  try {
+    //    return null;
+    //  } catch (err) {
+    //    const errorResult = new Exception(
+    //      err,
+    //      `Error running mint(). Params:\nnull: ${null}\n`
+    //    );
+    //    return { error: errorResult.toString() };
+    //  }
+    //},
+    ///*
+    // *
+    // */
+    //tokenFallback: async (): Promise<any> => {
+    //  //
+    //  try {
+    //    return null;
+    //  } catch (err) {
+    //    const errorResult = new Exception(
+    //      err,
+    //      `Error running tokenFallback(). Params:\nnull: ${null}\n`
+    //    );
+    //    return { error: errorResult.toString() };
+    //  }
+    //},
 
-    /*
-     *
-     */
-    handleBTPMessage: async (): Promise<any> => {
-      //
-      try {
-        return null;
-      } catch (err) {
-        const errorResult = new Exception(
-          err,
-          `Error running handleBTPMessage(). Params:\nnull: ${null}\n`
-        );
-        return { error: errorResult.toString() };
-      }
-    },
+    ///*
+    // *
+    // */
+    //handleBTPMessage: async (): Promise<any> => {
+    //  //
+    //  try {
+    //    return null;
+    //  } catch (err) {
+    //    const errorResult = new Exception(
+    //      err,
+    //      `Error running handleBTPMessage(). Params:\nnull: ${null}\n`
+    //    );
+    //    return { error: errorResult.toString() };
+    //  }
+    //},
 
-    /*
-     *
-     */
-    handleBTPError: async (): Promise<any> => {
-      //
-      try {
-        return null;
-      } catch (err) {
-        const errorResult = new Exception(
-          err,
-          `Error running handleBTPError(). Params:\nnull: ${null}\n`
-        );
-        return { error: errorResult.toString() };
-      }
-    },
+    ///*
+    // *
+    // */
+    //handleBTPError: async (): Promise<any> => {
+    //  //
+    //  try {
+    //    return null;
+    //  } catch (err) {
+    //    const errorResult = new Exception(
+    //      err,
+    //      `Error running handleBTPError(). Params:\nnull: ${null}\n`
+    //    );
+    //    return { error: errorResult.toString() };
+    //  }
+    //},
 
-    /*
-     *
-     */
-    handleFeeGathering: async (): Promise<any> => {
-      //
-      try {
-        return null;
-      } catch (err) {
-        const errorResult = new Exception(
-          err,
-          `Error running handleFeeGathering(). Params:\nnull: ${null}\n`
-        );
-        return { error: errorResult.toString() };
-      }
-    }
+    ///*
+    // *
+    // */
+    //handleFeeGathering: async (): Promise<any> => {
+    //  //
+    //  try {
+    //    return null;
+    //  } catch (err) {
+    //    const errorResult = new Exception(
+    //      err,
+    //      `Error running handleFeeGathering(). Params:\nnull: ${null}\n`
+    //    );
+    //    return { error: errorResult.toString() };
+    //  }
+    //}
   };
 
   /*
@@ -472,11 +637,11 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
    * @param nid - nid of network.
    */
   private makeTxRequest = async (
-    method: string,
-    params: any,
     from: string,
     to: string,
     pk: string,
+    method: string,
+    params: any = null,
     value: number = 0,
     stepLimit: string | null = null,
     nid: string = this.params.iconProvider.nid
@@ -491,9 +656,14 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
         .nonce(IconConverter.toBigNumber(this.sdkUtils.getRandNonce()))
         .version(IconConverter.toBigNumber("3"))
         .timestamp(new Date().getTime() * 1000)
-        .method(method)
-        .params(params);
+        .method(method);
 
+      // if any params are specified
+      if (params != null) {
+        txObj.params(params);
+      }
+
+      // if an amount of ICX is specified to transfer
       if (value !== 0) {
         txObj.value(IconAmount.of(value, IconAmount.Unit.ICX).toLoop());
       }
