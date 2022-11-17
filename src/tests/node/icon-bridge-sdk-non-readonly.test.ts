@@ -39,22 +39,24 @@ async function iconBridgeSDKNodeTests() {
     "icon",
     wallets.bsc.a.pubK,
     wallets.bsc.a.privK,
-    "0.01"
+    "0.3"
   );
 
-  // Test 2: iconBridgeSDK.bsc.methods.transfer(targetAddress, targetChain, from, pk, _coinName, _value, gas)
+  // Test 2: iconBridgeSDK.bsc.methods.approveAndTransfer(targetAddress, targetChain, from, pk, _coinName, _value, gas)
   console.log(
-    "Test 2: iconBridgeSDK.bsc.methods.transfer(targetAddress, targetChain, from, pk, _coinName, _value, gas)"
+    "Test 2: iconBridgeSDK.bsc.methods.approveAndTransfer(targetAddress, targetChain, from, pk, _coinName, _value, gas)"
   );
   await testUtils.runTestOnMethod(
-    lib.bsc.methods.transfer,
+    lib.bsc.methods.approveAndTransfer,
     true,
     wallets.icon.a.pubK,
     "icon",
     wallets.bsc.a.pubK,
     wallets.bsc.a.privK,
     "btp-0x2.icon-ICX",
-    "10",
+    "100",
+    "0x7d8c52A23FD7e3ca1342797baE7caF6d7b8036BA",
+    lib.sdkUtils.genericAbi,
     10000000
   );
 
@@ -69,7 +71,7 @@ async function iconBridgeSDKNodeTests() {
     "icon",
     wallets.bsc.a.pubK,
     wallets.bsc.a.privK,
-    "10",
+    "100",
     10000000
   );
 
@@ -84,7 +86,7 @@ async function iconBridgeSDKNodeTests() {
     "icon",
     wallets.bsc.a.pubK,
     wallets.bsc.a.privK,
-    "10",
+    "1000",
     10000000
   );
 
@@ -109,12 +111,30 @@ async function iconBridgeSDKNodeTests() {
   );
   await testUtils.runTestOnMethod(
     lib.bsc.methods.transferETH,
-    true,
+    false,
     wallets.icon.a.pubK,
     "icon",
     wallets.bsc.a.pubK,
     wallets.bsc.a.privK,
-    "10",
+    "0.05",
+    10000000
+  );
+
+  // Test 6.1: iconBridgeSDK.bsc.methods.approveAndTransfer(targetAddress, targetChain, from, pk, _coinName, _value, gas)
+  console.log(
+    "Test 6.1: iconBridgeSDK.bsc.methods.approveAndTransfer(targetAddress, targetChain, from, pk, _coinName, _value, gas)"
+  );
+  await testUtils.runTestOnMethod(
+    lib.bsc.methods.approveAndTransfer,
+    false,
+    wallets.icon.a.pubK,
+    "icon",
+    wallets.bsc.a.pubK,
+    wallets.bsc.a.privK,
+    "btp-0x61.bsc-ETH",
+    "0.04",
+    "0xd66c6B4F0be8CE5b39D52E0Fd1344c389929B378",
+    lib.sdkUtils.genericAbi,
     10000000
   );
 
@@ -124,12 +144,30 @@ async function iconBridgeSDKNodeTests() {
   );
   await testUtils.runTestOnMethod(
     lib.bsc.methods.transferBTCB,
-    true,
+    false,
     wallets.icon.a.pubK,
     "icon",
     wallets.bsc.a.pubK,
     wallets.bsc.a.privK,
     "0.05",
+    10000000
+  );
+
+  // Test 7.1: iconBridgeSDK.bsc.methods.approveAndTransfer(targetAddress, targetChain, from, pk, _coinName, _value, gas)
+  console.log(
+    "Test 7.1: iconBridgeSDK.bsc.methods.approveAndTransfer(targetAddress, targetChain, from, pk, _coinName, _value, gas)"
+  );
+  await testUtils.runTestOnMethod(
+    lib.bsc.methods.approveAndTransfer,
+    false,
+    wallets.icon.a.pubK,
+    "icon",
+    wallets.bsc.a.pubK,
+    wallets.bsc.a.privK,
+    "btp-0x61.bsc-BTCB",
+    "0.04",
+    "0x6ce8dA28E2f864420840cF74474eFf5fD80E65B8",
+    lib.sdkUtils.genericAbi,
     10000000
   );
 
@@ -192,19 +230,19 @@ async function iconBridgeSDKNodeTests() {
   );
 
   // Test 12: iconBridgeSDK.bsc.methods.initialize(from, pk, _owner, gas)
-  console.log(
-    "Test 12: iconBridgeSDK.bsc.methods.initialize(from, pk, _owner, gas)"
-  );
-  await testUtils.runTestOnMethod(
-    lib.bsc.methods.initialize,
-    true,
-    wallets.bsc.a.pubK,
-    wallets.bsc.a.privK,
-    "BNB",
-    10000,
-    100,
-    10000000
-  );
+  // console.log(
+  //   "Test 12: iconBridgeSDK.bsc.methods.initialize(from, pk, _owner, gas)"
+  // );
+  // await testUtils.runTestOnMethod(
+  //   lib.bsc.methods.initialize,
+  //   true,
+  //   wallets.bsc.a.pubK,
+  //   wallets.bsc.a.privK,
+  //   "BNB",
+  //   10000,
+  //   100,
+  //   10000000
+  // );
 
   // Test 13: iconBridgeSDK.bsc.methods.reclaim(from, pk, _owner, gas)
   console.log(
@@ -290,7 +328,7 @@ async function iconBridgeSDKNodeTests() {
     "bsc",
     wallets.icon.a.pubK,
     wallets.icon.a.privK,
-    100
+    "100"
   );
 }
 

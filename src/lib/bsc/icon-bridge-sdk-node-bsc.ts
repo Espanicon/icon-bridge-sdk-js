@@ -449,7 +449,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       } catch (err) {
         const errorResult = new Exception(
           err,
-          `Error running transfer(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\npk: ${pk}\n_coinName: ${_coinName}\n_value: ${_value}\n`
+          `Error running approveAndTransfer(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\npk: ${pk}\n_coinName: ${_coinName}\n_value: ${_value}\ntokenContractAddress: ${tokenContractAddress}\ntokenContractAbi: ${tokenContractAbi}\n`
         );
         return { error: errorResult.toString() };
       }

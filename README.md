@@ -109,3 +109,14 @@ const SDK = new IconBridgeSDK({
   bscProvider: { hostname: "https://data-seed-prebsc-2-s1.binance.org:8545" }
 });
 ```
+
+### Making a token transfer originating from BSC chain returns the following error: `Returned error: insufficient funds for gas * price + value`
+
+Error example:
+```
+Result:
+{
+  error: 'Error running approveAndTransfer(). Params:\n' + 'targetAddress: {ADDRESS} \n' + 'targetChain: icon\n' + 'from: {ADDRESS}\n' + 'pk: {PRIVATE_KEY}\n' + '_value: 0.05\n' + '.\n' + 'Returned error: insufficient funds for gas * price + value'
+}
+```
+This error occurs when you dont have enough balance (native coin, in this case BNB) to pay for the transaction fee.
