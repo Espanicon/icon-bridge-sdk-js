@@ -230,7 +230,6 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     //
     // The following methods can only be called by the contract owner
     //
-
     /*
      * Add another Owner. Caller must be an Owner of BTP network.
      * @param _addr - address of new owner.

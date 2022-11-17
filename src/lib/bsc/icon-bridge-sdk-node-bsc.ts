@@ -49,214 +49,55 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
 
   private localMethods = {
     /**
-     * Add another Owner. Caller must be an Owner of BTP network.
+     * Allow users to deposit an amount of token into the
+     * BTSCore contract.
+     * @param targetAddress - address of receiver.
+     * @param targetChain - receiver chain.
      * @param from - address of sender.
      * @param pk - private key of sender.
-     * @param _owner - Address of new owner
-     * @param gas - transfer fee amount.
-     * @return
-     */
-    addOwner: async (
-      from: string,
-      pk: string,
-      _owner: string,
-      gas: number | null = null
-    ): Promise<any> => {
-      try {
-        return await this.signBTSCoreTx(
-          from,
-          pk,
-          "addOwner",
-          null,
-          gas,
-          _owner
-        );
-      } catch (err) {
-        const errorResult = new Exception(
-          err,
-          `Error running addOwner(). Params:\nfrom: ${from}\npk: ${pk}\n_owner: ${_owner}\n`
-        );
-        return { error: errorResult.toString() };
-      }
-    },
-
-    /**
-     * TODO: no info provided on this function in the BSC smart contract code.
-     * https://testnet.bscscan.com/address/0xe020d4ad483c7ec90a24d9db502e66564ef9c236#code
-     */
-    initialize: async (
-      from: string,
-      pk: string,
-      _nativeCoinName: string,
-      _feeNumerator: number,
-      _fixedFee: number,
-      gas: number | null = null
-    ): Promise<any> => {
-      try {
-        return await this.signBTSCoreTx(
-          from,
-          pk,
-          "initialize",
-          null,
-          gas,
-          _nativeCoinName,
-          _feeNumerator,
-          _fixedFee
-        );
-      } catch (err) {
-        const errorResult = new Exception(
-          err,
-          `Error running initialize(). Params:\nfrom: ${from}\npk: ${pk}\n_nativeCoinName: ${_nativeCoinName}\n_feeNumerator: ${_feeNumerator}\n_fixedFee: ${_fixedFee}\n`
-        );
-        return { error: errorResult.toString() };
-      }
-    },
-
-    /**
-     * Reclaim the token's refundable balance by an owner. Caller must be
-     * owner of coin.
-     * @param from - address of sender.
-     * @param pk - private key of sender.
-     * @param _coinName - coin name.
-     * @param _value - amount of re-claiming tokens.
+     * @param _value - amount to transfer.
+     * @param _coinName - name of coin to transfer.
      * @param gas - transfer fee amount.
      */
-    reclaim: async (
+    transfer: async (
+      targetAddress: string,
+      targetChain: string = "icon",
       from: string,
       pk: string,
+      _value: string,
       _coinName: string,
-      _value: number,
-      gas: number | null = null
+      gas: number | null = 2000000
     ): Promise<any> => {
+      //
       try {
-        return await this.signBTSCoreTx(
+        const isMainnet: boolean | null =
+          this.params.useMainnet == null ? true : this.params.useMainnet;
+
+        const btpAddress = this.sdkUtils.getBTPAddress(
+          targetAddress,
+          targetChain,
+          isMainnet
+        );
+
+        const valueInWei = this.bscWeb3.utils.toWei(_value, "ether");
+
+        // token transaction
+        const response = await this.signBTSCoreTx(
           from,
           pk,
-          "reclaim",
+          "transfer",
           null,
           gas,
           _coinName,
-          _value
+          valueInWei,
+          btpAddress
         );
-      } catch (err) {
-        const errorResult = new Exception(
-          err,
-          `Error running reclaim(). Params:\nfrom: ${from}\npk: ${pk}\n_coinName: ${_coinName}\n_value: ${_value}\n`
-        );
-        return { error: errorResult.toString() };
-      }
-    },
 
-    /**
-     * Registers a wrapped coin and id number of a supporting coin. Caller
-     * must be an owner of this contract.
-     * @param from - address of sender.
-     * @param pk - private key of sender.
-     * @param _name - must be different with the native coin name.
-     * @param _symbol - symbol name for a wrapped coin.
-     * @param _decimals - decimal number.
-     * @param _feeNumerator -
-     * @param _fixedFee -
-     * @param _addr -
-     * @param gas - transfer fee amount.
-     */
-    register: async (
-      from: string,
-      pk: string,
-      _name: string,
-      _symbol: string,
-      _decimals: number,
-      _feeNumerator: number,
-      _fixedFee: number,
-      _addr: string,
-      gas: number | null = null
-    ): Promise<any> => {
-      try {
-        return await this.signBTSCoreTx(
-          from,
-          pk,
-          "register",
-          null,
-          gas,
-          _name,
-          _symbol,
-          _decimals,
-          _feeNumerator,
-          _fixedFee,
-          _addr
-        );
+        return response;
       } catch (err) {
         const errorResult = new Exception(
           err,
-          `Error running register(). Params:\nfrom: ${from}\npk: ${pk}\n_name: ${_name}\n_symbol: ${_symbol}\n_decimals: ${_decimals}\n_feeNumerator: ${_feeNumerator}\n_fixedFee: ${_fixedFee}\n_addr: ${_addr}\n`
-        );
-        return { error: errorResult.toString() };
-      }
-    },
-
-    /**
-     * Removing an existing owner. Caller must be an owner of BTP network.
-     * @param from - address of sender.
-     * @param pk - private key of sender.
-     * @param _owner - address of owner to be removed.
-     * @param gas - transfer fee amount.
-     */
-    removeOwner: async (
-      from: string,
-      pk: string,
-      _owner: string,
-      gas: number | null = null
-    ): Promise<any> => {
-      try {
-        return await this.signBTSCoreTx(
-          from,
-          pk,
-          "removeOwner",
-          null,
-          gas,
-          _owner
-        );
-      } catch (err) {
-        const errorResult = new Exception(
-          err,
-          `Error running removeOwner(). Params:\nfrom: ${from}\npk: ${pk}\n_owner: ${_owner}\n`
-        );
-        return { error: errorResult.toString() };
-      }
-    },
-
-    /**
-     * Set fee ratio. Caller must be an owner of this contract.
-     * @param from - address of sender.
-     * @param pk - private key of sender.
-     * @param _name -
-     * @param _feeNumerator -
-     * @param _fixedFee -
-     * @param gas - transfer fee amount.
-     */
-    setFeeRatio: async (
-      from: string,
-      pk: string,
-      _name: string,
-      _feeNumerator: number,
-      _fixedFee: number,
-      gas: number | null = null
-    ): Promise<any> => {
-      try {
-        return await this.signBTSCoreTx(
-          from,
-          pk,
-          "setFeeRatio",
-          null,
-          gas,
-          _name,
-          _feeNumerator,
-          _fixedFee
-        );
-      } catch (err) {
-        const errorResult = new Exception(
-          err,
-          `Error running setFeeRatio(). Params:\nfrom: ${from}\npk: ${pk}\n_name: ${_name}\n_feeNumerator: ${_feeNumerator}\n_fixedFee: ${_fixedFee}\n`
+          `Error running transfer(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\npk: ${pk}\n_value: ${_value}\n_coinName: ${_coinName}\n`
         );
         return { error: errorResult.toString() };
       }
@@ -572,7 +413,6 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
     /**
      * Allow users to deposit an amount of wrapped native coin into the
      * BTSCore contract.
-     * BTSCore contract.
      * @param targetAddress - address of receiver.
      * @param targetChain - receiver chain.
      * @param from - address of sender.
@@ -583,7 +423,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
      * @param tokenContractAbi - contract abi of the token to be sent.
      * @param gas - transfer fee amount.
      */
-    transfer: async (
+    approveAndTransfer: async (
       targetAddress: string,
       targetChain: string = "icon",
       from: string,
@@ -595,7 +435,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       gas: number | null = 2000000
     ): Promise<any> => {
       try {
-        return await this.transfer(
+        return await this.approveAndTransfer(
           targetAddress,
           targetChain,
           from,
@@ -673,6 +513,191 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       }
     },
 
+    ///////////////////////////////////////////////////////////////////
+    //
+    // The following methods can only be called by contract owners
+    /**
+     * Add another Owner. Caller must be an Owner of BTP network.
+     * @param from - address of sender.
+     * @param pk - private key of sender.
+     * @param _owner - Address of new owner
+     * @param gas - transfer fee amount.
+     * @return
+     */
+    addOwner: async (
+      from: string,
+      pk: string,
+      _owner: string,
+      gas: number | null = null
+    ): Promise<any> => {
+      try {
+        return await this.signBTSCoreTx(
+          from,
+          pk,
+          "addOwner",
+          null,
+          gas,
+          _owner
+        );
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running addOwner(). Params:\nfrom: ${from}\npk: ${pk}\n_owner: ${_owner}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /**
+     * Reclaim the token's refundable balance by an owner. Caller must be
+     * owner of coin.
+     * @param from - address of sender.
+     * @param pk - private key of sender.
+     * @param _coinName - coin name.
+     * @param _value - amount of re-claiming tokens.
+     * @param gas - transfer fee amount.
+     */
+    reclaim: async (
+      from: string,
+      pk: string,
+      _coinName: string,
+      _value: number,
+      gas: number | null = null
+    ): Promise<any> => {
+      try {
+        return await this.signBTSCoreTx(
+          from,
+          pk,
+          "reclaim",
+          null,
+          gas,
+          _coinName,
+          _value
+        );
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running reclaim(). Params:\nfrom: ${from}\npk: ${pk}\n_coinName: ${_coinName}\n_value: ${_value}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /**
+     * Registers a wrapped coin and id number of a supporting coin. Caller
+     * must be an owner of this contract.
+     * @param from - address of sender.
+     * @param pk - private key of sender.
+     * @param _name - must be different with the native coin name.
+     * @param _symbol - symbol name for a wrapped coin.
+     * @param _decimals - decimal number.
+     * @param _feeNumerator -
+     * @param _fixedFee -
+     * @param _addr -
+     * @param gas - transfer fee amount.
+     */
+    register: async (
+      from: string,
+      pk: string,
+      _name: string,
+      _symbol: string,
+      _decimals: number,
+      _feeNumerator: number,
+      _fixedFee: number,
+      _addr: string,
+      gas: number | null = null
+    ): Promise<any> => {
+      try {
+        return await this.signBTSCoreTx(
+          from,
+          pk,
+          "register",
+          null,
+          gas,
+          _name,
+          _symbol,
+          _decimals,
+          _feeNumerator,
+          _fixedFee,
+          _addr
+        );
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running register(). Params:\nfrom: ${from}\npk: ${pk}\n_name: ${_name}\n_symbol: ${_symbol}\n_decimals: ${_decimals}\n_feeNumerator: ${_feeNumerator}\n_fixedFee: ${_fixedFee}\n_addr: ${_addr}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /**
+     * Removing an existing owner. Caller must be an owner of BTP network.
+     * @param from - address of sender.
+     * @param pk - private key of sender.
+     * @param _owner - address of owner to be removed.
+     * @param gas - transfer fee amount.
+     */
+    removeOwner: async (
+      from: string,
+      pk: string,
+      _owner: string,
+      gas: number | null = null
+    ): Promise<any> => {
+      try {
+        return await this.signBTSCoreTx(
+          from,
+          pk,
+          "removeOwner",
+          null,
+          gas,
+          _owner
+        );
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running removeOwner(). Params:\nfrom: ${from}\npk: ${pk}\n_owner: ${_owner}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /**
+     * Set fee ratio. Caller must be an owner of this contract.
+     * @param from - address of sender.
+     * @param pk - private key of sender.
+     * @param _name -
+     * @param _feeNumerator -
+     * @param _fixedFee -
+     * @param gas - transfer fee amount.
+     */
+    setFeeRatio: async (
+      from: string,
+      pk: string,
+      _name: string,
+      _feeNumerator: number,
+      _fixedFee: number,
+      gas: number | null = null
+    ): Promise<any> => {
+      try {
+        return await this.signBTSCoreTx(
+          from,
+          pk,
+          "setFeeRatio",
+          null,
+          gas,
+          _name,
+          _feeNumerator,
+          _fixedFee
+        );
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running setFeeRatio(). Params:\nfrom: ${from}\npk: ${pk}\n_name: ${_name}\n_feeNumerator: ${_feeNumerator}\n_fixedFee: ${_fixedFee}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
     /**
      * Updates BTS periphery address. Caller must be owner of contract.
      * @param from - address of sender.
@@ -744,6 +769,37 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
     //   // index 24
     //   console.log(_fa);
     // }
+    // /**
+    //  * TODO: no info provided on this function in the BSC smart contract code.
+    //  * https://testnet.bscscan.com/address/0xe020d4ad483c7ec90a24d9db502e66564ef9c236#code
+    //  */
+    // initialize: async (
+    //   from: string,
+    //   pk: string,
+    //   _nativeCoinName: string,
+    //   _feeNumerator: number,
+    //   _fixedFee: number,
+    //   gas: number | null = null
+    // ): Promise<any> => {
+    //   try {
+    //     return await this.signBTSCoreTx(
+    //       from,
+    //       pk,
+    //       "initialize",
+    //       null,
+    //       gas,
+    //       _nativeCoinName,
+    //       _feeNumerator,
+    //       _fixedFee
+    //     );
+    //   } catch (err) {
+    //     const errorResult = new Exception(
+    //       err,
+    //       `Error running initialize(). Params:\nfrom: ${from}\npk: ${pk}\n_nativeCoinName: ${_nativeCoinName}\n_feeNumerator: ${_feeNumerator}\n_fixedFee: ${_fixedFee}\n`
+    //     );
+    //     return { error: errorResult.toString() };
+    //   }
+    // },
   };
 
   /**
@@ -866,7 +922,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       false
     );
 
-    const request = await this.transfer(
+    const request = await this.approveAndTransfer(
       targetAddress,
       targetChain,
       from,
@@ -894,7 +950,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
    * @param tokenContractAbi - contract abi of the token to be sent.
    * @param gas - transfer fee amount.
    */
-  private transfer = async (
+  private approveAndTransfer = async (
     targetAddress: string,
     targetChain: string = "icon",
     from: string,
@@ -905,11 +961,6 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
     tokenContractAbi: any[],
     gas: number | null = 2000000
   ): Promise<any> => {
-    const bar = false;
-    if (bar) {
-      const foo = [tokenContractAddress, tokenContractAbi];
-      console.log(foo);
-    }
     const isMainnet: boolean | null =
       this.params.useMainnet == null ? true : this.params.useMainnet;
 
