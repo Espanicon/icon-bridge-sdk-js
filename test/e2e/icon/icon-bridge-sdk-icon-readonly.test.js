@@ -10,8 +10,7 @@ const sdk = new IconBridgeSDK({
 
 // test wallets
 const wallets = {
-  icon: process.env.WALLET_ICON_ADDRESS,
-  bsc: process.env.WALLET_BSC_ADDRESS
+  icon: process.env.WALLET_ICON_ADDRESS
 };
 
 // Keys that should appear in any response from a readonly call
@@ -60,3 +59,72 @@ describe("E2E testing Icon Bridge SDK. Chain: 'icon', Method 'balanceOfBatch(_ow
     assert.ok(!result.includes(false));
   }).timeout(5000);
 });
+
+// ********************************************//
+// Test 3: calls 'coinNames' method originating on the Icon chain.
+// It should returns and object with a predefined set of keys.
+
+// ********************************************//
+// Test 4: calls 'feeRatio' method originating on the Icon chain.
+// It should returns and object with a predefined set of keys.
+
+// ********************************************//
+// Test 5: calls 'getAccumulatedFees' method originating on the Icon chain.
+// It should returns and object with a predefined set of keys.
+
+// ********************************************//
+// Test 6: calls 'getOwners' method originating on the Icon chain.
+// It should returns and object with a predefined set of keys.
+
+// ********************************************//
+// Test 7: calls 'isOwner' method originating on the Icon chain.
+// It should returns and object with a predefined set of keys.
+
+// ********************************************//
+// Test 8: calls 'name' method originating on the Icon chain.
+// It should returns and object with a predefined set of keys.
+
+// ********************************************//
+// Test 9: calls 'getTokenLimit' method originating on the Icon chain.
+// It should returns and object with a predefined set of keys.
+
+// ********************************************//
+// Test 10: calls 'getTokenLimitTxn' method originating on the Icon chain.
+// It should returns and object with a predefined set of keys.
+
+// ********************************************//
+// Test 11: calls 'getSn' method originating on the Icon chain.
+// It should returns and object with a predefined set of keys.
+
+// ********************************************//
+// Test 12: calls 'isUserBlackListed' method originating on the Icon chain.
+// It should returns and object with a predefined set of keys.
+
+// ********************************************//
+// Test 13: calls 'getBlackListedUsers' method originating on the Icon chain.
+// It should returns and object with a predefined set of keys.
+
+// ********************************************//
+// Test 14: calls 'getRegisteredTokensCount' method originating on the
+// Icon chain.
+// It should returns and object with a predefined set of keys.
+
+// ********************************************//
+// Test 15: calls 'tokenLimitStatus' method originating on the Icon chain.
+// It should returns and object with a predefined set of keys.
+
+// ********************************************//
+// Test 16: calls 'blackListedUsersCount' method originating on the Icon chain.
+// It should returns and object with a predefined set of keys.
+
+// ********************************************//
+// Test 17: calls 'getTransaction' method originating on the Icon chain.
+// It should returns and object with a predefined set of keys.
+
+// ********************************************//
+// Test 18: calls 'isRestrictionEnabled' method originating on the Icon chain.
+// It should returns and object with a predefined set of keys.
+
+// ********************************************//
+// Test 19: calls 'coinId' method originating on the Icon chain.
+// It should returns and object with a predefined set of keys.
