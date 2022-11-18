@@ -13,7 +13,8 @@
     "test": "npm run build && mocha",
     "build": "rm -rf dist/ && tsc",
     "test-web": "webpack serve --open",
-    "e2eTest": "npm run build && node ./dist/tests/e2eTests/node/main.mjs",
+    "e2eTest-node": "npm run build && node ./dist/tests/e2eTests/node/main.mjs",
+    "e2eTest": "npm run build && mocha --recursive ./test/e2e/**/*.test.js",
     "build-data": "tsc && node ./dist/utils/buildABIData.js"
   },
   "author": "fidelve",
