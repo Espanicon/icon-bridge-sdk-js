@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import IconBridgeSDKWeb from "../../icon-bridge-sdk-web.mjs";
+import IconBridgeSDKWeb from "../../../icon-bridge-sdk-web.mjs";
 const lib = new IconBridgeSDKWeb({ useMainnet: false });
 export default function iconBridgeSDKWebTests() {
     return __awaiter(this, void 0, void 0, function* () {

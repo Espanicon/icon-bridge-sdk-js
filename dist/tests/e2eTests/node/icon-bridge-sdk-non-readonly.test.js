@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 require("dotenv").config();
-const sdk = require("../../icon-bridge-sdk-node");
+const sdk = require("../../../icon-bridge-sdk-node");
 const testUtils = require("../testUtils");
 const lib = new sdk({
     useMainnet: false,

@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-const icon_bridge_sdk_node_1 = __importDefault(require("../../icon-bridge-sdk-node"));
+const icon_bridge_sdk_node_1 = __importDefault(require("../../../icon-bridge-sdk-node"));
 const testUtils_1 = __importDefault(require("../testUtils"));
 const sdkTestnet = new icon_bridge_sdk_node_1.default({
     useMainnet: false,

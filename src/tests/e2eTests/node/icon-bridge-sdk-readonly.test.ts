@@ -1,4 +1,4 @@
-import IconBridgeSDK from "../../icon-bridge-sdk-node";
+import IconBridgeSDK from "../../../icon-bridge-sdk-node";
 import testUtils from "../testUtils";
 
 // const sdkMainnet = new IconBridgeSDK();

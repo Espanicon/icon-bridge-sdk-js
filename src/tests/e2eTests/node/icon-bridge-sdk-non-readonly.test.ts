@@ -1,5 +1,5 @@
 require("dotenv").config();
-const sdk = require("../../icon-bridge-sdk-node");
+const sdk = require("../../../icon-bridge-sdk-node");
 const testUtils = require("../testUtils");
 
 const lib = new sdk({
