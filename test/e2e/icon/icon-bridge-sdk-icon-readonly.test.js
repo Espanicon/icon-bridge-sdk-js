@@ -128,3 +128,20 @@ describe("E2E testing Icon Bridge SDK. Chain: 'icon', Method 'balanceOfBatch(_ow
 // ********************************************//
 // Test 19: calls 'coinId' method originating on the Icon chain.
 // It should returns and object with a predefined set of keys.
+
+// ********************************************//
+// Test 20: calls 'balanceOf' method originating on the Icon chain. with a
+// wrongly formatted wallet address, It should returns and object with
+// one key named 'error'
+describe("E2E testing Icon Bridge SDK. Chain: 'icon', Method 'balanceOf(_owner, _coinName)' with a wrongly formatted wallet address.", () => {
+  it("Returns an error object.", async () => {
+    const query = await sdk.icon.methods.balanceOf(
+      wallets.icon + "a",
+      "btp-0x2.icon-bnUSD"
+    );
+    const result = Object.keys(query);
+
+    console.log(`\n  > Result: ${JSON.stringify(query)}\n`);
+    assert.ok(result.includes("error"));
+  }).timeout(5000);
+});
