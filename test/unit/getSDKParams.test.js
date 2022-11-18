@@ -1,4 +1,4 @@
-const utils = require("../dist/utils/utils");
+const utils = require("../../dist/utils/utils");
 const assert = require("assert");
 
 const input = {
