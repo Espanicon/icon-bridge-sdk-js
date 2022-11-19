@@ -331,6 +331,26 @@ class IconBridgeSDKIcon {
     },
 
     /**
+     * Get blacklisted users count on specified chain.
+     * @param _net
+     */
+    blackListedUsersCount: async (_net: string): Promise<any> => {
+      try {
+        // make readonly query
+        const response = await this.makeReadonlyQuery("blackListedUsersCount", {
+          _net: _net
+        });
+        return response;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running blackListedUsersCount(). Params:\n_net: ${_net}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /**
      * Get transaction.
      * @param _sn -
      */

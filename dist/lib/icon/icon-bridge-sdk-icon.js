@@ -177,6 +177,18 @@ class IconBridgeSDKIcon {
                     return { error: errorResult.toString() };
                 }
             }),
+            blackListedUsersCount: (_net) => __awaiter(this, void 0, void 0, function* () {
+                try {
+                    const response = yield this.makeReadonlyQuery("blackListedUsersCount", {
+                        _net: _net
+                    });
+                    return response;
+                }
+                catch (err) {
+                    const errorResult = new Exception(err, `Error running blackListedUsersCount(). Params:\n_net: ${_net}\n`);
+                    return { error: errorResult.toString() };
+                }
+            }),
             getTransaction: (_sn) => __awaiter(this, void 0, void 0, function* () {
                 try {
                     const response = yield this.makeReadonlyQuery("getTransaction", {
