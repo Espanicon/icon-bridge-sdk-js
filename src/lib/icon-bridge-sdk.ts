@@ -37,7 +37,7 @@ class IconBridgeSDK {
   sdkUtils: any = utils;
   params = utils.defaultSDKParams;
   bscWeb3: any;
-  bsc: any;
+  // bsc: any;
 
   /**
    * Configuration object for the initialization of the library
@@ -68,6 +68,7 @@ class IconBridgeSDK {
       methodName: string,
       chain: string,
       web3Wrapper: any,
+      queryMethod: any = null,
       ...rest: any[]
     ): Promise<string | null> => {
       // check if class object was created for mainnet or testnet
@@ -95,10 +96,15 @@ class IconBridgeSDK {
       }
 
       // making readonly call
-      const contractMethodCallResponse = await web3Wrapper.eth.call({
-        to: BTSProxyContractAddress,
-        data: encodedData
-      });
+      let contractMethodCallResponse = null;
+      if (queryMethod == null) {
+        contractMethodCallResponse = await web3Wrapper.eth.call({
+          to: BTSProxyContractAddress,
+          data: encodedData
+        });
+      } else {
+        return null;
+      }
 
       return contractMethodCallResponse;
     },

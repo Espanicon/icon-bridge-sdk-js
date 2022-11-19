@@ -21,7 +21,7 @@ class IconBridgeSDK {
         this.sdkUtils = utils_1.default;
         this.params = utils_1.default.defaultSDKParams;
         this.lib = {
-            BTSReadonlyQuery: (methodName, chain, web3Wrapper, ...rest) => __awaiter(this, void 0, void 0, function* () {
+            BTSReadonlyQuery: (methodName, chain, web3Wrapper, queryMethod = null, ...rest) => __awaiter(this, void 0, void 0, function* () {
                 const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
                 const BTSProxyContractAddress = this.lib.getBTSCoreProxyContractAddress(chain, isMainnet);
                 const contractObject = this.lib.getBTSCoreLogicContractObject(chain, web3Wrapper);
@@ -33,10 +33,16 @@ class IconBridgeSDK {
                 else {
                     encodedData = contractMethod(...rest).encodeABI();
                 }
-                const contractMethodCallResponse = yield web3Wrapper.eth.call({
-                    to: BTSProxyContractAddress,
-                    data: encodedData
-                });
+                let contractMethodCallResponse = null;
+                if (queryMethod == null) {
+                    contractMethodCallResponse = yield web3Wrapper.eth.call({
+                        to: BTSProxyContractAddress,
+                        data: encodedData
+                    });
+                }
+                else {
+                    return null;
+                }
                 return contractMethodCallResponse;
             }),
             signBTSCoreTx: (from, pk, methodName, amount = null, chain, web3Wrapper, gas = null, ...rest) => __awaiter(this, void 0, void 0, function* () {

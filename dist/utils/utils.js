@@ -6,6 +6,7 @@ const contracts_1 = require("./contracts");
 const networks_1 = require("./networks");
 const lib_1 = __importDefault(require("./lib"));
 const abiDataPath = lib_1.default.abiDataPath;
+const urlRegex = /^((https|http):\/\/)?(([a-zA-Z0-9-]{1,}\.){1,}([a-zA-Z0-9]{1,63}))(:[0-9]{2,5})?(\/.*)?$/;
 const defaultSDKParams = {
     useMainnet: null,
     iconProvider: {
@@ -111,6 +112,46 @@ function getRandNonce() {
     }
     return result;
 }
+function makeEthJsonRpcReadonlyQuery(to, data) {
+    const jsonRpcObj = makeEthJsonRpcObj(to, data);
+    return jsonRpcObj;
+}
+function makeEthJsonRpcObj(to, data) {
+    const result = {
+        jsonrpc: "2.0",
+        method: "eth_call",
+        params: [
+            {
+                to: to,
+                data: data
+            }
+        ]
+    };
+    return result;
+}
+function parseEthRPCUrl(rpcNode) {
+    const inputInLowercase = rpcNode.toLowerCase();
+    const parsedUrl = {
+        protocol: "https",
+        path: "/",
+        hostname: null,
+        port: "443"
+    };
+    const regexResult = inputInLowercase.match(urlRegex);
+    if (regexResult != null) {
+        parsedUrl.protocol =
+            regexResult[2] == null ? "https" : regexResult[2];
+        parsedUrl.path = regexResult[7] == null ? "" : regexResult[7];
+        parsedUrl.hostname = regexResult[3];
+        parsedUrl.port = regexResult[6] == null ? "" : regexResult[6].slice(1);
+    }
+    console.log(rpcNode);
+    console.log(parsedUrl);
+    return parsedUrl;
+}
+function isValidUrl(urlString) {
+    return urlRegex.test(urlString);
+}
 const utils = {
     networks: networks_1.networks,
     contracts: contracts_1.contracts,
@@ -129,7 +170,10 @@ const utils = {
     getContractOfLabelFromLocalData,
     getAbiOfLabelFromLocalData,
     getTokenLabelFromTokenName,
-    getRandNonce
+    getRandNonce,
+    makeEthJsonRpcReadonlyQuery,
+    isValidUrl,
+    parseEthRPCUrl
 };
 module.exports = utils;
 //# sourceMappingURL=utils.js.map

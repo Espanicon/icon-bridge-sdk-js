@@ -16,13 +16,37 @@ type Provider = {
   hostname: string;
   nid: null | number;
 };
+
 type InputParams = {
   useMainnet: null | boolean;
   iconProvider: Provider;
   bscProvider: Provider;
 };
+
+type Protocol = "https" | "http";
+
+type Url = {
+  protocol: Protocol;
+  hostname: string | null;
+  path: string | null;
+  port: string | null;
+};
+
+type EthMethods = "eth_call";
+type EthJsonRpc = {
+  jsonrpc: "2.0";
+  method: EthMethods;
+  params: [
+    {
+      to: string;
+      data: string;
+    }
+  ];
+};
+
 // variables
 const abiDataPath = lib.abiDataPath;
+const urlRegex = /^((https|http):\/\/)?(([a-zA-Z0-9-]{1,}\.){1,}([a-zA-Z0-9]{1,63}))(:[0-9]{2,5})?(\/.*)?$/;
 
 const defaultSDKParams: InputParams = {
   useMainnet: null,
@@ -206,6 +230,77 @@ function getRandNonce() {
 
   return result;
 }
+
+/*
+ *
+ */
+function makeEthJsonRpcReadonlyQuery(
+  // queryMethod: any,
+  to: string,
+  data: string
+) {
+  //
+  const jsonRpcObj = makeEthJsonRpcObj(to, data);
+  /*
+   * route: /
+   * json: jsonRpcObj
+   * api.icon.community
+   * https
+   * port
+   */
+  return jsonRpcObj;
+}
+
+/*
+ *
+ */
+function makeEthJsonRpcObj(to: string, data: string) {
+  //
+  const result: EthJsonRpc = {
+    jsonrpc: "2.0",
+    method: "eth_call",
+    params: [
+      {
+        to: to,
+        data: data
+      }
+    ]
+  };
+
+  return result;
+}
+/*
+ *
+ */
+function parseEthRPCUrl(rpcNode: string) {
+  //
+  const inputInLowercase = rpcNode.toLowerCase();
+  const parsedUrl: Url = {
+    protocol: "https",
+    path: "/",
+    hostname: null,
+    port: "443"
+  };
+
+  const regexResult = inputInLowercase.match(urlRegex);
+
+  if (regexResult != null) {
+    parsedUrl.protocol =
+      regexResult[2] == null ? "https" : (regexResult[2] as Protocol);
+    parsedUrl.path = regexResult[7] == null ? "" : regexResult[7];
+    parsedUrl.hostname = regexResult[3];
+    parsedUrl.port = regexResult[6] == null ? "" : regexResult[6].slice(1);
+  }
+
+  console.log(rpcNode);
+  console.log(parsedUrl);
+  return parsedUrl;
+}
+
+function isValidUrl(urlString: string) {
+  return urlRegex.test(urlString);
+}
+
 // exports
 const utils = {
   networks,
@@ -225,7 +320,10 @@ const utils = {
   getContractOfLabelFromLocalData,
   getAbiOfLabelFromLocalData,
   getTokenLabelFromTokenName,
-  getRandNonce
+  getRandNonce,
+  makeEthJsonRpcReadonlyQuery,
+  isValidUrl,
+  parseEthRPCUrl
 };
 
 export = utils;

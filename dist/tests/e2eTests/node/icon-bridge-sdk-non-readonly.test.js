@@ -13,7 +13,7 @@ const sdk = require("../../../icon-bridge-sdk-node");
 const testUtils = require("../testUtils");
 const lib = new sdk({
     useMainnet: false,
-    bscProvider: { hostname: "https://data-seed-prebsc-2-s1.binance.org:8545" }
+    bscProvider: { hostname: "https://data-seed-prebsc-2-s3.binance.org:8545/" }
 });
 const wallets = {
     icon: {
@@ -45,13 +45,13 @@ function iconBridgeSDKNodeTests() {
         console.log("Test 5: iconBridgeSDK.bsc.methods.transferSICX(targetAddress, targetChain, from, pk, _coinName, _value, gas)");
         yield testUtils.runTestOnMethod(lib.bsc.methods.transferSICX, true, wallets.icon.a.pubK, "icon", wallets.bsc.a.pubK, wallets.bsc.a.privK, "10", 10000000);
         console.log("Test 6: iconBridgeSDK.bsc.methods.transferETH(targetAddress, targetChain, from, pk, _coinName, _value, gas)");
-        yield testUtils.runTestOnMethod(lib.bsc.methods.transferETH, false, wallets.icon.a.pubK, "icon", wallets.bsc.a.pubK, wallets.bsc.a.privK, "0.05", 10000000);
+        yield testUtils.runTestOnMethod(lib.bsc.methods.transferETH, true, wallets.icon.a.pubK, "icon", wallets.bsc.a.pubK, wallets.bsc.a.privK, "0.05", 10000000);
         console.log("Test 6.1: iconBridgeSDK.bsc.methods.approveAndTransfer(targetAddress, targetChain, from, pk, _coinName, _value, gas)");
-        yield testUtils.runTestOnMethod(lib.bsc.methods.approveAndTransfer, false, wallets.icon.a.pubK, "icon", wallets.bsc.a.pubK, wallets.bsc.a.privK, "btp-0x61.bsc-ETH", "0.04", "0xd66c6B4F0be8CE5b39D52E0Fd1344c389929B378", lib.sdkUtils.genericAbi, 10000000);
+        yield testUtils.runTestOnMethod(lib.bsc.methods.approveAndTransfer, true, wallets.icon.a.pubK, "icon", wallets.bsc.a.pubK, wallets.bsc.a.privK, "btp-0x61.bsc-ETH", "0.04", "0xd66c6B4F0be8CE5b39D52E0Fd1344c389929B378", lib.sdkUtils.genericAbi, 10000000);
         console.log("Test 7: iconBridgeSDK.bsc.methods.transferBTCB(targetAddress, targetChain, from, pk, _coinName, _value, gas)");
-        yield testUtils.runTestOnMethod(lib.bsc.methods.transferBTCB, false, wallets.icon.a.pubK, "icon", wallets.bsc.a.pubK, wallets.bsc.a.privK, "0.05", 10000000);
+        yield testUtils.runTestOnMethod(lib.bsc.methods.transferBTCB, true, wallets.icon.a.pubK, "icon", wallets.bsc.a.pubK, wallets.bsc.a.privK, "0.05", 10000000);
         console.log("Test 7.1: iconBridgeSDK.bsc.methods.approveAndTransfer(targetAddress, targetChain, from, pk, _coinName, _value, gas)");
-        yield testUtils.runTestOnMethod(lib.bsc.methods.approveAndTransfer, false, wallets.icon.a.pubK, "icon", wallets.bsc.a.pubK, wallets.bsc.a.privK, "btp-0x61.bsc-BTCB", "0.04", "0x6ce8dA28E2f864420840cF74474eFf5fD80E65B8", lib.sdkUtils.genericAbi, 10000000);
+        yield testUtils.runTestOnMethod(lib.bsc.methods.approveAndTransfer, true, wallets.icon.a.pubK, "icon", wallets.bsc.a.pubK, wallets.bsc.a.privK, "btp-0x61.bsc-BTCB", "0.04", "0x6ce8dA28E2f864420840cF74474eFf5fD80E65B8", lib.sdkUtils.genericAbi, 10000000);
         console.log("Test 8: iconBridgeSDK.bsc.methods.transferUSDC(targetAddress, targetChain, from, pk, _coinName, _value, gas)");
         yield testUtils.runTestOnMethod(lib.bsc.methods.transferUSDC, true, wallets.icon.a.pubK, "icon", wallets.bsc.a.pubK, wallets.bsc.a.privK, "10", 10000000);
         console.log("Test 9: iconBridgeSDK.bsc.methods.transferUSDT(targetAddress, targetChain, from, pk, _coinName, _value, gas)");

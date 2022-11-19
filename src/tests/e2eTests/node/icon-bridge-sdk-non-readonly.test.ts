@@ -4,7 +4,7 @@ const testUtils = require("../testUtils");
 
 const lib = new sdk({
   useMainnet: false,
-  bscProvider: { hostname: "https://data-seed-prebsc-2-s1.binance.org:8545" }
+  bscProvider: { hostname: "https://data-seed-prebsc-2-s3.binance.org:8545/" }
 });
 const wallets = {
   icon: {
@@ -111,7 +111,7 @@ async function iconBridgeSDKNodeTests() {
   );
   await testUtils.runTestOnMethod(
     lib.bsc.methods.transferETH,
-    false,
+    true,
     wallets.icon.a.pubK,
     "icon",
     wallets.bsc.a.pubK,
@@ -126,7 +126,7 @@ async function iconBridgeSDKNodeTests() {
   );
   await testUtils.runTestOnMethod(
     lib.bsc.methods.approveAndTransfer,
-    false,
+    true,
     wallets.icon.a.pubK,
     "icon",
     wallets.bsc.a.pubK,
@@ -144,7 +144,7 @@ async function iconBridgeSDKNodeTests() {
   );
   await testUtils.runTestOnMethod(
     lib.bsc.methods.transferBTCB,
-    false,
+    true,
     wallets.icon.a.pubK,
     "icon",
     wallets.bsc.a.pubK,
@@ -159,7 +159,7 @@ async function iconBridgeSDKNodeTests() {
   );
   await testUtils.runTestOnMethod(
     lib.bsc.methods.approveAndTransfer,
-    false,
+    true,
     wallets.icon.a.pubK,
     "icon",
     wallets.bsc.a.pubK,

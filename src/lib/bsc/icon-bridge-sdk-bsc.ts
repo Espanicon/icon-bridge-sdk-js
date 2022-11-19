@@ -169,7 +169,11 @@ class IconBridgeSDKBSC {
      * @return token balance of a wallet.
      */
 
-    balanceOf: async (_owner: string, _coinName: string): Promise<any> => {
+    balanceOf: async (
+      _owner: string,
+      _coinName: string,
+      queryMethod: any = null
+    ): Promise<any> => {
       try {
         const isMainnet: boolean | null =
           this.params.useMainnet == null ? true : this.params.useMainnet;
@@ -178,6 +182,7 @@ class IconBridgeSDKBSC {
           "balanceOf",
           "bsc",
           this.bscWeb3,
+          queryMethod,
           _owner,
           _coinName
         );
@@ -213,7 +218,8 @@ class IconBridgeSDKBSC {
      */
     balanceOfBatch: async (
       _owner: string,
-      _coinNames: string[]
+      _coinNames: string[],
+      queryMethod: any = null
     ): Promise<any> => {
       try {
         const isMainnet: boolean | null =
@@ -223,6 +229,7 @@ class IconBridgeSDKBSC {
           "balanceOfBatch",
           "bsc",
           this.bscWeb3,
+          queryMethod,
           _owner,
           _coinNames
         );
@@ -254,7 +261,10 @@ class IconBridgeSDKBSC {
      * @param _coinName - name of coin.
      * @return
      */
-    coinId: async (_coinName: string): Promise<any> => {
+    coinId: async (
+      _coinName: string,
+      queryMethod: any = null
+    ): Promise<any> => {
       try {
         const isMainnet: boolean | null =
           this.params.useMainnet == null ? true : this.params.useMainnet;
@@ -263,6 +273,7 @@ class IconBridgeSDKBSC {
           "coinId",
           "bsc",
           this.bscWeb3,
+          queryMethod,
           _coinName
         );
 
@@ -292,7 +303,7 @@ class IconBridgeSDKBSC {
      * Get name of tokens.
      * @return name of tokens.
      */
-    coinNames: async (): Promise<any> => {
+    coinNames: async (queryMethod: any = null): Promise<any> => {
       try {
         const isMainnet: boolean | null =
           this.params.useMainnet == null ? true : this.params.useMainnet;
@@ -300,7 +311,8 @@ class IconBridgeSDKBSC {
         const response = await this.callbackLib.BTSReadonlyQuery(
           "coinNames",
           "bsc",
-          this.bscWeb3
+          this.bscWeb3,
+          queryMethod
         );
 
         const BTSLogicContractABI = this.callbackLib.getAbiOf(
@@ -330,7 +342,10 @@ class IconBridgeSDKBSC {
      * @param _coinName - name of coin.
      * @return
      */
-    feeRatio: async (_coinName: string): Promise<any> => {
+    feeRatio: async (
+      _coinName: string,
+      queryMethod: any = null
+    ): Promise<any> => {
       try {
         const isMainnet: boolean | null =
           this.params.useMainnet == null ? true : this.params.useMainnet;
@@ -339,6 +354,7 @@ class IconBridgeSDKBSC {
           "feeRatio",
           "bsc",
           this.bscWeb3,
+          queryMethod,
           _coinName
         );
 
@@ -369,7 +385,7 @@ class IconBridgeSDKBSC {
      * asset's value greater than 0.
      * @return Array of assets.
      */
-    getAccumulatedFees: async (): Promise<any> => {
+    getAccumulatedFees: async (queryMethod: any = null): Promise<any> => {
       try {
         const isMainnet: boolean | null =
           this.params.useMainnet == null ? true : this.params.useMainnet;
@@ -377,7 +393,8 @@ class IconBridgeSDKBSC {
         const response = await this.callbackLib.BTSReadonlyQuery(
           "getAccumulatedFees",
           "bsc",
-          this.bscWeb3
+          this.bscWeb3,
+          queryMethod
         );
 
         const BTSLogicContractABI = this.callbackLib.getAbiOf(
@@ -406,7 +423,7 @@ class IconBridgeSDKBSC {
      * Returns name of native coin.
      * @return string name of native coin.
      */
-    getNativeCoinName: async (): Promise<any> => {
+    getNativeCoinName: async (queryMethod: any = null): Promise<any> => {
       try {
         const isMainnet: boolean | null =
           this.params.useMainnet == null ? true : this.params.useMainnet;
@@ -414,7 +431,8 @@ class IconBridgeSDKBSC {
         const response = await this.callbackLib.BTSReadonlyQuery(
           "getNativeCoinName",
           "bsc",
-          this.bscWeb3
+          this.bscWeb3,
+          queryMethod
         );
 
         const BTSLogicContractABI = this.callbackLib.getAbiOf(
@@ -443,7 +461,7 @@ class IconBridgeSDKBSC {
      * Returns list of current owners.
      * @return Array of address of current owners.
      */
-    getOwners: async (): Promise<any> => {
+    getOwners: async (queryMethod: any = null): Promise<any> => {
       try {
         const isMainnet: boolean | null =
           this.params.useMainnet == null ? true : this.params.useMainnet;
@@ -451,7 +469,8 @@ class IconBridgeSDKBSC {
         const response = await this.callbackLib.BTSReadonlyQuery(
           "getOwners",
           "bsc",
-          this.bscWeb3
+          this.bscWeb3,
+          queryMethod
         );
 
         const BTSLogicContractABI = this.callbackLib.getAbiOf(
@@ -480,7 +499,7 @@ class IconBridgeSDKBSC {
      * Checks is a especified address has owner role.
      * @param _owner - address to check.
      */
-    isOwner: async (_owner: string): Promise<any> => {
+    isOwner: async (_owner: string, queryMethod: any = null): Promise<any> => {
       try {
         const isMainnet: boolean | null =
           this.params.useMainnet == null ? true : this.params.useMainnet;
@@ -489,6 +508,7 @@ class IconBridgeSDKBSC {
           "isOwner",
           "bsc",
           this.bscWeb3,
+          queryMethod,
           _owner
         );
 
@@ -518,7 +538,10 @@ class IconBridgeSDKBSC {
      * Checks validity of a coin name.
      * @param _coinName - coin name to check.
      */
-    isValidCoin: async (_coinName: string): Promise<any> => {
+    isValidCoin: async (
+      _coinName: string,
+      queryMethod: any = null
+    ): Promise<any> => {
       try {
         const isMainnet: boolean | null =
           this.params.useMainnet == null ? true : this.params.useMainnet;
@@ -527,6 +550,7 @@ class IconBridgeSDKBSC {
           "isValidCoin",
           "bsc",
           this.bscWeb3,
+          queryMethod,
           _coinName
         );
 
