@@ -33,15 +33,12 @@ type Url = {
 };
 
 type EthMethods = "eth_call";
+
 type EthJsonRpc = {
   jsonrpc: "2.0";
   method: EthMethods;
-  params: [
-    {
-      to: string;
-      data: string;
-    }
-  ];
+  id: number;
+  params: any[];
 };
 
 // variables
@@ -234,40 +231,50 @@ function getRandNonce() {
 /*
  *
  */
-function makeEthJsonRpcReadonlyQuery(
-  // queryMethod: any,
+async function makeEthJsonRpcReadonlyQuery(
+  url: string,
   to: string,
-  data: string
+  data: any,
+  queryMethod: any
 ) {
   //
   const jsonRpcObj = makeEthJsonRpcObj(to, data);
-  /*
-   * route: /
-   * json: jsonRpcObj
-   * api.icon.community
-   * https
-   * port
-   */
-  return jsonRpcObj;
+  const urlObj = parseEthRPCUrl(url);
+  console.log("readonly query");
+  console.log(urlObj);
+  console.log(jsonRpcObj);
+  const query = await queryMethod(
+    urlObj.path,
+    jsonRpcObj,
+    urlObj.hostname,
+    urlObj.protocol === "http" ? false : true,
+    urlObj.port === "" ? false : urlObj.port
+  );
+
+  return query;
 }
 
 /*
  *
  */
-function makeEthJsonRpcObj(to: string, data: string) {
+function makeEthJsonRpcObj(
+  to: string,
+  data: string,
+  useLatestBlock: boolean = true
+) {
   //
+  const params: any[] = [{ to: to, data: data }];
+  if (useLatestBlock) {
+    params.push("latest");
+  }
   const result: EthJsonRpc = {
     jsonrpc: "2.0",
     method: "eth_call",
-    params: [
-      {
-        to: to,
-        data: data
-      }
-    ]
+    id: Math.ceil(Math.random() * 100),
+    params: params
   };
 
-  return result;
+  return JSON.stringify(result);
 }
 /*
  *
@@ -287,13 +294,11 @@ function parseEthRPCUrl(rpcNode: string) {
   if (regexResult != null) {
     parsedUrl.protocol =
       regexResult[2] == null ? "https" : (regexResult[2] as Protocol);
-    parsedUrl.path = regexResult[7] == null ? "" : regexResult[7];
+    parsedUrl.path = regexResult[7] == null ? "/" : regexResult[7];
     parsedUrl.hostname = regexResult[3];
     parsedUrl.port = regexResult[6] == null ? "" : regexResult[6].slice(1);
   }
 
-  console.log(rpcNode);
-  console.log(parsedUrl);
   return parsedUrl;
 }
 

@@ -31,14 +31,16 @@ class IconBridgeSDKNode extends IconBridgeSDK {
     //   this.params.iconProvider.hostname,
     //   this.params.iconProvider.nid
     // );
+
+    this.icon = new iconNodeBridge(this.params, this.sdkUtils);
+
     this.bsc = new bscNodeBridge(
       this.params,
       this.bscWeb3,
       this.sdkUtils,
-      this.lib
+      this.lib,
+      this.icon.iconWeb3.queryMethod
     );
-
-    this.icon = new iconNodeBridge(this.params, this.sdkUtils);
   }
 }
 export = IconBridgeSDKNode;

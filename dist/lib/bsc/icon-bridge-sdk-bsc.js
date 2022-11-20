@@ -10,12 +10,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 const Exception = require("../../utils/exception");
 class IconBridgeSDKBSC {
-    constructor(params, bscWeb3, sdkUtils, callbackLib) {
+    constructor(params, bscWeb3, sdkUtils, callbackLib, queryMethod) {
         this.superMethods = {
-            balanceOf: (_owner, _coinName, queryMethod = null) => __awaiter(this, void 0, void 0, function* () {
+            balanceOf: (_owner, _coinName, queryMethod = this.queryMethod) => __awaiter(this, void 0, void 0, function* () {
                 try {
                     const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
                     const response = yield this.callbackLib.BTSReadonlyQuery("balanceOf", "bsc", this.bscWeb3, queryMethod, _owner, _coinName);
+                    console.log("response");
+                    console.log(response);
                     const BTSLogicContractABI = this.callbackLib.getAbiOf("BTSCore", "bsc", isMainnet, true);
                     const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(BTSLogicContractABI[4].outputs, response);
                     return parsedResponse;
@@ -147,6 +149,7 @@ class IconBridgeSDKBSC {
         this.bscWeb3 = bscWeb3;
         this.sdkUtils = sdkUtils;
         this.callbackLib = callbackLib;
+        this.queryMethod = queryMethod;
     }
 }
 module.exports = IconBridgeSDKBSC;

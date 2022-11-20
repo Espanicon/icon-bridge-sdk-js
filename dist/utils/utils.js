@@ -1,4 +1,13 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -112,22 +121,29 @@ function getRandNonce() {
     }
     return result;
 }
-function makeEthJsonRpcReadonlyQuery(to, data) {
-    const jsonRpcObj = makeEthJsonRpcObj(to, data);
-    return jsonRpcObj;
+function makeEthJsonRpcReadonlyQuery(url, to, data, queryMethod) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const jsonRpcObj = makeEthJsonRpcObj(to, data);
+        const urlObj = parseEthRPCUrl(url);
+        console.log("readonly query");
+        console.log(urlObj);
+        console.log(jsonRpcObj);
+        const query = yield queryMethod(urlObj.path, jsonRpcObj, urlObj.hostname, urlObj.protocol === "http" ? false : true, urlObj.port === "" ? false : urlObj.port);
+        return query;
+    });
 }
-function makeEthJsonRpcObj(to, data) {
+function makeEthJsonRpcObj(to, data, useLatestBlock = true) {
+    const params = [{ to: to, data: data }];
+    if (useLatestBlock) {
+        params.push("latest");
+    }
     const result = {
         jsonrpc: "2.0",
         method: "eth_call",
-        params: [
-            {
-                to: to,
-                data: data
-            }
-        ]
+        id: Math.ceil(Math.random() * 100),
+        params: params
     };
-    return result;
+    return JSON.stringify(result);
 }
 function parseEthRPCUrl(rpcNode) {
     const inputInLowercase = rpcNode.toLowerCase();
@@ -141,12 +157,10 @@ function parseEthRPCUrl(rpcNode) {
     if (regexResult != null) {
         parsedUrl.protocol =
             regexResult[2] == null ? "https" : regexResult[2];
-        parsedUrl.path = regexResult[7] == null ? "" : regexResult[7];
+        parsedUrl.path = regexResult[7] == null ? "/" : regexResult[7];
         parsedUrl.hostname = regexResult[3];
         parsedUrl.port = regexResult[6] == null ? "" : regexResult[6].slice(1);
     }
-    console.log(rpcNode);
-    console.log(parsedUrl);
     return parsedUrl;
 }
 function isValidUrl(urlString) {

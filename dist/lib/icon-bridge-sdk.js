@@ -41,8 +41,14 @@ class IconBridgeSDK {
                     });
                 }
                 else {
-                    return null;
+                    const contractMethodCallResponseRaw = yield this.sdkUtils.makeEthJsonRpcReadonlyQuery(this.params.bscProvider.hostname, BTSProxyContractAddress, encodedData, queryMethod);
+                    if (contractMethodCallResponseRaw.error != null) {
+                        throw new Error(JSON.stringify(contractMethodCallResponseRaw));
+                    }
+                    contractMethodCallResponse = contractMethodCallResponseRaw.result;
                 }
+                console.log("method query response");
+                console.log(contractMethodCallResponse);
                 return contractMethodCallResponse;
             }),
             signBTSCoreTx: (from, pk, methodName, amount = null, chain, web3Wrapper, gas = null, ...rest) => __awaiter(this, void 0, void 0, function* () {

@@ -26,6 +26,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
   sdkUtils: any;
   callbackLib: any;
   methods: any;
+  queryMethod: any;
 
   /**
    * Constructor
@@ -34,9 +35,10 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
     params: InputParams,
     bscWeb3: any,
     sdkUtils: any,
-    callbackLib: any
+    callbackLib: any,
+    queryMethod: any
   ) {
-    super(params, bscWeb3, sdkUtils, callbackLib);
+    super(params, bscWeb3, sdkUtils, callbackLib, queryMethod);
     this.params = params;
     this.bscWeb3 = bscWeb3;
     this.sdkUtils = sdkUtils;

@@ -24,6 +24,7 @@ class IconBridgeSDKBSC {
   bscWeb3: any;
   sdkUtils: any;
   callbackLib: any;
+  queryMethod: any;
 
   /**
    * Constructor
@@ -32,12 +33,14 @@ class IconBridgeSDKBSC {
     params: InputParams,
     bscWeb3: any,
     sdkUtils: any,
-    callbackLib: any
+    callbackLib: any,
+    queryMethod: any
   ) {
     this.params = params;
     this.bscWeb3 = bscWeb3;
     this.sdkUtils = sdkUtils;
     this.callbackLib = callbackLib;
+    this.queryMethod = queryMethod;
   }
 
   // ######################################################################
@@ -172,7 +175,7 @@ class IconBridgeSDKBSC {
     balanceOf: async (
       _owner: string,
       _coinName: string,
-      queryMethod: any = null
+      queryMethod: any = this.queryMethod
     ): Promise<any> => {
       try {
         const isMainnet: boolean | null =
@@ -186,6 +189,8 @@ class IconBridgeSDKBSC {
           _owner,
           _coinName
         );
+        console.log("response");
+        console.log(response);
 
         const BTSLogicContractABI = this.callbackLib.getAbiOf(
           "BTSCore",

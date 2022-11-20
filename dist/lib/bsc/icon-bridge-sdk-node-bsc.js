@@ -11,8 +11,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 const baseBSCSDK = require("./icon-bridge-sdk-bsc");
 const Exception = require("../../utils/exception");
 class IconBridgeSDKNodeBSC extends baseBSCSDK {
-    constructor(params, bscWeb3, sdkUtils, callbackLib) {
-        super(params, bscWeb3, sdkUtils, callbackLib);
+    constructor(params, bscWeb3, sdkUtils, callbackLib, queryMethod) {
+        super(params, bscWeb3, sdkUtils, callbackLib, queryMethod);
         this.localMethods = {
             transfer: (targetAddress, targetChain = "icon", from, pk, _value, _coinName, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
                 try {

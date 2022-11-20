@@ -6,7 +6,7 @@ const assert = require("assert");
 // Icon Bridge SDK
 const sdk = new IconBridgeSDK({
   useMainnet: false,
-  bscProvider: { hostname: "https://data-seed-prebsc-2-s1.binance.org:8545" }
+  bscProvider: { hostname: "https://data-seed-prebsc-1-s3.binance.org:8545" }
 });
 
 // test wallets
@@ -43,7 +43,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'balanceOf(_owner, _
 // ********************************************//
 // Test 2: calls 'balanceOfBatch' method originating on the BSC chain.
 // It should returns and object with a predefined set of keys.
-describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'balanceOfBatch(_owner, _coinNames)'", () => {
+describe.skip("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'balanceOfBatch(_owner, _coinNames)'", () => {
   it("Returns BTP balance of a BSC wallet for a set of coins.", async () => {
     const query = await sdk.bsc.methods.balanceOfBatch(wallets.bsc, [
       "btp-0x2.icon-bnUSD"
@@ -64,7 +64,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'balanceOfBatch(_own
 // ********************************************//
 // Test 3: calls 'coinNames' method originating on the BSC chain.
 // It should returns and object with a predefined set of keys.
-describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'coinNames()'", () => {
+describe.skip("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'coinNames()'", () => {
   it("Returns list of coin names.", async () => {
     const query = await sdk.bsc.methods.coinNames();
     // check if the result query has the valid keys
@@ -83,7 +83,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'coinNames()'", () =
 // ********************************************//
 // Test 4: calls 'feeRatio' method originating on the BSC chain.
 // It should returns and object with a predefined set of keys.
-describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'feeRatio(_coinName)'", () => {
+describe.skip("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'feeRatio(_coinName)'", () => {
   it("Returns fee ratio for a coin.", async () => {
     const query = await sdk.bsc.methods.feeRatio("btp-0x2.icon-ICX");
     // check if the result query has the valid keys
@@ -102,7 +102,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'feeRatio(_coinName)
 // ********************************************//
 // Test 5: calls 'getAccumulatedFees' method originating on the BSC chain.
 // It should returns and object with a predefined set of keys.
-describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'getAccumulatedFees()'", () => {
+describe.skip("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'getAccumulatedFees()'", () => {
   it("Returns accumulated fees.", async () => {
     const query = await sdk.bsc.methods.getAccumulatedFees();
     // check if the result query has the valid keys
@@ -121,7 +121,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'getAccumulatedFees(
 // ********************************************//
 // Test 6: calls 'coinId' method originating on the BSC chain.
 // It should returns and object with a predefined set of keys.
-describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'coinId(_coinName)'", () => {
+describe.skip("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'coinId(_coinName)'", () => {
   it("Returns fee ratio for a coin.", async () => {
     const query = await sdk.bsc.methods.coinId("btp-0x2.icon-ICX");
     // check if the result query has the valid keys
@@ -140,7 +140,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'coinId(_coinName)'"
 // ********************************************//
 // Test 7: calls 'getNativeCoinName' method originating on the BSC chain.
 // It should returns and object with a predefined set of keys.
-describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'getNativeCoinName()'", () => {
+describe.skip("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'getNativeCoinName()'", () => {
   it("Returns native coin name on the defined chain.", async () => {
     const query = await sdk.bsc.methods.getNativeCoinName();
     // check if the result query has the valid keys
@@ -159,7 +159,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'getNativeCoinName()
 // ********************************************//
 // Test 8: calls 'getOwners' method originating on the BSC chain.
 // It should returns and object with a predefined set of keys.
-describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'getOwners()'", () => {
+describe.skip("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'getOwners()'", () => {
   it("Returns contract owners of BTS contract.", async () => {
     const query = await sdk.bsc.methods.getOwners();
     // check if the result query has the valid keys
@@ -178,7 +178,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'getOwners()'", () =
 // ********************************************//
 // Test 9: calls 'isOwner' method originating on the BSC chain.
 // It should returns and object with a predefined set of keys.
-describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'isOwner(_owner)'", () => {
+describe.skip("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'isOwner(_owner)'", () => {
   it("Returns contract owners of BTS contract.", async () => {
     const query = await sdk.bsc.methods.isOwner(
       "0xd5f24a22a9e4029deecbf4dd38ab6be4657fc5b7"
@@ -199,7 +199,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'isOwner(_owner)'", 
 // ********************************************//
 // Test 10: calls 'isValidCoin' method originating on the BSC chain.
 // It should returns and object with a predefined set of keys.
-describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'isValidCoin(_coinName)'", () => {
+describe.skip("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'isValidCoin(_coinName)'", () => {
   it("Returns if coinName is a valid coin.", async () => {
     const query = await sdk.bsc.methods.isOwner("btp-0x2.icon-ICX");
     // check if the result query has the valid keys
