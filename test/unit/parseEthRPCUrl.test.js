@@ -6,7 +6,7 @@ const tests = [
     "https://api.icon.community:50000",
     {
       protocol: "https",
-      path: "",
+      path: "/",
       hostname: "api.icon.community",
       port: "50000"
     }
@@ -15,7 +15,7 @@ const tests = [
     "https://api.icon.community:500",
     {
       protocol: "https",
-      path: "",
+      path: "/",
       hostname: "api.icon.community",
       port: "500"
     }
@@ -24,7 +24,7 @@ const tests = [
     "https://tracker.lisbon.icon.community:500",
     {
       protocol: "https",
-      path: "",
+      path: "/",
       hostname: "tracker.lisbon.icon.community",
       port: "500"
     }
@@ -33,7 +33,7 @@ const tests = [
     "https://data-seed-prebsc-1-s1.binance.org:8545",
     {
       protocol: "https",
-      path: "",
+      path: "/",
       hostname: "data-seed-prebsc-1-s1.binance.org",
       port: "8545"
     }
@@ -42,7 +42,7 @@ const tests = [
     "https://data-seed-prebsc-2-s1.binance.org:8545",
     {
       protocol: "https",
-      path: "",
+      path: "/",
       hostname: "data-seed-prebsc-2-s1.binance.org",
       port: "8545"
     }
@@ -51,7 +51,7 @@ const tests = [
     "https://data-seed-prebsc-1-s2.binance.org:8545",
     {
       protocol: "https",
-      path: "",
+      path: "/",
       hostname: "data-seed-prebsc-1-s2.binance.org",
       port: "8545"
     }
@@ -60,7 +60,7 @@ const tests = [
     "https://data-seed-prebsc-2-s2.binance.org:8545",
     {
       protocol: "https",
-      path: "",
+      path: "/",
       hostname: "data-seed-prebsc-2-s2.binance.org",
       port: "8545"
     }
@@ -69,7 +69,7 @@ const tests = [
     "https://data-seed-prebsc-1-s3.binance.org:8545",
     {
       protocol: "https",
-      path: "",
+      path: "/",
       hostname: "data-seed-prebsc-1-s3.binance.org",
       port: "8545"
     }
@@ -78,7 +78,7 @@ const tests = [
     "https://data-seed-prebsc-2-s3.binance.org:8545",
     {
       protocol: "https",
-      path: "",
+      path: "/",
       hostname: "data-seed-prebsc-2-s3.binance.org",
       port: "8545"
     }
@@ -87,7 +87,7 @@ const tests = [
     "http://api.icon.community:50000",
     {
       protocol: "http",
-      path: "",
+      path: "/",
       hostname: "api.icon.community",
       port: "50000"
     }
@@ -96,7 +96,7 @@ const tests = [
     "http://api.icon.community:500",
     {
       protocol: "http",
-      path: "",
+      path: "/",
       hostname: "api.icon.community",
       port: "500"
     }
@@ -105,7 +105,7 @@ const tests = [
     "http://data-seed-prebsc-1-s1.binance.org",
     {
       protocol: "http",
-      path: "",
+      path: "/",
       hostname: "data-seed-prebsc-1-s1.binance.org",
       port: ""
     }
@@ -114,7 +114,7 @@ const tests = [
     "https://data-seed-prebsc-2-s1.binance.org",
     {
       protocol: "https",
-      path: "",
+      path: "/",
       hostname: "data-seed-prebsc-2-s1.binance.org",
       port: ""
     }
@@ -123,7 +123,7 @@ const tests = [
     "data-seed-prebsc-1-s2.binance.org:8545",
     {
       protocol: "https",
-      path: "",
+      path: "/",
       hostname: "data-seed-prebsc-1-s2.binance.org",
       port: "8545"
     }
@@ -132,7 +132,7 @@ const tests = [
     "data-seed-prebsc-1-s2.binance.org",
     {
       protocol: "https",
-      path: "",
+      path: "/",
       hostname: "data-seed-prebsc-1-s2.binance.org",
       port: ""
     }
@@ -141,7 +141,7 @@ const tests = [
     "https://data-seed-prebsc-2-s2.binance.org",
     {
       protocol: "https",
-      path: "",
+      path: "/",
       hostname: "data-seed-prebsc-2-s2.binance.org",
       port: ""
     }

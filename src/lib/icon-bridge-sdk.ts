@@ -114,8 +114,6 @@ class IconBridgeSDK {
         }
         contractMethodCallResponse = contractMethodCallResponseRaw.result;
       }
-      console.log("method query response");
-      console.log(contractMethodCallResponse);
 
       return contractMethodCallResponse;
     },

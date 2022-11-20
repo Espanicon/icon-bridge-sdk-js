@@ -240,9 +240,6 @@ async function makeEthJsonRpcReadonlyQuery(
   //
   const jsonRpcObj = makeEthJsonRpcObj(to, data);
   const urlObj = parseEthRPCUrl(url);
-  console.log("readonly query");
-  console.log(urlObj);
-  console.log(jsonRpcObj);
   const query = await queryMethod(
     urlObj.path,
     jsonRpcObj,

@@ -125,9 +125,6 @@ function makeEthJsonRpcReadonlyQuery(url, to, data, queryMethod) {
     return __awaiter(this, void 0, void 0, function* () {
         const jsonRpcObj = makeEthJsonRpcObj(to, data);
         const urlObj = parseEthRPCUrl(url);
-        console.log("readonly query");
-        console.log(urlObj);
-        console.log(jsonRpcObj);
         const query = yield queryMethod(urlObj.path, jsonRpcObj, urlObj.hostname, urlObj.protocol === "http" ? false : true, urlObj.port === "" ? false : urlObj.port);
         return query;
     });

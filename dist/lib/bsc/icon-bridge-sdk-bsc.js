@@ -12,12 +12,11 @@ const Exception = require("../../utils/exception");
 class IconBridgeSDKBSC {
     constructor(params, bscWeb3, sdkUtils, callbackLib, queryMethod) {
         this.superMethods = {
-            balanceOf: (_owner, _coinName, queryMethod = this.queryMethod) => __awaiter(this, void 0, void 0, function* () {
+            balanceOf: (_owner, _coinName, useNativeQueryMethod = true) => __awaiter(this, void 0, void 0, function* () {
                 try {
                     const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
+                    const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
                     const response = yield this.callbackLib.BTSReadonlyQuery("balanceOf", "bsc", this.bscWeb3, queryMethod, _owner, _coinName);
-                    console.log("response");
-                    console.log(response);
                     const BTSLogicContractABI = this.callbackLib.getAbiOf("BTSCore", "bsc", isMainnet, true);
                     const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(BTSLogicContractABI[4].outputs, response);
                     return parsedResponse;
@@ -27,9 +26,10 @@ class IconBridgeSDKBSC {
                     return { error: errorResult.toString() };
                 }
             }),
-            balanceOfBatch: (_owner, _coinNames, queryMethod = null) => __awaiter(this, void 0, void 0, function* () {
+            balanceOfBatch: (_owner, _coinNames, useNativeQueryMethod = true) => __awaiter(this, void 0, void 0, function* () {
                 try {
                     const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
+                    const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
                     const response = yield this.callbackLib.BTSReadonlyQuery("balanceOfBatch", "bsc", this.bscWeb3, queryMethod, _owner, _coinNames);
                     const BTSLogicContractABI = this.callbackLib.getAbiOf("BTSCore", "bsc", isMainnet, true);
                     const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(BTSLogicContractABI[5].outputs, response);
@@ -40,9 +40,10 @@ class IconBridgeSDKBSC {
                     return { error: errorResult.toString() };
                 }
             }),
-            coinId: (_coinName, queryMethod = null) => __awaiter(this, void 0, void 0, function* () {
+            coinId: (_coinName, useNativeQueryMethod = true) => __awaiter(this, void 0, void 0, function* () {
                 try {
                     const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
+                    const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
                     const response = yield this.callbackLib.BTSReadonlyQuery("coinId", "bsc", this.bscWeb3, queryMethod, _coinName);
                     const BTSLogicContractABI = this.callbackLib.getAbiOf("BTSCore", "bsc", isMainnet, true);
                     const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(BTSLogicContractABI[6].outputs, response);
@@ -53,9 +54,10 @@ class IconBridgeSDKBSC {
                     return { error: errorResult.toString() };
                 }
             }),
-            coinNames: (queryMethod = null) => __awaiter(this, void 0, void 0, function* () {
+            coinNames: (useNativeQueryMethod = true) => __awaiter(this, void 0, void 0, function* () {
                 try {
                     const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
+                    const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
                     const response = yield this.callbackLib.BTSReadonlyQuery("coinNames", "bsc", this.bscWeb3, queryMethod);
                     const BTSLogicContractABI = this.callbackLib.getAbiOf("BTSCore", "bsc", isMainnet, true);
                     const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(BTSLogicContractABI[7].outputs, response);
@@ -66,9 +68,10 @@ class IconBridgeSDKBSC {
                     return { error: errorResult.toString() };
                 }
             }),
-            feeRatio: (_coinName, queryMethod = null) => __awaiter(this, void 0, void 0, function* () {
+            feeRatio: (_coinName, useNativeQueryMethod = true) => __awaiter(this, void 0, void 0, function* () {
                 try {
                     const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
+                    const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
                     const response = yield this.callbackLib.BTSReadonlyQuery("feeRatio", "bsc", this.bscWeb3, queryMethod, _coinName);
                     const BTSLogicContractABI = this.callbackLib.getAbiOf("BTSCore", "bsc", isMainnet, true);
                     const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(BTSLogicContractABI[8].outputs, response);
@@ -79,9 +82,10 @@ class IconBridgeSDKBSC {
                     return { error: errorResult.toString() };
                 }
             }),
-            getAccumulatedFees: (queryMethod = null) => __awaiter(this, void 0, void 0, function* () {
+            getAccumulatedFees: (useNativeQueryMethod = true) => __awaiter(this, void 0, void 0, function* () {
                 try {
                     const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
+                    const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
                     const response = yield this.callbackLib.BTSReadonlyQuery("getAccumulatedFees", "bsc", this.bscWeb3, queryMethod);
                     const BTSLogicContractABI = this.callbackLib.getAbiOf("BTSCore", "bsc", isMainnet, true);
                     const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(BTSLogicContractABI[9].outputs, response);
@@ -92,9 +96,10 @@ class IconBridgeSDKBSC {
                     return { error: errorResult.toString() };
                 }
             }),
-            getNativeCoinName: (queryMethod = null) => __awaiter(this, void 0, void 0, function* () {
+            getNativeCoinName: (useNativeQueryMethod = true) => __awaiter(this, void 0, void 0, function* () {
                 try {
                     const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
+                    const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
                     const response = yield this.callbackLib.BTSReadonlyQuery("getNativeCoinName", "bsc", this.bscWeb3, queryMethod);
                     const BTSLogicContractABI = this.callbackLib.getAbiOf("BTSCore", "bsc", isMainnet, true);
                     const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(BTSLogicContractABI[10].outputs, response);
@@ -105,9 +110,10 @@ class IconBridgeSDKBSC {
                     return { error: errorResult.toString() };
                 }
             }),
-            getOwners: (queryMethod = null) => __awaiter(this, void 0, void 0, function* () {
+            getOwners: (useNativeQueryMethod = true) => __awaiter(this, void 0, void 0, function* () {
                 try {
                     const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
+                    const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
                     const response = yield this.callbackLib.BTSReadonlyQuery("getOwners", "bsc", this.bscWeb3, queryMethod);
                     const BTSLogicContractABI = this.callbackLib.getAbiOf("BTSCore", "bsc", isMainnet, true);
                     const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(BTSLogicContractABI[11].outputs, response);
@@ -118,9 +124,10 @@ class IconBridgeSDKBSC {
                     return { error: errorResult.toString() };
                 }
             }),
-            isOwner: (_owner, queryMethod = null) => __awaiter(this, void 0, void 0, function* () {
+            isOwner: (_owner, useNativeQueryMethod = true) => __awaiter(this, void 0, void 0, function* () {
                 try {
                     const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
+                    const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
                     const response = yield this.callbackLib.BTSReadonlyQuery("isOwner", "bsc", this.bscWeb3, queryMethod, _owner);
                     const BTSLogicContractABI = this.callbackLib.getAbiOf("BTSCore", "bsc", isMainnet, true);
                     const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(BTSLogicContractABI[14].outputs, response);
@@ -131,9 +138,10 @@ class IconBridgeSDKBSC {
                     return { error: errorResult.toString() };
                 }
             }),
-            isValidCoin: (_coinName, queryMethod = null) => __awaiter(this, void 0, void 0, function* () {
+            isValidCoin: (_coinName, useNativeQueryMethod = true) => __awaiter(this, void 0, void 0, function* () {
                 try {
                     const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
+                    const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
                     const response = yield this.callbackLib.BTSReadonlyQuery("isValidCoin", "bsc", this.bscWeb3, queryMethod, _coinName);
                     const BTSLogicContractABI = this.callbackLib.getAbiOf("BTSCore", "bsc", isMainnet, true);
                     const parsedResponse = this.bscWeb3.eth.abi.decodeParameters(BTSLogicContractABI[15].outputs, response);

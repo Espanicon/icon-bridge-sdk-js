@@ -47,8 +47,6 @@ class IconBridgeSDK {
                     }
                     contractMethodCallResponse = contractMethodCallResponseRaw.result;
                 }
-                console.log("method query response");
-                console.log(contractMethodCallResponse);
                 return contractMethodCallResponse;
             }),
             signBTSCoreTx: (from, pk, methodName, amount = null, chain, web3Wrapper, gas = null, ...rest) => __awaiter(this, void 0, void 0, function* () {

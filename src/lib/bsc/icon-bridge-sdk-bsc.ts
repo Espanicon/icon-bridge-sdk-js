@@ -175,12 +175,18 @@ class IconBridgeSDKBSC {
     balanceOf: async (
       _owner: string,
       _coinName: string,
-      queryMethod: any = this.queryMethod
+      useNativeQueryMethod: boolean = true
     ): Promise<any> => {
       try {
         const isMainnet: boolean | null =
           this.params.useMainnet == null ? true : this.params.useMainnet;
 
+        // this params determine if we use the native query method, which
+        // would be http/https when running on nodejs or fetch if running
+        // on the browser or if we directly use the query method included
+        // in the web3js library. the default is not to use the method
+        // included in the web3js library.
+        const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
         const response = await this.callbackLib.BTSReadonlyQuery(
           "balanceOf",
           "bsc",
@@ -189,8 +195,6 @@ class IconBridgeSDKBSC {
           _owner,
           _coinName
         );
-        console.log("response");
-        console.log(response);
 
         const BTSLogicContractABI = this.callbackLib.getAbiOf(
           "BTSCore",
@@ -224,12 +228,18 @@ class IconBridgeSDKBSC {
     balanceOfBatch: async (
       _owner: string,
       _coinNames: string[],
-      queryMethod: any = null
+      useNativeQueryMethod: boolean = true
     ): Promise<any> => {
       try {
         const isMainnet: boolean | null =
           this.params.useMainnet == null ? true : this.params.useMainnet;
 
+        // this params determine if we use the native query method, which
+        // would be http/https when running on nodejs or fetch if running
+        // on the browser or if we directly use the query method included
+        // in the web3js library. the default is not to use the method
+        // included in the web3js library.
+        const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
         const response = await this.callbackLib.BTSReadonlyQuery(
           "balanceOfBatch",
           "bsc",
@@ -268,12 +278,18 @@ class IconBridgeSDKBSC {
      */
     coinId: async (
       _coinName: string,
-      queryMethod: any = null
+      useNativeQueryMethod: boolean = true
     ): Promise<any> => {
       try {
         const isMainnet: boolean | null =
           this.params.useMainnet == null ? true : this.params.useMainnet;
 
+        // this params determine if we use the native query method, which
+        // would be http/https when running on nodejs or fetch if running
+        // on the browser or if we directly use the query method included
+        // in the web3js library. the default is not to use the method
+        // included in the web3js library.
+        const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
         const response = await this.callbackLib.BTSReadonlyQuery(
           "coinId",
           "bsc",
@@ -308,11 +324,17 @@ class IconBridgeSDKBSC {
      * Get name of tokens.
      * @return name of tokens.
      */
-    coinNames: async (queryMethod: any = null): Promise<any> => {
+    coinNames: async (useNativeQueryMethod: boolean = true): Promise<any> => {
       try {
         const isMainnet: boolean | null =
           this.params.useMainnet == null ? true : this.params.useMainnet;
 
+        // this params determine if we use the native query method, which
+        // would be http/https when running on nodejs or fetch if running
+        // on the browser or if we directly use the query method included
+        // in the web3js library. the default is not to use the method
+        // included in the web3js library.
+        const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
         const response = await this.callbackLib.BTSReadonlyQuery(
           "coinNames",
           "bsc",
@@ -349,12 +371,18 @@ class IconBridgeSDKBSC {
      */
     feeRatio: async (
       _coinName: string,
-      queryMethod: any = null
+      useNativeQueryMethod: boolean = true
     ): Promise<any> => {
       try {
         const isMainnet: boolean | null =
           this.params.useMainnet == null ? true : this.params.useMainnet;
 
+        // this params determine if we use the native query method, which
+        // would be http/https when running on nodejs or fetch if running
+        // on the browser or if we directly use the query method included
+        // in the web3js library. the default is not to use the method
+        // included in the web3js library.
+        const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
         const response = await this.callbackLib.BTSReadonlyQuery(
           "feeRatio",
           "bsc",
@@ -390,11 +418,19 @@ class IconBridgeSDKBSC {
      * asset's value greater than 0.
      * @return Array of assets.
      */
-    getAccumulatedFees: async (queryMethod: any = null): Promise<any> => {
+    getAccumulatedFees: async (
+      useNativeQueryMethod: boolean = true
+    ): Promise<any> => {
       try {
         const isMainnet: boolean | null =
           this.params.useMainnet == null ? true : this.params.useMainnet;
 
+        // this params determine if we use the native query method, which
+        // would be http/https when running on nodejs or fetch if running
+        // on the browser or if we directly use the query method included
+        // in the web3js library. the default is not to use the method
+        // included in the web3js library.
+        const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
         const response = await this.callbackLib.BTSReadonlyQuery(
           "getAccumulatedFees",
           "bsc",
@@ -428,11 +464,19 @@ class IconBridgeSDKBSC {
      * Returns name of native coin.
      * @return string name of native coin.
      */
-    getNativeCoinName: async (queryMethod: any = null): Promise<any> => {
+    getNativeCoinName: async (
+      useNativeQueryMethod: boolean = true
+    ): Promise<any> => {
       try {
         const isMainnet: boolean | null =
           this.params.useMainnet == null ? true : this.params.useMainnet;
 
+        // this params determine if we use the native query method, which
+        // would be http/https when running on nodejs or fetch if running
+        // on the browser or if we directly use the query method included
+        // in the web3js library. the default is not to use the method
+        // included in the web3js library.
+        const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
         const response = await this.callbackLib.BTSReadonlyQuery(
           "getNativeCoinName",
           "bsc",
@@ -466,11 +510,17 @@ class IconBridgeSDKBSC {
      * Returns list of current owners.
      * @return Array of address of current owners.
      */
-    getOwners: async (queryMethod: any = null): Promise<any> => {
+    getOwners: async (useNativeQueryMethod: boolean = true): Promise<any> => {
       try {
         const isMainnet: boolean | null =
           this.params.useMainnet == null ? true : this.params.useMainnet;
 
+        // this params determine if we use the native query method, which
+        // would be http/https when running on nodejs or fetch if running
+        // on the browser or if we directly use the query method included
+        // in the web3js library. the default is not to use the method
+        // included in the web3js library.
+        const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
         const response = await this.callbackLib.BTSReadonlyQuery(
           "getOwners",
           "bsc",
@@ -504,11 +554,20 @@ class IconBridgeSDKBSC {
      * Checks is a especified address has owner role.
      * @param _owner - address to check.
      */
-    isOwner: async (_owner: string, queryMethod: any = null): Promise<any> => {
+    isOwner: async (
+      _owner: string,
+      useNativeQueryMethod: boolean = true
+    ): Promise<any> => {
       try {
         const isMainnet: boolean | null =
           this.params.useMainnet == null ? true : this.params.useMainnet;
 
+        // this params determine if we use the native query method, which
+        // would be http/https when running on nodejs or fetch if running
+        // on the browser or if we directly use the query method included
+        // in the web3js library. the default is not to use the method
+        // included in the web3js library.
+        const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
         const response = await this.callbackLib.BTSReadonlyQuery(
           "isOwner",
           "bsc",
@@ -545,12 +604,18 @@ class IconBridgeSDKBSC {
      */
     isValidCoin: async (
       _coinName: string,
-      queryMethod: any = null
+      useNativeQueryMethod: boolean = true
     ): Promise<any> => {
       try {
         const isMainnet: boolean | null =
           this.params.useMainnet == null ? true : this.params.useMainnet;
 
+        // this params determine if we use the native query method, which
+        // would be http/https when running on nodejs or fetch if running
+        // on the browser or if we directly use the query method included
+        // in the web3js library. the default is not to use the method
+        // included in the web3js library.
+        const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
         const response = await this.callbackLib.BTSReadonlyQuery(
           "isValidCoin",
           "bsc",
