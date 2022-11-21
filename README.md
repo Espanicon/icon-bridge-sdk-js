@@ -1,6 +1,5 @@
 # IconBridge SDK for Javascript
  ** UNDER DEVELOPMENT **
-
 WRITE INTRODUCTION AND HIGH LEVEL DESCRIPTION OF THE SDK
 
 ## Table of Contents
@@ -9,7 +8,7 @@ WRITE INTRODUCTION AND HIGH LEVEL DESCRIPTION OF THE SDK
 
 DESCRIBE INSTALLATION PROCESS
 
-## How to use
+## HOW TO USE
 
 DESCRIBE HOW TO USE
 
@@ -18,11 +17,11 @@ DESCRIBE HOW TO USE
 |Module | Description|
 |-------|------------|
 |IconBridge | Class object that provides the API to use the ICON Bridge |
-|IconBridge.[CHAIN] | Methods for interacting with the ICON Bridge on each supported chain |
+|IconBridge[CHAIN] | Methods for interacting with the ICON Bridge on each supported chain |
 |IconBridge.sdkUtils | Utility functions for the SDK |
 
 ### IconBridgeSDK
-IconBridgeSDK is a class that provides the methods to communicate with the [Icon Bridge](https://github.com/icon-project/icon-bridge).
+IconBridgeSDK is a class that provides the methods to communicate with the [Icon Bridge](https://github.com/icon-project/icon-bridge). 
 
 #### Constructor
 Creates an instance of the SDK.
@@ -75,9 +74,35 @@ const SDK = new IconBridgeSDK({
 
 Methods for interacting with the ICON Bridge originating from the ICON Chain.
 
-#### IconBridge.icon.methods
+### IconBridge.icon.methods
 
-* `balanceOf`
+#### `balanceOf(_owner, _coinName)`
+Gets the balance of a defined coin (`_coinName`) for a defined wallet (`_owner`).
+##### Parameters
+| Parameter | Type | Description|
+|--------------|------|----------|
+|_owner|address|Wallet address to check|
+|_coinName|string|Name of coin to check|
+
+##### Returns
+```js
+Result {
+  '0': '10000000000000000000',
+  '1': '0',
+  '2': '0',
+  '3': '9998500000000000000000',
+  __length__: 4,
+  _usableBalance: '10000000000000000000',
+  _lockedBalance: '0',
+  _refundableBalance: '0',
+  _userBalance: '9998500000000000000000'
+}
+```
+##### Example
+```js
+const balance = await SDK.icon.methods.balanceOf("hx0000000000000000000000000000000000000000", "btp-0x2.icon-ICX")
+```
+
 * `name`
 * `feeRatio`
 * `getTokenLimit`
@@ -114,7 +139,7 @@ Methods for interacting with the ICON Bridge originating from the ICON Chain.
 
 Methods for interacting with the ICON Bridge originating from the BSC Chain.
 
-#### IconBridge.bsc.methods
+### IconBridge.bsc.methods
 * `balanceOf`
 * `balanceOfBatch`
 * `coinId`
