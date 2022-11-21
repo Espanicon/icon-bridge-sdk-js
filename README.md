@@ -1,5 +1,6 @@
 # IconBridge SDK for Javascript
  ** UNDER DEVELOPMENT **
+
 WRITE INTRODUCTION AND HIGH LEVEL DESCRIPTION OF THE SDK
 
 ## Table of Contents
@@ -8,7 +9,7 @@ WRITE INTRODUCTION AND HIGH LEVEL DESCRIPTION OF THE SDK
 
 DESCRIBE INSTALLATION PROCESS
 
-## HOW TO USE
+## How to use
 
 DESCRIBE HOW TO USE
 
@@ -17,11 +18,11 @@ DESCRIBE HOW TO USE
 |Module | Description|
 |-------|------------|
 |IconBridge | Class object that provides the API to use the ICON Bridge |
-|IconBridge[CHAIN] | Methods for interacting with the ICON Bridge on each supported chain |
+|IconBridge.[CHAIN] | Methods for interacting with the ICON Bridge on each supported chain |
 |IconBridge.sdkUtils | Utility functions for the SDK |
 
 ### IconBridgeSDK
-IconBridgeSDK is a class that provides the methods to communicate with the [Icon Bridge](https://github.com/icon-project/icon-bridge). 
+IconBridgeSDK is a class that provides the methods to communicate with the [Icon Bridge](https://github.com/icon-project/icon-bridge).
 
 #### Constructor
 Creates an instance of the SDK.
