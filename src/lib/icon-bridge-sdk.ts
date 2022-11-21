@@ -37,7 +37,7 @@ class IconBridgeSDK {
   sdkUtils: any = utils;
   params = utils.defaultSDKParams;
   bscWeb3: any;
-  // bsc: any;
+  #bscWeb3Private: any;
 
   /**
    * Configuration object for the initialization of the library
@@ -48,7 +48,24 @@ class IconBridgeSDK {
    */
   constructor(inputParams: InputParams = defaultParams) {
     this.params = this.sdkUtils.getSDKParams(inputParams);
-    this.bscWeb3 = new Web3(this.params.bscProvider.hostname);
+    this.#bscWeb3Private = new Web3(this.params.bscProvider.hostname);
+    this.bscWeb3 = {
+      eth: {
+        Contract: this.#bscWeb3Private.eth.Contract,
+        accounts: this.#bscWeb3Private.eth.accounts,
+        abi: this.#bscWeb3Private.eth.abi,
+        getBalance: this.#bscWeb3Private.eth.getBalance,
+        getTransaction: this.#bscWeb3Private.eth.getTransaction,
+        sendSignedTransaction: this.#bscWeb3Private.eth.sendSignedTransaction,
+        signTransaction: this.#bscWeb3Private.eth.signTransaction,
+        sendTransaction: this.#bscWeb3Private.eth.sendTransaction,
+        sign: this.#bscWeb3Private.eth.sign,
+        call: this.#bscWeb3Private.eth.call
+      },
+      utils: {
+        fromWei: this.#bscWeb3Private.utils.fromWei
+      }
+    };
   }
 
   // ######################################################################

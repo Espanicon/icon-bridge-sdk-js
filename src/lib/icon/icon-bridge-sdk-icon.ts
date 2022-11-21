@@ -21,20 +21,22 @@ type InputParams = {
  * Class that provides the API for interacting with the ICON Bridge
  */
 class IconBridgeSDKIcon {
-  params: any;
-  sdkUtils: any;
-  iconWeb3: any;
+  #params: any;
+  #sdkUtils: any;
+  #iconWeb3: any;
+  queryMethod: any;
 
   /**
    * Constructor
    */
   constructor(params: InputParams, sdkUtils: any) {
-    this.params = params;
-    this.sdkUtils = sdkUtils;
-    this.iconWeb3 = new EspaniconSDK(
-      this.params.iconProvider.hostname,
-      this.params.iconProvider.nid
+    this.#params = params;
+    this.#sdkUtils = sdkUtils;
+    this.#iconWeb3 = new EspaniconSDK(
+      this.#params.iconProvider.hostname,
+      this.#params.iconProvider.nid
     );
+    this.queryMethod = this.#iconWeb3.queryMethod;
   }
 
   // ######################################################################
@@ -431,12 +433,12 @@ class IconBridgeSDKIcon {
   ) => {
     // get BTS Contract
     const isMainnet: boolean | null =
-      this.params.useMainnet == null ? true : this.params.useMainnet;
+      this.#params.useMainnet == null ? true : this.#params.useMainnet;
 
-    const btsContract = this.sdkUtils.getContractOf("bts", "icon", isMainnet);
+    const btsContract = this.#sdkUtils.getContractOf("bts", "icon", isMainnet);
 
     // make RPC JSON object
-    const JSONRPCObject = this.iconWeb3.makeICXCallRequestObj(
+    const JSONRPCObject = this.#iconWeb3.makeICXCallRequestObj(
       methodName,
       methodParams,
       null,
@@ -444,10 +446,10 @@ class IconBridgeSDKIcon {
     );
 
     // make query
-    const request = await this.iconWeb3.queryMethod(
-      this.iconWeb3.scores.apiRoutes.v3,
+    const request = await this.#iconWeb3.queryMethod(
+      this.#iconWeb3.scores.apiRoutes.v3,
       JSONRPCObject,
-      this.iconWeb3.apiNode
+      this.#iconWeb3.apiNode
     );
 
     return request;

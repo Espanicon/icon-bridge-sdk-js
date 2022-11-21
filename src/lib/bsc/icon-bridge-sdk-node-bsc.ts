@@ -21,10 +21,10 @@ type InputParams = {
  * Class that provides the API for interacting with the ICON Bridge
  */
 class IconBridgeSDKNodeBSC extends baseBSCSDK {
-  params: any;
-  bscWeb3: any;
-  sdkUtils: any;
-  callbackLib: any;
+  #params: any;
+  #bscWeb3: any;
+  #sdkUtils: any;
+  #callbackLib: any;
   methods: any;
   queryMethod: any;
 
@@ -38,18 +38,18 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
     callbackLib: any,
     queryMethod: any
   ) {
-    super(params, bscWeb3, sdkUtils, callbackLib, queryMethod);
-    this.params = params;
-    this.bscWeb3 = bscWeb3;
-    this.sdkUtils = sdkUtils;
-    this.callbackLib = callbackLib;
+    super(params, bscWeb3, callbackLib, queryMethod);
+    this.#params = params;
+    this.#bscWeb3 = bscWeb3;
+    this.#sdkUtils = sdkUtils;
+    this.#callbackLib = callbackLib;
     this.methods = {
       ...this.superMethods,
-      ...this.localMethods
+      ...this.#localMethods
     };
   }
 
-  private localMethods = {
+  #localMethods = {
     /**
      * Allow users to deposit an amount of token into the
      * BTSCore contract.
@@ -73,18 +73,18 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       //
       try {
         const isMainnet: boolean | null =
-          this.params.useMainnet == null ? true : this.params.useMainnet;
+          this.#params.useMainnet == null ? true : this.#params.useMainnet;
 
-        const btpAddress = this.sdkUtils.getBTPAddress(
+        const btpAddress = this.#sdkUtils.getBTPAddress(
           targetAddress,
           targetChain,
           isMainnet
         );
 
-        const valueInWei = this.bscWeb3.utils.toWei(_value, "ether");
+        const valueInWei = this.#bscWeb3.utils.toWei(_value, "ether");
 
         // token transaction
-        const response = await this.signBTSCoreTx(
+        const response = await this.#signBTSCoreTx(
           from,
           pk,
           "transfer",
@@ -125,8 +125,8 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
     ): Promise<any> => {
       //
       try {
-        const tokenLabel = this.sdkUtils.labels.busd;
-        return await this.transferToken(
+        const tokenLabel = this.#sdkUtils.labels.busd;
+        return await this.#transferToken(
           targetAddress,
           targetChain,
           from,
@@ -164,8 +164,8 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
     ): Promise<any> => {
       //
       try {
-        const tokenLabel = this.sdkUtils.labels.usdt;
-        return await this.transferToken(
+        const tokenLabel = this.#sdkUtils.labels.usdt;
+        return await this.#transferToken(
           targetAddress,
           targetChain,
           from,
@@ -202,8 +202,8 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       gas: number | null = 2000000
     ): Promise<any> => {
       try {
-        const tokenLabel = this.sdkUtils.labels.usdc;
-        return await this.transferToken(
+        const tokenLabel = this.#sdkUtils.labels.usdc;
+        return await this.#transferToken(
           targetAddress,
           targetChain,
           from,
@@ -240,8 +240,8 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       gas: number | null = 2000000
     ): Promise<any> => {
       try {
-        const tokenLabel = this.sdkUtils.labels.btcb;
-        return await this.transferToken(
+        const tokenLabel = this.#sdkUtils.labels.btcb;
+        return await this.#transferToken(
           targetAddress,
           targetChain,
           from,
@@ -278,8 +278,8 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       gas: number | null = 2000000
     ): Promise<any> => {
       try {
-        const tokenLabel = this.sdkUtils.labels.eth;
-        return await this.transferToken(
+        const tokenLabel = this.#sdkUtils.labels.eth;
+        return await this.#transferToken(
           targetAddress,
           targetChain,
           from,
@@ -317,8 +317,8 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
     ): Promise<any> => {
       //
       try {
-        const tokenLabel = this.sdkUtils.labels.icx;
-        return await this.transferToken(
+        const tokenLabel = this.#sdkUtils.labels.icx;
+        return await this.#transferToken(
           targetAddress,
           targetChain,
           from,
@@ -355,8 +355,8 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       gas: number | null = 2000000
     ): Promise<any> => {
       try {
-        const tokenLabel = this.sdkUtils.labels.sicx;
-        return await this.transferToken(
+        const tokenLabel = this.#sdkUtils.labels.sicx;
+        return await this.#transferToken(
           targetAddress,
           targetChain,
           from,
@@ -393,8 +393,8 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       gas: number | null = 2000000
     ): Promise<any> => {
       try {
-        const tokenLabel = this.sdkUtils.labels.bnusd;
-        return await this.transferToken(
+        const tokenLabel = this.#sdkUtils.labels.bnusd;
+        return await this.#transferToken(
           targetAddress,
           targetChain,
           from,
@@ -437,7 +437,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       gas: number | null = 2000000
     ): Promise<any> => {
       try {
-        return await this.approveAndTransfer(
+        return await this.#approveAndTransfer(
           targetAddress,
           targetChain,
           from,
@@ -451,7 +451,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       } catch (err) {
         const errorResult = new Exception(
           err,
-          `Error running approveAndTransfer(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\npk: ${pk}\n_coinName: ${_coinName}\n_value: ${_value}\ntokenContractAddress: ${tokenContractAddress}\ntokenContractAbi: ${tokenContractAbi}\n`
+          `Error running #approveAndTransfer(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\npk: ${pk}\n_coinName: ${_coinName}\n_value: ${_value}\ntokenContractAddress: ${tokenContractAddress}\ntokenContractAbi: ${tokenContractAbi}\n`
         );
         return { error: errorResult.toString() };
       }
@@ -491,14 +491,14 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
     ): Promise<any> => {
       try {
         const isMainnet: boolean | null =
-          this.params.useMainnet == null ? true : this.params.useMainnet;
+          this.#params.useMainnet == null ? true : this.#params.useMainnet;
 
-        const btpAddress = this.sdkUtils.getBTPAddress(
+        const btpAddress = this.#sdkUtils.getBTPAddress(
           targetAddress,
           targetChain,
           isMainnet
         );
-        return await this.signBTSCoreTx(
+        return await this.#signBTSCoreTx(
           from,
           pk,
           "transferNativeCoin",
@@ -533,7 +533,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       gas: number | null = null
     ): Promise<any> => {
       try {
-        return await this.signBTSCoreTx(
+        return await this.#signBTSCoreTx(
           from,
           pk,
           "addOwner",
@@ -567,7 +567,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       gas: number | null = null
     ): Promise<any> => {
       try {
-        return await this.signBTSCoreTx(
+        return await this.#signBTSCoreTx(
           from,
           pk,
           "reclaim",
@@ -610,7 +610,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       gas: number | null = null
     ): Promise<any> => {
       try {
-        return await this.signBTSCoreTx(
+        return await this.#signBTSCoreTx(
           from,
           pk,
           "register",
@@ -646,7 +646,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       gas: number | null = null
     ): Promise<any> => {
       try {
-        return await this.signBTSCoreTx(
+        return await this.#signBTSCoreTx(
           from,
           pk,
           "removeOwner",
@@ -681,7 +681,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       gas: number | null = null
     ): Promise<any> => {
       try {
-        return await this.signBTSCoreTx(
+        return await this.#signBTSCoreTx(
           from,
           pk,
           "setFeeRatio",
@@ -714,7 +714,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       gas: number | null = null
     ): Promise<any> => {
       try {
-        return await this.signBTSCoreTx(
+        return await this.#signBTSCoreTx(
           from,
           pk,
           "updateBTSPeriphery",
@@ -784,7 +784,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
     //   gas: number | null = null
     // ): Promise<any> => {
     //   try {
-    //     return await this.signBTSCoreTx(
+    //     return await this.#signBTSCoreTx(
     //       from,
     //       pk,
     //       "initialize",
@@ -813,7 +813,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
    * @param tokenContractAbi - Contract abi of the token to approve.
    * @param gas - transfer fee amount.
    */
-  private approveBTSCoreForTransfer = async (
+  #approveBTSCoreForTransfer = async (
     from: string,
     pk: string,
     amount: string,
@@ -823,14 +823,14 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
   ) => {
     //
     const isMainnet: boolean | null =
-      this.params.useMainnet == null ? true : this.params.useMainnet;
+      this.#params.useMainnet == null ? true : this.#params.useMainnet;
 
-    const btsCoreAddress = this.callbackLib.getBTSCoreProxyContractAddress(
+    const btsCoreAddress = this.#callbackLib.getBTSCoreProxyContractAddress(
       "bsc",
       isMainnet
     );
 
-    return await this.callbackLib.approveTransfer(
+    return await this.#callbackLib.approveTransfer(
       from,
       pk,
       btsCoreAddress,
@@ -838,7 +838,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       tokenContractAddress,
       tokenContractAbi,
       "bsc",
-      this.bscWeb3,
+      this.#bscWeb3,
       gas
     );
   };
@@ -851,7 +851,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
    * @param amount -
    * @param gas - transfer fee amount.
    */
-  private signBTSCoreTx = async (
+  #signBTSCoreTx = async (
     from: string,
     pk: string,
     methodName: string,
@@ -860,23 +860,23 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
     ...rest: any[]
   ): Promise<string | null> => {
     if (rest.length === 0) {
-      return await this.callbackLib.signBTSCoreTx(
+      return await this.#callbackLib.signBTSCoreTx(
         from,
         pk,
         methodName,
         amount,
         "bsc",
-        this.bscWeb3,
+        this.#bscWeb3,
         gas
       );
     } else {
-      return await this.callbackLib.signBTSCoreTx(
+      return await this.#callbackLib.signBTSCoreTx(
         from,
         pk,
         methodName,
         amount,
         "bsc",
-        this.bscWeb3,
+        this.#bscWeb3,
         gas,
         ...rest
       );
@@ -894,7 +894,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
    * @param tokenLabel - token to transfer.
    * @param gas - transfer fee amount.
    */
-  private transferToken = async (
+  #transferToken = async (
     targetAddress: string,
     targetChain: string = "icon",
     from: string,
@@ -906,25 +906,25 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
     //
     let isMainnet = null;
     let coinName = null;
-    if (this.params.useMainnet === false) {
+    if (this.#params.useMainnet === false) {
       isMainnet = false;
-      coinName = this.sdkUtils.tokenNames.bsc.testnet[tokenLabel];
+      coinName = this.#sdkUtils.tokenNames.bsc.testnet[tokenLabel];
     } else if (
-      this.params.useMainnet === true ||
-      this.params.useMainnet == null
+      this.#params.useMainnet === true ||
+      this.#params.useMainnet == null
     ) {
       isMainnet = true;
-      coinName = this.sdkUtils.tokenNames.bsc.mainnet[tokenLabel];
+      coinName = this.#sdkUtils.tokenNames.bsc.mainnet[tokenLabel];
     }
-    const abi = this.sdkUtils.genericAbi;
-    const tokenContractAddress = this.callbackLib.getContractAddressLocally(
+    const abi = this.#sdkUtils.genericAbi;
+    const tokenContractAddress = this.#callbackLib.getContractAddressLocally(
       tokenLabel,
       "bsc",
       isMainnet,
       false
     );
 
-    const request = await this.approveAndTransfer(
+    const request = await this.#approveAndTransfer(
       targetAddress,
       targetChain,
       from,
@@ -952,7 +952,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
    * @param tokenContractAbi - contract abi of the token to be sent.
    * @param gas - transfer fee amount.
    */
-  private approveAndTransfer = async (
+  #approveAndTransfer = async (
     targetAddress: string,
     targetChain: string = "icon",
     from: string,
@@ -964,10 +964,10 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
     gas: number | null = 2000000
   ): Promise<any> => {
     const isMainnet: boolean | null =
-      this.params.useMainnet == null ? true : this.params.useMainnet;
+      this.#params.useMainnet == null ? true : this.#params.useMainnet;
 
     // first approve the contract to make transfer
-    const response = await this.approveBTSCoreForTransfer(
+    const response = await this.#approveBTSCoreForTransfer(
       from,
       pk,
       _value,
@@ -976,16 +976,16 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       gas
     );
 
-    const btpAddress = this.sdkUtils.getBTPAddress(
+    const btpAddress = this.#sdkUtils.getBTPAddress(
       targetAddress,
       targetChain,
       isMainnet
     );
 
-    const valueInWei = this.bscWeb3.utils.toWei(_value, "ether");
+    const valueInWei = this.#bscWeb3.utils.toWei(_value, "ether");
 
     // token transaction after approval
-    const response2 = await this.signBTSCoreTx(
+    const response2 = await this.#signBTSCoreTx(
       from,
       pk,
       "transfer",

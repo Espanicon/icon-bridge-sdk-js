@@ -79,7 +79,13 @@ function getSDKParams(inputParams, defaultParams = defaultSDKParams) {
         if (inputParams.iconProvider != null &&
             typeof inputParams.iconProvider === "object") {
             if (typeof inputParams.iconProvider.hostname === "string") {
-                result.iconProvider.hostname = inputParams.iconProvider.hostname;
+                const parsedUrl = getFormattedHostname(inputParams.iconProvider.hostname);
+                if (parsedUrl != null) {
+                    result.iconProvider.hostname = inputParams.iconProvider.hostname;
+                }
+                else {
+                    throw new Error(`Format error on provided Url. URL = ${parsedUrl}`);
+                }
             }
             if (inputParams.iconProvider.nid != null) {
                 result.iconProvider.nid = inputParams.iconProvider.nid;
@@ -98,12 +104,14 @@ function getSDKParams(inputParams, defaultParams = defaultSDKParams) {
     return result;
 }
 function getFormattedHostname(hostname) {
-    let temp = hostname;
-    if (temp[temp.length - 1] === "/") {
-        temp = temp.slice(0, temp.length - 2);
+    const inputInLowercase = hostname;
+    const regexResult = inputInLowercase.match(urlRegex);
+    if (regexResult != null) {
+        if (regexResult[3] != null) {
+            return regexResult[3];
+        }
     }
-    const tempArray = temp.split("/");
-    return tempArray[tempArray.length - 1];
+    return null;
 }
 function getContractOfLabelFromLocalData(label, chain, isMainnet, getLogicContract = false) {
     return lib_1.default.getContractOfLabelFromLocalData(label, chain, isMainnet, getLogicContract);

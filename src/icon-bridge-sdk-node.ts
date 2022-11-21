@@ -33,7 +33,7 @@ class IconBridgeSDKNode extends IconBridgeSDK {
       this.bscWeb3,
       this.sdkUtils,
       this.lib,
-      this.icon.iconWeb3.queryMethod
+      this.icon.queryMethod
     );
   }
 }

@@ -1,5 +1,5 @@
 # IconBridge SDK for Javascript
-
+ ** UNDER DEVELOPMENT **
 WRITE INTRODUCTION AND HIGH LEVEL DESCRIPTION OF THE SDK
 
 ## Table of Contents
@@ -20,73 +20,127 @@ DESCRIBE HOW TO USE
 |IconBridge[CHAIN] | Methods for interacting with the ICON Bridge on each supported chain |
 |IconBridge.sdkUtils | Utility functions for the SDK |
 
-### IconBridge
+### IconBridgeSDK
+IconBridgeSDK is a class that provides the methods to communicate with the [Icon Bridge](https://github.com/icon-project/icon-bridge). 
 
-### IconBridge[CHAIN]
+#### Constructor
+Creates an instance of the SDK.
+```js
+new IconBridgeSDK({
+  useMainnet: boolean,
+  iconProvider: {
+    hostname: string,
+    nid: number
+  },
+  bscProvider: {
+    hostname: string,
+    nid: number | null
+  }
+})
+```
+#### Parameter
+| Parameter | Type | Description|
+|--------------|------|----------|
+| useMainnet|boolean|Use on mainnet or testnet for all chains in the bridge|
+|iconProvider.hostname|string|URL of the ICON RPC Node|
+|iconProvider.nid|number OR null| Network identifier of the ICON RPC Node|
+bscProvider.hostname|string|URL of the BSC RPC Node|
+bscProvider.nid|number OR null|Network indentifier of the BSC RPC Node|
 
-#### IconBridge[CHAIN].bts
+#### Example
+```js
+// It can be instanciated without params and default values will be used. These values default to mainnet.
+const SDK = new IconBridgeSDK()
 
-Methods for interacting with the BTS (BTP Token Service) contract available on all chains.
+// Params can be defined to use default params for mainnet and testnet
+const SDK = new IconBridgeSDK({
+  useMainnet: true
+})
+const SDK = new IconBridgeSDK({
+  useMainnet: false
+})
 
-* balanceOf
-* balanceOfBatch
-* coinId
-* coinNames
-* feeRatio
-* getAccumulatedFees
-* getNativeCoinName
-* getOwners
-* isOwner
-* isValidCoin
-* addOwner
-* handleResponseService
-* initialize
-* mint
-* reclaim
-* refund
-* register
-* removeOwner
-* setFeeRatio
-* transfer
-* transferBatch
-* transferFees
-* transferNativeCoin
+// you can define the RPC Nodes to use
+const SDK = new IconBridgeSDK({
+  iconProvider: {
+    hostname: 'lisbon.net.solidwallet.io'
+  },
+  bscProvider: {
+    hostname: 'https://data-seed-prebsc-1-s1.binance.org:8545'
+  }
+})
+```
+### IconBridge.icon
 
-##### iconBridge['icon'].bts
+Methods for interacting with the ICON Bridge originating from the ICON Chain.
 
-Methods for interacting with the BTS (BTP Token Service) contract available on the ICON chain.
+#### IconBridge.icon.methods
 
-* setTokenLimit
-* getTokenLimit
-* getTokenLimitTxn
-* getSn
-* addBlacklistAddress
-* removeBlacklistAddress
-* isUserBlackListed
-* getBlackListedUsers
-* blackListedUsersCount
-* getRegisteredTokensCount
-* tokenLimitStatus
-* tokenFallback
-* getTransaction
-* handleBTPMessage
-* handleBTPError
-* handleFeeGathering
-* addRestrictions
-* disableRestrictions
-* isRestrictionEnabled
+* `balanceOf`
+* `name`
+* `feeRatio`
+* `getTokenLimit`
+* `getTokenLimitTxn`
+* `getSn`
+* `isUserBlackListed`
+* `getBlackListedUsers`
+* `getRegisteredTokensCount`
+* `tokenLimitStatus`
+* `coinId`
+* `coinNames`
+* `balanceOfBatch`
+* `getAccumulatedFees`
+* `blackListedUsersCount`
+* `getTransaction`
+* `getOwners`
+* `isOwner`
+* `isRestrictionEnabled`
+* `transferNativeCoinName`
+* `reclaim`
+* `transfer`
+* `transferBatch`
+* `addOwner`
+* `removeOwner`
+* `register`
+* `setFeeRatio`
+* `removeBlacklistAddress`
+* `setTokenLimit`
+* `addBlacklistAddress`
+* `addRestriction`
+* `disableRestrictions`
 
-##### iconBridge['bsc'].bts
+### IconBridge.bsc
 
-Methods for interacting with the BTS (BTP Token Service) contract available on the BSC chain.
+Methods for interacting with the ICON Bridge originating from the BSC Chain.
 
-* updateBTSPeriphery
-
-#### IconBridge[CHAIN].bmc
-
-Methods for interacting with the BMC (BTP Message Center) contract.
+#### IconBridge.bsc.methods
+* `balanceOf`
+* `balanceOfBatch`
+* `coinId`
+* `coinNames`
+* `feeRatio`
+* `getAccumulatedFees`
+* `getNativeCoinName`
+* `getOwners`
+* `isOwner`
+* `isValidCoin`
+* `transfer`
+* `approve`
+* `approveAndTransfer`
+* `transferBatch`
+* `transferNativeCoin`
+* `addOwner`
+* `reclaim`
+* `removeOwner`
+* `setFeeRatio`
+* `updateBTSPeriphery`
 
 ### IconBridge.sdkUtils
+Miscellaneous utilities for the IconBridge SDK.
+* `networks`
+* `contracts`
+* `getBTPAddress`
+* `genericAbi`
 
 ## Troubleshooting
 ### When calling methods on the BSC chain I get an error with `Invalid JSON RPC response: {"size": 0, "timeout": 0}`
@@ -119,4 +173,4 @@ Result:
   error: 'Error running approveAndTransfer(). Params:\n' + 'targetAddress: {ADDRESS} \n' + 'targetChain: icon\n' + 'from: {ADDRESS}\n' + 'pk: {PRIVATE_KEY}\n' + '_value: 0.05\n' + '.\n' + 'Returned error: insufficient funds for gas * price + value'
 }
 ```
-This error occurs when you dont have enough balance (native coin, in this case BNB) to pay for the transaction fee.
+This error occurs when you don't have enough balance (native coin, in this case BNB) to pay for the transaction fee.

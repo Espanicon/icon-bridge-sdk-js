@@ -8,10 +8,25 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, state, value, kind, f) {
+    if (kind === "m") throw new TypeError("Private method is not writable");
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
+    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
+};
+var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, state, kind, f) {
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
+    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
+};
+var _IconBridgeSDKIcon_params, _IconBridgeSDKIcon_sdkUtils, _IconBridgeSDKIcon_iconWeb3;
 const Exception = require("../../utils/exception");
 const EspaniconSDK = require("@espanicon/espanicon-sdk");
 class IconBridgeSDKIcon {
     constructor(params, sdkUtils) {
+        _IconBridgeSDKIcon_params.set(this, void 0);
+        _IconBridgeSDKIcon_sdkUtils.set(this, void 0);
+        _IconBridgeSDKIcon_iconWeb3.set(this, void 0);
         this.superMethods = {
             balanceOf: (_owner, _coinName) => __awaiter(this, void 0, void 0, function* () {
                 try {
@@ -235,16 +250,18 @@ class IconBridgeSDKIcon {
             })
         };
         this.makeReadonlyQuery = (methodName, methodParams = null) => __awaiter(this, void 0, void 0, function* () {
-            const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
-            const btsContract = this.sdkUtils.getContractOf("bts", "icon", isMainnet);
-            const JSONRPCObject = this.iconWeb3.makeICXCallRequestObj(methodName, methodParams, null, btsContract);
-            const request = yield this.iconWeb3.queryMethod(this.iconWeb3.scores.apiRoutes.v3, JSONRPCObject, this.iconWeb3.apiNode);
+            const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").useMainnet;
+            const btsContract = __classPrivateFieldGet(this, _IconBridgeSDKIcon_sdkUtils, "f").getContractOf("bts", "icon", isMainnet);
+            const JSONRPCObject = __classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f").makeICXCallRequestObj(methodName, methodParams, null, btsContract);
+            const request = yield __classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f").queryMethod(__classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f").scores.apiRoutes.v3, JSONRPCObject, __classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f").apiNode);
             return request;
         });
-        this.params = params;
-        this.sdkUtils = sdkUtils;
-        this.iconWeb3 = new EspaniconSDK(this.params.iconProvider.hostname, this.params.iconProvider.nid);
+        __classPrivateFieldSet(this, _IconBridgeSDKIcon_params, params, "f");
+        __classPrivateFieldSet(this, _IconBridgeSDKIcon_sdkUtils, sdkUtils, "f");
+        __classPrivateFieldSet(this, _IconBridgeSDKIcon_iconWeb3, new EspaniconSDK(__classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").iconProvider.hostname, __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").iconProvider.nid), "f");
+        this.queryMethod = __classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f").queryMethod;
     }
 }
+_IconBridgeSDKIcon_params = new WeakMap(), _IconBridgeSDKIcon_sdkUtils = new WeakMap(), _IconBridgeSDKIcon_iconWeb3 = new WeakMap();
 module.exports = IconBridgeSDKIcon;
 //# sourceMappingURL=icon-bridge-sdk-icon.js.map

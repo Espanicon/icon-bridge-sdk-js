@@ -8,6 +8,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, state, value, kind, f) {
+    if (kind === "m") throw new TypeError("Private method is not writable");
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
+    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
+};
+var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, state, kind, f) {
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
+    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
+};
+var _IconBridgeSDKNodeIcon_params, _IconBridgeSDKNodeIcon_sdkUtils, _IconBridgeSDKNodeIcon_iconHttpProvider, _IconBridgeSDKNodeIcon_iconService, _IconBridgeSDKNodeIcon_localMethods, _IconBridgeSDKNodeIcon_makeTxRequest;
 const Exception = require("../../utils/exception");
 const baseICONSDK = require("./icon-bridge-sdk-icon");
 const IconService = require("icon-sdk-js");
@@ -16,13 +28,17 @@ const { CallTransactionBuilder } = IconBuilder;
 class IconBridgeSDKNodeIcon extends baseICONSDK {
     constructor(params, sdkUtils) {
         super(params, sdkUtils);
-        this.localMethods = {
+        _IconBridgeSDKNodeIcon_params.set(this, void 0);
+        _IconBridgeSDKNodeIcon_sdkUtils.set(this, void 0);
+        _IconBridgeSDKNodeIcon_iconHttpProvider.set(this, void 0);
+        _IconBridgeSDKNodeIcon_iconService.set(this, void 0);
+        _IconBridgeSDKNodeIcon_localMethods.set(this, {
             transferNativeCoin: (targetAddress, targetChain, from, pk, amount, stepLimit = null) => __awaiter(this, void 0, void 0, function* () {
                 try {
-                    const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
-                    const btpAddress = this.sdkUtils.getBTPAddress(targetAddress, targetChain, isMainnet);
-                    const btsContract = this.sdkUtils.getContractOfLabelFromLocalData("bts", "icon", isMainnet, false);
-                    const txRequest = yield this.makeTxRequest(from, btsContract, pk, "transferNativeCoin", { _to: btpAddress }, amount, stepLimit);
+                    const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet;
+                    const btpAddress = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_sdkUtils, "f").getBTPAddress(targetAddress, targetChain, isMainnet);
+                    const btsContract = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_sdkUtils, "f").getContractOfLabelFromLocalData("bts", "icon", isMainnet, false);
+                    const txRequest = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_makeTxRequest, "f").call(this, from, btsContract, pk, "transferNativeCoin", { _to: btpAddress }, amount, stepLimit);
                     return txRequest;
                 }
                 catch (err) {
@@ -32,9 +48,9 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
             }),
             reclaim: (_coinName, _value, from, pk, stepLimit = null) => __awaiter(this, void 0, void 0, function* () {
                 try {
-                    const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
-                    const btsContract = this.sdkUtils.getContractOfLabelFromLocalData("bts", "icon", isMainnet, false);
-                    const txRequest = yield this.makeTxRequest(from, btsContract, pk, "transferNativeCoin", { _coinName: _coinName, _value: _value }, 0, stepLimit);
+                    const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet;
+                    const btsContract = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_sdkUtils, "f").getContractOfLabelFromLocalData("bts", "icon", isMainnet, false);
+                    const txRequest = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_makeTxRequest, "f").call(this, from, btsContract, pk, "transferNativeCoin", { _coinName: _coinName, _value: _value }, 0, stepLimit);
                     return txRequest;
                 }
                 catch (err) {
@@ -66,9 +82,9 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
             }),
             addOwner: (_addr, from, pk, stepLimit = null) => __awaiter(this, void 0, void 0, function* () {
                 try {
-                    const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
-                    const btsContract = this.sdkUtils.getContractOfLabelFromLocalData("bts", "icon", isMainnet, false);
-                    const txRequest = yield this.makeTxRequest(from, btsContract, pk, "addOwner", { _addr: _addr }, 0, stepLimit);
+                    const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet;
+                    const btsContract = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_sdkUtils, "f").getContractOfLabelFromLocalData("bts", "icon", isMainnet, false);
+                    const txRequest = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_makeTxRequest, "f").call(this, from, btsContract, pk, "addOwner", { _addr: _addr }, 0, stepLimit);
                     return txRequest;
                 }
                 catch (err) {
@@ -78,9 +94,9 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
             }),
             removeOwner: (_addr, from, pk, stepLimit = null) => __awaiter(this, void 0, void 0, function* () {
                 try {
-                    const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
-                    const btsContract = this.sdkUtils.getContractOfLabelFromLocalData("bts", "icon", isMainnet, false);
-                    const txRequest = yield this.makeTxRequest(from, btsContract, pk, "removeOwner", { _addr: _addr }, 0, stepLimit);
+                    const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet;
+                    const btsContract = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_sdkUtils, "f").getContractOfLabelFromLocalData("bts", "icon", isMainnet, false);
+                    const txRequest = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_makeTxRequest, "f").call(this, from, btsContract, pk, "removeOwner", { _addr: _addr }, 0, stepLimit);
                     return txRequest;
                 }
                 catch (err) {
@@ -90,9 +106,9 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
             }),
             register: (_name, _symbol, _decimals, _feeNumerator, _fixedFee, _addr, from, pk, stepLimit = null) => __awaiter(this, void 0, void 0, function* () {
                 try {
-                    const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
-                    const btsContract = this.sdkUtils.getContractOfLabelFromLocalData("bts", "icon", isMainnet, false);
-                    const txRequest = yield this.makeTxRequest(from, btsContract, pk, "register", {
+                    const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet;
+                    const btsContract = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_sdkUtils, "f").getContractOfLabelFromLocalData("bts", "icon", isMainnet, false);
+                    const txRequest = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_makeTxRequest, "f").call(this, from, btsContract, pk, "register", {
                         _name: _name,
                         _symbol: _symbol,
                         _decimals: _decimals,
@@ -109,9 +125,9 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
             }),
             setFeeRatio: (_name, _feeNumerator, _fixedFee, from, pk, stepLimit = null) => __awaiter(this, void 0, void 0, function* () {
                 try {
-                    const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
-                    const btsContract = this.sdkUtils.getContractOfLabelFromLocalData("bts", "icon", isMainnet, false);
-                    const txRequest = yield this.makeTxRequest(from, btsContract, pk, "setFeeRatio", { _name: _name, _feeNumerator: _feeNumerator, _fixedFee: _fixedFee }, 0, stepLimit);
+                    const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet;
+                    const btsContract = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_sdkUtils, "f").getContractOfLabelFromLocalData("bts", "icon", isMainnet, false);
+                    const txRequest = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_makeTxRequest, "f").call(this, from, btsContract, pk, "setFeeRatio", { _name: _name, _feeNumerator: _feeNumerator, _fixedFee: _fixedFee }, 0, stepLimit);
                     return txRequest;
                 }
                 catch (err) {
@@ -121,9 +137,9 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
             }),
             removeBlacklistAddress: (_net, _addresses, from, pk, stepLimit = null) => __awaiter(this, void 0, void 0, function* () {
                 try {
-                    const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
-                    const btsContract = this.sdkUtils.getContractOfLabelFromLocalData("bts", "icon", isMainnet, false);
-                    const txRequest = yield this.makeTxRequest(from, btsContract, pk, "removeBlacklistAddress", { _net: _net, _addresses: _addresses }, 0, stepLimit);
+                    const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet;
+                    const btsContract = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_sdkUtils, "f").getContractOfLabelFromLocalData("bts", "icon", isMainnet, false);
+                    const txRequest = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_makeTxRequest, "f").call(this, from, btsContract, pk, "removeBlacklistAddress", { _net: _net, _addresses: _addresses }, 0, stepLimit);
                     return txRequest;
                 }
                 catch (err) {
@@ -133,9 +149,9 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
             }),
             setTokenLimit: (_coinNames, _tokenLimits, from, pk, stepLimit = null) => __awaiter(this, void 0, void 0, function* () {
                 try {
-                    const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
-                    const btsContract = this.sdkUtils.getContractOfLabelFromLocalData("bts", "icon", isMainnet, false);
-                    const txRequest = yield this.makeTxRequest(from, btsContract, pk, "setTokenLimit", { _coinNames: _coinNames, _tokenLimits: _tokenLimits }, 0, stepLimit);
+                    const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet;
+                    const btsContract = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_sdkUtils, "f").getContractOfLabelFromLocalData("bts", "icon", isMainnet, false);
+                    const txRequest = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_makeTxRequest, "f").call(this, from, btsContract, pk, "setTokenLimit", { _coinNames: _coinNames, _tokenLimits: _tokenLimits }, 0, stepLimit);
                     return txRequest;
                 }
                 catch (err) {
@@ -145,9 +161,9 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
             }),
             addBlacklistAddress: (_net, _addresses, from, pk, stepLimit = null) => __awaiter(this, void 0, void 0, function* () {
                 try {
-                    const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
-                    const btsContract = this.sdkUtils.getContractOfLabelFromLocalData("bts", "icon", isMainnet, false);
-                    const txRequest = yield this.makeTxRequest(from, btsContract, pk, "addBlacklistAddress", { _net: _net, _addresses: _addresses }, 0, stepLimit);
+                    const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet;
+                    const btsContract = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_sdkUtils, "f").getContractOfLabelFromLocalData("bts", "icon", isMainnet, false);
+                    const txRequest = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_makeTxRequest, "f").call(this, from, btsContract, pk, "addBlacklistAddress", { _net: _net, _addresses: _addresses }, 0, stepLimit);
                     return txRequest;
                 }
                 catch (err) {
@@ -157,9 +173,9 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
             }),
             addRestriction: (from, pk, stepLimit = null) => __awaiter(this, void 0, void 0, function* () {
                 try {
-                    const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
-                    const btsContract = this.sdkUtils.getContractOfLabelFromLocalData("bts", "icon", isMainnet, false);
-                    const txRequest = yield this.makeTxRequest(from, btsContract, pk, "addRestriction", null, 0, stepLimit);
+                    const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet;
+                    const btsContract = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_sdkUtils, "f").getContractOfLabelFromLocalData("bts", "icon", isMainnet, false);
+                    const txRequest = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_makeTxRequest, "f").call(this, from, btsContract, pk, "addRestriction", null, 0, stepLimit);
                     return txRequest;
                 }
                 catch (err) {
@@ -169,9 +185,9 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
             }),
             disableRestrictions: (from, pk, stepLimit = null) => __awaiter(this, void 0, void 0, function* () {
                 try {
-                    const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
-                    const btsContract = this.sdkUtils.getContractOfLabelFromLocalData("bts", "icon", isMainnet, false);
-                    const txRequest = yield this.makeTxRequest(from, btsContract, pk, "disableRestrictions", null, 0, stepLimit);
+                    const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet;
+                    const btsContract = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_sdkUtils, "f").getContractOfLabelFromLocalData("bts", "icon", isMainnet, false);
+                    const txRequest = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_makeTxRequest, "f").call(this, from, btsContract, pk, "disableRestrictions", null, 0, stepLimit);
                     return txRequest;
                 }
                 catch (err) {
@@ -179,8 +195,8 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
                     return { error: errorResult.toString() };
                 }
             })
-        };
-        this.makeTxRequest = (from, to, pk, method, params = null, value = 0, stepLimit = null, nid = this.params.iconProvider.nid) => __awaiter(this, void 0, void 0, function* () {
+        });
+        _IconBridgeSDKNodeIcon_makeTxRequest.set(this, (from, to, pk, method, params = null, value = 0, stepLimit = null, nid = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").iconProvider.nid) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const useStepLimit = stepLimit == null ? "8000000" : stepLimit;
                 const txObj = new CallTransactionBuilder()
@@ -188,7 +204,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
                     .to(to)
                     .stepLimit(IconConverter.toBigNumber(useStepLimit))
                     .nid(IconConverter.toBigNumber(nid))
-                    .nonce(IconConverter.toBigNumber(this.sdkUtils.getRandNonce()))
+                    .nonce(IconConverter.toBigNumber(__classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_sdkUtils, "f").getRandNonce()))
                     .version(IconConverter.toBigNumber("3"))
                     .timestamp(new Date().getTime() * 1000)
                     .method(method);
@@ -201,20 +217,21 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
                 const txObj2 = txObj.build();
                 const wallet = IconWallet.loadPrivateKey(pk);
                 const signedTx = new SignedTransaction(txObj2, wallet);
-                const txHash = yield this.iconService.sendTransaction(signedTx).execute();
+                const txHash = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_iconService, "f").sendTransaction(signedTx).execute();
                 return txHash;
             }
             catch (err) {
-                console.log("error running makeTxRequest");
+                console.log("error running #makeTxRequest");
                 console.log(err);
             }
-        });
-        this.params = params;
-        this.sdkUtils = sdkUtils;
-        this.iconHttpProvider = new HttpProvider("https://" + this.params.iconProvider.hostname + "/api/v3");
-        this.iconService = new IconService.default(this.iconHttpProvider);
-        this.methods = Object.assign(Object.assign({}, this.superMethods), this.localMethods);
+        }));
+        __classPrivateFieldSet(this, _IconBridgeSDKNodeIcon_params, params, "f");
+        __classPrivateFieldSet(this, _IconBridgeSDKNodeIcon_sdkUtils, sdkUtils, "f");
+        __classPrivateFieldSet(this, _IconBridgeSDKNodeIcon_iconHttpProvider, new HttpProvider("https://" + __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").iconProvider.hostname + "/api/v3"), "f");
+        __classPrivateFieldSet(this, _IconBridgeSDKNodeIcon_iconService, new IconService.default(__classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_iconHttpProvider, "f")), "f");
+        this.methods = Object.assign(Object.assign({}, this.superMethods), __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_localMethods, "f"));
     }
 }
+_IconBridgeSDKNodeIcon_params = new WeakMap(), _IconBridgeSDKNodeIcon_sdkUtils = new WeakMap(), _IconBridgeSDKNodeIcon_iconHttpProvider = new WeakMap(), _IconBridgeSDKNodeIcon_iconService = new WeakMap(), _IconBridgeSDKNodeIcon_localMethods = new WeakMap(), _IconBridgeSDKNodeIcon_makeTxRequest = new WeakMap();
 module.exports = IconBridgeSDKNodeIcon;
 //# sourceMappingURL=icon-bridge-sdk-node-icon.js.map

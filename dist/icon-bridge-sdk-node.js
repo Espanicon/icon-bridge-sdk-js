@@ -9,7 +9,7 @@ class IconBridgeSDKNode extends IconBridgeSDK {
     constructor(inputParams = defaultParams) {
         super(inputParams);
         this.icon = new iconNodeBridge(this.params, this.sdkUtils);
-        this.bsc = new bscNodeBridge(this.params, this.bscWeb3, this.sdkUtils, this.lib, this.icon.iconWeb3.queryMethod);
+        this.bsc = new bscNodeBridge(this.params, this.bscWeb3, this.sdkUtils, this.lib, this.icon.queryMethod);
     }
 }
 module.exports = IconBridgeSDKNode;

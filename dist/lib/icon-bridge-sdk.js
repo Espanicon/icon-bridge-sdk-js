@@ -8,9 +8,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, state, value, kind, f) {
+    if (kind === "m") throw new TypeError("Private method is not writable");
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
+    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
+};
+var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, state, kind, f) {
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
+    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
+var _IconBridgeSDK_bscWeb3Private;
 const utils_1 = __importDefault(require("../utils/utils"));
 const web3_1 = __importDefault(require("web3"));
 const defaultParams = {
@@ -20,6 +32,7 @@ class IconBridgeSDK {
     constructor(inputParams = defaultParams) {
         this.sdkUtils = utils_1.default;
         this.params = utils_1.default.defaultSDKParams;
+        _IconBridgeSDK_bscWeb3Private.set(this, void 0);
         this.lib = {
             BTSReadonlyQuery: (methodName, chain, web3Wrapper, queryMethod = null, ...rest) => __awaiter(this, void 0, void 0, function* () {
                 const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
@@ -141,8 +154,26 @@ class IconBridgeSDK {
             return receipt.transactionHash;
         });
         this.params = this.sdkUtils.getSDKParams(inputParams);
-        this.bscWeb3 = new web3_1.default(this.params.bscProvider.hostname);
+        __classPrivateFieldSet(this, _IconBridgeSDK_bscWeb3Private, new web3_1.default(this.params.bscProvider.hostname), "f");
+        this.bscWeb3 = {
+            eth: {
+                Contract: __classPrivateFieldGet(this, _IconBridgeSDK_bscWeb3Private, "f").eth.Contract,
+                accounts: __classPrivateFieldGet(this, _IconBridgeSDK_bscWeb3Private, "f").eth.accounts,
+                abi: __classPrivateFieldGet(this, _IconBridgeSDK_bscWeb3Private, "f").eth.abi,
+                getBalance: __classPrivateFieldGet(this, _IconBridgeSDK_bscWeb3Private, "f").eth.getBalance,
+                getTransaction: __classPrivateFieldGet(this, _IconBridgeSDK_bscWeb3Private, "f").eth.getTransaction,
+                sendSignedTransaction: __classPrivateFieldGet(this, _IconBridgeSDK_bscWeb3Private, "f").eth.sendSignedTransaction,
+                signTransaction: __classPrivateFieldGet(this, _IconBridgeSDK_bscWeb3Private, "f").eth.signTransaction,
+                sendTransaction: __classPrivateFieldGet(this, _IconBridgeSDK_bscWeb3Private, "f").eth.sendTransaction,
+                sign: __classPrivateFieldGet(this, _IconBridgeSDK_bscWeb3Private, "f").eth.sign,
+                call: __classPrivateFieldGet(this, _IconBridgeSDK_bscWeb3Private, "f").eth.call
+            },
+            utils: {
+                fromWei: __classPrivateFieldGet(this, _IconBridgeSDK_bscWeb3Private, "f").utils.fromWei
+            }
+        };
     }
 }
+_IconBridgeSDK_bscWeb3Private = new WeakMap();
 module.exports = IconBridgeSDK;
 //# sourceMappingURL=icon-bridge-sdk.js.map
