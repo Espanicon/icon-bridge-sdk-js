@@ -47,6 +47,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       ...this.superMethods,
       ...this.#localMethods
     };
+    this.queryMethod = queryMethod;
   }
 
   #localMethods = {
@@ -68,13 +69,20 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       pk: string,
       _value: string,
       _coinName: string,
-      gas: number | null = 2000000
+      gas: number | null = 2000000,
+      useNativeQueryMethod: boolean = true
     ): Promise<any> => {
       //
       try {
         const isMainnet: boolean | null =
           this.#params.useMainnet == null ? true : this.#params.useMainnet;
 
+        // this params determine if we use the native query method, which
+        // would be http/https when running on nodejs or fetch if running
+        // on the browser or if we directly use the query method included
+        // in the web3js library. the default is not to use the method
+        // included in the web3js library.
+        const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
         const btpAddress = this.#sdkUtils.getBTPAddress(
           targetAddress,
           targetChain,
@@ -90,6 +98,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
           "transfer",
           null,
           gas,
+          queryMethod,
           _coinName,
           valueInWei,
           btpAddress
@@ -487,12 +496,20 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       from: string,
       pk: string,
       amount: string,
-      gas: number | null = 2000000
+      gas: number | null = 2000000,
+      useNativeQueryMethod: boolean = true
     ): Promise<any> => {
       try {
         const isMainnet: boolean | null =
           this.#params.useMainnet == null ? true : this.#params.useMainnet;
 
+        // this params determine if we use the native query method, which
+        // would be http/https when running on nodejs or fetch if running
+        // on the browser or if we directly use the query method included
+        // in the web3js library. the default is not to use the method
+        // included in the web3js library.
+        const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
+        //
         const btpAddress = this.#sdkUtils.getBTPAddress(
           targetAddress,
           targetChain,
@@ -504,6 +521,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
           "transferNativeCoin",
           amount,
           gas,
+          queryMethod,
           btpAddress
         );
       } catch (err) {
@@ -530,15 +548,23 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       from: string,
       pk: string,
       _owner: string,
-      gas: number | null = null
+      gas: number | null = null,
+      useNativeQueryMethod: boolean = true
     ): Promise<any> => {
       try {
+        // this params determine if we use the native query method, which
+        // would be http/https when running on nodejs or fetch if running
+        // on the browser or if we directly use the query method included
+        // in the web3js library. the default is not to use the method
+        // included in the web3js library.
+        const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
         return await this.#signBTSCoreTx(
           from,
           pk,
           "addOwner",
           null,
           gas,
+          queryMethod,
           _owner
         );
       } catch (err) {
@@ -564,15 +590,23 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       pk: string,
       _coinName: string,
       _value: number,
-      gas: number | null = null
+      gas: number | null = null,
+      useNativeQueryMethod: boolean = true
     ): Promise<any> => {
       try {
+        // this params determine if we use the native query method, which
+        // would be http/https when running on nodejs or fetch if running
+        // on the browser or if we directly use the query method included
+        // in the web3js library. the default is not to use the method
+        // included in the web3js library.
+        const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
         return await this.#signBTSCoreTx(
           from,
           pk,
           "reclaim",
           null,
           gas,
+          queryMethod,
           _coinName,
           _value
         );
@@ -607,15 +641,23 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       _feeNumerator: number,
       _fixedFee: number,
       _addr: string,
-      gas: number | null = null
+      gas: number | null = null,
+      useNativeQueryMethod: boolean = true
     ): Promise<any> => {
       try {
+        // this params determine if we use the native query method, which
+        // would be http/https when running on nodejs or fetch if running
+        // on the browser or if we directly use the query method included
+        // in the web3js library. the default is not to use the method
+        // included in the web3js library.
+        const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
         return await this.#signBTSCoreTx(
           from,
           pk,
           "register",
           null,
           gas,
+          queryMethod,
           _name,
           _symbol,
           _decimals,
@@ -643,15 +685,23 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       from: string,
       pk: string,
       _owner: string,
-      gas: number | null = null
+      gas: number | null = null,
+      useNativeQueryMethod: boolean = true
     ): Promise<any> => {
       try {
+        // this params determine if we use the native query method, which
+        // would be http/https when running on nodejs or fetch if running
+        // on the browser or if we directly use the query method included
+        // in the web3js library. the default is not to use the method
+        // included in the web3js library.
+        const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
         return await this.#signBTSCoreTx(
           from,
           pk,
           "removeOwner",
           null,
           gas,
+          queryMethod,
           _owner
         );
       } catch (err) {
@@ -678,8 +728,15 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       _name: string,
       _feeNumerator: number,
       _fixedFee: number,
-      gas: number | null = null
+      gas: number | null = null,
+      useNativeQueryMethod: boolean = true
     ): Promise<any> => {
+      // this params determine if we use the native query method, which
+      // would be http/https when running on nodejs or fetch if running
+      // on the browser or if we directly use the query method included
+      // in the web3js library. the default is not to use the method
+      // included in the web3js library.
+      const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
       try {
         return await this.#signBTSCoreTx(
           from,
@@ -687,6 +744,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
           "setFeeRatio",
           null,
           gas,
+          queryMethod,
           _name,
           _feeNumerator,
           _fixedFee
@@ -711,15 +769,23 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       from: string,
       pk: string,
       _btsPeriphery: string,
-      gas: number | null = null
+      gas: number | null = null,
+      useNativeQueryMethod: boolean = true
     ): Promise<any> => {
       try {
+        // this params determine if we use the native query method, which
+        // would be http/https when running on nodejs or fetch if running
+        // on the browser or if we directly use the query method included
+        // in the web3js library. the default is not to use the method
+        // included in the web3js library.
+        const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
         return await this.#signBTSCoreTx(
           from,
           pk,
           "updateBTSPeriphery",
           null,
           gas,
+          queryMethod,
           _btsPeriphery
         );
       } catch (err) {
@@ -857,6 +923,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
     methodName: string,
     amount: null | string = null,
     gas: number | null = null,
+    queryMethod: null = null,
     ...rest: any[]
   ): Promise<string | null> => {
     if (rest.length === 0) {
@@ -867,7 +934,8 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
         amount,
         "bsc",
         this.#bscWeb3,
-        gas
+        gas,
+        queryMethod
       );
     } else {
       return await this.#callbackLib.signBTSCoreTx(
@@ -878,6 +946,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
         "bsc",
         this.#bscWeb3,
         gas,
+        queryMethod,
         ...rest
       );
     }
@@ -961,10 +1030,18 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
     _value: string,
     tokenContractAddress: string,
     tokenContractAbi: any[],
-    gas: number | null = 2000000
+    gas: number | null = 2000000,
+    useNativeQueryMethod: boolean = true
   ): Promise<any> => {
     const isMainnet: boolean | null =
       this.#params.useMainnet == null ? true : this.#params.useMainnet;
+
+    // this params determine if we use the native query method, which
+    // would be http/https when running on nodejs or fetch if running
+    // on the browser or if we directly use the query method included
+    // in the web3js library. the default is not to use the method
+    // included in the web3js library.
+    const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
 
     // first approve the contract to make transfer
     const response = await this.#approveBTSCoreForTransfer(
@@ -991,6 +1068,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       "transfer",
       null,
       gas,
+      queryMethod,
       _coinName,
       valueInWei,
       btpAddress

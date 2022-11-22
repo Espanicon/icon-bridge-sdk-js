@@ -316,20 +316,6 @@ async function iconBridgeSDKNodeTests() {
     "0x4DeD312eB774B9828665448C55Faa8AE15353E56",
     10000000
   );
-
-  // Test 18: iconBridgeSDK.icon.methods.transferNativeCoin(targetAddress, targetChain, from, pk, amount, stepLimit)
-  console.log(
-    "Test 18: iconBridgeSDK.icon.methods.transferNativeCoin(targetAddress, targetChain, from, pk, amount, stepLimit)"
-  );
-  await testUtils.runTestOnMethod(
-    lib.icon.methods.transferNativeCoin,
-    true,
-    wallets.bsc.a.pubK,
-    "bsc",
-    wallets.icon.a.pubK,
-    wallets.icon.a.privK,
-    "100"
-  );
 }
 
 export = iconBridgeSDKNodeTests;

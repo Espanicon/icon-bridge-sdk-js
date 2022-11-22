@@ -63,7 +63,8 @@ class IconBridgeSDK {
         call: this.#bscWeb3Private.eth.call
       },
       utils: {
-        fromWei: this.#bscWeb3Private.utils.fromWei
+        fromWei: this.#bscWeb3Private.utils.fromWei,
+        toWei: this.#bscWeb3Private.utils.toWei
       }
     };
   }
@@ -79,6 +80,7 @@ class IconBridgeSDK {
      * @param methodName - name of the smart contract method to call.
      * @param chain - chain to use.
      * @param web3Wrapper - object containing the web3 library to use.
+     * @param queryMethod - callback module that makes the http request.
      * @param rest - Array of params to pass to method call.
      */
     BTSReadonlyQuery: async (
@@ -152,6 +154,7 @@ class IconBridgeSDK {
       chain: string,
       web3Wrapper: any,
       gas: number | null = null,
+      queryMethod: any = null,
       ...rest: any[]
     ): Promise<string | null> => {
       // check if class object was created for mainnet or testnet
@@ -179,7 +182,8 @@ class IconBridgeSDK {
           contractObject,
           web3Wrapper,
           amount,
-          gas
+          gas,
+          queryMethod
         );
       } else {
         return await this.signTx(
@@ -191,6 +195,7 @@ class IconBridgeSDK {
           web3Wrapper,
           amount,
           gas,
+          queryMethod,
           ...rest
         );
       }
@@ -204,7 +209,6 @@ class IconBridgeSDK {
      * @param rawAmount - amount to send.
      * @param tokenContractAddress - contract address of the token to transfer
      * @param tokenContractAbi - abi of the token to transfer
-     * @param chain - chain to use.
      * @param web3Wrapper - object containing the web3 library to use.
      * @param gas - gas for tx fee
      */
@@ -215,9 +219,10 @@ class IconBridgeSDK {
       rawAmount: string,
       tokenContractAddress: string,
       tokenContractAbi: any[],
-      chain: string,
+      // chain: string,
       web3Wrapper: any,
-      gas: number | null = null
+      gas: number | null = null,
+      queryMethod: any = null
     ) => {
       const valueInWei = web3Wrapper.utils.toWei(rawAmount, "ether");
 
@@ -237,6 +242,7 @@ class IconBridgeSDK {
         web3Wrapper,
         null,
         gas,
+        queryMethod,
         spender,
         valueInWei
       );
@@ -461,6 +467,7 @@ class IconBridgeSDK {
     web3Wrapper: any,
     amount: null | number = null,
     gas: number | null = null,
+    methodQuery: any = null,
     ...rest: any[]
   ): Promise<string | null> => {
     // decoding a call to readonly method
@@ -487,6 +494,32 @@ class IconBridgeSDK {
     // create the signed tx
     const signedTx = await web3Wrapper.eth.accounts.signTransaction(tx, pk);
 
+    console.log('signed tx');
+    console.log(signedTx);
+    console.log(signedTx.rawTransaction);
+      // // making readonly call
+      const contractMethodCallResponse = null;
+      // if (queryMethod == null) {
+      if (contractMethodCallResponse == null) {
+        // contractMethodCallResponse = await web3Wrapper.eth.call({
+        //   to: BTSProxyContractAddress,
+        //   data: encodedData
+        // });
+      } else {
+        console.log(methodQuery);
+        // const contractMethodCallResponseRaw = await this.sdkUtils.makeEthJsonRpcReadonlyQuery(
+        //   this.params.bscProvider.hostname,
+        //   BTSProxyContractAddress,
+        //   encodedData,
+        //   queryMethod
+        // );
+        // if (contractMethodCallResponseRaw.error != null) {
+        //   throw new Error(JSON.stringify(contractMethodCallResponseRaw));
+        // }
+        // contractMethodCallResponse = contractMethodCallResponseRaw.result;
+      }
+
+      // return contractMethodCallResponse;
     // get tx receipt
     const receipt = await web3Wrapper.eth.sendSignedTransaction(
       signedTx.rawTransaction

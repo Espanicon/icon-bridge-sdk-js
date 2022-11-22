@@ -11,7 +11,7 @@ const sdk = new IconBridgeSDK({
 // test wallets
 const wallets = {
   icon: {
-    pubK: process.env.WALLET_ICON_ADDRESS + "a",
+    pubK: process.env.WALLET_ICON_ADDRESS,
     privK: process.env.WALLET_ICON_PK
   },
   bsc: {
@@ -36,8 +36,6 @@ describe("E2E testing Icon Bridge SDK. Chain: 'icon', Method 'transferNativeCoin
       wallets.icon.privK,
       "100"
     );
-    console.log("query");
-    console.log(query);
     // check if the result query has the valid keys
     const result = Object.keys(query).map(key => {
       if (genericResultKeys.includes(key)) {
