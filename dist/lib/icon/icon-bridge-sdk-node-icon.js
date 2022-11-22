@@ -26,8 +26,8 @@ const IconService = require("icon-sdk-js");
 const { IconBuilder, IconAmount, IconConverter, IconWallet, SignedTransaction, } = IconService.default;
 const { CallTransactionBuilder } = IconBuilder;
 class IconBridgeSDKNodeIcon extends baseICONSDK {
-    constructor(params, sdkUtils) {
-        super(params, sdkUtils);
+    constructor(params, sdkUtils, CustomSDK) {
+        super(params, sdkUtils, CustomSDK);
         _IconBridgeSDKNodeIcon_params.set(this, void 0);
         _IconBridgeSDKNodeIcon_sdkUtils.set(this, void 0);
         _IconBridgeSDKNodeIcon_localMethods.set(this, {

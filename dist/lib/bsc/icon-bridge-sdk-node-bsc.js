@@ -19,7 +19,7 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
-var _IconBridgeSDKNodeBSC_params, _IconBridgeSDKNodeBSC_bscWeb3, _IconBridgeSDKNodeBSC_sdkUtils, _IconBridgeSDKNodeBSC_callbackLib, _IconBridgeSDKNodeBSC_localMethods, _IconBridgeSDKNodeBSC_approveBTSCoreForTransfer, _IconBridgeSDKNodeBSC_signBTSCoreTx, _IconBridgeSDKNodeBSC_transferToken, _IconBridgeSDKNodeBSC_approveAndTransfer;
+var _IconBridgeSDKNodeBSC_params, _IconBridgeSDKNodeBSC_bscWeb3, _IconBridgeSDKNodeBSC_sdkUtils, _IconBridgeSDKNodeBSC_callbackLib, _IconBridgeSDKNodeBSC_localMethods, _IconBridgeSDKNodeBSC_approveBTSCoreForTransfer, _IconBridgeSDKNodeBSC_signBTSCoreTx, _IconBridgeSDKNodeBSC_approveAndTransfer;
 const baseBSCSDK = require("./icon-bridge-sdk-bsc");
 const Exception = require("../../utils/exception");
 class IconBridgeSDKNodeBSC extends baseBSCSDK {
@@ -41,86 +41,6 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
                 }
                 catch (err) {
                     const errorResult = new Exception(err, `Error running transfer(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\npk: ${pk}\n_value: ${_value}\n_coinName: ${_coinName}\n`);
-                    return { error: errorResult.toString() };
-                }
-            }),
-            transferBUSD: (targetAddress, targetChain = "icon", from, pk, _value, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
-                try {
-                    const tokenLabel = __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_sdkUtils, "f").labels.busd;
-                    return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_transferToken, "f").call(this, targetAddress, targetChain, from, pk, _value, tokenLabel, gas);
-                }
-                catch (err) {
-                    const errorResult = new Exception(err, `Error running transferBUSD(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\npk: ${pk}\n_value: ${_value}\n`);
-                    return { error: errorResult.toString() };
-                }
-            }),
-            transferUSDT: (targetAddress, targetChain = "icon", from, pk, _value, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
-                try {
-                    const tokenLabel = __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_sdkUtils, "f").labels.usdt;
-                    return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_transferToken, "f").call(this, targetAddress, targetChain, from, pk, _value, tokenLabel, gas);
-                }
-                catch (err) {
-                    const errorResult = new Exception(err, `Error running transferUSDT(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\npk: ${pk}\n_value: ${_value}\n`);
-                    return { error: errorResult.toString() };
-                }
-            }),
-            transferUSDC: (targetAddress, targetChain = "icon", from, pk, _value, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
-                try {
-                    const tokenLabel = __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_sdkUtils, "f").labels.usdc;
-                    return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_transferToken, "f").call(this, targetAddress, targetChain, from, pk, _value, tokenLabel, gas);
-                }
-                catch (err) {
-                    const errorResult = new Exception(err, `Error running transferUSDC(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\npk: ${pk}\n_value: ${_value}\n`);
-                    return { error: errorResult.toString() };
-                }
-            }),
-            transferBTCB: (targetAddress, targetChain = "icon", from, pk, _value, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
-                try {
-                    const tokenLabel = __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_sdkUtils, "f").labels.btcb;
-                    return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_transferToken, "f").call(this, targetAddress, targetChain, from, pk, _value, tokenLabel, gas);
-                }
-                catch (err) {
-                    const errorResult = new Exception(err, `Error running transferBTCB(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\npk: ${pk}\n_value: ${_value}\n`);
-                    return { error: errorResult.toString() };
-                }
-            }),
-            transferETH: (targetAddress, targetChain = "icon", from, pk, _value, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
-                try {
-                    const tokenLabel = __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_sdkUtils, "f").labels.eth;
-                    return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_transferToken, "f").call(this, targetAddress, targetChain, from, pk, _value, tokenLabel, gas);
-                }
-                catch (err) {
-                    const errorResult = new Exception(err, `Error running transferETH(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\npk: ${pk}\n_value: ${_value}\n`);
-                    return { error: errorResult.toString() };
-                }
-            }),
-            transferICX: (targetAddress, targetChain = "icon", from, pk, _value, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
-                try {
-                    const tokenLabel = __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_sdkUtils, "f").labels.icx;
-                    return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_transferToken, "f").call(this, targetAddress, targetChain, from, pk, _value, tokenLabel, gas);
-                }
-                catch (err) {
-                    const errorResult = new Exception(err, `Error running transferICX(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\npk: ${pk}\n_value: ${_value}\n`);
-                    return { error: errorResult.toString() };
-                }
-            }),
-            transferSICX: (targetAddress, targetChain = "icon", from, pk, _value, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
-                try {
-                    const tokenLabel = __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_sdkUtils, "f").labels.sicx;
-                    return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_transferToken, "f").call(this, targetAddress, targetChain, from, pk, _value, tokenLabel, gas);
-                }
-                catch (err) {
-                    const errorResult = new Exception(err, `Error running transferSICX(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\npk: ${pk}\n_value: ${_value}\n`);
-                    return { error: errorResult.toString() };
-                }
-            }),
-            transferBnUSD: (targetAddress, targetChain = "icon", from, pk, _value, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
-                try {
-                    const tokenLabel = __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_sdkUtils, "f").labels.bnusd;
-                    return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_transferToken, "f").call(this, targetAddress, targetChain, from, pk, _value, tokenLabel, gas);
-                }
-                catch (err) {
-                    const errorResult = new Exception(err, `Error running transferBnUSD(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\npk: ${pk}\n_value: ${_value}\n`);
                     return { error: errorResult.toString() };
                 }
             }),
@@ -222,23 +142,6 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
                 return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_callbackLib, "f").signBTSCoreTx(from, pk, methodName, amount, "bsc", __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_bscWeb3, "f"), gas, queryMethod, ...rest);
             }
         }));
-        _IconBridgeSDKNodeBSC_transferToken.set(this, (targetAddress, targetChain = "icon", from, pk, _value, tokenLabel, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
-            let isMainnet = null;
-            let coinName = null;
-            if (__classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_params, "f").useMainnet === false) {
-                isMainnet = false;
-                coinName = __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_sdkUtils, "f").tokenNames.bsc.testnet[tokenLabel];
-            }
-            else if (__classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_params, "f").useMainnet === true ||
-                __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_params, "f").useMainnet == null) {
-                isMainnet = true;
-                coinName = __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_sdkUtils, "f").tokenNames.bsc.mainnet[tokenLabel];
-            }
-            const abi = __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_sdkUtils, "f").genericAbi;
-            const tokenContractAddress = __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_callbackLib, "f").getContractAddressLocally(tokenLabel, "bsc", isMainnet, false);
-            const request = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_approveAndTransfer, "f").call(this, targetAddress, targetChain, from, pk, coinName, _value, tokenContractAddress, abi, gas);
-            return request;
-        }));
         _IconBridgeSDKNodeBSC_approveAndTransfer.set(this, (targetAddress, targetChain = "icon", from, pk, _coinName, _value, tokenContractAddress, tokenContractAbi, gas = 2000000, useNativeQueryMethod = true) => __awaiter(this, void 0, void 0, function* () {
             const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_params, "f").useMainnet;
             const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
@@ -259,6 +162,6 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
         this.queryMethod = queryMethod;
     }
 }
-_IconBridgeSDKNodeBSC_params = new WeakMap(), _IconBridgeSDKNodeBSC_bscWeb3 = new WeakMap(), _IconBridgeSDKNodeBSC_sdkUtils = new WeakMap(), _IconBridgeSDKNodeBSC_callbackLib = new WeakMap(), _IconBridgeSDKNodeBSC_localMethods = new WeakMap(), _IconBridgeSDKNodeBSC_approveBTSCoreForTransfer = new WeakMap(), _IconBridgeSDKNodeBSC_signBTSCoreTx = new WeakMap(), _IconBridgeSDKNodeBSC_transferToken = new WeakMap(), _IconBridgeSDKNodeBSC_approveAndTransfer = new WeakMap();
+_IconBridgeSDKNodeBSC_params = new WeakMap(), _IconBridgeSDKNodeBSC_bscWeb3 = new WeakMap(), _IconBridgeSDKNodeBSC_sdkUtils = new WeakMap(), _IconBridgeSDKNodeBSC_callbackLib = new WeakMap(), _IconBridgeSDKNodeBSC_localMethods = new WeakMap(), _IconBridgeSDKNodeBSC_approveBTSCoreForTransfer = new WeakMap(), _IconBridgeSDKNodeBSC_signBTSCoreTx = new WeakMap(), _IconBridgeSDKNodeBSC_approveAndTransfer = new WeakMap();
 module.exports = IconBridgeSDKNodeBSC;
 //# sourceMappingURL=icon-bridge-sdk-node-bsc.js.map

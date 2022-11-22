@@ -21,9 +21,8 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
 };
 var _IconBridgeSDKIcon_params, _IconBridgeSDKIcon_sdkUtils, _IconBridgeSDKIcon_iconWeb3;
 const Exception = require("../../utils/exception");
-const EspaniconSDK = require("@espanicon/espanicon-sdk");
 class IconBridgeSDKIcon {
-    constructor(params, sdkUtils) {
+    constructor(params, sdkUtils, CustomSDK) {
         _IconBridgeSDKIcon_params.set(this, void 0);
         _IconBridgeSDKIcon_sdkUtils.set(this, void 0);
         _IconBridgeSDKIcon_iconWeb3.set(this, void 0);
@@ -258,10 +257,11 @@ class IconBridgeSDKIcon {
         });
         __classPrivateFieldSet(this, _IconBridgeSDKIcon_params, params, "f");
         __classPrivateFieldSet(this, _IconBridgeSDKIcon_sdkUtils, sdkUtils, "f");
-        __classPrivateFieldSet(this, _IconBridgeSDKIcon_iconWeb3, new EspaniconSDK(__classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").iconProvider.hostname, __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").iconProvider.nid), "f");
+        __classPrivateFieldSet(this, _IconBridgeSDKIcon_iconWeb3, new CustomSDK(__classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").iconProvider.hostname, __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").iconProvider.nid), "f");
         this.queryMethod = __classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f").queryMethod;
         this.espaniconLib = {
-            makeJSONRPCRequestObj: __classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f").makeJSONRPCRequestObj
+            makeJSONRPCRequestObj: __classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f").makeJSONRPCRequestObj,
+            queryTypeMethod: __classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f").queryTypeMethod
         };
     }
 }

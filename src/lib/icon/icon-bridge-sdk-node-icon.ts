@@ -42,8 +42,8 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
   /**
    * Constructor
    */
-  constructor(params: InputParams, sdkUtils: any) {
-    super(params, sdkUtils);
+  constructor(params: InputParams, sdkUtils: any, CustomSDK: any) {
+    super(params, sdkUtils, CustomSDK);
     this.#params = params;
     this.#sdkUtils = sdkUtils;
     // this.#iconHttpProvider = new HttpProvider(

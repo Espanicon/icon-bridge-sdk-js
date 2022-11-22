@@ -1,7 +1,7 @@
 // icon-bridge-sdk-icon.ts
 //
 const Exception = require("../../utils/exception");
-const EspaniconSDK = require("@espanicon/espanicon-sdk");
+// const EspaniconSDK = require("@espanicon/espanicon-sdk");
 
 // types
 type Provider = {
@@ -30,16 +30,17 @@ class IconBridgeSDKIcon {
   /**
    * Constructor
    */
-  constructor(params: InputParams, sdkUtils: any) {
+  constructor(params: InputParams, sdkUtils: any, CustomSDK: any) {
     this.#params = params;
     this.#sdkUtils = sdkUtils;
-    this.#iconWeb3 = new EspaniconSDK(
+    this.#iconWeb3 = new CustomSDK(
       this.#params.iconProvider.hostname,
       this.#params.iconProvider.nid
     );
     this.queryMethod = this.#iconWeb3.queryMethod;
     this.espaniconLib = {
-      makeJSONRPCRequestObj: this.#iconWeb3.makeJSONRPCRequestObj
+      makeJSONRPCRequestObj: this.#iconWeb3.makeJSONRPCRequestObj,
+      queryTypeMethod: this.#iconWeb3.queryTypeMethod
     }
   }
 
