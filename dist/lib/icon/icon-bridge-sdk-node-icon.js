@@ -19,19 +19,17 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
-var _IconBridgeSDKNodeIcon_params, _IconBridgeSDKNodeIcon_sdkUtils, _IconBridgeSDKNodeIcon_iconHttpProvider, _IconBridgeSDKNodeIcon_iconService, _IconBridgeSDKNodeIcon_localMethods, _IconBridgeSDKNodeIcon_makeTxRequest;
+var _IconBridgeSDKNodeIcon_params, _IconBridgeSDKNodeIcon_sdkUtils, _IconBridgeSDKNodeIcon_localMethods, _IconBridgeSDKNodeIcon_makeTxRequest;
 const Exception = require("../../utils/exception");
 const baseICONSDK = require("./icon-bridge-sdk-icon");
 const IconService = require("icon-sdk-js");
-const { IconBuilder, IconAmount, IconConverter, IconWallet, SignedTransaction, HttpProvider } = IconService.default;
+const { IconBuilder, IconAmount, IconConverter, IconWallet, SignedTransaction, } = IconService.default;
 const { CallTransactionBuilder } = IconBuilder;
 class IconBridgeSDKNodeIcon extends baseICONSDK {
     constructor(params, sdkUtils) {
         super(params, sdkUtils);
         _IconBridgeSDKNodeIcon_params.set(this, void 0);
         _IconBridgeSDKNodeIcon_sdkUtils.set(this, void 0);
-        _IconBridgeSDKNodeIcon_iconHttpProvider.set(this, void 0);
-        _IconBridgeSDKNodeIcon_iconService.set(this, void 0);
         _IconBridgeSDKNodeIcon_localMethods.set(this, {
             transferNativeCoin: (targetAddress, targetChain, from, pk, amount, stepLimit = null) => __awaiter(this, void 0, void 0, function* () {
                 try {
@@ -217,8 +215,10 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
                 const txObj2 = txObj.build();
                 const wallet = IconWallet.loadPrivateKey(pk);
                 const signedTx = new SignedTransaction(txObj2, wallet);
-                const txHash = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_iconService, "f").sendTransaction(signedTx).execute();
-                return txHash;
+                const jsonRPCObj = this.espaniconLib.makeJSONRPCRequestObj("icx_sendTransaction");
+                jsonRPCObj["params"] = signedTx.getProperties();
+                const query = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_sdkUtils, "f").makeJsonRpcCall(__classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").iconProvider.hostname, jsonRPCObj, this.queryMethod);
+                return query;
             }
             catch (err) {
                 console.log("error running #makeTxRequest");
@@ -227,11 +227,9 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
         }));
         __classPrivateFieldSet(this, _IconBridgeSDKNodeIcon_params, params, "f");
         __classPrivateFieldSet(this, _IconBridgeSDKNodeIcon_sdkUtils, sdkUtils, "f");
-        __classPrivateFieldSet(this, _IconBridgeSDKNodeIcon_iconHttpProvider, new HttpProvider("https://" + __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").iconProvider.hostname + "/api/v3"), "f");
-        __classPrivateFieldSet(this, _IconBridgeSDKNodeIcon_iconService, new IconService.default(__classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_iconHttpProvider, "f")), "f");
         this.methods = Object.assign(Object.assign({}, this.superMethods), __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_localMethods, "f"));
     }
 }
-_IconBridgeSDKNodeIcon_params = new WeakMap(), _IconBridgeSDKNodeIcon_sdkUtils = new WeakMap(), _IconBridgeSDKNodeIcon_iconHttpProvider = new WeakMap(), _IconBridgeSDKNodeIcon_iconService = new WeakMap(), _IconBridgeSDKNodeIcon_localMethods = new WeakMap(), _IconBridgeSDKNodeIcon_makeTxRequest = new WeakMap();
+_IconBridgeSDKNodeIcon_params = new WeakMap(), _IconBridgeSDKNodeIcon_sdkUtils = new WeakMap(), _IconBridgeSDKNodeIcon_localMethods = new WeakMap(), _IconBridgeSDKNodeIcon_makeTxRequest = new WeakMap();
 module.exports = IconBridgeSDKNodeIcon;
 //# sourceMappingURL=icon-bridge-sdk-node-icon.js.map

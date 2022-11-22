@@ -1,5 +1,6 @@
 # IconBridge SDK for Javascript
  ** UNDER DEVELOPMENT **
+ 
 WRITE INTRODUCTION AND HIGH LEVEL DESCRIPTION OF THE SDK
 
 ## Table of Contents
@@ -17,7 +18,7 @@ DESCRIBE HOW TO USE
 |Module | Description|
 |-------|------------|
 |IconBridge | Class object that provides the API to use the ICON Bridge |
-|IconBridge[CHAIN] | Methods for interacting with the ICON Bridge on each supported chain |
+|IconBridge.[CHAIN] | Methods for interacting with the ICON Bridge on each supported chain |
 |IconBridge.sdkUtils | Utility functions for the SDK |
 
 ### IconBridgeSDK
@@ -38,7 +39,7 @@ new IconBridgeSDK({
   }
 })
 ```
-#### Parameter
+#### Parameters
 | Parameter | Type | Description|
 |--------------|------|----------|
 | useMainnet|boolean|Use on mainnet or testnet for all chains in the bridge|
@@ -86,16 +87,15 @@ Gets the balance of a defined coin (`_coinName`) for a defined wallet (`_owner`)
 
 ##### Returns
 ```js
-Result {
-  '0': '10000000000000000000',
-  '1': '0',
-  '2': '0',
-  '3': '9998500000000000000000',
-  __length__: 4,
-  _usableBalance: '10000000000000000000',
-  _lockedBalance: '0',
-  _refundableBalance: '0',
-  _userBalance: '9998500000000000000000'
+{
+  jsonrpc: '2.0',
+  result: {
+    locked: '0x0',
+    refundable: '0x0',
+    usable: '0x0',
+    userBalance: '0x130ee8e7179044400000'
+  },
+  id: 470
 }
 ```
 ##### Example

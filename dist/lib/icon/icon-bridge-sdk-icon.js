@@ -253,13 +253,16 @@ class IconBridgeSDKIcon {
             const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").useMainnet;
             const btsContract = __classPrivateFieldGet(this, _IconBridgeSDKIcon_sdkUtils, "f").getContractOf("bts", "icon", isMainnet);
             const JSONRPCObject = __classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f").makeICXCallRequestObj(methodName, methodParams, null, btsContract);
-            const request = yield __classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f").queryMethod(__classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f").scores.apiRoutes.v3, JSONRPCObject, __classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f").apiNode);
+            const request = __classPrivateFieldGet(this, _IconBridgeSDKIcon_sdkUtils, "f").makeJsonRpcCall(__classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").iconProvider.hostname, JSONRPCObject, this.queryMethod);
             return request;
         });
         __classPrivateFieldSet(this, _IconBridgeSDKIcon_params, params, "f");
         __classPrivateFieldSet(this, _IconBridgeSDKIcon_sdkUtils, sdkUtils, "f");
         __classPrivateFieldSet(this, _IconBridgeSDKIcon_iconWeb3, new EspaniconSDK(__classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").iconProvider.hostname, __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").iconProvider.nid), "f");
         this.queryMethod = __classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f").queryMethod;
+        this.espaniconLib = {
+            makeJSONRPCRequestObj: __classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f").makeJSONRPCRequestObj
+        };
     }
 }
 _IconBridgeSDKIcon_params = new WeakMap(), _IconBridgeSDKIcon_sdkUtils = new WeakMap(), _IconBridgeSDKIcon_iconWeb3 = new WeakMap();

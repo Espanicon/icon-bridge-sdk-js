@@ -17,7 +17,7 @@ export const networks = {
       btp_network_id: "0x1.icon",
       block_height: 54062001,
       provider: {
-        hostname: "ctz.solidwallet.io", // TODO: without https://
+        hostname: "https://ctz.solidwallet.io/api/v3/icon_dex",
         nid: 1
       }
     },
@@ -49,7 +49,7 @@ export const networks = {
       btp_network_id: "0x2.icon",
       block_height: 11273953,
       provider: {
-        hostname: "lisbon.net.solidwallet.io", //TODO without https
+        hostname: "https://lisbon.net.solidwallet.io/api/v3/icon_dex",
         nid: 2
       }
     },

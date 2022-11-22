@@ -25,6 +25,7 @@ class IconBridgeSDKIcon {
   #sdkUtils: any;
   #iconWeb3: any;
   queryMethod: any;
+  espaniconLib: any;
 
   /**
    * Constructor
@@ -37,6 +38,9 @@ class IconBridgeSDKIcon {
       this.#params.iconProvider.nid
     );
     this.queryMethod = this.#iconWeb3.queryMethod;
+    this.espaniconLib = {
+      makeJSONRPCRequestObj: this.#iconWeb3.makeJSONRPCRequestObj
+    }
   }
 
   // ######################################################################
@@ -446,10 +450,10 @@ class IconBridgeSDKIcon {
     );
 
     // make query
-    const request = await this.#iconWeb3.queryMethod(
-      this.#iconWeb3.scores.apiRoutes.v3,
+    const request = this.#sdkUtils.makeJsonRpcCall(
+      this.#params.iconProvider.hostname,
       JSONRPCObject,
-      this.#iconWeb3.apiNode
+      this.queryMethod
     );
 
     return request;

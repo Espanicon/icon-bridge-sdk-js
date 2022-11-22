@@ -11,7 +11,7 @@ const {
   IconConverter,
   IconWallet,
   SignedTransaction,
-  HttpProvider
+  // HttpProvider
 } = IconService.default;
 
 const { CallTransactionBuilder } = IconBuilder;
@@ -36,8 +36,8 @@ type InputParams = {
 class IconBridgeSDKNodeIcon extends baseICONSDK {
   #params: any;
   #sdkUtils: any;
-  #iconHttpProvider: any;
-  #iconService: any;
+  // #iconHttpProvider: any;
+  // #iconService: any;
 
   /**
    * Constructor
@@ -46,10 +46,10 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     super(params, sdkUtils);
     this.#params = params;
     this.#sdkUtils = sdkUtils;
-    this.#iconHttpProvider = new HttpProvider(
-      "https://" + this.#params.iconProvider.hostname + "/api/v3"
-    );
-    this.#iconService = new IconService.default(this.#iconHttpProvider);
+    // this.#iconHttpProvider = new HttpProvider(
+    //   "https://" + this.#params.iconProvider.hostname + "/api/v3"
+    // );
+    // this.#iconService = new IconService.default(this.#iconHttpProvider);
     this.methods = {
       ...this.superMethods,
       ...this.#localMethods
@@ -851,9 +851,17 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       const txObj2 = txObj.build();
       const wallet = IconWallet.loadPrivateKey(pk);
       const signedTx = new SignedTransaction(txObj2, wallet);
-      const txHash = await this.#iconService.sendTransaction(signedTx).execute();
+      const jsonRPCObj = this.espaniconLib.makeJSONRPCRequestObj(
+        "icx_sendTransaction"
+      );
+      jsonRPCObj["params"] = signedTx.getProperties();
+      const query = await this.#sdkUtils.makeJsonRpcCall(
+        this.#params.iconProvider.hostname,
+        jsonRPCObj,
+        this.queryMethod
+      )
 
-      return txHash;
+      return query;
     } catch (err) {
       console.log("error running #makeTxRequest");
       console.log(err);

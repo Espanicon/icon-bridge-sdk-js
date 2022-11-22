@@ -259,6 +259,19 @@ async function makeEthJsonRpcReadonlyQuery(
   return query;
 }
 
+async function makeJsonRpcCall(url: string, data: any, queryMethod: any) {
+  const urlObj = parseEthRPCUrl(url);
+  const stringData = JSON.stringify(data);
+  const query = await queryMethod(
+    urlObj.path,
+    stringData,
+    urlObj.hostname,
+    urlObj.protocol == "http" ? false : true,
+    urlObj.port === "" ? false : urlObj.port
+  );
+  return query;
+}
+
 /*
  *
  */
@@ -333,7 +346,8 @@ const utils = {
   getRandNonce,
   makeEthJsonRpcReadonlyQuery,
   isValidUrl,
-  parseEthRPCUrl
+  parseEthRPCUrl,
+  makeJsonRpcCall
 };
 
 export = utils;

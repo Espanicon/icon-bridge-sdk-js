@@ -137,6 +137,14 @@ function makeEthJsonRpcReadonlyQuery(url, to, data, queryMethod) {
         return query;
     });
 }
+function makeJsonRpcCall(url, data, queryMethod) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const urlObj = parseEthRPCUrl(url);
+        const stringData = JSON.stringify(data);
+        const query = yield queryMethod(urlObj.path, stringData, urlObj.hostname, urlObj.protocol == "http" ? false : true, urlObj.port === "" ? false : urlObj.port);
+        return query;
+    });
+}
 function makeEthJsonRpcObj(to, data, useLatestBlock = true) {
     const params = [{ to: to, data: data }];
     if (useLatestBlock) {
@@ -192,7 +200,8 @@ const utils = {
     getRandNonce,
     makeEthJsonRpcReadonlyQuery,
     isValidUrl,
-    parseEthRPCUrl
+    parseEthRPCUrl,
+    makeJsonRpcCall
 };
 module.exports = utils;
 //# sourceMappingURL=utils.js.map
