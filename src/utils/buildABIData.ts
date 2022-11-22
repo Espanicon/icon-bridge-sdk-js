@@ -44,11 +44,6 @@ interface Result {
     | undefined;
 }
 
-// functions
-function sleep(time: number = 2000): Promise<void> {
-  return new Promise(resolve => setTimeout(resolve, time));
-}
-
 async function getAbi(
   contract: any,
   isMainnet: boolean = true
@@ -72,7 +67,7 @@ async function getAbi(
     } else {
       count = 0;
       console.log("\nBeginning time pause.");
-      await sleep();
+      await utils.sleep();
     }
     const parsedHostname = utils.getFormattedHostname(hostname);
     console.log("making query");

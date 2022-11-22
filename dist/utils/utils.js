@@ -131,7 +131,15 @@ function getRandNonce() {
 }
 function makeEthJsonRpcReadonlyQuery(url, to, data, queryMethod) {
     return __awaiter(this, void 0, void 0, function* () {
-        const jsonRpcObj = makeEthJsonRpcObj(to, data);
+        const jsonRpcObj = makeEthCallJsonRpcObj(to, data);
+        const urlObj = parseEthRPCUrl(url);
+        const query = yield queryMethod(urlObj.path, jsonRpcObj, urlObj.hostname, urlObj.protocol === "http" ? false : true, urlObj.port === "" ? false : urlObj.port);
+        return query;
+    });
+}
+function makeEthSendRawTransactionQuery(url, data, queryMethod) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const jsonRpcObj = makeEthSendRawTransactionJsonRpcObj(data);
         const urlObj = parseEthRPCUrl(url);
         const query = yield queryMethod(urlObj.path, jsonRpcObj, urlObj.hostname, urlObj.protocol === "http" ? false : true, urlObj.port === "" ? false : urlObj.port);
         return query;
@@ -145,18 +153,30 @@ function makeJsonRpcCall(url, data, queryMethod) {
         return query;
     });
 }
-function makeEthJsonRpcObj(to, data, useLatestBlock = true) {
-    const params = [{ to: to, data: data }];
+function makeEthJsonRpcObj(to = null, data, callType = "eth_call", useLatestBlock = true) {
+    let params;
+    if (to == null) {
+        params = [data];
+    }
+    else {
+        params = [{ to: to, data: data }];
+    }
     if (useLatestBlock) {
         params.push("latest");
     }
     const result = {
         jsonrpc: "2.0",
-        method: "eth_call",
+        method: callType,
         id: Math.ceil(Math.random() * 100),
         params: params
     };
     return JSON.stringify(result);
+}
+function makeEthCallJsonRpcObj(to, data, useLatestBlock = true) {
+    return makeEthJsonRpcObj(to, data, "eth_call", useLatestBlock);
+}
+function makeEthSendRawTransactionJsonRpcObj(data) {
+    return makeEthJsonRpcObj(null, data, "eth_sendRawTransaction", false);
 }
 function parseEthRPCUrl(rpcNode) {
     const inputInLowercase = rpcNode.toLowerCase();
@@ -178,6 +198,13 @@ function parseEthRPCUrl(rpcNode) {
 }
 function isValidUrl(urlString) {
     return urlRegex.test(urlString);
+}
+function isValidTxString(tx) {
+    const regex = /([0][xX][a-fA-F0-9]{40})$/;
+    return regex.test(tx);
+}
+function sleep(time = 2000) {
+    return new Promise(resolve => setTimeout(resolve, time));
 }
 const utils = {
     networks: networks_1.networks,
@@ -201,7 +228,10 @@ const utils = {
     makeEthJsonRpcReadonlyQuery,
     isValidUrl,
     parseEthRPCUrl,
-    makeJsonRpcCall
+    makeJsonRpcCall,
+    makeEthSendRawTransactionQuery,
+    isValidTxString,
+    sleep
 };
 module.exports = utils;
 //# sourceMappingURL=utils.js.map

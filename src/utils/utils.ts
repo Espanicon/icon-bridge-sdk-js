@@ -32,7 +32,7 @@ type Url = {
   port: string | null;
 };
 
-type EthMethods = "eth_call";
+type EthMethods = "eth_call" | "eth_sendRawTransaction";
 
 type EthJsonRpc = {
   jsonrpc: "2.0";
@@ -246,7 +246,29 @@ async function makeEthJsonRpcReadonlyQuery(
   queryMethod: any
 ) {
   //
-  const jsonRpcObj = makeEthJsonRpcObj(to, data);
+  const jsonRpcObj = makeEthCallJsonRpcObj(to, data);
+  const urlObj = parseEthRPCUrl(url);
+  const query = await queryMethod(
+    urlObj.path,
+    jsonRpcObj,
+    urlObj.hostname,
+    urlObj.protocol === "http" ? false : true,
+    urlObj.port === "" ? false : urlObj.port
+  );
+
+  return query;
+}
+
+/*
+ *
+ */
+async function makeEthSendRawTransactionQuery(
+  url: string,
+  data: any,
+  queryMethod: any
+) {
+  //
+  const jsonRpcObj = makeEthSendRawTransactionJsonRpcObj(data);
   const urlObj = parseEthRPCUrl(url);
   const query = await queryMethod(
     urlObj.path,
@@ -271,29 +293,55 @@ async function makeJsonRpcCall(url: string, data: any, queryMethod: any) {
   );
   return query;
 }
-
 /*
  *
  */
 function makeEthJsonRpcObj(
-  to: string,
+  to: string | null = null,
   data: string,
+  callType: EthMethods = "eth_call",
   useLatestBlock: boolean = true
 ) {
   //
-  const params: any[] = [{ to: to, data: data }];
+  let params: any[];
+  if (to == null) {
+    params = [data];
+  } else {
+    params = [{ to: to, data: data }];
+  }
   if (useLatestBlock) {
     params.push("latest");
   }
   const result: EthJsonRpc = {
     jsonrpc: "2.0",
-    method: "eth_call",
+    method: callType,
     id: Math.ceil(Math.random() * 100),
     params: params
   };
 
   return JSON.stringify(result);
 }
+
+/*
+ *
+ */
+function makeEthCallJsonRpcObj(
+  to: string,
+  data: string,
+  useLatestBlock: boolean = true
+) {
+  //
+  return makeEthJsonRpcObj(to, data, "eth_call", useLatestBlock);
+}
+
+/*
+ *
+ */
+function makeEthSendRawTransactionJsonRpcObj(data: string) {
+  //
+  return makeEthJsonRpcObj(null, data, "eth_sendRawTransaction", false);
+}
+
 /*
  *
  */
@@ -324,6 +372,15 @@ function isValidUrl(urlString: string) {
   return urlRegex.test(urlString);
 }
 
+function isValidTxString(tx: string) {
+  const regex = /([0][xX][a-fA-F0-9]{40})$/;
+  return regex.test(tx);
+}
+
+function sleep(time: number = 2000): Promise<void> {
+  return new Promise(resolve => setTimeout(resolve, time));
+}
+
 // exports
 const utils = {
   networks,
@@ -347,7 +404,10 @@ const utils = {
   makeEthJsonRpcReadonlyQuery,
   isValidUrl,
   parseEthRPCUrl,
-  makeJsonRpcCall
+  makeJsonRpcCall,
+  makeEthSendRawTransactionQuery,
+  isValidTxString,
+  sleep
 };
 
 export = utils;

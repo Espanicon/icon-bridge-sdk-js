@@ -58,7 +58,7 @@ class IconBridgeSDK {
                     if (contractMethodCallResponseRaw.error != null) {
                         throw new Error(JSON.stringify(contractMethodCallResponseRaw));
                     }
-                    contractMethodCallResponse = contractMethodCallResponseRaw.result;
+                    contractMethodCallResponse = contractMethodCallResponseRaw;
                 }
                 return contractMethodCallResponse;
             }),
@@ -131,7 +131,7 @@ class IconBridgeSDK {
                 return this.lib.getContractObjectByLabel("BTSCore", chain, web3Wrapper, true);
             }
         };
-        this.signTx = (from, pk, methodName, contractAddress, contractObject, web3Wrapper, amount = null, gas = null, methodQuery = null, ...rest) => __awaiter(this, void 0, void 0, function* () {
+        this.signTx = (from, pk, methodName, contractAddress, contractObject, web3Wrapper, amount = null, gas = null, queryMethod = null, ...rest) => __awaiter(this, void 0, void 0, function* () {
             let encodedData = null;
             const contractMethod = contractObject.methods[methodName];
             if (rest.length === 0) {
@@ -150,17 +150,20 @@ class IconBridgeSDK {
                 tx["value"] = web3Wrapper.utils.toWei(amount, "ether");
             }
             const signedTx = yield web3Wrapper.eth.accounts.signTransaction(tx, pk);
-            console.log('signed tx');
-            console.log(signedTx);
-            console.log(signedTx.rawTransaction);
-            const contractMethodCallResponse = null;
-            if (contractMethodCallResponse == null) {
+            let contractMethodCallResponse = null;
+            if (queryMethod == null) {
+                contractMethodCallResponse = yield web3Wrapper.eth
+                    .sendSignedTransaction(signedTx.rawTransaction);
             }
             else {
-                console.log(methodQuery);
+                const contractMethodCallResponseRaw = yield this.sdkUtils
+                    .makeEthSendRawTransactionQuery(this.params.bscProvider.hostname, signedTx.rawTransaction, queryMethod);
+                if (contractMethodCallResponseRaw.error != null) {
+                    throw new Error(JSON.stringify(contractMethodCallResponseRaw));
+                }
+                contractMethodCallResponse = contractMethodCallResponseRaw;
             }
-            const receipt = yield web3Wrapper.eth.sendSignedTransaction(signedTx.rawTransaction);
-            return receipt.transactionHash;
+            return contractMethodCallResponse;
         });
         this.params = this.sdkUtils.getSDKParams(inputParams);
         __classPrivateFieldSet(this, _IconBridgeSDK_bscWeb3Private, new web3_1.default(this.params.bscProvider.hostname), "f");

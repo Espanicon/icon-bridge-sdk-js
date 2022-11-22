@@ -131,7 +131,7 @@ class IconBridgeSDK {
         if (contractMethodCallResponseRaw.error != null) {
           throw new Error(JSON.stringify(contractMethodCallResponseRaw));
         }
-        contractMethodCallResponse = contractMethodCallResponseRaw.result;
+        contractMethodCallResponse = contractMethodCallResponseRaw;
       }
 
       return contractMethodCallResponse;
@@ -467,7 +467,7 @@ class IconBridgeSDK {
     web3Wrapper: any,
     amount: null | number = null,
     gas: number | null = null,
-    methodQuery: any = null,
+    queryMethod: any = null,
     ...rest: any[]
   ): Promise<string | null> => {
     // decoding a call to readonly method
@@ -494,38 +494,24 @@ class IconBridgeSDK {
     // create the signed tx
     const signedTx = await web3Wrapper.eth.accounts.signTransaction(tx, pk);
 
-    console.log('signed tx');
-    console.log(signedTx);
-    console.log(signedTx.rawTransaction);
-      // // making readonly call
-      const contractMethodCallResponse = null;
-      // if (queryMethod == null) {
-      if (contractMethodCallResponse == null) {
-        // contractMethodCallResponse = await web3Wrapper.eth.call({
-        //   to: BTSProxyContractAddress,
-        //   data: encodedData
-        // });
-      } else {
-        console.log(methodQuery);
-        // const contractMethodCallResponseRaw = await this.sdkUtils.makeEthJsonRpcReadonlyQuery(
-        //   this.params.bscProvider.hostname,
-        //   BTSProxyContractAddress,
-        //   encodedData,
-        //   queryMethod
-        // );
-        // if (contractMethodCallResponseRaw.error != null) {
-        //   throw new Error(JSON.stringify(contractMethodCallResponseRaw));
-        // }
-        // contractMethodCallResponse = contractMethodCallResponseRaw.result;
+    // making readonly call
+    let contractMethodCallResponse = null;
+    if (queryMethod == null) {
+      contractMethodCallResponse = await web3Wrapper.eth
+      .sendSignedTransaction(signedTx.rawTransaction);
+    } else {
+      const contractMethodCallResponseRaw = await this.sdkUtils
+      .makeEthSendRawTransactionQuery(
+        this.params.bscProvider.hostname,
+        signedTx.rawTransaction,
+        queryMethod
+      );
+      if (contractMethodCallResponseRaw.error != null) {
+        throw new Error(JSON.stringify(contractMethodCallResponseRaw));
       }
-
-      // return contractMethodCallResponse;
-    // get tx receipt
-    const receipt = await web3Wrapper.eth.sendSignedTransaction(
-      signedTx.rawTransaction
-    );
-
-    return receipt.transactionHash;
+      contractMethodCallResponse = contractMethodCallResponseRaw;
+    }
+    return contractMethodCallResponse;
   };
 }
 

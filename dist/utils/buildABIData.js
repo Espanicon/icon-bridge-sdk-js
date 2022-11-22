@@ -24,9 +24,6 @@ const lib = new EspaniconSDKNode(utils_1.default.networks.mainnet.icon.provider.
 const bscLib = new web3_1.default(utils_1.default.networks.mainnet.bsc.provider.hostname);
 const bscLibTestnet = new web3_1.default(utils_1.default.networks.testnet.bsc.provider.hostname);
 let count = 0;
-function sleep(time = 2000) {
-    return new Promise(resolve => setTimeout(resolve, time));
-}
 function getAbi(contract, isMainnet = true) {
     return __awaiter(this, void 0, void 0, function* () {
         let route = null;
@@ -47,7 +44,7 @@ function getAbi(contract, isMainnet = true) {
             else {
                 count = 0;
                 console.log("\nBeginning time pause.");
-                yield sleep();
+                yield utils_1.default.sleep();
             }
             const parsedHostname = utils_1.default.getFormattedHostname(hostname);
             console.log("making query");
