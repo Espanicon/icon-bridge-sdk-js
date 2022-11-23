@@ -58,18 +58,6 @@ function iconBridgeSDKNodeTests() {
         yield testUtils.runTestOnMethod(lib.bsc.methods.transferUSDT, true, wallets.icon.a.pubK, "icon", wallets.bsc.a.pubK, wallets.bsc.a.privK, "10", 10000000);
         console.log("Test 10: iconBridgeSDK.bsc.methods.transferBUSD(targetAddress, targetChain, from, pk, _coinName, _value, gas)");
         yield testUtils.runTestOnMethod(lib.bsc.methods.transferBUSD, true, wallets.icon.a.pubK, "icon", wallets.bsc.a.pubK, wallets.bsc.a.privK, "9", 10000000);
-        console.log("Test 11: iconBridgeSDK.bsc.methods.addOwner(from, pk, _owner, gas)");
-        yield testUtils.runTestOnMethod(lib.bsc.methods.addOwner, true, wallets.bsc.a.pubK, wallets.bsc.a.privK, wallets.bsc.a.pubK, 10000000);
-        console.log("Test 13: iconBridgeSDK.bsc.methods.reclaim(from, pk, _owner, gas)");
-        yield testUtils.runTestOnMethod(lib.bsc.methods.reclaim, true, wallets.bsc.a.pubK, wallets.bsc.a.privK, "btp-0x2.icon-ICX", "10", 10000000);
-        console.log("Test 14: iconBridgeSDK.bsc.methods.register(from, pk, _owner, gas)");
-        yield testUtils.runTestOnMethod(lib.bsc.methods.register, true, wallets.bsc.a.pubK, wallets.bsc.a.privK, "fooCoin", "fooCoin", 18, 10, 10, "0x4DeD312eB774B9828665448C55Faa8AE15353E56", 10000000);
-        console.log("Test 15: iconBridgeSDK.bsc.methods.removeOwner(from, pk, _owner, gas)");
-        yield testUtils.runTestOnMethod(lib.bsc.methods.removeOwner, true, wallets.bsc.a.pubK, wallets.bsc.a.privK, wallets.bsc.a.pubK, 10000000);
-        console.log("Test 16: iconBridgeSDK.bsc.methods.setFeeRatio(from, pk, _owner, gas)");
-        yield testUtils.runTestOnMethod(lib.bsc.methods.setFeeRatio, true, wallets.bsc.a.pubK, wallets.bsc.a.privK, "btp-0x2.icon-ICX", 100, 10, 10000000);
-        console.log("Test 17: iconBridgeSDK.bsc.methods.updateBTSPeriphery(from, pk, _owner, gas)");
-        yield testUtils.runTestOnMethod(lib.bsc.methods.updateBTSPeriphery, true, wallets.bsc.a.pubK, wallets.bsc.a.privK, "0x4DeD312eB774B9828665448C55Faa8AE15353E56", 10000000);
     });
 }
 module.exports = iconBridgeSDKNodeTests;
