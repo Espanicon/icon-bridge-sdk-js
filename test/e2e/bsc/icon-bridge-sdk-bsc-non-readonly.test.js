@@ -36,7 +36,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'transferNativeCoin(
     );
 
     console.log(`\n  > Result: ${JSON.stringify(query)}\n`);
-    assert.ok(Object.keys(query).includes("result"));
+    assert.ok(Object.keys(query).includes("jsonrpc"));
   }).timeout(5000);
 });
 
@@ -52,6 +52,9 @@ describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'addOwner(from, pk, 
     );
 
     console.log(`\n  > Result: ${JSON.stringify(query)}\n`);
-    assert.ok(Object.keys(query).includes("error"));
+    assert.ok(
+      Object.keys(query).includes("jsonrpc") ||
+        Object.keys(query).includes("error")
+    );
   }).timeout(5000);
 });

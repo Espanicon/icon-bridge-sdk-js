@@ -133,7 +133,7 @@ class IconBridgeSDK {
         if (contractMethodCallResponseRaw.error != null) {
           throw new Error(JSON.stringify(contractMethodCallResponseRaw));
         }
-        contractMethodCallResponse = contractMethodCallResponseRaw;
+        contractMethodCallResponse = contractMethodCallResponseRaw.result;
       }
 
       return contractMethodCallResponse;
@@ -503,8 +503,6 @@ class IconBridgeSDK {
     // create the signed tx
     const signedTx = await web3Wrapper.eth.accounts.signTransaction(tx, pk);
 
-    console.log('signedTx');
-    console.log(signedTx);
     // making readonly call
     let contractMethodCallResponse = null;
     if (queryMethod == null) {

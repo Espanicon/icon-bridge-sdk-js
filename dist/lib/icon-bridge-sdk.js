@@ -58,7 +58,7 @@ class IconBridgeSDK {
                     if (contractMethodCallResponseRaw.error != null) {
                         throw new Error(JSON.stringify(contractMethodCallResponseRaw));
                     }
-                    contractMethodCallResponse = contractMethodCallResponseRaw;
+                    contractMethodCallResponse = contractMethodCallResponseRaw.result;
                 }
                 return contractMethodCallResponse;
             }),
@@ -153,8 +153,6 @@ class IconBridgeSDK {
                 tx["value"] = web3Wrapper.utils.toWei(amount, "ether");
             }
             const signedTx = yield web3Wrapper.eth.accounts.signTransaction(tx, pk);
-            console.log('signedTx');
-            console.log(signedTx);
             let contractMethodCallResponse = null;
             if (queryMethod == null) {
                 contractMethodCallResponse = yield web3Wrapper.eth
