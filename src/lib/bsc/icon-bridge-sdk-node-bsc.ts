@@ -39,7 +39,10 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
     queryMethod: any
   ) {
     super(params, bscWeb3, callbackLib, queryMethod);
-    this.#params = params;
+    this.#params = {
+      ...params,
+      nonce: 0
+    };
     this.#bscWeb3 = bscWeb3;
     this.#sdkUtils = sdkUtils;
     this.#callbackLib = callbackLib;
@@ -548,6 +551,37 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
     queryMethod: null = null,
     ...rest: any[]
   ): Promise<string | null> => {
+    // get the account nonce on chain. The following code logic is executed
+    // to help the library process queue txs more easily. 
+    //
+    let nonceOnChain: any = null;
+    try {
+      const bypass = true // TODO: bypass the nonce querying logic
+      if (!bypass) {
+        if(queryMethod == null) {
+          nonceOnChain = await this.#bscWeb3.eth.getTransactionCount(from);
+        } else {
+          const nonceQuery = await this.#sdkUtils.makeEthGetTransactionCountQuery(
+            this.#params.bscProvider.hostname,
+            from,
+            queryMethod
+          );
+          if (nonceQuery.result != null) {
+            nonceOnChain = parseInt(nonceQuery.result, 16);
+          }
+        }
+
+        this.#params["nonce"] = this.#params["nonce"] > nonceOnChain
+        ? this.#params["nonce"] + 1 
+        : nonceOnChain + 1;
+      }
+
+    } catch (err) {
+      // if an error is catched we simply continue with the transaction
+      // without trying to setup a nonce
+      this.#params["nonce"] = 0;
+    }
+
     if (rest.length === 0) {
       return await this.#callbackLib.signBTSCoreTx(
         from,
@@ -557,7 +591,8 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
         "bsc",
         this.#bscWeb3,
         gas,
-        queryMethod
+        queryMethod,
+        this.#params.nonce
       );
     } else {
       return await this.#callbackLib.signBTSCoreTx(
@@ -569,6 +604,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
         this.#bscWeb3,
         gas,
         queryMethod,
+        this.#params.nonce,
         ...rest
       );
     }

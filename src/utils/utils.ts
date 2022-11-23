@@ -32,7 +32,10 @@ type Url = {
   port: string | null;
 };
 
-type EthMethods = "eth_call" | "eth_sendRawTransaction";
+type EthMethods =
+  | "eth_call"
+  | "eth_sendRawTransaction"
+  | "eth_getTransactionCount";
 
 type EthJsonRpc = {
   jsonrpc: "2.0";
@@ -281,6 +284,25 @@ async function makeEthSendRawTransactionQuery(
   return query;
 }
 
+async function makeEthGetTransactionCountQuery(
+  url: string,
+  address: string,
+  queryMethod: any
+) {
+  //
+  const jsonRpcObj = makeEthGetTransactionCountJsonRpcObj(address);
+  const urlObj = parseEthRPCUrl(url);
+  const query = await queryMethod(
+    urlObj.path,
+    jsonRpcObj,
+    urlObj.hostname,
+    urlObj.protocol === "http" ? false : true,
+    urlObj.port === "" ? false : urlObj.port
+  );
+
+  return query;
+}
+
 async function makeJsonRpcCall(url: string, data: any, queryMethod: any) {
   const urlObj = parseEthRPCUrl(url);
   const stringData = JSON.stringify(data);
@@ -332,6 +354,22 @@ function makeEthCallJsonRpcObj(
 ) {
   //
   return makeEthJsonRpcObj(to, data, "eth_call", useLatestBlock);
+}
+
+/*
+ *
+ */
+function makeEthGetTransactionCountJsonRpcObj(
+  address: string,
+  useLatestBlock: boolean = true
+) {
+  //
+  return makeEthJsonRpcObj(
+    null,
+    address,
+    "eth_getTransactionCount",
+    useLatestBlock
+  );
 }
 
 /*
@@ -406,6 +444,7 @@ const utils = {
   parseEthRPCUrl,
   makeJsonRpcCall,
   makeEthSendRawTransactionQuery,
+  makeEthGetTransactionCountQuery,
   isValidTxString,
   sleep
 };

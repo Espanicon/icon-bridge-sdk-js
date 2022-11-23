@@ -135,11 +135,32 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
             return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_callbackLib, "f").approveTransfer(from, pk, btsCoreAddress, amount, tokenContractAddress, tokenContractAbi, "bsc", __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_bscWeb3, "f"), gas);
         }));
         _IconBridgeSDKNodeBSC_signBTSCoreTx.set(this, (from, pk, methodName, amount = null, gas = null, queryMethod = null, ...rest) => __awaiter(this, void 0, void 0, function* () {
+            let nonceOnChain = null;
+            try {
+                const bypass = true;
+                if (!bypass) {
+                    if (queryMethod == null) {
+                        nonceOnChain = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_bscWeb3, "f").eth.getTransactionCount(from);
+                    }
+                    else {
+                        const nonceQuery = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_sdkUtils, "f").makeEthGetTransactionCountQuery(__classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_params, "f").bscProvider.hostname, from, queryMethod);
+                        if (nonceQuery.result != null) {
+                            nonceOnChain = parseInt(nonceQuery.result, 16);
+                        }
+                    }
+                    __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_params, "f")["nonce"] = __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_params, "f")["nonce"] > nonceOnChain
+                        ? __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_params, "f")["nonce"] + 1
+                        : nonceOnChain + 1;
+                }
+            }
+            catch (err) {
+                __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_params, "f")["nonce"] = 0;
+            }
             if (rest.length === 0) {
-                return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_callbackLib, "f").signBTSCoreTx(from, pk, methodName, amount, "bsc", __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_bscWeb3, "f"), gas, queryMethod);
+                return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_callbackLib, "f").signBTSCoreTx(from, pk, methodName, amount, "bsc", __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_bscWeb3, "f"), gas, queryMethod, __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_params, "f").nonce);
             }
             else {
-                return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_callbackLib, "f").signBTSCoreTx(from, pk, methodName, amount, "bsc", __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_bscWeb3, "f"), gas, queryMethod, ...rest);
+                return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_callbackLib, "f").signBTSCoreTx(from, pk, methodName, amount, "bsc", __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_bscWeb3, "f"), gas, queryMethod, __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_params, "f").nonce, ...rest);
             }
         }));
         _IconBridgeSDKNodeBSC_approveAndTransfer.set(this, (targetAddress, targetChain = "icon", from, pk, _coinName, _value, tokenContractAddress, tokenContractAbi, gas = 2000000, useNativeQueryMethod = true) => __awaiter(this, void 0, void 0, function* () {
@@ -154,7 +175,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
                 tokenTx: response2
             };
         }));
-        __classPrivateFieldSet(this, _IconBridgeSDKNodeBSC_params, params, "f");
+        __classPrivateFieldSet(this, _IconBridgeSDKNodeBSC_params, Object.assign(Object.assign({}, params), { nonce: 0 }), "f");
         __classPrivateFieldSet(this, _IconBridgeSDKNodeBSC_bscWeb3, bscWeb3, "f");
         __classPrivateFieldSet(this, _IconBridgeSDKNodeBSC_sdkUtils, sdkUtils, "f");
         __classPrivateFieldSet(this, _IconBridgeSDKNodeBSC_callbackLib, callbackLib, "f");

@@ -62,15 +62,15 @@ class IconBridgeSDK {
                 }
                 return contractMethodCallResponse;
             }),
-            signBTSCoreTx: (from, pk, methodName, amount = null, chain, web3Wrapper, gas = null, queryMethod = null, ...rest) => __awaiter(this, void 0, void 0, function* () {
+            signBTSCoreTx: (from, pk, methodName, amount = null, chain, web3Wrapper, gas = null, queryMethod = null, nonce = null, ...rest) => __awaiter(this, void 0, void 0, function* () {
                 const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
                 const BTSProxyContractAddress = this.lib.getBTSCoreProxyContractAddress(chain, isMainnet);
                 const contractObject = this.lib.getBTSCoreLogicContractObject(chain, web3Wrapper);
                 if (rest.length === 0) {
-                    return yield this.signTx(from, pk, methodName, BTSProxyContractAddress, contractObject, web3Wrapper, amount, gas, queryMethod);
+                    return yield this.signTx(from, pk, methodName, BTSProxyContractAddress, contractObject, web3Wrapper, amount, gas, queryMethod, nonce);
                 }
                 else {
-                    return yield this.signTx(from, pk, methodName, BTSProxyContractAddress, contractObject, web3Wrapper, amount, gas, queryMethod, ...rest);
+                    return yield this.signTx(from, pk, methodName, BTSProxyContractAddress, contractObject, web3Wrapper, amount, gas, queryMethod, nonce, ...rest);
                 }
             }),
             approveTransfer: (from, pk, spender, rawAmount, tokenContractAddress, tokenContractAbi, web3Wrapper, gas = null, queryMethod = null) => __awaiter(this, void 0, void 0, function* () {
@@ -131,7 +131,7 @@ class IconBridgeSDK {
                 return this.lib.getContractObjectByLabel("BTSCore", chain, web3Wrapper, true);
             }
         };
-        this.signTx = (from, pk, methodName, contractAddress, contractObject, web3Wrapper, amount = null, gas = null, queryMethod = null, ...rest) => __awaiter(this, void 0, void 0, function* () {
+        this.signTx = (from, pk, methodName, contractAddress, contractObject, web3Wrapper, amount = null, gas = null, queryMethod = null, nonce = null, ...rest) => __awaiter(this, void 0, void 0, function* () {
             let encodedData = null;
             const contractMethod = contractObject.methods[methodName];
             if (rest.length === 0) {
@@ -146,10 +146,15 @@ class IconBridgeSDK {
                 gas: gas == null ? 2000000 : gas,
                 data: encodedData
             };
+            if (nonce > 1) {
+                tx["nonce"] = nonce;
+            }
             if (amount != null) {
                 tx["value"] = web3Wrapper.utils.toWei(amount, "ether");
             }
             const signedTx = yield web3Wrapper.eth.accounts.signTransaction(tx, pk);
+            console.log('signedTx');
+            console.log(signedTx);
             let contractMethodCallResponse = null;
             if (queryMethod == null) {
                 contractMethodCallResponse = yield web3Wrapper.eth
@@ -178,7 +183,8 @@ class IconBridgeSDK {
                 signTransaction: __classPrivateFieldGet(this, _IconBridgeSDK_bscWeb3Private, "f").eth.signTransaction,
                 sendTransaction: __classPrivateFieldGet(this, _IconBridgeSDK_bscWeb3Private, "f").eth.sendTransaction,
                 sign: __classPrivateFieldGet(this, _IconBridgeSDK_bscWeb3Private, "f").eth.sign,
-                call: __classPrivateFieldGet(this, _IconBridgeSDK_bscWeb3Private, "f").eth.call
+                call: __classPrivateFieldGet(this, _IconBridgeSDK_bscWeb3Private, "f").eth.call,
+                getTransactionCount: __classPrivateFieldGet(this, _IconBridgeSDK_bscWeb3Private, "f").eth.getTransactionCount
             },
             utils: {
                 fromWei: __classPrivateFieldGet(this, _IconBridgeSDK_bscWeb3Private, "f").utils.fromWei,

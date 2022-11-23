@@ -21,6 +21,7 @@ type Tx = {
   gas: number;
   data: object;
   value?: number;
+  nonce?: any;
 };
 
 // variables
@@ -60,7 +61,8 @@ class IconBridgeSDK {
         signTransaction: this.#bscWeb3Private.eth.signTransaction,
         sendTransaction: this.#bscWeb3Private.eth.sendTransaction,
         sign: this.#bscWeb3Private.eth.sign,
-        call: this.#bscWeb3Private.eth.call
+        call: this.#bscWeb3Private.eth.call,
+        getTransactionCount: this.#bscWeb3Private.eth.getTransactionCount
       },
       utils: {
         fromWei: this.#bscWeb3Private.utils.fromWei,
@@ -155,6 +157,7 @@ class IconBridgeSDK {
       web3Wrapper: any,
       gas: number | null = null,
       queryMethod: any = null,
+      nonce: any = null,
       ...rest: any[]
     ): Promise<string | null> => {
       // check if class object was created for mainnet or testnet
@@ -183,7 +186,8 @@ class IconBridgeSDK {
           web3Wrapper,
           amount,
           gas,
-          queryMethod
+          queryMethod,
+          nonce
         );
       } else {
         return await this.signTx(
@@ -196,6 +200,7 @@ class IconBridgeSDK {
           amount,
           gas,
           queryMethod,
+          nonce,
           ...rest
         );
       }
@@ -468,6 +473,7 @@ class IconBridgeSDK {
     amount: null | number = null,
     gas: number | null = null,
     queryMethod: any = null,
+    nonce: any = null,
     ...rest: any[]
   ): Promise<string | null> => {
     // decoding a call to readonly method
@@ -487,6 +493,9 @@ class IconBridgeSDK {
       data: encodedData
     };
 
+    if (nonce > 1) {
+      tx["nonce"] = nonce;
+    }
     if (amount != null) {
       tx["value"] = web3Wrapper.utils.toWei(amount, "ether");
     }
@@ -494,6 +503,8 @@ class IconBridgeSDK {
     // create the signed tx
     const signedTx = await web3Wrapper.eth.accounts.signTransaction(tx, pk);
 
+    console.log('signedTx');
+    console.log(signedTx);
     // making readonly call
     let contractMethodCallResponse = null;
     if (queryMethod == null) {

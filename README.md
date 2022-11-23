@@ -1,6 +1,6 @@
 # IconBridge SDK for Javascript
  ** UNDER DEVELOPMENT **
- 
+
 WRITE INTRODUCTION AND HIGH LEVEL DESCRIPTION OF THE SDK
 
 ## Table of Contents
@@ -22,7 +22,7 @@ DESCRIBE HOW TO USE
 |IconBridge.sdkUtils | Utility functions for the SDK |
 
 ### IconBridgeSDK
-IconBridgeSDK is a class that provides the methods to communicate with the [Icon Bridge](https://github.com/icon-project/icon-bridge). 
+IconBridgeSDK is a class that provides the methods to communicate with the [Icon Bridge](https://github.com/icon-project/icon-bridge).
 
 #### Constructor
 Creates an instance of the SDK.
@@ -200,3 +200,18 @@ Result:
 }
 ```
 This error occurs when you don't have enough balance (native coin, in this case BNB) to pay for the transaction fee.
+
+
+### Making a token transfer originating from BSC chain returns one of the following errors: `Returned error: replacement transaction underpriced` or `Returned error: already known`
+
+Error example:
+
+```
+{
+ error: 'Error running addOwner(). Params:\n' + 'from: {ADDRES}\n' + 'pk: {PRIVATE_KEY}\n' + '_owner: {ADDRESS}\n' + '.\n' + '{"jsonrpc":"2.0","id":77,"error":{"code":-32000,"message":"already known"}}'
+}
+
+```
+Currently the SDK doesnt support sending multiple concurrent transactions to be processed on the same block, because of this if you send for example 2 transactions one after the other without waiting around 5 to 10 seconds depending on the types of transaction that you are sending the chain will reply back thinking you are either sending the same tx twice or you are trying to replace an already existing tx in the mempool.
+
+To fix this currently the only solution is to wait at least 5 to 10 seconds between sending each transaction.
