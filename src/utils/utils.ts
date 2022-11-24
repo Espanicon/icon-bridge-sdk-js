@@ -414,6 +414,11 @@ function isValidTxString(tx: string) {
   return regex.test(tx);
 }
 
+function isValidContractAddress(tx: string) {
+  const regex = /([cC][xX][a-fA-F0-9]{40})$/;
+  return regex.test(tx);
+}
+
 function sleep(time: number = 2000): Promise<void> {
   return new Promise(resolve => setTimeout(resolve, time));
 }
@@ -445,7 +450,8 @@ const utils = {
   makeEthSendRawTransactionQuery,
   makeEthGetTransactionCountQuery,
   isValidTxString,
-  sleep
+  sleep,
+  isValidContractAddress
 };
 
 export = utils;

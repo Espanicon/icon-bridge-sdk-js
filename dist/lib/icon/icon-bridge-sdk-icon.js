@@ -261,7 +261,8 @@ class IconBridgeSDKIcon {
         this.queryMethod = __classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f").queryMethod;
         this.espaniconLib = {
             makeJSONRPCRequestObj: __classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f").makeJSONRPCRequestObj,
-            queryTypeMethod: __classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f").queryTypeMethod
+            queryTypeMethod: __classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f").queryTypeMethod,
+            decimalToHex: __classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f").decimalToHex
         };
     }
 }

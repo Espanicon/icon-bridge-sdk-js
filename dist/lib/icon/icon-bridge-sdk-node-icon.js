@@ -48,7 +48,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
                 try {
                     const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet;
                     const btsContract = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_sdkUtils, "f").getContractOfLabelFromLocalData("bts", "icon", isMainnet, false);
-                    const txRequest = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_makeTxRequest, "f").call(this, from, btsContract, pk, "transferNativeCoin", { _coinName: _coinName, _value: _value }, 0, stepLimit);
+                    const txRequest = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_makeTxRequest, "f").call(this, from, btsContract, pk, "reclaim", { _coinName: _coinName, _value: _value }, 0, stepLimit);
                     return txRequest;
                 }
                 catch (err) {
@@ -56,11 +56,29 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
                     return { error: errorResult.toString() };
                 }
             }),
-            transfer: (_coinName, _value, _to, from, pk, stepLimit = null) => __awaiter(this, void 0, void 0, function* () {
+            transferToBTSContract: (_value, tokenContract = null, from, pk, stepLimit = "2000000") => __awaiter(this, void 0, void 0, function* () {
                 try {
-                    const foo = [_coinName, _value, _to, from, pk, stepLimit];
-                    console.log(foo);
-                    return null;
+                    if (tokenContract == null || !__classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_sdkUtils, "f").isValidContractAddress) {
+                        throw new Error(`Contract address is not valid. Address: ${tokenContract}`);
+                    }
+                    const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet;
+                    const btsContract = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_sdkUtils, "f").getContractOfLabelFromLocalData("bts", "icon", isMainnet, false);
+                    const parsedValue = this.espaniconLib.decimalToHex(Number(_value) * (10 ** 18));
+                    const txRequest = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_makeTxRequest, "f").call(this, from, tokenContract, pk, "transfer", { _to: btsContract, _value: parsedValue }, 0, stepLimit);
+                    return txRequest;
+                }
+                catch (err) {
+                    const errorResult = new Exception(err, `Error running transferToBTSContract(). Params:\n_value: ${_value}\ntokenContract: ${tokenContract}\n\nfrom: ${from}\npk: ${pk}\n`);
+                    return { error: errorResult.toString() };
+                }
+            }),
+            transfer: (_coinName, _value, _to, from, pk, stepLimit = "2000000") => __awaiter(this, void 0, void 0, function* () {
+                try {
+                    const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet;
+                    const btsContract = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_sdkUtils, "f").getContractOfLabelFromLocalData("bts", "icon", isMainnet, false);
+                    const parsedValue = this.espaniconLib.decimalToHex(Number(_value) * (10 ** 18));
+                    const txRequest = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_makeTxRequest, "f").call(this, from, btsContract, pk, "transfer", { _coinName: _coinName, _value: parsedValue, _to: _to }, 0, stepLimit);
+                    return txRequest;
                 }
                 catch (err) {
                     const errorResult = new Exception(err, `Error running transfer(). Params:\n_coinName: ${_coinName}\n_value: ${_value}\n_to: ${_to}\nfrom: ${from}\npk: ${pk}\n`);

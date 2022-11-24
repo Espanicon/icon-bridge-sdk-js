@@ -149,7 +149,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
           from,
           btsContract,
           pk,
-          "transferNativeCoin",
+          "reclaim",
           { _coinName: _coinName, _value: _value },
           0,
           stepLimit
@@ -160,6 +160,67 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
         const errorResult = new Exception(
           err,
           `Error running reclaim(). Params:\n_coinName: ${_coinName}\n_value: ${_value}\nfrom: ${from}\npk: ${pk}`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /*
+     * Allow users to transfer token to the BTS contract. This step is
+     * necessary to do before using the transfer method of the BTS contract.
+     * @param _value - amount to transfers.
+     * @param tokenContract - token contract.
+     * @param from - public address of origin.
+     * @param pk - private key of origin.
+     * @param stepLimit - max gas to pay.
+     */
+    transferToBTSContract: async (
+      _value: string,
+      tokenContract: string | null = null,
+      from: string,
+      pk: string,
+      stepLimit: string | null = "2000000"
+    ): Promise<any> => {
+      //
+      try {
+        if (tokenContract == null || !this.#sdkUtils.isValidContractAddress) {
+          throw new Error(
+            `Contract address is not valid. Address: ${tokenContract}`
+          )
+        }
+
+        const isMainnet: boolean =
+          this.#params.useMainnet == null ? true : this.#params.useMainnet;
+
+        const btsContract = this.#sdkUtils.getContractOfLabelFromLocalData(
+          "bts",
+          "icon",
+          isMainnet,
+          false
+        );
+
+        // parse value into loop units and then into hexadecimal
+        const parsedValue = this.espaniconLib.decimalToHex(
+          Number(_value)*(10**18)
+        )
+
+        // transfer token to the BTS address to be able to then
+        // make the cross chain transaction
+        const txRequest = await this.#makeTxRequest(
+          from,
+          tokenContract,
+          pk,
+          "transfer",
+          { _to: btsContract, _value: parsedValue },
+          0,
+          stepLimit
+        )
+
+        return txRequest;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running transferToBTSContract(). Params:\n_value: ${_value}\ntokenContract: ${tokenContract}\n\nfrom: ${from}\npk: ${pk}\n`
         );
         return { error: errorResult.toString() };
       }
@@ -178,15 +239,46 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       _coinName: string,
       _value: string,
       _to: string,
+      // tokenContract: string | null = null,
       from: string,
       pk: string,
-      stepLimit: string | null = null
+      stepLimit: string | null = "2000000"
     ): Promise<any> => {
       //
       try {
-        const foo = [_coinName, _value, _to, from, pk, stepLimit];
-        console.log(foo);
-        return null;
+        // if (tokenContract == null || !this.#sdkUtils.isValidContractAddress) {
+        //   throw new Error(
+        //     `Contract address is not valid. Address: ${tokenContract}`
+        //   )
+        // }
+
+        const isMainnet: boolean =
+          this.#params.useMainnet == null ? true : this.#params.useMainnet;
+
+        const btsContract = this.#sdkUtils.getContractOfLabelFromLocalData(
+          "bts",
+          "icon",
+          isMainnet,
+          false
+        );
+
+        // parse value into loop units and then into hexadecimal
+        const parsedValue = this.espaniconLib.decimalToHex(
+          Number(_value)*(10**18)
+        )
+
+        // make cross chain transaction
+        const txRequest = await this.#makeTxRequest(
+          from,
+          btsContract,
+          pk,
+          "transfer",
+          { _coinName: _coinName, _value: parsedValue, _to: _to},
+          0,
+          stepLimit
+        );
+
+        return txRequest;
       } catch (err) {
         const errorResult = new Exception(
           err,

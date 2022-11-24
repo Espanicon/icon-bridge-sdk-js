@@ -213,6 +213,10 @@ function isValidTxString(tx) {
     const regex = /([0][xX][a-fA-F0-9]{40})$/;
     return regex.test(tx);
 }
+function isValidContractAddress(tx) {
+    const regex = /([cC][xX][a-fA-F0-9]{40})$/;
+    return regex.test(tx);
+}
 function sleep(time = 2000) {
     return new Promise(resolve => setTimeout(resolve, time));
 }
@@ -242,7 +246,8 @@ const utils = {
     makeEthSendRawTransactionQuery,
     makeEthGetTransactionCountQuery,
     isValidTxString,
-    sleep
+    sleep,
+    isValidContractAddress
 };
 module.exports = utils;
 //# sourceMappingURL=utils.js.map
