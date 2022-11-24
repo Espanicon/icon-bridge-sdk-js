@@ -252,7 +252,7 @@ class IconBridgeSDKIcon {
             const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").useMainnet;
             const btsContract = __classPrivateFieldGet(this, _IconBridgeSDKIcon_sdkUtils, "f").getContractOf("bts", "icon", isMainnet);
             const JSONRPCObject = __classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f").makeICXCallRequestObj(methodName, methodParams, null, btsContract);
-            const request = __classPrivateFieldGet(this, _IconBridgeSDKIcon_sdkUtils, "f").makeJsonRpcCall(__classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").iconProvider.hostname, JSONRPCObject, this.queryMethod);
+            const request = yield __classPrivateFieldGet(this, _IconBridgeSDKIcon_sdkUtils, "f").makeJsonRpcCall(__classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").iconProvider.hostname, JSONRPCObject, this.queryMethod);
             return request;
         });
         __classPrivateFieldSet(this, _IconBridgeSDKIcon_params, params, "f");

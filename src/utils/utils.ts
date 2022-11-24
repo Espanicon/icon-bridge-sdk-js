@@ -305,10 +305,9 @@ async function makeEthGetTransactionCountQuery(
 
 async function makeJsonRpcCall(url: string, data: any, queryMethod: any) {
   const urlObj = parseEthRPCUrl(url);
-  const stringData = JSON.stringify(data);
   const query = await queryMethod(
     urlObj.path,
-    stringData,
+    data,
     urlObj.hostname,
     urlObj.protocol == "http" ? false : true,
     urlObj.port === "" ? false : urlObj.port

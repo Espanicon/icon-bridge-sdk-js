@@ -156,8 +156,7 @@ function makeEthGetTransactionCountQuery(url, address, queryMethod) {
 function makeJsonRpcCall(url, data, queryMethod) {
     return __awaiter(this, void 0, void 0, function* () {
         const urlObj = parseEthRPCUrl(url);
-        const stringData = JSON.stringify(data);
-        const query = yield queryMethod(urlObj.path, stringData, urlObj.hostname, urlObj.protocol == "http" ? false : true, urlObj.port === "" ? false : urlObj.port);
+        const query = yield queryMethod(urlObj.path, data, urlObj.hostname, urlObj.protocol == "http" ? false : true, urlObj.port === "" ? false : urlObj.port);
         return query;
     });
 }

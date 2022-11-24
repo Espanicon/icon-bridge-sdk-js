@@ -855,9 +855,10 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
         "icx_sendTransaction"
       );
       jsonRPCObj["params"] = signedTx.getProperties();
+      const stringJsonObj = JSON.stringify(jsonRPCObj);
       const query = await this.#sdkUtils.makeJsonRpcCall(
         this.#params.iconProvider.hostname,
-        jsonRPCObj,
+        stringJsonObj,
         this.queryMethod
       )
 

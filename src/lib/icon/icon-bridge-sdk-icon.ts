@@ -451,7 +451,7 @@ class IconBridgeSDKIcon {
     );
 
     // make query
-    const request = this.#sdkUtils.makeJsonRpcCall(
+    const request = await this.#sdkUtils.makeJsonRpcCall(
       this.#params.iconProvider.hostname,
       JSONRPCObject,
       this.queryMethod

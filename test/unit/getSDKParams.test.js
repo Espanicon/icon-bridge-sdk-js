@@ -12,7 +12,7 @@ const result = {
     nid: 97
   },
   iconProvider: {
-    hostname: "lisbon.net.solidwallet.io",
+    hostname: "https://lisbon.net.solidwallet.io/api/v3/icon_dex",
     nid: 2
   }
 };

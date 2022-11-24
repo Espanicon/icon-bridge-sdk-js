@@ -217,7 +217,8 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
                 const signedTx = new SignedTransaction(txObj2, wallet);
                 const jsonRPCObj = this.espaniconLib.makeJSONRPCRequestObj("icx_sendTransaction");
                 jsonRPCObj["params"] = signedTx.getProperties();
-                const query = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_sdkUtils, "f").makeJsonRpcCall(__classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").iconProvider.hostname, jsonRPCObj, this.queryMethod);
+                const stringJsonObj = JSON.stringify(jsonRPCObj);
+                const query = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_sdkUtils, "f").makeJsonRpcCall(__classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").iconProvider.hostname, stringJsonObj, this.queryMethod);
                 return query;
             }
             catch (err) {
