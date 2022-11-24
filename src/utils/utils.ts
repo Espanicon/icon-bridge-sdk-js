@@ -426,6 +426,7 @@ function sleep(time: number = 2000): Promise<void> {
 // exports
 const utils = {
   networks,
+  chains,
   contracts,
   getBTPAddress,
   abiDataPath,

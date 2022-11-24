@@ -222,6 +222,7 @@ function sleep(time = 2000) {
 }
 const utils = {
     networks: networks_1.networks,
+    chains: networks_1.chains,
     contracts: contracts_1.contracts,
     getBTPAddress,
     abiDataPath,

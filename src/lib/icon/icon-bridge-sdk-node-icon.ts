@@ -183,36 +183,13 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     ): Promise<any> => {
       //
       try {
-        if (tokenContract == null || !this.#sdkUtils.isValidContractAddress) {
-          throw new Error(
-            `Contract address is not valid. Address: ${tokenContract}`
-          )
-        }
-
-        const isMainnet: boolean =
-          this.#params.useMainnet == null ? true : this.#params.useMainnet;
-
-        const btsContract = this.#sdkUtils.getContractOfLabelFromLocalData(
-          "bts",
-          "icon",
-          isMainnet,
-          false
-        );
-
-        // parse value into loop units and then into hexadecimal
-        const parsedValue = this.espaniconLib.decimalToHex(
-          Number(_value)*(10**18)
-        )
-
         // transfer token to the BTS address to be able to then
         // make the cross chain transaction
-        const txRequest = await this.#makeTxRequest(
-          from,
+        const txRequest = await this.#transferToBTSContract(
+          _value,
           tokenContract,
+          from,
           pk,
-          "transfer",
-          { _to: btsContract, _value: parsedValue },
-          0,
           stepLimit
         )
 
@@ -246,35 +223,14 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     ): Promise<any> => {
       //
       try {
-        // if (tokenContract == null || !this.#sdkUtils.isValidContractAddress) {
-        //   throw new Error(
-        //     `Contract address is not valid. Address: ${tokenContract}`
-        //   )
-        // }
-
-        const isMainnet: boolean =
-          this.#params.useMainnet == null ? true : this.#params.useMainnet;
-
-        const btsContract = this.#sdkUtils.getContractOfLabelFromLocalData(
-          "bts",
-          "icon",
-          isMainnet,
-          false
-        );
-
-        // parse value into loop units and then into hexadecimal
-        const parsedValue = this.espaniconLib.decimalToHex(
-          Number(_value)*(10**18)
-        )
 
         // make cross chain transaction
-        const txRequest = await this.#makeTxRequest(
+        const txRequest = await this.#transfer(
+          _coinName,
+          _value,
+          _to,
           from,
-          btsContract,
           pk,
-          "transfer",
-          { _coinName: _coinName, _value: parsedValue, _to: _to},
-          0,
           stepLimit
         );
 
@@ -283,6 +239,86 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
         const errorResult = new Exception(
           err,
           `Error running transfer(). Params:\n_coinName: ${_coinName}\n_value: ${_value}\n_to: ${_to}\nfrom: ${from}\npk: ${pk}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /*
+     * Allow users to transfer native ICON tokens cross chain. 
+     * this method first makes a 'transfer' query to the token contract to
+     * transfer the tokens to the BTS contract and then calls the 'transfer'
+     * method on the BTS contract to make the cross chain transfer.
+     * @param tokenName - name of native ICON token to transfer.
+     * @param value - amount to transfers.
+     * @param targetAddress - receiver address.
+     * @param targetChain - receiving chain.
+     * @param from - public address of origin.
+     * @param pk - private key of origin.
+     * @param stepLimit - max gas to pay.
+     */
+    transferNativeToken: async (
+      tokenName: string,
+      value: string,
+      targetAddress: string,
+      targetChain: string,
+      tokenContract: string,
+      from: string,
+      pk: string,
+      stepLimit: string | null = "2000000"
+    ): Promise<any> => {
+      //
+      try {
+
+        // verify if the submitted targetChain is valid and supported by
+        // the sdk currently
+        const chainLabels = Object.keys(this.#sdkUtils.chains);
+        if (!chainLabels.includes(targetChain) || targetChain === "icon") {
+          throw new Error(`Invalid target chain. targetChain: ${targetChain}`)
+        }
+
+        const isMainnet: boolean =
+          this.#params.useMainnet == null ? true : this.#params.useMainnet;
+
+        const btpAddress = this.#sdkUtils.getBTPAddress(
+          targetAddress,
+          targetChain,
+          isMainnet
+        );
+
+        // transfer token to the BTS contract to be able to then
+        // make the cross chain transaction
+        const preTxRequest = await this.#transferToBTSContract(
+          value,
+          tokenContract,
+          from,
+          pk,
+          stepLimit
+        )
+
+        // if the preTxRequest was successfull the reply object will
+        // have a 'result' param. In that case we wait for 3 seconds
+        // to allow the chain to generate a new block to ensure that 
+        // the following cross chain transaction will be successfull
+        if (preTxRequest.result != null) {
+          await this.#sdkUtils.sleep(3000)
+        }
+
+        // make cross chain transaction
+        const txRequest = await this.#transfer(
+          tokenName,
+          value,
+          btpAddress,
+          from,
+          pk,
+          stepLimit
+        );
+
+        return txRequest;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running transferNativeToken(). Params:\ntokenName: ${tokenName}\nvalue: ${value}\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\ntokenContract: ${tokenContract}\nfrom: ${from}\npk: ${pk}\n`
         );
         return { error: errorResult.toString() };
       }
@@ -750,152 +786,6 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       }
     }
 
-    //
-    // The following methods cannot be called by anyone even contract owners
-    //
-
-    ///*
-    // *
-    // */
-    //refund: async (): Promise<any> => {
-    //  //
-    //  try {
-    //    return null;
-    //  } catch (err) {
-    //    const errorResult = new Exception(
-    //      err,
-    //      `Error running refund(). Params:\nnull: ${null}\n`
-    //    );
-    //    return { error: errorResult.toString() };
-    //  }
-    //},
-
-    ///*
-    // *
-    // */
-    //handleResponseService: async (): Promise<any> => {
-    //  //
-    //  try {
-    //    return null;
-    //  } catch (err) {
-    //    const errorResult = new Exception(
-    //      err,
-    //      `Error running handleResponseService(). Params:\nnull: ${null}\n`
-    //    );
-    //    return { error: errorResult.toString() };
-    //  }
-    //},
-
-    ///*
-    // *
-    // */
-    //initialize: async (): Promise<any> => {
-    //  //
-    //  try {
-    //    return null;
-    //  } catch (err) {
-    //    const errorResult = new Exception(
-    //      err,
-    //      `Error running initialize(). Params:\nnull: ${null}\n`
-    //    );
-    //    return { error: errorResult.toString() };
-    //  }
-    //},
-
-    ///*
-    // *
-    // */
-    //transferFees: async (): Promise<any> => {
-    //  //
-    //  try {
-    //    return null;
-    //  } catch (err) {
-    //    const errorResult = new Exception(
-    //      err,
-    //      `Error running transferFees(). Params:\nnull: ${null}\n`
-    //    );
-    //    return { error: errorResult.toString() };
-    //  }
-    //},
-
-    ///*
-    // *
-    // */
-    //mint: async (): Promise<any> => {
-    //  //
-    //  try {
-    //    return null;
-    //  } catch (err) {
-    //    const errorResult = new Exception(
-    //      err,
-    //      `Error running mint(). Params:\nnull: ${null}\n`
-    //    );
-    //    return { error: errorResult.toString() };
-    //  }
-    //},
-    ///*
-    // *
-    // */
-    //tokenFallback: async (): Promise<any> => {
-    //  //
-    //  try {
-    //    return null;
-    //  } catch (err) {
-    //    const errorResult = new Exception(
-    //      err,
-    //      `Error running tokenFallback(). Params:\nnull: ${null}\n`
-    //    );
-    //    return { error: errorResult.toString() };
-    //  }
-    //},
-
-    ///*
-    // *
-    // */
-    //handleBTPMessage: async (): Promise<any> => {
-    //  //
-    //  try {
-    //    return null;
-    //  } catch (err) {
-    //    const errorResult = new Exception(
-    //      err,
-    //      `Error running handleBTPMessage(). Params:\nnull: ${null}\n`
-    //    );
-    //    return { error: errorResult.toString() };
-    //  }
-    //},
-
-    ///*
-    // *
-    // */
-    //handleBTPError: async (): Promise<any> => {
-    //  //
-    //  try {
-    //    return null;
-    //  } catch (err) {
-    //    const errorResult = new Exception(
-    //      err,
-    //      `Error running handleBTPError(). Params:\nnull: ${null}\n`
-    //    );
-    //    return { error: errorResult.toString() };
-    //  }
-    //},
-
-    ///*
-    // *
-    // */
-    //handleFeeGathering: async (): Promise<any> => {
-    //  //
-    //  try {
-    //    return null;
-    //  } catch (err) {
-    //    const errorResult = new Exception(
-    //      err,
-    //      `Error running handleFeeGathering(). Params:\nnull: ${null}\n`
-    //    );
-    //    return { error: errorResult.toString() };
-    //  }
-    //}
   };
 
   /*
@@ -958,6 +848,123 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     } catch (err) {
       console.log("error running #makeTxRequest");
       console.log(err);
+    }
+  };
+
+  /*
+   * Allow users to transfer token to the BTS contract. This step is
+   * necessary to do before using the transfer method of the BTS contract.
+   * @param _value - amount to transfers.
+   * @param tokenContract - token contract.
+   * @param from - public address of origin.
+   * @param pk - private key of origin.
+   * @param stepLimit - max gas to pay.
+   */
+  #transferToBTSContract = async (
+    _value: string,
+    tokenContract: string | null = null,
+    from: string,
+    pk: string,
+    stepLimit: string | null = "2000000"
+  ): Promise<any> => {
+    //
+    try {
+      if (tokenContract == null || !this.#sdkUtils.isValidContractAddress) {
+        throw new Error(
+          `Contract address is not valid. Address: ${tokenContract}`
+        )
+      }
+
+      const isMainnet: boolean =
+        this.#params.useMainnet == null ? true : this.#params.useMainnet;
+
+      const btsContract = this.#sdkUtils.getContractOfLabelFromLocalData(
+        "bts",
+        "icon",
+        isMainnet,
+        false
+      );
+
+      // parse value into loop units and then into hexadecimal
+      const parsedValue = this.espaniconLib.decimalToHex(
+        Number(_value)*(10**18)
+      )
+
+      // transfer token to the BTS address to be able to then
+      // make the cross chain transaction
+      const txRequest = await this.#makeTxRequest(
+        from,
+        tokenContract,
+        pk,
+        "transfer",
+        { _to: btsContract, _value: parsedValue },
+        0,
+        stepLimit
+      )
+
+      return txRequest;
+    } catch (err) {
+      const errorResult = new Exception(
+        err,
+        `Error running transferToBTSContract(). Params:\n_value: ${_value}\ntokenContract: ${tokenContract}\n\nfrom: ${from}\npk: ${pk}\n`
+      );
+      return { error: errorResult.toString() };
+    }
+  };
+
+  /*
+   * Allow users to transfer token between chains.
+   * @param _coinName - name of coin.
+   * @param _value - amount to transfers.
+   * @param _to - receiver address BTP formatted.
+   * @param from - public address of origin.
+   * @param pk - private key of origin.
+   * @param stepLimit - max gas to pay.
+   */
+  #transfer = async (
+    _coinName: string,
+    _value: string,
+    _to: string,
+    from: string,
+    pk: string,
+    stepLimit: string | null = "2000000"
+  ): Promise<any> => {
+    //
+    try {
+
+      const isMainnet: boolean =
+        this.#params.useMainnet == null ? true : this.#params.useMainnet;
+
+      const btsContract = this.#sdkUtils.getContractOfLabelFromLocalData(
+        "bts",
+        "icon",
+        isMainnet,
+        false
+      );
+
+      // parse value into loop units and then into hexadecimal
+      const parsedValue = this.espaniconLib.decimalToHex(
+        Number(_value)*(10**18)
+      )
+
+      // make cross chain transaction
+      const txRequest = await this.#makeTxRequest(
+        from,
+        btsContract,
+        pk,
+        "transfer",
+        { _coinName: _coinName, _value: parsedValue, _to: _to},
+        0,
+        stepLimit
+      );
+
+      return txRequest;
+    } catch (err) {
+      const errorResult = new Exception(
+        err,
+        `Error running transfer(). Params:\n_coinName: ${_coinName}\n_value: ${_value}\n_to: ${_to}\nfrom: ${from}\npk: ${pk}\n`
+      );
+      return { error: errorResult.toString() };
     }
   };
 }
