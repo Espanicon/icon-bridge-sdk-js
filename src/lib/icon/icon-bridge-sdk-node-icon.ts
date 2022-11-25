@@ -132,7 +132,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
      */
     transferNativeToken: async (
       tokenName: string,
-      value: string,
+      amount: string,
       targetAddress: string,
       targetChain: string,
       tokenContract: string,
@@ -162,7 +162,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
         // transfer token to the BTS contract to be able to then
         // make the cross chain transaction
         const preTxRequest = await this.#transferToBTSContract(
-          value,
+          amount,
           tokenContract,
           from,
           pk,
@@ -184,7 +184,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
         // make cross chain transaction
         const txRequest = await this.#transfer(
           tokenName,
-          value,
+          amount,
           btpAddress,
           from,
           pk,
@@ -195,7 +195,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       } catch (err) {
         const errorResult = new Exception(
           err,
-          `Error running transferNativeToken(). Params:\ntokenName: ${tokenName}\nvalue: ${value}\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\ntokenContract: ${tokenContract}\nfrom: ${from}\npk: ${pk}\n`
+          `Error running transferNativeToken(). Params:\ntokenName: ${tokenName}\namount: ${amount}\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\ntokenContract: ${tokenContract}\nfrom: ${from}\npk: ${pk}\n`
         );
         return { error: errorResult.toString() };
       }
@@ -216,7 +216,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
      */
     transferWrappedToken: async (
       tokenName: string,
-      value: string,
+      amount: string,
       targetAddress: string,
       targetChain: string,
       tokenContract: string,
@@ -247,7 +247,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
         // behalf of the originator wallet to be able to then
         // make the cross chain transaction
         const preTxRequest = await this.#approveBTSContract(
-          value,
+          amount,
           tokenContract,
           from,
           pk,
@@ -269,7 +269,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
         // make cross chain transaction
         const txRequest = await this.#transfer(
           tokenName,
-          value,
+          amount,
           btpAddress,
           from,
           pk,
@@ -280,7 +280,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       } catch (err) {
         const errorResult = new Exception(
           err,
-          `Error running transferWrappedToken(). Params:\ntokenName: ${tokenName}\nvalue: ${value}\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\ntokenContract: ${tokenContract}\nfrom: ${from}\npk: ${pk}\n`
+          `Error running transferWrappedToken(). Params:\ntokenName: ${tokenName}\namount: ${amount}\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\ntokenContract: ${tokenContract}\nfrom: ${from}\npk: ${pk}\n`
         );
         return { error: errorResult.toString() };
       }

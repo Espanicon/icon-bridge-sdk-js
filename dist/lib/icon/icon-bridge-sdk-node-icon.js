@@ -44,7 +44,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
                     return { error: errorResult.toString() };
                 }
             }),
-            transferNativeToken: (tokenName, value, targetAddress, targetChain, tokenContract, from, pk, stepLimit = "10000000") => __awaiter(this, void 0, void 0, function* () {
+            transferNativeToken: (tokenName, amount, targetAddress, targetChain, tokenContract, from, pk, stepLimit = "10000000") => __awaiter(this, void 0, void 0, function* () {
                 try {
                     const chainLabels = Object.keys(__classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_sdkUtils, "f").chains);
                     if (!chainLabels.includes(targetChain) || targetChain === "icon") {
@@ -52,22 +52,22 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
                     }
                     const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet;
                     const btpAddress = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_sdkUtils, "f").getBTPAddress(targetAddress, targetChain, isMainnet);
-                    const preTxRequest = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_transferToBTSContract, "f").call(this, value, tokenContract, from, pk, stepLimit);
+                    const preTxRequest = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_transferToBTSContract, "f").call(this, amount, tokenContract, from, pk, stepLimit);
                     if (preTxRequest.result != null) {
                         yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_sdkUtils, "f").sleep(3000);
                     }
                     else {
                         throw new Error(`pre approve tx returned error. result: ${preTxRequest}`);
                     }
-                    const txRequest = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_transfer, "f").call(this, tokenName, value, btpAddress, from, pk, stepLimit);
+                    const txRequest = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_transfer, "f").call(this, tokenName, amount, btpAddress, from, pk, stepLimit);
                     return txRequest;
                 }
                 catch (err) {
-                    const errorResult = new Exception(err, `Error running transferNativeToken(). Params:\ntokenName: ${tokenName}\nvalue: ${value}\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\ntokenContract: ${tokenContract}\nfrom: ${from}\npk: ${pk}\n`);
+                    const errorResult = new Exception(err, `Error running transferNativeToken(). Params:\ntokenName: ${tokenName}\namount: ${amount}\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\ntokenContract: ${tokenContract}\nfrom: ${from}\npk: ${pk}\n`);
                     return { error: errorResult.toString() };
                 }
             }),
-            transferWrappedToken: (tokenName, value, targetAddress, targetChain, tokenContract, from, pk, stepLimit = "10000000") => __awaiter(this, void 0, void 0, function* () {
+            transferWrappedToken: (tokenName, amount, targetAddress, targetChain, tokenContract, from, pk, stepLimit = "10000000") => __awaiter(this, void 0, void 0, function* () {
                 try {
                     const chainLabels = Object.keys(__classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_sdkUtils, "f").chains);
                     if (!chainLabels.includes(targetChain) || targetChain === "icon") {
@@ -75,18 +75,18 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
                     }
                     const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet;
                     const btpAddress = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_sdkUtils, "f").getBTPAddress(targetAddress, targetChain, isMainnet);
-                    const preTxRequest = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_approveBTSContract, "f").call(this, value, tokenContract, from, pk, stepLimit);
+                    const preTxRequest = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_approveBTSContract, "f").call(this, amount, tokenContract, from, pk, stepLimit);
                     if (preTxRequest.result != null) {
                         yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_sdkUtils, "f").sleep(3000);
                     }
                     else {
                         throw new Error(`pre approve tx returned error. result: ${preTxRequest}`);
                     }
-                    const txRequest = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_transfer, "f").call(this, tokenName, value, btpAddress, from, pk, stepLimit);
+                    const txRequest = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_transfer, "f").call(this, tokenName, amount, btpAddress, from, pk, stepLimit);
                     return txRequest;
                 }
                 catch (err) {
-                    const errorResult = new Exception(err, `Error running transferWrappedToken(). Params:\ntokenName: ${tokenName}\nvalue: ${value}\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\ntokenContract: ${tokenContract}\nfrom: ${from}\npk: ${pk}\n`);
+                    const errorResult = new Exception(err, `Error running transferWrappedToken(). Params:\ntokenName: ${tokenName}\namount: ${amount}\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\ntokenContract: ${tokenContract}\nfrom: ${from}\npk: ${pk}\n`);
                     return { error: errorResult.toString() };
                 }
             }),
