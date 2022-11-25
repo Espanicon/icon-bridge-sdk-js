@@ -118,6 +118,323 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     },
 
     /*
+     * Allow users to transfer native ICON tokens cross chain. 
+     * this method first makes a 'transfer' query to the token contract to
+     * transfer the tokens to the BTS contract and then calls the 'transfer'
+     * method on the BTS contract to make the cross chain transfer.
+     * @param tokenName - name of native ICON token to transfer.
+     * @param value - amount to transfers.
+     * @param targetAddress - receiver address.
+     * @param targetChain - receiving chain.
+     * @param from - public address of origin.
+     * @param pk - private key of origin.
+     * @param stepLimit - max gas to pay.
+     */
+    transferNativeToken: async (
+      tokenName: string,
+      value: string,
+      targetAddress: string,
+      targetChain: string,
+      tokenContract: string,
+      from: string,
+      pk: string,
+      stepLimit: string | null = "10000000"
+    ): Promise<any> => {
+      //
+      try {
+
+        // verify if the submitted targetChain is valid and supported by
+        // the sdk currently
+        const chainLabels = Object.keys(this.#sdkUtils.chains);
+        if (!chainLabels.includes(targetChain) || targetChain === "icon") {
+          throw new Error(`Invalid target chain. targetChain: ${targetChain}`)
+        }
+
+        const isMainnet: boolean =
+          this.#params.useMainnet == null ? true : this.#params.useMainnet;
+
+        const btpAddress = this.#sdkUtils.getBTPAddress(
+          targetAddress,
+          targetChain,
+          isMainnet
+        );
+
+        // transfer token to the BTS contract to be able to then
+        // make the cross chain transaction
+        const preTxRequest = await this.#transferToBTSContract(
+          value,
+          tokenContract,
+          from,
+          pk,
+          stepLimit
+        )
+
+        // if the preTxRequest was successfull the reply object will
+        // have a 'result' param. In that case we wait for 3 seconds
+        // to allow the chain to generate a new block to ensure that 
+        // the following cross chain transaction will be successfull
+        if (preTxRequest.result != null) {
+          await this.#sdkUtils.sleep(3000)
+        } else {
+          throw new Error(
+            `pre approve tx returned error. result: ${preTxRequest}`
+          )
+        }
+
+        // make cross chain transaction
+        const txRequest = await this.#transfer(
+          tokenName,
+          value,
+          btpAddress,
+          from,
+          pk,
+          stepLimit
+        );
+
+        return txRequest;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running transferNativeToken(). Params:\ntokenName: ${tokenName}\nvalue: ${value}\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\ntokenContract: ${tokenContract}\nfrom: ${from}\npk: ${pk}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /*
+     * Allow users to transfer wrapped ICON tokens cross chain. 
+     * this method first makes an 'approve' query to the token contract to
+     * allow the BTS contract to make cross chain transfer on behalf of
+     * the originator wallet.
+     * @param tokenName - name of native ICON token to transfer.
+     * @param value - amount to transfers.
+     * @param targetAddress - receiver address.
+     * @param targetChain - receiving chain.
+     * @param from - public address of origin.
+     * @param pk - private key of origin.
+     * @param stepLimit - max gas to pay.
+     */
+    transferWrappedToken: async (
+      tokenName: string,
+      value: string,
+      targetAddress: string,
+      targetChain: string,
+      tokenContract: string,
+      from: string,
+      pk: string,
+      stepLimit: string | null = "10000000"
+    ): Promise<any> => {
+      //
+      try {
+
+        // verify if the submitted targetChain is valid and supported by
+        // the sdk currently
+        const chainLabels = Object.keys(this.#sdkUtils.chains);
+        if (!chainLabels.includes(targetChain) || targetChain === "icon") {
+          throw new Error(`Invalid target chain. targetChain: ${targetChain}`)
+        }
+
+        const isMainnet: boolean =
+          this.#params.useMainnet == null ? true : this.#params.useMainnet;
+
+        const btpAddress = this.#sdkUtils.getBTPAddress(
+          targetAddress,
+          targetChain,
+          isMainnet
+        );
+
+        // approve the BTS contract to transfer wrapped tokens on
+        // behalf of the originator wallet to be able to then
+        // make the cross chain transaction
+        const preTxRequest = await this.#approveBTSContract(
+          value,
+          tokenContract,
+          from,
+          pk,
+          stepLimit
+        )
+
+        // if the preTxRequest was successfull the reply object will
+        // have a 'result' param. In that case we wait for 3 seconds
+        // to allow the chain to generate a new block to ensure that 
+        // the following cross chain transaction will be successfull
+        if (preTxRequest.result != null) {
+          await this.#sdkUtils.sleep(3000)
+        } else {
+          throw new Error(
+            `pre approve tx returned error. result: ${preTxRequest}`
+          )
+        }
+
+        // make cross chain transaction
+        const txRequest = await this.#transfer(
+          tokenName,
+          value,
+          btpAddress,
+          from,
+          pk,
+          stepLimit
+        );
+
+        return txRequest;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running transferWrappedToken(). Params:\ntokenName: ${tokenName}\nvalue: ${value}\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\ntokenContract: ${tokenContract}\nfrom: ${from}\npk: ${pk}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /*
+     * Allow users to transfer token to the BTS contract. This step is
+     * necessary to do before using the transfer method of the BTS contract.
+     * @param _value - amount to transfers.
+     * @param tokenContract - token contract.
+     * @param from - public address of origin.
+     * @param pk - private key of origin.
+     * @param stepLimit - max gas to pay.
+     */
+    transferToBTSContract: async (
+      _value: string,
+      tokenContract: string | null = null,
+      from: string,
+      pk: string,
+      stepLimit: string | null = "5000000"
+    ): Promise<any> => {
+      //
+      try {
+        // transfer token to the BTS address to be able to then
+        // make the cross chain transaction
+        const txRequest = await this.#transferToBTSContract(
+          _value,
+          tokenContract,
+          from,
+          pk,
+          stepLimit
+        )
+
+        return txRequest;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running transferToBTSContract(). Params:\n_value: ${_value}\ntokenContract: ${tokenContract}\n\nfrom: ${from}\npk: ${pk}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /*
+     * Allow users to transfer token between chains.
+     * @param _coinName - name of coin.
+     * @param _value - amount to transfers.
+     * @param _to - receiver address BTP formatted.
+     * @param from - public address of origin.
+     * @param pk - private key of origin.
+     * @param stepLimit - max gas to pay.
+     */
+    transfer: async (
+      _coinName: string,
+      _value: string,
+      _to: string,
+      from: string,
+      pk: string,
+      stepLimit: string | null = "10000000"
+    ): Promise<any> => {
+      //
+      try {
+
+        // make cross chain transaction
+        const txRequest = await this.#transfer(
+          _coinName,
+          _value,
+          _to,
+          from,
+          pk,
+          stepLimit
+        );
+
+        return txRequest;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running transfer(). Params:\n_coinName: ${_coinName}\n_value: ${_value}\n_to: ${_to}\nfrom: ${from}\npk: ${pk}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /*
+     * Allow user to transfer a batch of tokens.
+     * @param _coinNames - names of tokens to transfer.
+     * @param _values - amounts to transfer.
+     * @param _to - receiver address BTP formatted.
+     * @param from - public address of origin.
+     * @param pk - private key of origin.
+     * @param stepLimit - max gas to pay.
+     */
+    transferBatch: async (
+      _coinNames: string[],
+      _values: string[],
+      _to: string,
+      from: string,
+      pk: string,
+      stepLimit: string | null = null
+    ): Promise<any> => {
+      //
+      try {
+        const foo = [_coinNames, _values, _to, from, pk, stepLimit];
+        console.log(foo);
+        return null;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running transferBatch(). Params:\n_coinNames: ${_coinNames}\n_values: ${_values}\n_to: ${_to}\nfrom: ${from}\npk: ${pk}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /*
+     * Approves the BTS contract address to send tokens on behalf
+     * of the originator wallet. This 'approve' method is used by the
+     * contracts of wrapped tokens to allow the BTS contract to move
+     * an amount of token cross chain.
+     * @param spender - address that is being approved for spending.
+     * @param amount - amount being approved to spent.
+     * @param tokenContract - contract address for the wrapped token.
+     * @param from - public address of origin.
+     * @param pk - private key of origin.
+     * @param stepLimit - max gas to pay.
+     */
+    approveBTSContract: async (
+      amount: string,
+      tokenContract: string,
+      from: string,
+      pk: string,
+      stepLimit: string | null = "5000000"
+    ): Promise<any> => {
+      //
+      try {
+      const txRequest = await this.#approveBTSContract(
+        amount,
+        tokenContract,
+        from,
+        pk,
+        stepLimit
+      );
+
+        return txRequest;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running approveBTSContract(). Params:\namount: ${amount}\ntokenContract: ${tokenContract}\nfrom: ${from}\npk: ${pk}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /*
      * Reclaim the tokens refundable balance by an owner. Caller must be
      * owner of coin.
      * @param _coinName - coin name.
@@ -160,196 +477,6 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
         const errorResult = new Exception(
           err,
           `Error running reclaim(). Params:\n_coinName: ${_coinName}\n_value: ${_value}\nfrom: ${from}\npk: ${pk}`
-        );
-        return { error: errorResult.toString() };
-      }
-    },
-
-    /*
-     * Allow users to transfer token to the BTS contract. This step is
-     * necessary to do before using the transfer method of the BTS contract.
-     * @param _value - amount to transfers.
-     * @param tokenContract - token contract.
-     * @param from - public address of origin.
-     * @param pk - private key of origin.
-     * @param stepLimit - max gas to pay.
-     */
-    transferToBTSContract: async (
-      _value: string,
-      tokenContract: string | null = null,
-      from: string,
-      pk: string,
-      stepLimit: string | null = "2000000"
-    ): Promise<any> => {
-      //
-      try {
-        // transfer token to the BTS address to be able to then
-        // make the cross chain transaction
-        const txRequest = await this.#transferToBTSContract(
-          _value,
-          tokenContract,
-          from,
-          pk,
-          stepLimit
-        )
-
-        return txRequest;
-      } catch (err) {
-        const errorResult = new Exception(
-          err,
-          `Error running transferToBTSContract(). Params:\n_value: ${_value}\ntokenContract: ${tokenContract}\n\nfrom: ${from}\npk: ${pk}\n`
-        );
-        return { error: errorResult.toString() };
-      }
-    },
-
-    /*
-     * Allow users to transfer token between chains.
-     * @param _coinName - name of coin.
-     * @param _value - amount to transfers.
-     * @param _to - receiver address BTP formatted.
-     * @param from - public address of origin.
-     * @param pk - private key of origin.
-     * @param stepLimit - max gas to pay.
-     */
-    transfer: async (
-      _coinName: string,
-      _value: string,
-      _to: string,
-      // tokenContract: string | null = null,
-      from: string,
-      pk: string,
-      stepLimit: string | null = "2000000"
-    ): Promise<any> => {
-      //
-      try {
-
-        // make cross chain transaction
-        const txRequest = await this.#transfer(
-          _coinName,
-          _value,
-          _to,
-          from,
-          pk,
-          stepLimit
-        );
-
-        return txRequest;
-      } catch (err) {
-        const errorResult = new Exception(
-          err,
-          `Error running transfer(). Params:\n_coinName: ${_coinName}\n_value: ${_value}\n_to: ${_to}\nfrom: ${from}\npk: ${pk}\n`
-        );
-        return { error: errorResult.toString() };
-      }
-    },
-
-    /*
-     * Allow users to transfer native ICON tokens cross chain. 
-     * this method first makes a 'transfer' query to the token contract to
-     * transfer the tokens to the BTS contract and then calls the 'transfer'
-     * method on the BTS contract to make the cross chain transfer.
-     * @param tokenName - name of native ICON token to transfer.
-     * @param value - amount to transfers.
-     * @param targetAddress - receiver address.
-     * @param targetChain - receiving chain.
-     * @param from - public address of origin.
-     * @param pk - private key of origin.
-     * @param stepLimit - max gas to pay.
-     */
-    transferNativeToken: async (
-      tokenName: string,
-      value: string,
-      targetAddress: string,
-      targetChain: string,
-      tokenContract: string,
-      from: string,
-      pk: string,
-      stepLimit: string | null = "2000000"
-    ): Promise<any> => {
-      //
-      try {
-
-        // verify if the submitted targetChain is valid and supported by
-        // the sdk currently
-        const chainLabels = Object.keys(this.#sdkUtils.chains);
-        if (!chainLabels.includes(targetChain) || targetChain === "icon") {
-          throw new Error(`Invalid target chain. targetChain: ${targetChain}`)
-        }
-
-        const isMainnet: boolean =
-          this.#params.useMainnet == null ? true : this.#params.useMainnet;
-
-        const btpAddress = this.#sdkUtils.getBTPAddress(
-          targetAddress,
-          targetChain,
-          isMainnet
-        );
-
-        // transfer token to the BTS contract to be able to then
-        // make the cross chain transaction
-        const preTxRequest = await this.#transferToBTSContract(
-          value,
-          tokenContract,
-          from,
-          pk,
-          stepLimit
-        )
-
-        // if the preTxRequest was successfull the reply object will
-        // have a 'result' param. In that case we wait for 3 seconds
-        // to allow the chain to generate a new block to ensure that 
-        // the following cross chain transaction will be successfull
-        if (preTxRequest.result != null) {
-          await this.#sdkUtils.sleep(3000)
-        }
-
-        // make cross chain transaction
-        const txRequest = await this.#transfer(
-          tokenName,
-          value,
-          btpAddress,
-          from,
-          pk,
-          stepLimit
-        );
-
-        return txRequest;
-      } catch (err) {
-        const errorResult = new Exception(
-          err,
-          `Error running transferNativeToken(). Params:\ntokenName: ${tokenName}\nvalue: ${value}\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\ntokenContract: ${tokenContract}\nfrom: ${from}\npk: ${pk}\n`
-        );
-        return { error: errorResult.toString() };
-      }
-    },
-
-    /*
-     * Allow user to transfer a batch of tokens.
-     * @param _coinNames - names of tokens to transfer.
-     * @param _values - amounts to transfer.
-     * @param _to - receiver address BTP formatted.
-     * @param from - public address of origin.
-     * @param pk - private key of origin.
-     * @param stepLimit - max gas to pay.
-     */
-    transferBatch: async (
-      _coinNames: string[],
-      _values: string[],
-      _to: string,
-      from: string,
-      pk: string,
-      stepLimit: string | null = null
-    ): Promise<any> => {
-      //
-      try {
-        const foo = [_coinNames, _values, _to, from, pk, stepLimit];
-        console.log(foo);
-        return null;
-      } catch (err) {
-        const errorResult = new Exception(
-          err,
-          `Error running transferBatch(). Params:\n_coinNames: ${_coinNames}\n_values: ${_values}\n_to: ${_to}\nfrom: ${from}\npk: ${pk}\n`
         );
         return { error: errorResult.toString() };
       }
@@ -865,7 +992,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     tokenContract: string | null = null,
     from: string,
     pk: string,
-    stepLimit: string | null = "2000000"
+    stepLimit: string | null = "5000000"
   ): Promise<any> => {
     //
     try {
@@ -927,7 +1054,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     _to: string,
     from: string,
     pk: string,
-    stepLimit: string | null = "2000000"
+    stepLimit: string | null = "5000000"
   ): Promise<any> => {
     //
     try {
@@ -963,6 +1090,105 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       const errorResult = new Exception(
         err,
         `Error running transfer(). Params:\n_coinName: ${_coinName}\n_value: ${_value}\n_to: ${_to}\nfrom: ${from}\npk: ${pk}\n`
+      );
+      return { error: errorResult.toString() };
+    }
+  };
+
+  /*
+   * Approves an address (usually a contract) to send tokens on behalf
+   * of the originator wallet. This 'approve' method is used by the
+   * contracts of wrapped tokens to allow the BTS contract to move
+   * an amount of token cross chain.
+   * @param spender - address that is being approved for spending.
+   * @param amount - amount being approved to spent.
+   * @param tokenContract - contract address for the wrapped token.
+   * @param from - public address of origin.
+   * @param pk - private key of origin.
+   * @param stepLimit - max gas to pay.
+   */
+  #approve = async (
+    spender: string,
+    amount: string,
+    tokenContract: string,
+    from: string,
+    pk: string,
+    stepLimit: string | null = "5000000"
+  ): Promise<any> => {
+    //
+    try {
+
+    // parse value into loop units and then into hexadecimal
+    const parsedValue = this.espaniconLib.decimalToHex(
+      Number(amount)*(10**18)
+    )
+
+    // make cross chain transaction
+    const txRequest = await this.#makeTxRequest(
+      from,
+      tokenContract,
+      pk,
+      "approve",
+      { spender: spender, amount: parsedValue },
+      0,
+      stepLimit
+    );
+
+      return txRequest;
+    } catch (err) {
+      const errorResult = new Exception(
+        err,
+        `Error running approve(). Params:\nspender: ${spender}\namount: ${amount}\ntokenContract: ${tokenContract}\nfrom: ${from}\npk: ${pk}\n`
+      );
+      return { error: errorResult.toString() };
+    }
+  };
+
+  /*
+   * Approves the BTS contract address to send tokens on behalf
+   * of the originator wallet. This 'approve' method is used by the
+   * contracts of wrapped tokens to allow the BTS contract to move
+   * an amount of token cross chain.
+   * @param spender - address that is being approved for spending.
+   * @param amount - amount being approved to spent.
+   * @param tokenContract - contract address for the wrapped token.
+   * @param from - public address of origin.
+   * @param pk - private key of origin.
+   * @param stepLimit - max gas to pay.
+   */
+  #approveBTSContract = async (
+    amount: string,
+    tokenContract: string,
+    from: string,
+    pk: string,
+    stepLimit: string | null = "5000000"
+  ): Promise<any> => {
+    //
+    try {
+
+    const isMainnet: boolean =
+      this.#params.useMainnet == null ? true : this.#params.useMainnet;
+
+    const btsContract = this.#sdkUtils.getContractOfLabelFromLocalData(
+      "bts",
+      "icon",
+      isMainnet,
+      false
+    );
+    const txRequest = await this.#approve(
+      btsContract,
+      amount,
+      tokenContract,
+      from,
+      pk,
+      stepLimit
+    );
+
+      return txRequest;
+    } catch (err) {
+      const errorResult = new Exception(
+        err,
+        `Error running approveBTSContract(). Params:\namount: ${amount}\ntokenContract: ${tokenContract}\nfrom: ${from}\npk: ${pk}\n`
       );
       return { error: errorResult.toString() };
     }
