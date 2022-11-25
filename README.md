@@ -64,7 +64,7 @@ const SDK = new IconBridgeSDK({
 // you can define the RPC Nodes to use
 const SDK = new IconBridgeSDK({
   iconProvider: {
-    hostname: 'lisbon.net.solidwallet.io'
+  hostname: 'https://lisbon.net.solidwallet.io/api/v3/icon_dex'
   },
   bscProvider: {
     hostname: 'https://data-seed-prebsc-1-s1.binance.org:8545'
