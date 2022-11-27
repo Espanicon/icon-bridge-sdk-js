@@ -168,18 +168,21 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
                     return { error: errorResult.toString() };
                 }
             }),
-            register: (_name, _symbol, _decimals, _feeNumerator, _fixedFee, _addr, from, pk, stepLimit = null) => __awaiter(this, void 0, void 0, function* () {
+            register: (_name, _symbol, _decimals, _feeNumerator, _fixedFee, from, pk, _addr = null, stepLimit = null) => __awaiter(this, void 0, void 0, function* () {
                 try {
                     const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet;
                     const btsContract = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_sdkUtils, "f").getContractOfLabelFromLocalData("bts", "icon", isMainnet, false);
-                    const txRequest = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_makeTxRequest, "f").call(this, from, btsContract, pk, "register", {
+                    const queryParams = {
                         _name: _name,
                         _symbol: _symbol,
                         _decimals: _decimals,
                         _feeNumerator: _feeNumerator,
                         _fixedFee: _fixedFee,
-                        _addr: _addr
-                    }, 0, stepLimit);
+                    };
+                    if (_addr != null) {
+                        queryParams["_addr"] = _addr;
+                    }
+                    const txRequest = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_makeTxRequest, "f").call(this, from, btsContract, pk, "register", queryParams, 0, stepLimit);
                     return txRequest;
                 }
                 catch (err) {

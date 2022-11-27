@@ -586,9 +586,9 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
      * @param _decimals - decimal number.
      * @param _feeNumerator -
      * @param _fixedFee -
-     * @param _addr -
      * @param from - public address of origin.
      * @param pk - private key of origin.
+     * @param _addr -
      * @param stepLimit - max gas to pay.
      */
     register: async (
@@ -597,9 +597,9 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       _decimals: string,
       _feeNumerator: string,
       _fixedFee: string,
-      _addr: string,
       from: string,
       pk: string,
+      _addr: string | null = null,
       stepLimit: string | null = null
     ): Promise<any> => {
       //
@@ -614,19 +614,31 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
           false
         );
 
-        const txRequest = await this.#makeTxRequest(
-          from,
-          btsContract,
-          pk,
-          "register",
-          {
+        const queryParams: {
+            _name: string,
+            _symbol: string,
+            _decimals: string,
+            _feeNumerator: string,
+            _fixedFee: string,
+            _addr?: string 
+        } = {
             _name: _name,
             _symbol: _symbol,
             _decimals: _decimals,
             _feeNumerator: _feeNumerator,
             _fixedFee: _fixedFee,
-            _addr: _addr
-          },
+          };
+
+          if (_addr != null) {
+            queryParams["_addr"] = _addr;
+          }
+
+        const txRequest = await this.#makeTxRequest(
+          from,
+          btsContract,
+          pk,
+          "register",
+          queryParams,
           0,
           stepLimit
         );
@@ -692,7 +704,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
 
     /*
      * Removes blacklisted addresses.
-     * @param _net -
+     * @param _net - network
      * @param _addresses - addresses to remove from blacklist.
      * @param from - public address of origin.
      * @param pk - private key of origin.
