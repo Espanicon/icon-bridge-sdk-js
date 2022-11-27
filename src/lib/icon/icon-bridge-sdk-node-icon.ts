@@ -462,12 +462,16 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
           false
         );
 
+      // parse value into loop units and then into hexadecimal
+      const parsedValue = this.espaniconLib.decimalToHex(
+        Number(_value)*(10**18)
+      )
         const txRequest = await this.#makeTxRequest(
           from,
           btsContract,
           pk,
           "reclaim",
-          { _coinName: _coinName, _value: _value },
+          { _coinName: _coinName, _value: parsedValue },
           0,
           stepLimit
         );

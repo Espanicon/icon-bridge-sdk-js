@@ -135,7 +135,8 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
                 try {
                     const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet;
                     const btsContract = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_sdkUtils, "f").getContractOfLabelFromLocalData("bts", "icon", isMainnet, false);
-                    const txRequest = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_makeTxRequest, "f").call(this, from, btsContract, pk, "reclaim", { _coinName: _coinName, _value: _value }, 0, stepLimit);
+                    const parsedValue = this.espaniconLib.decimalToHex(Number(_value) * (10 ** 18));
+                    const txRequest = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_makeTxRequest, "f").call(this, from, btsContract, pk, "reclaim", { _coinName: _coinName, _value: parsedValue }, 0, stepLimit);
                     return txRequest;
                 }
                 catch (err) {
