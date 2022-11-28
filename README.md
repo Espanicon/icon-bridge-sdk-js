@@ -77,6 +77,7 @@ Methods for interacting with the ICON Bridge originating from the ICON Chain.
 
 ### IconBridge.icon.methods
 
+------------------
 #### `balanceOf(_owner, _coinName)`
 Gets the balance of a defined coin (`_coinName`) for a defined wallet (`_owner`).
 ##### Parameters
@@ -102,38 +103,185 @@ Gets the balance of a defined coin (`_coinName`) for a defined wallet (`_owner`)
 ```js
 const balance = await SDK.icon.methods.balanceOf("hx0000000000000000000000000000000000000000", "btp-0x2.icon-ICX")
 ```
+------------------
+#### `balanceOfBatch(_owner, _coinNames)`
+##### Parameters
+| Parameter | Type | Description|
+|--------------|------|----------|
+|_owner|address|Wallet address to check|
+|_coinNames|string[]|List of coin names|
 
-* `name`
-* `feeRatio`
-* `getTokenLimit`
-* `getTokenLimitTxn`
-* `getSn`
-* `isUserBlackListed`
-* `getBlackListedUsers`
-* `getRegisteredTokensCount`
-* `tokenLimitStatus`
-* `coinId`
-* `coinNames`
-* `balanceOfBatch`
-* `getAccumulatedFees`
-* `blackListedUsersCount`
-* `getTransaction`
-* `getOwners`
-* `isOwner`
-* `isRestrictionEnabled`
-* `transferNativeCoinName`
-* `reclaim`
-* `transfer`
-* `transferBatch`
-* `addOwner`
-* `removeOwner`
-* `register`
-* `setFeeRatio`
-* `removeBlacklistAddress`
-* `setTokenLimit`
-* `addBlacklistAddress`
-* `addRestriction`
-* `disableRestrictions`
+##### Returns
+```js
+{
+  "jsonrpc":"2.0",
+  "result":[
+    {"locked":"0x0",
+    "refundable":"0x0",
+    "usable": "0x0",
+    "userBalance":"0x128cce36434efac00000"
+    }
+  ],
+  "id":140
+}
+
+```
+##### Example
+```js
+const balance = await SDK.icon.methods.balanceOfBatch("hx0000000000000000000000000000000000000000", ["btp-0x2.icon-ICX"])
+```
+------------------
+#### `coinNames()`
+##### Parameters
+** NO PARAMS **
+
+##### Returns
+```js
+{
+  "jsonrpc":"2.0",
+  "result":[
+    "btp-0x2.icon-ICX",
+    "btp-0x2.icon-sICX",
+    "btp-0x2.icon-bnUSD",
+    "btp-0x61.bsc-BNB",
+    "btp-0x61.bsc-BUSD",
+    "btp-0x61.bsc-USDT",
+    "btp-0x61.bsc-USDC",
+    "btp-0x61.bsc-BTCB",
+    "btp-0x61.bsc-ETH",
+    "btp-0x228.snow-ICZ"
+    ]
+  "id":140
+}
+
+```
+##### Example
+```js
+const balance = await SDK.icon.methods.coinNames()
+```
+------------------
+#### `feeRatio(_coinName)`
+##### Parameters
+| Parameter | Type | Description|
+|--------------|------|----------|
+|_coinName|string|Name of coin to check|
+
+##### Returns
+```js
+{
+  "jsonrpc":"2.0",
+  "result":{
+    "feeNumerator":"0x64",
+    "fixedFee":"0x3bacab37b62e0000"
+    }
+  "id":140
+}
+
+```
+##### Example
+```js
+const balance = await SDK.icon.methods.feeRatio("btp-0x2.icon-ICX")
+```
+------------------
+#### `getAccumulatedFees()`
+##### Parameters
+** NO PARAMS **
+
+##### Returns
+```js
+{
+  "jsonrpc":"2.0",
+  "result":{
+    "btp-0x2.icon-ICX":"0x16baa26c2d2280000",
+    "btp-0x2.icon-bnUSD":"0x0",
+    "btp-0x2.icon-sICX":"0x0",
+    "btp-0x228.snow-ICZ":"0x0",
+    "btp-0x61.bsc-BNB":"0x0",
+    "btp-0x61.bsc-BTCB":"0x0",
+    "btp-0x61.bsc-BUSD":"0x0",
+    "btp-0x61.bsc-ETH":"0x0",
+    "btp-0x61.bsc-USDC":"0x0",
+    "btp-0x61.bsc-USDT":"0x0"
+  },
+  "id":140
+}
+
+```
+##### Example
+```js
+const balance = await SDK.icon.methods.getAccumulatedFees()
+```
+------------------
+#### `getOwners()`
+##### Parameters
+** NO PARAMS **
+
+##### Returns
+```js
+{
+  "jsonrpc":"2.0",
+  "result":[
+    "hx172ddb77bc9d9b000fac0f25505ce367bfbe96ad",
+    "hx81da0f9f2203741bfee0883cc1b757bc2389f93f"
+  ],
+  "id":140
+}
+
+```
+##### Example
+```js
+const balance = await SDK.icon.methods.getOwners()
+```
+------------------
+#### `getOwners()`
+##### Parameters
+** NO PARAMS **
+
+##### Returns
+```js
+{
+  "jsonrpc":"2.0",
+  "result":[
+    "hx172ddb77bc9d9b000fac0f25505ce367bfbe96ad",
+    "hx81da0f9f2203741bfee0883cc1b757bc2389f93f"
+  ],
+  "id":140
+}
+
+```
+##### Example
+```js
+const balance = await SDK.icon.methods.getOwners()
+```
+#### `getTokenLimit`
+#### `getTokenLimitTxn`
+#### `getSn`
+#### `isUserBlackListed`
+#### `getBlackListedUsers`
+#### `getRegisteredTokensCount`
+#### `tokenLimitStatus`
+#### `coinId`
+#### `coinNames`
+#### `balanceOfBatch`
+#### `getAccumulatedFees`
+#### `blackListedUsersCount`
+#### `getTransaction`
+#### `getOwners`
+#### `isOwner`
+#### `isRestrictionEnabled`
+#### `transferNativeCoinName`
+#### `reclaim`
+#### `transfer`
+#### `transferBatch`
+#### `addOwner`
+#### `removeOwner`
+#### `register`
+#### `setFeeRatio`
+#### `removeBlacklistAddress`
+#### `setTokenLimit`
+#### `addBlacklistAddress`
+#### `addRestriction`
+#### `disableRestrictions`
 
 ### IconBridge.bsc
 
