@@ -139,7 +139,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'icon', Method 'getOwners()'", () 
 // ********************************************//
 // Test 7: calls 'isOwner' method originating on the Icon chain.
 // It should returns and object with a predefined set of keys.
-describe("E2E testing Icon Bridge SDK. Chain: 'icon', Method 'isOwner()'", () => {
+describe("E2E testing Icon Bridge SDK. Chain: 'icon', Method 'isOwner(_addr)'", () => {
   it("Check is wallet address is owner of BTS contract.", async () => {
     const query = await sdk.icon.methods.isOwner(wallets.icon);
     // check if the result query has the valid keys
@@ -302,7 +302,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'icon', Method 'getRegisteredToken
 describe("E2E testing Icon Bridge SDK. Chain: 'icon', Method 'tokenLimitStatus(_net, _coinName)'", () => {
   it("Returns token limit status for the given coin and chain.", async () => {
     const query = await sdk.icon.methods.tokenLimitStatus(
-      "icon",
+      "0x2.icon",
       "btp-0x2.icon-bnUSD"
     );
     // check if the result query has the valid keys

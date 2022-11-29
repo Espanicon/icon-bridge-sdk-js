@@ -3,8 +3,6 @@
 
 WRITE INTRODUCTION AND HIGH LEVEL DESCRIPTION OF THE SDK
 
-## Table of Contents
-
 ## Installation
 
 DESCRIBE INSTALLATION PROCESS
@@ -233,7 +231,27 @@ const balance = await SDK.icon.methods.getAccumulatedFees()
 const balance = await SDK.icon.methods.getOwners()
 ```
 ------------------
-#### `getOwners()`
+#### `isOwners(_addr)`
+##### Parameters
+| Parameter | Type | Description|
+|--------------|------|----------|
+|_addr|address|Wallet address to check.|
+
+##### Returns
+```js
+{
+  "jsonrpc":"2.0",
+  "result":"0x0",
+  "id":140
+}
+
+```
+##### Example
+```js
+const balance = await SDK.icon.methods.isOwners("hx172ddb77bc9d9b000fac0f25505ce367bfbe96ad")
+```
+------------------
+#### `name()`
 ##### Parameters
 ** NO PARAMS **
 
@@ -241,34 +259,240 @@ const balance = await SDK.icon.methods.getOwners()
 ```js
 {
   "jsonrpc":"2.0",
-  "result":[
-    "hx172ddb77bc9d9b000fac0f25505ce367bfbe96ad",
-    "hx81da0f9f2203741bfee0883cc1b757bc2389f93f"
-  ],
+  "result":"BTP Token Service",
   "id":140
 }
 
 ```
 ##### Example
 ```js
-const balance = await SDK.icon.methods.getOwners()
+const balance = await SDK.icon.methods.name()
 ```
-#### `getTokenLimit`
-#### `getTokenLimitTxn`
-#### `getSn`
-#### `isUserBlackListed`
-#### `getBlackListedUsers`
-#### `getRegisteredTokensCount`
-#### `tokenLimitStatus`
-#### `coinId`
-#### `coinNames`
-#### `balanceOfBatch`
-#### `getAccumulatedFees`
-#### `blackListedUsersCount`
-#### `getTransaction`
-#### `getOwners`
-#### `isOwner`
-#### `isRestrictionEnabled`
+------------------
+#### `getTokenLimit(_name)`
+##### Parameters
+| Parameter | Type | Description|
+|--------------|------|----------|
+|_name|string|Name of token.|
+
+##### Returns
+```js
+{
+  "jsonrpc":"2.0",
+  "result":"0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+  "id":140
+}
+
+```
+##### Example
+```js
+const balance = await SDK.icon.methods.getTokenLimit("btp-0x2.icon-sICX")
+```
+------------------
+#### `getTokenLimitTxn(_Sn)`
+##### Parameters
+| Parameter | Type | Description|
+|--------------|------|----------|
+|_Sn|string|Tx number.|
+
+##### Returns
+```js
+{
+  "jsonrpc":"2.0",
+  "result":null,
+  "id":140
+}
+
+```
+##### Example
+```js
+const balance = await SDK.icon.methods.getTokenLimit("0x63")
+```
+------------------
+#### `getSn(_Sn)`
+##### Parameters
+| Parameter | Type | Description|
+|--------------|------|----------|
+|_Sn|string|Tx number.|
+
+##### Returns
+```js
+{
+  "jsonrpc":"2.0",
+  "result": "0xaf",
+  "id":140
+}
+
+```
+##### Example
+```js
+const balance = await SDK.icon.methods.getSn("0x63")
+```
+------------------
+#### `isUserBlackListed(_net, _address)`
+##### Parameters
+| Parameter | Type | Description|
+|--------------|------|----------|
+|_net|string|Network string identifier.|
+|_address|address|Wallet address.|
+
+##### Returns
+```js
+{
+  "jsonrpc":"2.0",
+  "result": "0x0",
+  "id":140
+}
+
+```
+##### Example
+```js
+const balance = await SDK.icon.methods.isUserBlackListed("hx0169e03001a3fa4012092ad4a4ddf2d07681f063")
+```
+------------------
+#### `getBlackListedUsers(_net, _start, _end)`
+##### Parameters
+| Parameter | Type | Description|
+|--------------|------|----------|
+|_net|string|Network string identifier.|
+|_start|Number in Hexadecimal|Start index.|
+|_end|Number in Hexadecimal|End index.|
+
+##### Returns
+```js
+{
+  "jsonrpc":"2.0",
+  "result": "0x0",
+  "id":140
+}
+
+```
+##### Example
+```js
+const balance = await SDK.icon.methods.getBlackListedUsers(
+  "0x1.icon",
+  "0x0",
+  "0x1"
+)
+```
+------------------
+#### `getRegisteredTokensCount()`
+##### Parameters
+** NO PARAMS **
+
+##### Returns
+```js
+{
+  "jsonrpc":"2.0",
+  "result": "0x9",
+  "id":140
+}
+
+```
+##### Example
+```js
+const balance = await SDK.icon.methods.getRegisteredTokensCount()
+```
+------------------
+#### `tokenLimitStatus(_net, _coinName)`
+##### Parameters
+| Parameter | Type | Description|
+|--------------|------|----------|
+|_net|string|Network string identifier.|
+|_coinName|string|Name of coin to check|
+
+##### Returns
+```js
+{
+  "jsonrpc":"2.0",
+  "result": "0x0",
+  "id":140
+}
+
+```
+##### Example
+```js
+const balance = await SDK.icon.methods.tokenLimitStatus("0x2.icon", "btp-0x2.icon-ICX")
+```
+------------------
+#### `blackListedUsersCount(_net)`
+##### Parameters
+| Parameter | Type | Description|
+|--------------|------|----------|
+|_net|string|Network string identifier.|
+
+##### Returns
+```js
+{
+  "jsonrpc":"2.0",
+  "result": "0x0",
+  "id":140
+}
+
+```
+##### Example
+```js
+const balance = await SDK.icon.methods.blackListedUsersCount("0x2.icon")
+```
+------------------
+#### `getTransaction(_sn)`
+##### Parameters
+| Parameter | Type | Description|
+|--------------|------|----------|
+|_Sn|string|Tx number.|
+
+##### Returns
+```js
+{
+  "jsonrpc":"2.0",
+  "result": "0x0",
+  "id":140
+}
+
+```
+##### Example
+```js
+const balance = await SDK.icon.methods.getTransaction("0x1")
+```
+------------------
+#### `isRestrictionEnabled()`
+##### Parameters
+** NO PARAMS **
+
+##### Returns
+```js
+{
+  "jsonrpc":"2.0",
+  "result": "0x1",
+  "id":140
+}
+
+```
+##### Example
+```js
+const balance = await SDK.icon.methods.isRestrictionEnabled()
+```
+------------------
+#### `coinId(_coinName)`
+##### Parameters
+| Parameter | Type | Description|
+|--------------|------|----------|
+|_coinName|string|Name of coin.|
+
+##### Returns
+```js
+{
+  "jsonrpc":"2.0",
+  "result": "cx55b835590d43af7bf6f5be3c3d50982264d24e5d",
+  "id":140
+}
+
+```
+##### Example
+```js
+const balance = await SDK.icon.methods.coinId("btp-0x2.icon-bnUSD")
+```
+------------------
 #### `transferNativeCoinName`
 #### `reclaim`
 #### `transfer`
