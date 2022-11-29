@@ -500,7 +500,7 @@ const balance = await SDK.icon.methods.coinId("btp-0x2.icon-bnUSD")
 |_targetAddress|string|Wallet address of receiver.|
 |_targetChain|string|Receiver chain.|
 |from|address|Wallet address of origin.|
-|pk|address|Private key of Wallet address of origin.|
+|pk|string|Private key of Wallet address of origin.|
 |amount|Number|Amount of native coin to transfer.|
 |stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
@@ -514,54 +514,162 @@ const balance = await SDK.icon.methods.coinId("btp-0x2.icon-bnUSD")
 |targetChain|string|Receiver chain.|
 |tokenContract|string|Contract for the token to transfer.|
 |from|address|Wallet address of origin.|
-|pk|address|Private key of Wallet address of origin.|
+|pk|string|Private key of Wallet address of origin.|
 |stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
-
 
 ------------------
 #### `transferWrappedToken(tokenName, amount, targetAddress, targetChain, tokenContract, from, pk, stepLimit)`
+| Parameter | Type | Description|
+|--------------|------|----------|
+|tokenName|string|Name of token to transfer.|
+|amount|Decimal number as string|Amount of token to transfer.|
+|targetAddress|string|Wallet address of receiver.|
+|targetChain|string|Receiver chain.|
+|tokenContract|string|Contract for the token to transfer.|
+|from|address|Wallet address of origin.|
+|pk|string|Private key of Wallet address of origin.|
+|stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
 ------------------
 #### `transferToBTSContract(_value, tokenContract, from, pk, stepLimit)`
+| Parameter | Type | Description|
+|--------------|------|----------|
+|_value|Decimal number as string|Amount to transfer.|
+|tokenContract|string|Contract for the token to transfer.|
+|from|address|Wallet address of origin.|
+|pk|string|Private key of Wallet address of origin.|
+|stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
 ------------------
 #### `transfer(_coinName, _value, _to, from, pk, stepLimit)`
+| Parameter | Type | Description|
+|--------------|------|----------|
+|_coinName|string|Name of Token to transfer.|
+|_value|Decimal number as string|Amount to transfer.|
+|_to|string|BTP formatted address of receiver.|
+|from|address|Wallet address of origin.|
+|pk|string|Private key of Wallet address of origin.|
+|stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
 ------------------
 #### `transferBatch(_coinNames, _values, _to, from, pk, stepLimit)`
+| Parameter | Type | Description|
+|--------------|------|----------|
+|_coinNames|string[]|Array of Names of Tokens to transfer.|
+|_value|Array\<Decimal number as string\>|Array of Amounts to transfer.|
+|_to|string|BTP formatted address of receiver.|
+|from|address|Wallet address of origin.|
+|pk|string|Private key of Wallet address of origin.|
+|stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
 ------------------
 #### `approveBTSContract(amount, tokenContract, from, pk, stepLimit)`
+| Parameter | Type | Description|
+|--------------|------|----------|
+|amount|Decimal number as string|Amount of token to transfer.|
+|tokenContract|string|Contract for the token to transfer.|
+|from|address|Wallet address of origin.|
+|pk|string|Private key of Wallet address of origin.|
+|stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
 ------------------
 #### `reclaim(_coinName, _value, from, pk, stepLimit)`
+| Parameter | Type | Description|
+|--------------|------|----------|
+|_coinName|string|Name of Token to transfer.|
+|_value|Decimal number as string|Amount to transfer.|
+|from|address|Wallet address of origin.|
+|pk|string|Private key of Wallet address of origin.|
+|stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
 ------------------
 #### `addOwner(_addr, from, pk, stepLimit)`
+| Parameter | Type | Description|
+|--------------|------|----------|
+|_addr|string|Wallet to add as owner of contract.|
+|from|address|Wallet address of origin.|
+|pk|string|Private key of Wallet address of origin.|
+|stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
 ------------------
 #### `removeOwner(_addr, from, pk, stepLimit)`
+| Parameter | Type | Description|
+|--------------|------|----------|
+|_addr|string|Wallet to add as owner of contract.|
+|from|address|Wallet address of origin.|
+|pk|string|Private key of Wallet address of origin.|
+|stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
 ------------------
 #### `register(_name, _symbol, _decimals, _feeNumerator, _fixedFee, from, pk, _addr, stepLimit)`
+| Parameter | Type | Description|
+|--------------|------|----------|
+|_name|string|Name of token to register.|
+|_symbol|string|Symbol name of wrapped coin.|
+|_decimals|string|N/A|
+|_feeNumerator|string|N/A|
+|_fixedFee|string|N/A|
+|from|address|Wallet address of origin.|
+|pk|string|Private key of Wallet address of origin.|
+|_addr?|string|N/A|
+|stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
 ------------------
 #### `setFeeRatio(_name, _feeNumerator, _fixedFee, from, pk, stepLimit)`
+| Parameter | Type | Description|
+|--------------|------|----------|
+|_name|string|Name of token to register.|
+|_feeNumerator|string|N/A|
+|_fixedFee|string|N/A|
+|from|address|Wallet address of origin.|
+|pk|string|Private key of Wallet address of origin.|
+|stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
 ------------------
 #### `removeBlacklistAddress(_net, _addresses, from, pk, stepLimit)`
+| Parameter | Type | Description|
+|--------------|------|----------|
+|_net|string|Chain network string identifier (btp formatted).|
+|_addresses|string[]|Array of addresses.|
+|from|address|Wallet address of origin.|
+|pk|string|Private key of Wallet address of origin.|
+|stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
 ------------------
 #### `setTokenLimit(_coinNames, _tokenLimits, from, pk, stepLimit)`
+| Parameter | Type | Description|
+|--------------|------|----------|
+|_coinNames|string[]|Array of coin names.|
+|_tokenLimits|string[]|Array of token limits.|
+|from|address|Wallet address of origin.|
+|pk|string|Private key of Wallet address of origin.|
+|stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
 ------------------
 #### `addBlacklistAddress(_net, _addresses, from, pk, stepLimit)`
+| Parameter | Type | Description|
+|--------------|------|----------|
+|_net|string|Chain network string identifier (btp formatted).|
+|_addresses|string[]|Array of addresses.|
+|from|address|Wallet address of origin.|
+|pk|string|Private key of Wallet address of origin.|
+|stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
 ------------------
 #### `addRestriction(from, pk, stepLimit)`
+| Parameter | Type | Description|
+|--------------|------|----------|
+|from|address|Wallet address of origin.|
+|pk|string|Private key of Wallet address of origin.|
+|stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
 ------------------
 #### `disableRestrictions(from, pk, stepLimit)`
+| Parameter | Type | Description|
+|--------------|------|----------|
+|from|address|Wallet address of origin.|
+|pk|string|Private key of Wallet address of origin.|
+|stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
 ------------------
 
@@ -570,26 +678,77 @@ const balance = await SDK.icon.methods.coinId("btp-0x2.icon-bnUSD")
 Methods for interacting with the ICON Bridge originating from the BSC Chain.
 
 ### IconBridge.bsc.methods
-* `balanceOf`
-* `balanceOfBatch`
-* `coinId`
-* `coinNames`
-* `feeRatio`
-* `getAccumulatedFees`
-* `getNativeCoinName`
-* `getOwners`
-* `isOwner`
-* `isValidCoin`
-* `transfer`
-* `approve`
-* `approveAndTransfer`
-* `transferBatch`
-* `transferNativeCoin`
-* `addOwner`
-* `reclaim`
-* `removeOwner`
-* `setFeeRatio`
-* `updateBTSPeriphery`
+
+Methods for interacting with the ICON Bridge originating from the Binance Smart Chain.
+
+------------------
+#### `balanceOf(_owner, _coinName)`
+| Parameter | Type | Description|
+|--------------|------|----------|
+|_owner|address|Wallet address to check.|
+|_coinName|string|Name of token to check.|
+
+------------------
+
+#### `balanceOfBatch(_owner, _coinNames)`
+| Parameter | Type | Description|
+|--------------|------|----------|
+|_owner|address|Wallet address to check.|
+|_coinNames|string[]|Array of names of tokens to check.|
+
+------------------
+
+#### `coinId(_coinName)`
+| Parameter | Type | Description|
+|--------------|------|----------|
+|_coinName|string|Name of token to check.|
+
+------------------
+#### `coinNames()`
+** NO PARAMS **
+
+------------------
+#### `feeRatio(coinName)`
+| Parameter | Type | Description|
+|--------------|------|----------|
+|_coinName|string|Name of token to check.|
+
+------------------
+
+#### `getAccumulatedFees()`
+** NO PARAMS **
+
+------------------
+#### `getNativeCoinName()`
+** NO PARAMS **
+
+------------------
+#### `getOwners()`
+** NO PARAMS **
+
+------------------
+#### `isOwner(_owner)`
+| Parameter | Type | Description|
+|--------------|------|----------|
+|_owner|address|Wallet address to check.|
+
+------------------
+#### `isValidCoin(_coinName)`
+| Parameter | Type | Description|
+|--------------|------|----------|
+|_coinName|string|Name of token to check.|
+
+------------------
+#### `transfer`
+#### `approve`
+#### `approveAndTransfer`
+#### `transferBatch`
+#### `transferNativeCoin`
+#### `addOwner`
+#### `reclaim`
+#### `removeOwner`
+#### `setFeeRatio`
+#### `updateBTSPeriphery`
 
 ### IconBridge.sdkUtils
 Miscellaneous utilities for the IconBridge SDK.

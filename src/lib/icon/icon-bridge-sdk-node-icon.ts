@@ -400,7 +400,6 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
      * of the originator wallet. This 'approve' method is used by the
      * contracts of wrapped tokens to allow the BTS contract to move
      * an amount of token cross chain.
-     * @param spender - address that is being approved for spending.
      * @param amount - amount being approved to spent.
      * @param tokenContract - contract address for the wrapped token.
      * @param from - public address of origin.
