@@ -493,19 +493,77 @@ const balance = await SDK.icon.methods.isRestrictionEnabled()
 const balance = await SDK.icon.methods.coinId("btp-0x2.icon-bnUSD")
 ```
 ------------------
-#### `transferNativeCoinName`
-#### `reclaim`
-#### `transfer`
-#### `transferBatch`
-#### `addOwner`
-#### `removeOwner`
-#### `register`
-#### `setFeeRatio`
-#### `removeBlacklistAddress`
-#### `setTokenLimit`
-#### `addBlacklistAddress`
-#### `addRestriction`
-#### `disableRestrictions`
+#### `transferNativeCoin(targetAddress, targetChain, from, pk, amount, stepLimit)`
+##### Parameters
+| Parameter | Type | Description|
+|--------------|------|----------|
+|_targetAddress|string|Wallet address of receiver.|
+|_targetChain|string|Receiver chain.|
+|from|address|Wallet address of origin.|
+|pk|address|Private key of Wallet address of origin.|
+|amount|Number|Amount of native coin to transfer.|
+|stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
+
+------------------
+#### `transferNativeToken(tokenName, amount, targetAddress, targetChain, tokenContract, from, pk, stepLimit)`
+| Parameter | Type | Description|
+|--------------|------|----------|
+|tokenName|string|Name of token to transfer.|
+|amount|Decimal number as string|Amount of token to transfer.|
+|targetAddress|string|Wallet address of receiver.|
+|targetChain|string|Receiver chain.|
+|tokenContract|string|Contract for the token to transfer.|
+|from|address|Wallet address of origin.|
+|pk|address|Private key of Wallet address of origin.|
+|stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
+
+
+------------------
+#### `transferWrappedToken(tokenName, amount, targetAddress, targetChain, tokenContract, from, pk, stepLimit)`
+
+------------------
+#### `transferToBTSContract(_value, tokenContract, from, pk, stepLimit)`
+
+------------------
+#### `transfer(_coinName, _value, _to, from, pk, stepLimit)`
+
+------------------
+#### `transferBatch(_coinNames, _values, _to, from, pk, stepLimit)`
+
+------------------
+#### `approveBTSContract(amount, tokenContract, from, pk, stepLimit)`
+
+------------------
+#### `reclaim(_coinName, _value, from, pk, stepLimit)`
+
+------------------
+#### `addOwner(_addr, from, pk, stepLimit)`
+
+------------------
+#### `removeOwner(_addr, from, pk, stepLimit)`
+
+------------------
+#### `register(_name, _symbol, _decimals, _feeNumerator, _fixedFee, from, pk, _addr, stepLimit)`
+
+------------------
+#### `setFeeRatio(_name, _feeNumerator, _fixedFee, from, pk, stepLimit)`
+
+------------------
+#### `removeBlacklistAddress(_net, _addresses, from, pk, stepLimit)`
+
+------------------
+#### `setTokenLimit(_coinNames, _tokenLimits, from, pk, stepLimit)`
+
+------------------
+#### `addBlacklistAddress(_net, _addresses, from, pk, stepLimit)`
+
+------------------
+#### `addRestriction(from, pk, stepLimit)`
+
+------------------
+#### `disableRestrictions(from, pk, stepLimit)`
+
+------------------
 
 ### IconBridge.bsc
 
