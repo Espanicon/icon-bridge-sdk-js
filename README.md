@@ -909,6 +909,25 @@ Methods for interacting with the ICON Bridge originating from the Binance Smart 
 |_owner|address|Wallet address to check.|
 |_coinName|string|Name of token to check.|
 
+##### Returns
+```js
+{
+  "0":"10000000000000000000",
+  "1":"0",
+  "2":"0",
+  "3":"12774500000000000000000",
+  "__length__":4,
+  "_usableBalance":"10000000000000000000",
+  "_lockedBalance":"0",
+  "_refundableBalance":"0",
+  "_userBalance":"12774500000000000000000"
+}
+
+```
+##### Example
+```js
+const balance = await SDK.bsc.methods.balanceOf("0x0123..", "btp-0x2.icon-bnUSD")
+```
 ------------------
 
 #### `balanceOfBatch(_owner, _coinNames)`
@@ -917,6 +936,25 @@ Methods for interacting with the ICON Bridge originating from the Binance Smart 
 |_owner|address|Wallet address to check.|
 |_coinNames|string[]|Array of names of tokens to check.|
 
+##### Returns
+```js
+{
+  "0":["10000000000000000000"],
+  "1":["0"],
+  "2":["0"],
+  "3":["12774500000000000000000"],
+  "__length__":4,
+  "_usableBalances":["10000000000000000000"],
+  "_lockedBalances":["0"],
+  "_refundableBalances":["0"],
+  "_userBalances":["12774500000000000000000"]
+}
+
+```
+##### Example
+```js
+const balance = await SDK.bsc.methods.balanceOfBatch("0x0123..", ["btp-0x2.icon-bnUSD"])
+```
 ------------------
 
 #### `coinId(_coinName)`
@@ -924,41 +962,187 @@ Methods for interacting with the ICON Bridge originating from the Binance Smart 
 |--------------|------|----------|
 |_coinName|string|Name of token to check.|
 
+##### Returns
+```js
+{
+  "0":"0x7d8c52A23FD7e3ca1342797baE7caF6d7b8036BA",
+  "__length__":1,
+}
+
+```
+##### Example
+```js
+const balance = await SDK.bsc.methods.coinId("btp-0x2.icon-ICX")
+```
 ------------------
 #### `coinNames()`
 ** NO PARAMS **
 
+##### Returns
+```js
+{
+  "0":[
+    "btp-0x61.bsc-BNB",
+    "btp-0x61.bsc-BUSD",
+    "btp-0x61.bsc-USDT",
+    "btp-0x61.bsc-USDC",
+    "btp-0x61.bsc-BTCB",
+    "btp-0x61.bsc-ETH",
+    "btp-0x2.icon-ICX",
+    "btp-0x2.icon-sICX",
+    "btp-0x2.icon-bnUSD",
+    "btp-0x228.snow-ICZ"
+  ],
+  "__length__":1,
+  "_names":[
+    "btp-0x61.bsc-BNB",
+    "btp-0x61.bsc-BUSD",
+    "btp-0x61.bsc-USDT",
+    "btp-0x61.bsc-USDC",
+    "btp-0x61.bsc-BTCB",
+    "btp-0x61.bsc-ETH",
+    "btp-0x2.icon-ICX",
+    "btp-0x2.icon-sICX",
+    "btp-0x2.icon-bnUSD",
+    "btp-0x228.snow-ICZ"
+  ]
+}
+
+```
+##### Example
+```js
+const balance = await SDK.bsc.methods.coinNames()
+```
 ------------------
 #### `feeRatio(coinName)`
 | Parameter | Type | Description|
 |--------------|------|----------|
 |_coinName|string|Name of token to check.|
 
+##### Returns
+```js
+{
+  "0":"0",
+  "1":"4300000000000000000",
+  "__length__":2,
+  "_feeNumerator":"0",
+  "_fixedFee":"4300000000000000000"
+}
+
+```
+##### Example
+```js
+const balance = await SDK.bsc.methods.feeRatio("btp-0x2.icon-ICX")
+```
 ------------------
 
 #### `getAccumulatedFees()`
 ** NO PARAMS **
 
+##### Returns
+```js
+{
+  "0":[
+    ["btp-0x61.bsc-BNB","0"],
+    ["btp-0x61.bsc-BUSD","0"],
+    ["btp-0x61.bsc-USDT","0"],
+    ["btp-0x61.bsc-USDC","0"],
+    ["btp-0x61.bsc-BTCB","0"],
+    ["btp-0x61.bsc-ETH","0"],
+    ["btp-0x2.icon-ICX","0"],
+    ["btp-0x2.icon-sICX","0"],
+    ["btp-0x2.icon-bnUSD","0"],
+    ["btp-0x228.snow-ICZ","0"]
+  ],
+  "__length__":1,
+  "_accumulatedFees":[
+    ["btp-0x61.bsc-BNB","0"],
+    ["btp-0x61.bsc-BUSD","0"],
+    ["btp-0x61.bsc-USDT","0"],
+    ["btp-0x61.bsc-USDC","0"],
+    ["btp-0x61.bsc-BTCB","0"],
+    ["btp-0x61.bsc-ETH","0"],
+    ["btp-0x2.icon-ICX","0"],
+    ["btp-0x2.icon-sICX","0"],
+    ["btp-0x2.icon-bnUSD","0"],
+    ["btp-0x228.snow-ICZ","0"]
+  ]
+}
+
+```
+##### Example
+```js
+const balance = await SDK.bsc.methods.getAccumulatedFees()
+```
 ------------------
 #### `getNativeCoinName()`
 ** NO PARAMS **
 
+##### Returns
+```js
+{
+  "0":"btp-0x61.bsc-BNB",
+  "__length__":1
+}
+
+```
+##### Example
+```js
+const balance = await SDK.bsc.methods.getNativeCoinName()
+```
 ------------------
 #### `getOwners()`
 ** NO PARAMS **
 
+##### Returns
+```js
+{
+  "0":["0xD5F24A22A9E4029dEeCbF4dd38Ab6BE4657Fc5B7"],
+  "__length__":1
+}
+
+```
+##### Example
+```js
+const balance = await SDK.bsc.methods.getOwners()
+```
 ------------------
 #### `isOwner(_owner)`
 | Parameter | Type | Description|
 |--------------|------|----------|
 |_owner|address|Wallet address to check.|
 
+##### Returns
+```js
+{
+  "0":true,
+  "__length__":1
+}
+
+```
+##### Example
+```js
+const balance = await SDK.bsc.methods.isOwner("0xd5f24a22a9e4029deecbf4dd38ab6be4657fc5b7")
+```
 ------------------
 #### `isValidCoin(_coinName)`
 | Parameter | Type | Description|
 |--------------|------|----------|
 |_coinName|string|Name of token to check.|
 
+##### Returns
+```js
+{
+  "0":true,
+  "__length__":1,
+  "_valid": true
+}
+
+```
+##### Example
+```js
+const balance = await SDK.bsc.methods.isValidCoin("btp-0x2.icon-ICX")
+```
 ------------------
 #### `transfer(targetAddress, targetChain, from, pk, _value, _coinName, gas)`
 | Parameter | Type | Description|
