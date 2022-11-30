@@ -383,9 +383,36 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     ): Promise<any> => {
       //
       try {
-        const foo = [_coinNames, _values, _to, from, pk, stepLimit];
-        console.log(foo);
-        return null;
+
+      const isMainnet: boolean =
+        this.#params.useMainnet == null ? true : this.#params.useMainnet;
+
+      const btsContract = this.#sdkUtils.getContractOfLabelFromLocalData(
+        "bts",
+        "icon",
+        isMainnet,
+        false
+      );
+
+      // parse values into loop units and then into hexadecimal
+      const parsedValues = _values.map(_value => {
+        return this.espaniconLib.decimalToHex(
+        Number(_value)*(10**18)
+      )
+      })
+
+      // make cross chain transaction
+      const txRequest = await this.#makeTxRequest(
+        from,
+        btsContract,
+        pk,
+        "transferBatch",
+        { _coinNames: _coinNames, _values: parsedValues, _to: _to},
+        0,
+        stepLimit
+      );
+
+      return txRequest;
       } catch (err) {
         const errorResult = new Exception(
           err,

@@ -112,9 +112,13 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
             }),
             transferBatch: (_coinNames, _values, _to, from, pk, stepLimit = null) => __awaiter(this, void 0, void 0, function* () {
                 try {
-                    const foo = [_coinNames, _values, _to, from, pk, stepLimit];
-                    console.log(foo);
-                    return null;
+                    const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet;
+                    const btsContract = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_sdkUtils, "f").getContractOfLabelFromLocalData("bts", "icon", isMainnet, false);
+                    const parsedValues = _values.map(_value => {
+                        return this.espaniconLib.decimalToHex(Number(_value) * (10 ** 18));
+                    });
+                    const txRequest = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_makeTxRequest, "f").call(this, from, btsContract, pk, "transferBatch", { _coinNames: _coinNames, _values: parsedValues, _to: _to }, 0, stepLimit);
+                    return txRequest;
                 }
                 catch (err) {
                     const errorResult = new Exception(err, `Error running transferBatch(). Params:\n_coinNames: ${_coinNames}\n_values: ${_values}\n_to: ${_to}\nfrom: ${from}\npk: ${pk}\n`);

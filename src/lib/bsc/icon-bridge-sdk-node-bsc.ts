@@ -117,52 +117,6 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       }
     },
 
-
-    /**
-     * Allow users to deposit an amount of wrapped native coin into the
-     * BTSCore contract.
-     * @param targetAddress - address of receiver.
-     * @param targetChain - receiver chain.
-     * @param from - address of sender.
-     * @param pk - private key of sender.
-     * @param _coinName - given name of wrapped coin.
-     * @param _value - amount to transfer.
-     * @param tokenContractAddress - contract address of the token to be sent.
-     * @param tokenContractAbi - contract abi of the token to be sent.
-     * @param gas - transfer fee amount.
-     */
-    approveAndTransfer: async (
-      targetAddress: string,
-      targetChain: string = "icon",
-      from: string,
-      pk: string,
-      _coinName: string,
-      _value: string,
-      tokenContractAddress: string,
-      tokenContractAbi: any[],
-      gas: number | null = 2000000
-    ): Promise<any> => {
-      try {
-        return await this.#approveAndTransfer(
-          targetAddress,
-          targetChain,
-          from,
-          pk,
-          _coinName,
-          _value,
-          tokenContractAddress,
-          tokenContractAbi,
-          gas
-        );
-      } catch (err) {
-        const errorResult = new Exception(
-          err,
-          `Error running #approveAndTransfer(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\npk: ${pk}\n_coinName: ${_coinName}\n_value: ${_value}\ntokenContractAddress: ${tokenContractAddress}\ntokenContractAbi: ${tokenContractAbi}\n`
-        );
-        return { error: errorResult.toString() };
-      }
-    },
-
     /**
      * Allow users to transfer multiple coins/wrapped coins to another chain.
      * @param _coinNames - list of coins.
@@ -172,10 +126,11 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
     transferBatch: async (
       _coinNames: string[],
       _values: string[],
-      _to: string
+      _to: string,
+      gas: number | null = 2000000
     ): Promise<void> => {
       // index 23
-      console.log([_coinNames, _values, _to]);
+      console.log([_coinNames, _values, _to, gas]);
     },
 
     /**
@@ -229,6 +184,92 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
         return { error: errorResult.toString() };
       }
     },
+
+    /**
+     * Allow users to deposit an amount of wrapped native coin into the
+     * BTSCore contract.
+     * @param targetAddress - address of receiver.
+     * @param targetChain - receiver chain.
+     * @param from - address of sender.
+     * @param pk - private key of sender.
+     * @param _coinName - given name of wrapped coin.
+     * @param _value - amount to transfer.
+     * @param tokenContractAddress - contract address of the token to be sent.
+     * @param tokenContractAbi - contract abi of the token to be sent.
+     * @param gas - transfer fee amount.
+     */
+    approveAndTransfer: async (
+      targetAddress: string,
+      targetChain: string = "icon",
+      from: string,
+      pk: string,
+      _coinName: string,
+      _value: string,
+      tokenContractAddress: string,
+      tokenContractAbi: any[],
+      gas: number | null = 2000000
+    ): Promise<any> => {
+      try {
+        return await this.#approveAndTransfer(
+          targetAddress,
+          targetChain,
+          from,
+          pk,
+          _coinName,
+          _value,
+          tokenContractAddress,
+          tokenContractAbi,
+          gas
+        );
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running #approveAndTransfer(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\npk: ${pk}\n_coinName: ${_coinName}\n_value: ${_value}\ntokenContractAddress: ${tokenContractAddress}\ntokenContractAbi: ${tokenContractAbi}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /**
+     * Approves an amount of token to be sent by the BTSCore contract on
+     * behalf of the originator wallet.
+     * @param from - address of sender.
+     * @param pk - private key of sender.
+     * @param amount - amount to approve.
+     * @param tokenContractAddress - Contract address of the token to approve.
+     * @param tokenContractAbi - Contract abi of the token to approve.
+     * @param gas - transfer fee amount.
+     */
+    approveTransfer: async (
+      from: string,
+      pk: string,
+      amount: string,
+      tokenContractAddress: string,
+      tokenContractAbi: any[],
+      gas: number | null = null
+    ) => {
+      //
+      const isMainnet: boolean | null =
+        this.#params.useMainnet == null ? true : this.#params.useMainnet;
+
+      const btsCoreAddress = this.#callbackLib.getBTSCoreProxyContractAddress(
+        "bsc",
+        isMainnet
+      );
+
+      return await this.#callbackLib.approveTransfer(
+        from,
+        pk,
+        btsCoreAddress,
+        amount,
+        tokenContractAddress,
+        tokenContractAbi,
+        "bsc",
+        this.#bscWeb3,
+        gas
+      );
+    },
+
 
     ///////////////////////////////////////////////////////////////////
     //

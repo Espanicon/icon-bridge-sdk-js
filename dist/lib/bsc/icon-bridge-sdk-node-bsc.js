@@ -44,17 +44,8 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
                     return { error: errorResult.toString() };
                 }
             }),
-            approveAndTransfer: (targetAddress, targetChain = "icon", from, pk, _coinName, _value, tokenContractAddress, tokenContractAbi, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
-                try {
-                    return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_approveAndTransfer, "f").call(this, targetAddress, targetChain, from, pk, _coinName, _value, tokenContractAddress, tokenContractAbi, gas);
-                }
-                catch (err) {
-                    const errorResult = new Exception(err, `Error running #approveAndTransfer(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\npk: ${pk}\n_coinName: ${_coinName}\n_value: ${_value}\ntokenContractAddress: ${tokenContractAddress}\ntokenContractAbi: ${tokenContractAbi}\n`);
-                    return { error: errorResult.toString() };
-                }
-            }),
-            transferBatch: (_coinNames, _values, _to) => __awaiter(this, void 0, void 0, function* () {
-                console.log([_coinNames, _values, _to]);
+            transferBatch: (_coinNames, _values, _to, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
+                console.log([_coinNames, _values, _to, gas]);
             }),
             transferNativeCoin: (targetAddress, targetChain = "icon", from, pk, amount, gas = 2000000, useNativeQueryMethod = true) => __awaiter(this, void 0, void 0, function* () {
                 try {
@@ -67,6 +58,20 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
                     const errorResult = new Exception(err, `Error running transferNativeCoin(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\npk: ${pk}\namount: ${amount}\ngas: ${gas}\n`);
                     return { error: errorResult.toString() };
                 }
+            }),
+            approveAndTransfer: (targetAddress, targetChain = "icon", from, pk, _coinName, _value, tokenContractAddress, tokenContractAbi, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
+                try {
+                    return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_approveAndTransfer, "f").call(this, targetAddress, targetChain, from, pk, _coinName, _value, tokenContractAddress, tokenContractAbi, gas);
+                }
+                catch (err) {
+                    const errorResult = new Exception(err, `Error running #approveAndTransfer(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\npk: ${pk}\n_coinName: ${_coinName}\n_value: ${_value}\ntokenContractAddress: ${tokenContractAddress}\ntokenContractAbi: ${tokenContractAbi}\n`);
+                    return { error: errorResult.toString() };
+                }
+            }),
+            approveTransfer: (from, pk, amount, tokenContractAddress, tokenContractAbi, gas = null) => __awaiter(this, void 0, void 0, function* () {
+                const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_params, "f").useMainnet;
+                const btsCoreAddress = __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_callbackLib, "f").getBTSCoreProxyContractAddress("bsc", isMainnet);
+                return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_callbackLib, "f").approveTransfer(from, pk, btsCoreAddress, amount, tokenContractAddress, tokenContractAbi, "bsc", __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_bscWeb3, "f"), gas);
             }),
             addOwner: (from, pk, _owner, gas = null, useNativeQueryMethod = true) => __awaiter(this, void 0, void 0, function* () {
                 try {

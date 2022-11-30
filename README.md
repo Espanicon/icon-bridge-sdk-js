@@ -504,6 +504,19 @@ const balance = await SDK.icon.methods.coinId("btp-0x2.icon-bnUSD")
 |amount|Number|Amount of native coin to transfer.|
 |stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
+##### Returns
+```js
+{
+  "jsonrpc":"2.0",
+  "result": "0x9967f139261eecf348bb6ff1f2c7deb6e620d39b1536c6425d87d2e8a885fac0",
+  "id":140
+}
+
+```
+##### Example
+```js
+const balance = await SDK.icon.methods.transferNativeCoin("0x0123..", "bsc", "hx0123..", "1234...", "50")
+```
 ------------------
 #### `transferNativeToken(tokenName, amount, targetAddress, targetChain, tokenContract, from, pk, stepLimit)`
 | Parameter | Type | Description|
@@ -517,6 +530,19 @@ const balance = await SDK.icon.methods.coinId("btp-0x2.icon-bnUSD")
 |pk|string|Private key of Wallet address of origin.|
 |stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
+##### Returns
+```js
+{
+  "jsonrpc":"2.0",
+  "result": "0xa081c958daeaddcb43e64bd1490b4e3b5432614c9ded3f0f51a199cc18e139db",
+  "id":140
+}
+
+```
+##### Example
+```js
+const balance = await SDK.icon.methods.transferNativeCoin("btp-0x2.icon-bnUSD", "50", "0x0123..", "bsc", "cxcadcaf77d8e46089fd3d98fcf71eabee1700f148", "hx0123..", "1234...")
+```
 ------------------
 #### `transferWrappedToken(tokenName, amount, targetAddress, targetChain, tokenContract, from, pk, stepLimit)`
 | Parameter | Type | Description|
@@ -530,6 +556,19 @@ const balance = await SDK.icon.methods.coinId("btp-0x2.icon-bnUSD")
 |pk|string|Private key of Wallet address of origin.|
 |stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
+##### Returns
+```js
+{
+  "jsonrpc":"2.0",
+  "result": "0x901f1ed955ea3d3b489e832e865fdf96aed722847ecac9b088ea81ca89ba3452",
+  "id":140
+}
+
+```
+##### Example
+```js
+const balance = await SDK.icon.methods.transferWrappedCoin("btp-0x61.bsc-BNB", "0.1", "0x0123..", "bsc", "cx55b835590d43af7bf6f5be3c3d50982264d24e5d", "hx0123..", "1234...")
+```
 ------------------
 #### `transferToBTSContract(_value, tokenContract, from, pk, stepLimit)`
 | Parameter | Type | Description|
@@ -540,6 +579,19 @@ const balance = await SDK.icon.methods.coinId("btp-0x2.icon-bnUSD")
 |pk|string|Private key of Wallet address of origin.|
 |stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
+##### Returns
+```js
+{
+  "jsonrpc":"2.0",
+ "result": "0xd04747f9bc316edc0ec09536457d8a0c0e2647626f98df324667381ac3c8a4a5",
+  "id":140
+}
+
+```
+##### Example
+```js
+const balance = await SDK.icon.methods.transferToBTSContract("100", "cxcadcaf77d8e46089fd3d98fcf71eabee1700f148", "hx0123..", "1234...")
+```
 ------------------
 #### `transfer(_coinName, _value, _to, from, pk, stepLimit)`
 | Parameter | Type | Description|
@@ -551,6 +603,19 @@ const balance = await SDK.icon.methods.coinId("btp-0x2.icon-bnUSD")
 |pk|string|Private key of Wallet address of origin.|
 |stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
+##### Returns
+```js
+{
+  "jsonrpc":"2.0",
+ "result": "0xd78159eb5224e70c12d9a1a520f609d43f696b2abb079cf50decd47cb61a4dfd",
+  "id":140
+}
+
+```
+##### Example
+```js
+const balance = await SDK.icon.methods.transfer("btp-0x2.icon-bnUSD", "50", "btp://0x61.bsc/0x01234..", "hx0123..", "1234...")
+```
 ------------------
 #### `transferBatch(_coinNames, _values, _to, from, pk, stepLimit)`
 | Parameter | Type | Description|
@@ -562,6 +627,19 @@ const balance = await SDK.icon.methods.coinId("btp-0x2.icon-bnUSD")
 |pk|string|Private key of Wallet address of origin.|
 |stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
+##### Returns
+```js
+{
+  "jsonrpc":"2.0",
+ "result": "0x3147aba0b2113cc842a1f33beceb2ef3347636325059fe1eca6e6480f80a7222",
+  "id":140
+}
+
+```
+##### Example
+```js
+const balance = await SDK.icon.methods.transferBatch(["btp-0x2.icon-bnUSD", "btp-0c61.bsc-BNB"], ["50", "0.1"], "btp://0x61.bsc/0x01234..", "hx0123..", "1234...")
+```
 ------------------
 #### `approveBTSContract(amount, tokenContract, from, pk, stepLimit)`
 | Parameter | Type | Description|
@@ -572,6 +650,19 @@ const balance = await SDK.icon.methods.coinId("btp-0x2.icon-bnUSD")
 |pk|string|Private key of Wallet address of origin.|
 |stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
+##### Returns
+```js
+{
+  "jsonrpc":"2.0",
+ "result": "0x6a41155cc1d26ee9127f88d84255a7950883a967b892703f4402dc60aa2f751d",
+  "id":140
+}
+
+```
+##### Example
+```js
+const balance = await SDK.icon.methods.approveBTSContract("0.1", "cx55b835590d43af7bf6f5be3c3d50982264d24e5d", "hx0123..", "1234...")
+```
 ------------------
 #### `reclaim(_coinName, _value, from, pk, stepLimit)`
 | Parameter | Type | Description|
@@ -582,6 +673,19 @@ const balance = await SDK.icon.methods.coinId("btp-0x2.icon-bnUSD")
 |pk|string|Private key of Wallet address of origin.|
 |stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
+##### Returns
+```js
+{
+  "jsonrpc":"2.0",
+  "result": "0x3597537df11701fd8e544ef9e30e611c6f833d11668ab3ce6ab499ff2264e756",
+  "id":140
+}
+
+```
+##### Example
+```js
+const balance = await SDK.icon.methods.reclaim("btp-0x61.bsc-BNB", "0.1", "0x0123..", "hx0123..", "1234...")
+```
 ------------------
 #### `addOwner(_addr, from, pk, stepLimit)`
 | Parameter | Type | Description|
@@ -591,6 +695,19 @@ const balance = await SDK.icon.methods.coinId("btp-0x2.icon-bnUSD")
 |pk|string|Private key of Wallet address of origin.|
 |stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
+##### Returns
+```js
+{
+  "jsonrpc":"2.0",
+  "result": "0x585166881ee05963b3cc1f98660364e179b96d27a260a78e2434da50a44f1030",
+  "id":140
+}
+
+```
+##### Example
+```js
+const balance = await SDK.icon.methods.addOwner("hx123..", "hx0123..", "1234...")
+```
 ------------------
 #### `removeOwner(_addr, from, pk, stepLimit)`
 | Parameter | Type | Description|
@@ -600,6 +717,19 @@ const balance = await SDK.icon.methods.coinId("btp-0x2.icon-bnUSD")
 |pk|string|Private key of Wallet address of origin.|
 |stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
+##### Returns
+```js
+{
+  "jsonrpc":"2.0",
+  "result": "0x713c0d06f8a6ffe7ec293a9b496fca0d89f4a6c48b8fd24a9024cad268780144",
+  "id":140
+}
+
+```
+##### Example
+```js
+const balance = await SDK.icon.methods.removeOwner("hx123..", "hx0123..", "1234...")
+```
 ------------------
 #### `register(_name, _symbol, _decimals, _feeNumerator, _fixedFee, from, pk, _addr, stepLimit)`
 | Parameter | Type | Description|
@@ -614,6 +744,19 @@ const balance = await SDK.icon.methods.coinId("btp-0x2.icon-bnUSD")
 |_addr?|string|N/A|
 |stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
+##### Returns
+```js
+{
+  "jsonrpc":"2.0",
+  "result": "0x6f11f9cbb172d7c0a665cddce6ba6aee0c4286629e6c1457a1398a7f981f1c9b",
+  "id":140
+}
+
+```
+##### Example
+```js
+const balance = await SDK.icon.methods.register("btp-0x61.bsc-WBNB", "BNB", "0x12", "0x0", "0x2aa1efb94e000", "hx0123..", "1234...")
+```
 ------------------
 #### `setFeeRatio(_name, _feeNumerator, _fixedFee, from, pk, stepLimit)`
 | Parameter | Type | Description|
@@ -625,6 +768,19 @@ const balance = await SDK.icon.methods.coinId("btp-0x2.icon-bnUSD")
 |pk|string|Private key of Wallet address of origin.|
 |stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
+##### Returns
+```js
+{
+  "jsonrpc":"2.0",
+  "result": "0x192e2a78456c4d32f01599d97987b7bddfe2e26c6ee0c0329e8bf7dcf8d37829",
+  "id":140
+}
+
+```
+##### Example
+```js
+const balance = await SDK.icon.methods.setFeeRatio("btp-0x61.bsc-WBNB", "0x0", "0x2aa1efb94e000", "hx0123..", "1234...")
+```
 ------------------
 #### `removeBlacklistAddress(_net, _addresses, from, pk, stepLimit)`
 | Parameter | Type | Description|
@@ -635,6 +791,19 @@ const balance = await SDK.icon.methods.coinId("btp-0x2.icon-bnUSD")
 |pk|string|Private key of Wallet address of origin.|
 |stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
+##### Returns
+```js
+{
+  "jsonrpc":"2.0",
+  "result": "0x924f4f3922d754cfca094301f226154bd432c58c5ebfe8a91dff866aba414769",
+  "id":140
+}
+
+```
+##### Example
+```js
+const balance = await SDK.icon.methods.removeBlacklistAddress("0x61.bsc", ["hx0123.."], "hx0123..", "1234...")
+```
 ------------------
 #### `setTokenLimit(_coinNames, _tokenLimits, from, pk, stepLimit)`
 | Parameter | Type | Description|
@@ -645,6 +814,19 @@ const balance = await SDK.icon.methods.coinId("btp-0x2.icon-bnUSD")
 |pk|string|Private key of Wallet address of origin.|
 |stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
+##### Returns
+```js
+{
+  "jsonrpc":"2.0",
+  "result": "0x943e41fb5079f4f67d13344367564b2351cb1b4606b370f48533fa1fe33220a0",
+  "id":140
+}
+
+```
+##### Example
+```js
+const balance = await SDK.icon.methods.setTokenLimit(["btp-0x61.bsc-WBNB"], ["0x0"], "hx0123..", "1234...")
+```
 ------------------
 #### `addBlacklistAddress(_net, _addresses, from, pk, stepLimit)`
 | Parameter | Type | Description|
@@ -655,6 +837,19 @@ const balance = await SDK.icon.methods.coinId("btp-0x2.icon-bnUSD")
 |pk|string|Private key of Wallet address of origin.|
 |stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
+##### Returns
+```js
+{
+  "jsonrpc":"2.0",
+  "result": "0xe7519f7867942e8d7b677baecf45b53c23d18ceed26232dbb86ea2065009e410",
+  "id":140
+}
+
+```
+##### Example
+```js
+const balance = await SDK.icon.methods.addBlacklistAddress("0x61.bsc", ["0x0123.."], "hx0123..", "1234...")
+```
 ------------------
 #### `addRestriction(from, pk, stepLimit)`
 | Parameter | Type | Description|
@@ -663,6 +858,19 @@ const balance = await SDK.icon.methods.coinId("btp-0x2.icon-bnUSD")
 |pk|string|Private key of Wallet address of origin.|
 |stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
+##### Returns
+```js
+{
+  "jsonrpc":"2.0",
+  "result": "0x00aec9ffc574ae2d1795f98375d4ca2609e586b47dac45d1ff022ad24e880187",
+  "id":140
+}
+
+```
+##### Example
+```js
+const balance = await SDK.icon.methods.addRestriction("hx0123..", "1234...")
+```
 ------------------
 #### `disableRestrictions(from, pk, stepLimit)`
 | Parameter | Type | Description|
@@ -671,6 +879,19 @@ const balance = await SDK.icon.methods.coinId("btp-0x2.icon-bnUSD")
 |pk|string|Private key of Wallet address of origin.|
 |stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
+##### Returns
+```js
+{
+  "jsonrpc":"2.0",
+  "result": "0xc2d08035d466fa14a8919f7b6c37b368d549693cd822ca9ffa7fb97ae9ef7264",
+  "id":140
+}
+
+```
+##### Example
+```js
+const balance = await SDK.icon.methods.disableRestrictions("hx0123..", "1234...")
+```
 ------------------
 
 ### IconBridge.bsc
@@ -739,16 +960,28 @@ Methods for interacting with the ICON Bridge originating from the Binance Smart 
 |_coinName|string|Name of token to check.|
 
 ------------------
-#### `transfer`
-#### `approve`
-#### `approveAndTransfer`
-#### `transferBatch`
-#### `transferNativeCoin`
-#### `addOwner`
-#### `reclaim`
-#### `removeOwner`
-#### `setFeeRatio`
-#### `updateBTSPeriphery`
+#### `transfer(targetAddress, targetChain, from, pk, _value, _coinName, gas)`
+| Parameter | Type | Description|
+|--------------|------|----------|
+|targetAddress|string|Wallet address of receiver.|
+|targetChain|string|Receiver chain.|
+|from|address|Wallet address of origin.|
+|pk|string|Private key of Wallet address of origin.|
+|_value|Decimal number as string|Amount of token to transfer.|
+|_coinName|string|Name of token to check.|
+|gas|Decimal|Max fee to pay.|
+
+------------------
+#### `approveTransfer(from, pk, amount, tokenContractAddress, tokenContractAbi, gas)`
+#### `approveAndTransfer(targetAddress, targetChain, from, pk, _coinName, _value, tokenContractAddress, tokenContractAbi, gas)`
+#### `transferBatch(_coinNames, _values, _to, gas)`
+#### `transferNativeCoin(targetAddress, targetChain, from, pk, amount, gas)`
+#### `addOwner(from, pk, _owner, gas)`
+#### `reclaim(from, pk, _coinName, _value, gas)`
+#### `register(from, pk, _name, _symbol, _feeNumerator, _fixedFee, _addr, gas)`
+#### `removeOwner(from, pk, _owner, gas)`
+#### `setFeeRatio(from, pk, _name, _feeNumerator, _fixedFee, gas)`
+#### `updateBTSPeriphery(from, pk, _btsPeriphery, gas)`
 
 ### IconBridge.sdkUtils
 Miscellaneous utilities for the IconBridge SDK.
