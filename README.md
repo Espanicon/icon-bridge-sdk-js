@@ -1183,7 +1183,7 @@ const balance = await SDK.bsc.methods.transfer("hx123..", "icon", "0x0123..", "1
 |--------------|------|----------|
 |from|address|Wallet address of origin.|
 |pk|string|Private key of Wallet address of origin.|
-|amount|Decimal number as string|Amount of native coin to transfer.|
+|amount|Decimal number as string|Amount of token to transfer.|
 |tokenContract|string|Contract for the token to transfer.|
 |tokenContractAbi [?][id1]|Array\<Object\>|Contract abi for the token to transfer.|
 |gas [?][id1]|Decimal|Max fee to pay.|
