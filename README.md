@@ -37,8 +37,10 @@ new IconBridgeSDK({
   }
 })
 ```
+[id1]: ## "Optional param"
+
 #### Parameters
-| Parameter | Type | Description|
+| Parameter ([?][id1])| Type | Description|
 |--------------|------|----------|
 | useMainnet|boolean|Use on mainnet or testnet for all chains in the bridge|
 |iconProvider.hostname|string|URL of the ICON RPC Node|
@@ -306,7 +308,7 @@ const balance = await SDK.icon.methods.getTokenLimit("btp-0x2.icon-sICX")
 ```
 ##### Example
 ```js
-const balance = await SDK.icon.methods.getTokenLimit("0x63")
+const balance = await SDK.icon.methods.getTokenLimitTxn("0x63")
 ```
 ------------------
 #### `getSn(_Sn)`
@@ -347,7 +349,7 @@ const balance = await SDK.icon.methods.getSn("0x63")
 ```
 ##### Example
 ```js
-const balance = await SDK.icon.methods.isUserBlackListed("hx0169e03001a3fa4012092ad4a4ddf2d07681f063")
+const balance = await SDK.icon.methods.isUserBlackListed("0x2.icon", "hx0169e03001a3fa4012092ad4a4ddf2d07681f063")
 ```
 ------------------
 #### `getBlackListedUsers(_net, _start, _end)`
@@ -370,7 +372,7 @@ const balance = await SDK.icon.methods.isUserBlackListed("hx0169e03001a3fa401209
 ##### Example
 ```js
 const balance = await SDK.icon.methods.getBlackListedUsers(
-  "0x1.icon",
+  "0x2.icon",
   "0x0",
   "0x1"
 )
@@ -668,7 +670,7 @@ const balance = await SDK.icon.methods.approveBTSContract("0.1", "cx55b835590d43
 | Parameter | Type | Description|
 |--------------|------|----------|
 |_coinName|string|Name of Token to transfer.|
-|_value|Decimal number as string|Amount to transfer.|
+|_value|Decimal number as string|Amount of re-claiming tokens.|
 |from|address|Wallet address of origin.|
 |pk|string|Private key of Wallet address of origin.|
 |stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
@@ -712,7 +714,7 @@ const balance = await SDK.icon.methods.addOwner("hx123..", "hx0123..", "1234..."
 #### `removeOwner(_addr, from, pk, stepLimit)`
 | Parameter | Type | Description|
 |--------------|------|----------|
-|_addr|string|Wallet to add as owner of contract.|
+|_addr|string|Wallet to remove as owner of contract.|
 |from|address|Wallet address of origin.|
 |pk|string|Private key of Wallet address of origin.|
 |stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
