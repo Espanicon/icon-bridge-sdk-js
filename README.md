@@ -81,7 +81,7 @@ Methods for interacting with the ICON Bridge originating from the ICON Chain.
 #### `balanceOf(_owner, _coinName)`
 Gets the balance of a defined coin (`_coinName`) for a defined wallet (`_owner`).
 ##### Parameters
-| Parameter | Type | Description|
+| Parameter ([?][id1])| Type | Description|
 |--------------|------|----------|
 |_owner|address|Wallet address to check|
 |_coinName|string|Name of coin to check|
@@ -106,7 +106,7 @@ const balance = await SDK.icon.methods.balanceOf("hx0000000000000000000000000000
 ------------------
 #### `balanceOfBatch(_owner, _coinNames)`
 ##### Parameters
-| Parameter | Type | Description|
+| Parameter ([?][id1])| Type | Description|
 |--------------|------|----------|
 |_owner|address|Wallet address to check|
 |_coinNames|string[]|List of coin names|
@@ -162,7 +162,7 @@ const balance = await SDK.icon.methods.coinNames()
 ------------------
 #### `feeRatio(_coinName)`
 ##### Parameters
-| Parameter | Type | Description|
+| Parameter ([?][id1])| Type | Description|
 |--------------|------|----------|
 |_coinName|string|Name of coin to check|
 
@@ -235,7 +235,7 @@ const balance = await SDK.icon.methods.getOwners()
 ------------------
 #### `isOwners(_addr)`
 ##### Parameters
-| Parameter | Type | Description|
+| Parameter ([?][id1])| Type | Description|
 |--------------|------|----------|
 |_addr|address|Wallet address to check.|
 
@@ -273,7 +273,7 @@ const balance = await SDK.icon.methods.name()
 ------------------
 #### `getTokenLimit(_name)`
 ##### Parameters
-| Parameter | Type | Description|
+| Parameter ([?][id1])| Type | Description|
 |--------------|------|----------|
 |_name|string|Name of token.|
 
@@ -293,7 +293,7 @@ const balance = await SDK.icon.methods.getTokenLimit("btp-0x2.icon-sICX")
 ------------------
 #### `getTokenLimitTxn(_Sn)`
 ##### Parameters
-| Parameter | Type | Description|
+| Parameter ([?][id1])| Type | Description|
 |--------------|------|----------|
 |_Sn|string|Tx number.|
 
@@ -313,7 +313,7 @@ const balance = await SDK.icon.methods.getTokenLimitTxn("0x63")
 ------------------
 #### `getSn(_Sn)`
 ##### Parameters
-| Parameter | Type | Description|
+| Parameter ([?][id1])| Type | Description|
 |--------------|------|----------|
 |_Sn|string|Tx number.|
 
@@ -333,7 +333,7 @@ const balance = await SDK.icon.methods.getSn("0x63")
 ------------------
 #### `isUserBlackListed(_net, _address)`
 ##### Parameters
-| Parameter | Type | Description|
+| Parameter ([?][id1])| Type | Description|
 |--------------|------|----------|
 |_net|string|Network string identifier.|
 |_address|address|Wallet address.|
@@ -354,7 +354,7 @@ const balance = await SDK.icon.methods.isUserBlackListed("0x2.icon", "hx0169e030
 ------------------
 #### `getBlackListedUsers(_net, _start, _end)`
 ##### Parameters
-| Parameter | Type | Description|
+| Parameter ([?][id1])| Type | Description|
 |--------------|------|----------|
 |_net|string|Network string identifier.|
 |_start|Number in Hexadecimal|Start index.|
@@ -398,7 +398,7 @@ const balance = await SDK.icon.methods.getRegisteredTokensCount()
 ------------------
 #### `tokenLimitStatus(_net, _coinName)`
 ##### Parameters
-| Parameter | Type | Description|
+| Parameter ([?][id1])| Type | Description|
 |--------------|------|----------|
 |_net|string|Network string identifier.|
 |_coinName|string|Name of coin to check|
@@ -419,7 +419,7 @@ const balance = await SDK.icon.methods.tokenLimitStatus("0x2.icon", "btp-0x2.ico
 ------------------
 #### `blackListedUsersCount(_net)`
 ##### Parameters
-| Parameter | Type | Description|
+| Parameter ([?][id1])| Type | Description|
 |--------------|------|----------|
 |_net|string|Network string identifier.|
 
@@ -439,7 +439,7 @@ const balance = await SDK.icon.methods.blackListedUsersCount("0x2.icon")
 ------------------
 #### `getTransaction(_sn)`
 ##### Parameters
-| Parameter | Type | Description|
+| Parameter ([?][id1])| Type | Description|
 |--------------|------|----------|
 |_Sn|string|Tx number.|
 
@@ -477,7 +477,7 @@ const balance = await SDK.icon.methods.isRestrictionEnabled()
 ------------------
 #### `coinId(_coinName)`
 ##### Parameters
-| Parameter | Type | Description|
+| Parameter ([?][id1])| Type | Description|
 |--------------|------|----------|
 |_coinName|string|Name of coin.|
 
@@ -497,14 +497,14 @@ const balance = await SDK.icon.methods.coinId("btp-0x2.icon-bnUSD")
 ------------------
 #### `transferNativeCoin(targetAddress, targetChain, from, pk, amount, stepLimit)`
 ##### Parameters
-| Parameter | Type | Description|
+| Parameter ([?][id1])| Type | Description|
 |--------------|------|----------|
 |_targetAddress|string|Wallet address of receiver.|
 |_targetChain|string|Receiver chain.|
 |from|address|Wallet address of origin.|
 |pk|string|Private key of Wallet address of origin.|
 |amount|Number|Amount of native coin to transfer.|
-|stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
+|stepLimit [?][id1]|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
 ##### Returns
 ```js
@@ -521,7 +521,7 @@ const balance = await SDK.icon.methods.transferNativeCoin("0x0123..", "bsc", "hx
 ```
 ------------------
 #### `transferNativeToken(tokenName, amount, targetAddress, targetChain, tokenContract, from, pk, stepLimit)`
-| Parameter | Type | Description|
+| Parameter ([?][id1])| Type | Description|
 |--------------|------|----------|
 |tokenName|string|Name of token to transfer.|
 |amount|Decimal number as string|Amount of token to transfer.|
@@ -530,7 +530,7 @@ const balance = await SDK.icon.methods.transferNativeCoin("0x0123..", "bsc", "hx
 |tokenContract|string|Contract for the token to transfer.|
 |from|address|Wallet address of origin.|
 |pk|string|Private key of Wallet address of origin.|
-|stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
+|stepLimit [?][id1]|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
 ##### Returns
 ```js
@@ -547,7 +547,7 @@ const balance = await SDK.icon.methods.transferNativeCoin("btp-0x2.icon-bnUSD", 
 ```
 ------------------
 #### `transferWrappedToken(tokenName, amount, targetAddress, targetChain, tokenContract, from, pk, stepLimit)`
-| Parameter | Type | Description|
+| Parameter ([?][id1])| Type | Description|
 |--------------|------|----------|
 |tokenName|string|Name of token to transfer.|
 |amount|Decimal number as string|Amount of token to transfer.|
@@ -556,7 +556,7 @@ const balance = await SDK.icon.methods.transferNativeCoin("btp-0x2.icon-bnUSD", 
 |tokenContract|string|Contract for the token to transfer.|
 |from|address|Wallet address of origin.|
 |pk|string|Private key of Wallet address of origin.|
-|stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
+|stepLimit [?][id1]|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
 ##### Returns
 ```js
@@ -573,13 +573,13 @@ const balance = await SDK.icon.methods.transferWrappedCoin("btp-0x61.bsc-BNB", "
 ```
 ------------------
 #### `transferToBTSContract(_value, tokenContract, from, pk, stepLimit)`
-| Parameter | Type | Description|
+| Parameter ([?][id1])| Type | Description|
 |--------------|------|----------|
 |_value|Decimal number as string|Amount to transfer.|
 |tokenContract|string|Contract for the token to transfer.|
 |from|address|Wallet address of origin.|
 |pk|string|Private key of Wallet address of origin.|
-|stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
+|stepLimit [?][id1]|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
 ##### Returns
 ```js
@@ -596,14 +596,14 @@ const balance = await SDK.icon.methods.transferToBTSContract("100", "cxcadcaf77d
 ```
 ------------------
 #### `transfer(_coinName, _value, _to, from, pk, stepLimit)`
-| Parameter | Type | Description|
+| Parameter ([?][id1])| Type | Description|
 |--------------|------|----------|
 |_coinName|string|Name of Token to transfer.|
 |_value|Decimal number as string|Amount to transfer.|
 |_to|string|BTP formatted address of receiver.|
 |from|address|Wallet address of origin.|
 |pk|string|Private key of Wallet address of origin.|
-|stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
+|stepLimit [?][id1]|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
 ##### Returns
 ```js
@@ -620,14 +620,14 @@ const balance = await SDK.icon.methods.transfer("btp-0x2.icon-bnUSD", "50", "btp
 ```
 ------------------
 #### `transferBatch(_coinNames, _values, _to, from, pk, stepLimit)`
-| Parameter | Type | Description|
+| Parameter ([?][id1])| Type | Description|
 |--------------|------|----------|
 |_coinNames|string[]|Array of Names of Tokens to transfer.|
 |_value|Array\<Decimal number as string\>|Array of Amounts to transfer.|
 |_to|string|BTP formatted address of receiver.|
 |from|address|Wallet address of origin.|
 |pk|string|Private key of Wallet address of origin.|
-|stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
+|stepLimit [?][id1]|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
 ##### Returns
 ```js
@@ -644,13 +644,13 @@ const balance = await SDK.icon.methods.transferBatch(["btp-0x2.icon-bnUSD", "btp
 ```
 ------------------
 #### `approveBTSContract(amount, tokenContract, from, pk, stepLimit)`
-| Parameter | Type | Description|
+| Parameter ([?][id1])| Type | Description|
 |--------------|------|----------|
 |amount|Decimal number as string|Amount of token to transfer.|
 |tokenContract|string|Contract for the token to transfer.|
 |from|address|Wallet address of origin.|
 |pk|string|Private key of Wallet address of origin.|
-|stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
+|stepLimit [?][id1]|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
 ##### Returns
 ```js
@@ -667,13 +667,13 @@ const balance = await SDK.icon.methods.approveBTSContract("0.1", "cx55b835590d43
 ```
 ------------------
 #### `reclaim(_coinName, _value, from, pk, stepLimit)`
-| Parameter | Type | Description|
+| Parameter ([?][id1])| Type | Description|
 |--------------|------|----------|
 |_coinName|string|Name of Token to transfer.|
 |_value|Decimal number as string|Amount of re-claiming tokens.|
 |from|address|Wallet address of origin.|
 |pk|string|Private key of Wallet address of origin.|
-|stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
+|stepLimit [?][id1]|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
 ##### Returns
 ```js
@@ -690,12 +690,12 @@ const balance = await SDK.icon.methods.reclaim("btp-0x61.bsc-BNB", "0.1", "0x012
 ```
 ------------------
 #### `addOwner(_addr, from, pk, stepLimit)`
-| Parameter | Type | Description|
+| Parameter ([?][id1])| Type | Description|
 |--------------|------|----------|
 |_addr|string|Wallet to add as owner of contract.|
 |from|address|Wallet address of origin.|
 |pk|string|Private key of Wallet address of origin.|
-|stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
+|stepLimit [?][id1]|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
 ##### Returns
 ```js
@@ -712,12 +712,12 @@ const balance = await SDK.icon.methods.addOwner("hx123..", "hx0123..", "1234..."
 ```
 ------------------
 #### `removeOwner(_addr, from, pk, stepLimit)`
-| Parameter | Type | Description|
+| Parameter ([?][id1])| Type | Description|
 |--------------|------|----------|
 |_addr|string|Wallet to remove as owner of contract.|
 |from|address|Wallet address of origin.|
 |pk|string|Private key of Wallet address of origin.|
-|stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
+|stepLimit [?][id1]|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
 ##### Returns
 ```js
@@ -734,7 +734,7 @@ const balance = await SDK.icon.methods.removeOwner("hx123..", "hx0123..", "1234.
 ```
 ------------------
 #### `register(_name, _symbol, _decimals, _feeNumerator, _fixedFee, from, pk, _addr, stepLimit)`
-| Parameter | Type | Description|
+| Parameter ([?][id1])| Type | Description|
 |--------------|------|----------|
 |_name|string|Name of token to register.|
 |_symbol|string|Symbol name of wrapped coin.|
@@ -744,7 +744,7 @@ const balance = await SDK.icon.methods.removeOwner("hx123..", "hx0123..", "1234.
 |from|address|Wallet address of origin.|
 |pk|string|Private key of Wallet address of origin.|
 |_addr?|string|N/A|
-|stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
+|stepLimit [?][id1]|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
 ##### Returns
 ```js
@@ -761,14 +761,14 @@ const balance = await SDK.icon.methods.register("btp-0x61.bsc-WBNB", "BNB", "0x1
 ```
 ------------------
 #### `setFeeRatio(_name, _feeNumerator, _fixedFee, from, pk, stepLimit)`
-| Parameter | Type | Description|
+| Parameter ([?][id1])| Type | Description|
 |--------------|------|----------|
 |_name|string|Name of token to register.|
 |_feeNumerator|string|N/A|
 |_fixedFee|string|N/A|
 |from|address|Wallet address of origin.|
 |pk|string|Private key of Wallet address of origin.|
-|stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
+|stepLimit [?][id1]|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
 ##### Returns
 ```js
@@ -785,13 +785,13 @@ const balance = await SDK.icon.methods.setFeeRatio("btp-0x61.bsc-WBNB", "0x0", "
 ```
 ------------------
 #### `removeBlacklistAddress(_net, _addresses, from, pk, stepLimit)`
-| Parameter | Type | Description|
+| Parameter ([?][id1])| Type | Description|
 |--------------|------|----------|
 |_net|string|Chain network string identifier (btp formatted).|
 |_addresses|string[]|Array of addresses.|
 |from|address|Wallet address of origin.|
 |pk|string|Private key of Wallet address of origin.|
-|stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
+|stepLimit [?][id1]|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
 ##### Returns
 ```js
@@ -808,13 +808,13 @@ const balance = await SDK.icon.methods.removeBlacklistAddress("0x61.bsc", ["hx01
 ```
 ------------------
 #### `setTokenLimit(_coinNames, _tokenLimits, from, pk, stepLimit)`
-| Parameter | Type | Description|
+| Parameter ([?][id1])| Type | Description|
 |--------------|------|----------|
 |_coinNames|string[]|Array of coin names.|
 |_tokenLimits|string[]|Array of token limits.|
 |from|address|Wallet address of origin.|
 |pk|string|Private key of Wallet address of origin.|
-|stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
+|stepLimit [?][id1]|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
 ##### Returns
 ```js
@@ -831,13 +831,13 @@ const balance = await SDK.icon.methods.setTokenLimit(["btp-0x61.bsc-WBNB"], ["0x
 ```
 ------------------
 #### `addBlacklistAddress(_net, _addresses, from, pk, stepLimit)`
-| Parameter | Type | Description|
+| Parameter ([?][id1])| Type | Description|
 |--------------|------|----------|
 |_net|string|Chain network string identifier (btp formatted).|
 |_addresses|string[]|Array of addresses.|
 |from|address|Wallet address of origin.|
 |pk|string|Private key of Wallet address of origin.|
-|stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
+|stepLimit [?][id1]|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
 ##### Returns
 ```js
@@ -854,11 +854,11 @@ const balance = await SDK.icon.methods.addBlacklistAddress("0x61.bsc", ["0x0123.
 ```
 ------------------
 #### `addRestriction(from, pk, stepLimit)`
-| Parameter | Type | Description|
+| Parameter ([?][id1])| Type | Description|
 |--------------|------|----------|
 |from|address|Wallet address of origin.|
 |pk|string|Private key of Wallet address of origin.|
-|stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
+|stepLimit [?][id1]|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
 ##### Returns
 ```js
@@ -875,11 +875,11 @@ const balance = await SDK.icon.methods.addRestriction("hx0123..", "1234...")
 ```
 ------------------
 #### `disableRestrictions(from, pk, stepLimit)`
-| Parameter | Type | Description|
+| Parameter ([?][id1])| Type | Description|
 |--------------|------|----------|
 |from|address|Wallet address of origin.|
 |pk|string|Private key of Wallet address of origin.|
-|stepLimit|Decimal number as string|Max 'steps', this determines the max fee to pay.|
+|stepLimit [?][id1]|Decimal number as string|Max 'steps', this determines the max fee to pay.|
 
 ##### Returns
 ```js
@@ -906,7 +906,7 @@ Methods for interacting with the ICON Bridge originating from the Binance Smart 
 
 ------------------
 #### `balanceOf(_owner, _coinName)`
-| Parameter | Type | Description|
+| Parameter ([?][id1])| Type | Description|
 |--------------|------|----------|
 |_owner|address|Wallet address to check.|
 |_coinName|string|Name of token to check.|
@@ -933,7 +933,7 @@ const balance = await SDK.bsc.methods.balanceOf("0x0123..", "btp-0x2.icon-bnUSD"
 ------------------
 
 #### `balanceOfBatch(_owner, _coinNames)`
-| Parameter | Type | Description|
+| Parameter ([?][id1])| Type | Description|
 |--------------|------|----------|
 |_owner|address|Wallet address to check.|
 |_coinNames|string[]|Array of names of tokens to check.|
@@ -960,7 +960,7 @@ const balance = await SDK.bsc.methods.balanceOfBatch("0x0123..", ["btp-0x2.icon-
 ------------------
 
 #### `coinId(_coinName)`
-| Parameter | Type | Description|
+| Parameter ([?][id1])| Type | Description|
 |--------------|------|----------|
 |_coinName|string|Name of token to check.|
 
@@ -1017,7 +1017,7 @@ const balance = await SDK.bsc.methods.coinNames()
 ```
 ------------------
 #### `feeRatio(coinName)`
-| Parameter | Type | Description|
+| Parameter ([?][id1])| Type | Description|
 |--------------|------|----------|
 |_coinName|string|Name of token to check.|
 
@@ -1110,7 +1110,7 @@ const balance = await SDK.bsc.methods.getOwners()
 ```
 ------------------
 #### `isOwner(_owner)`
-| Parameter | Type | Description|
+| Parameter ([?][id1])| Type | Description|
 |--------------|------|----------|
 |_owner|address|Wallet address to check.|
 
@@ -1128,7 +1128,7 @@ const balance = await SDK.bsc.methods.isOwner("0xd5f24a22a9e4029deecbf4dd38ab6be
 ```
 ------------------
 #### `isValidCoin(_coinName)`
-| Parameter | Type | Description|
+| Parameter ([?][id1])| Type | Description|
 |--------------|------|----------|
 |_coinName|string|Name of token to check.|
 
@@ -1147,7 +1147,7 @@ const balance = await SDK.bsc.methods.isValidCoin("btp-0x2.icon-ICX")
 ```
 ------------------
 #### `transfer(targetAddress, targetChain, from, pk, _value, _coinName, gas)`
-| Parameter | Type | Description|
+| Parameter ([?][id1])| Type | Description|
 |--------------|------|----------|
 |targetAddress|string|Wallet address of receiver.|
 |targetChain|string|Receiver chain.|
