@@ -502,7 +502,7 @@ const balance = await SDK.icon.methods.coinId("btp-0x2.icon-bnUSD")
 | Parameter ([?][id1])| Type | Description|
 |--------------|------|----------|
 |_targetAddress|string|Wallet address of receiver.|
-|_targetChain|string|Receiver chain.|
+|_targetChain|string|Receiver chain. Currently only "bsc" supported.|
 |from|address|Wallet address of origin.|
 |pk|string|Private key of Wallet address of origin.|
 |amount|Number|Amount of native coin to transfer.|
@@ -528,7 +528,7 @@ const balance = await SDK.icon.methods.transferNativeCoin("0x0123..", "bsc", "hx
 |tokenName|string|Name of token to transfer.|
 |amount|Decimal number as string|Amount of token to transfer.|
 |targetAddress|string|Wallet address of receiver.|
-|targetChain|string|Receiver chain.|
+|targetChain|string|Receiver chain. Currently only "bsc" supported.|
 |tokenContract|string|Contract for the token to transfer.|
 |from|address|Wallet address of origin.|
 |pk|string|Private key of Wallet address of origin.|
@@ -554,7 +554,7 @@ const balance = await SDK.icon.methods.transferNativeCoin("btp-0x2.icon-bnUSD", 
 |tokenName|string|Name of token to transfer.|
 |amount|Decimal number as string|Amount of token to transfer.|
 |targetAddress|string|Wallet address of receiver.|
-|targetChain|string|Receiver chain.|
+|targetChain|string|Receiver chain. Currently only "bsc" supported.|
 |tokenContract|string|Contract for the token to transfer.|
 |from|address|Wallet address of origin.|
 |pk|string|Private key of Wallet address of origin.|
@@ -1157,7 +1157,7 @@ const balance = await SDK.bsc.methods.isValidCoin("btp-0x2.icon-ICX")
 | Parameter ([?][id1])| Type | Description|
 |--------------|------|----------|
 |targetAddress|string|Wallet address of receiver.|
-|targetChain|string|Receiver chain.|
+|targetChain|string|Receiver chain. Currently only "icon" supported.|
 |from|address|Wallet address of origin.|
 |pk|string|Private key of Wallet address of origin.|
 |_value|Decimal number as string|Amount of token to transfer.|
@@ -1175,7 +1175,7 @@ const balance = await SDK.bsc.methods.isValidCoin("btp-0x2.icon-ICX")
 ```
 ##### Example
 ```js
-const balance = await SDK.bsc.methods.transfer("btp-0x2.icon-ICX")
+const balance = await SDK.bsc.methods.transfer("hx123..", "icon", "0x0123..", "1234..", "50", "btp-0x2.icon-ICX")
 ```
 ------------------
 #### `approveTransfer(from, pk, amount, tokenContractAddress, tokenContractAbi, gas)`
@@ -1234,7 +1234,7 @@ const balance = await SDK.bsc.methods.approveAndTransfer("hx0123..", "icon", "0x
 | Parameter ([?][id1])| Type | Description|
 |--------------|------|----------|
 |targetAddress|string|Wallet address of receiver.|
-|targetChain|string|Receiver chain.|
+|targetChain|string|Receiver chain. Currently only "icon" supported.|
 |from|address|Wallet address of origin.|
 |pk|string|Private key of Wallet address of origin.|
 |_values|Array\<Decimal number as string\>|Amounts of tokens to transfer.|
@@ -1260,7 +1260,7 @@ const balance = await SDK.bsc.methods.transferBatch("hx0123..", "icon", "0x0123.
 | Parameter ([?][id1])| Type | Description|
 |--------------|------|----------|
 |targetAddress|string|Wallet address of receiver.|
-|targetChain|string|Receiver chain.|
+|targetChain|string|Receiver chain. Currently only "icon" supported.|
 |from|address|Wallet address of origin.|
 |pk|string|Private key of Wallet address of origin.|
 |amount|Decimal number as string|Amount of native coin to transfer.|
