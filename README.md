@@ -76,7 +76,8 @@ const SDK = new IconBridgeSDK({
 Methods for interacting with the ICON Bridge originating from the ICON Chain.
 
 ### IconBridge.icon.methods
-`iconBridge.icon.methods` offers all the readonly and signed methods available on the ICON Bridge to be called directly with a valid set of params. The SDK will internally make the appropiate http/https request, handle the response and return the result in a asynchronous way.
+
+`iconBridge.icon.methods` offers all the readonly and signed methods available on the ICON Bridge to be called directly with a valid set of params. The SDK will internally make the appropiate http/https request, handle the response and return the result in an asynchronous way.
 ------------------
 #### `balanceOf(_owner, _coinName)`
 Gets the balance of a defined coin (`_coinName`) for a defined wallet (`_owner`).
@@ -897,6 +898,7 @@ const balance = await SDK.icon.methods.disableRestrictions("hx0123..", "1234..."
 ------------------
 
 ### IconBridge.icon.rawjson
+
 `iconBridge.icon.rawjson` offers the unsigned raw JSON RPC string of the defined signed method of the ICON Bridge. This option is necessary when you want to use a third party wallet (ICONex, Hana) to sign the required transaction object without your program having any access to the users private key.
 
 ------------------
@@ -906,7 +908,7 @@ Methods for interacting with the ICON Bridge originating from the Binance Smart 
 
 ### IconBridge.bsc.methods
 
-`iconBridge.bsc.methods` offers all the readonly and signed methods available on the ICON Bridge to be called directly with a valid set of params. The SDK will internally make the appropiate http/https request, handle the response and return the result in a asynchronous way.
+`iconBridge.bsc.methods` offers all the readonly and signed methods available on the ICON Bridge to be called directly with a valid set of params. The SDK will internally make the appropiate http/https request, handle the response and return the result in an asynchronous way.
 ------------------
 #### `balanceOf(_owner, _coinName)`
 | Parameter ([?][id1])| Type | Description|
@@ -1419,6 +1421,7 @@ const balance = await SDK.bsc.methods.updateBTSPeriphery("0x1234..", "1234..", "
 
 ------------------
 ### IconBridge.bsc.rawjson
+
 `iconBridge.bsc.rawjson` offers the unsigned raw JSON RPC string of the defined signed method of the ICON Bridge. This option is necessary when you want to use a third party wallet (Metamask) to sign the required transaction object without your program having any access to the users private key.
 
 ------------------
