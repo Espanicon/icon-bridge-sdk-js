@@ -192,7 +192,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
             const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
             const preTxRequest = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_approveBTSCoreForTransfer, "f").call(this, from, pk, _value, tokenContractAddress, tokenContractAbi, gas, queryMethod);
             if (preTxRequest.result != null) {
-                yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_sdkUtils, "f").sleep(5000);
+                yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_sdkUtils, "f").sleep(10000);
             }
             else {
                 throw new Error(`pre approve tx returned error. Result: ${preTxRequest}`);
@@ -200,10 +200,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
             const btpAddress = __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_sdkUtils, "f").getBTPAddress(targetAddress, targetChain, isMainnet);
             const valueInWei = __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_bscWeb3, "f").utils.toWei(_value, "ether");
             const txRequest = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_signBTSCoreTx, "f").call(this, from, pk, "transfer", null, gas, queryMethod, _coinName, valueInWei, btpAddress);
-            return {
-                approvalTx: preTxRequest,
-                tokenTx: txRequest
-            };
+            return txRequest;
         }));
         __classPrivateFieldSet(this, _IconBridgeSDKNodeBSC_params, Object.assign(Object.assign({}, params), { nonce: 0 }), "f");
         __classPrivateFieldSet(this, _IconBridgeSDKNodeBSC_bscWeb3, bscWeb3, "f");
