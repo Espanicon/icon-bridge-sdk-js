@@ -224,7 +224,6 @@ class IconBridgeSDK {
       rawAmount: string,
       tokenContractAddress: string,
       tokenContractAbi: any[],
-      // chain: string,
       web3Wrapper: any,
       gas: number | null = null,
       queryMethod: any = null
@@ -248,6 +247,7 @@ class IconBridgeSDK {
         null,
         gas,
         queryMethod,
+        null, //TODO: this is the nonce, maybe eliminate from outer logic?
         spender,
         valueInWei
       );

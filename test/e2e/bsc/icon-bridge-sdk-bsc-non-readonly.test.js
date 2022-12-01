@@ -21,11 +21,30 @@ const wallets = {
     privK: process.env.WALLET_ICON_PK
   }
 };
+// ********************************************//
+// Test 8: calls 'approveTransfer' method originating on the BSC chain.
+// It should returns and object with a predefined set of keys.
+describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'approveTransfer(from, pk, amount, tokenContractAddress, tokenContractAbi, gas)'", () => {
+  it("Result of approving BTS contract to transfer tokens on behalf of wallet address.", async () => {
+    const query = await sdk.bsc.methods.approveTransfer(
+      wallets.bsc.pubK,
+      wallets.bsc.privK,
+      "100",
+      "0x7d8c52A23FD7e3ca1342797baE7caF6d7b8036BA"
+    );
+
+    console.log(`\n  > Result: ${JSON.stringify(query)}\n`);
+    assert.ok(
+      Object.keys(query).includes("jsonrpc") ||
+        Object.keys(query).includes("error")
+    );
+  }).timeout(5000);
+});
 
 // ********************************************//
 // Test 1: calls 'transferNativeCoin' method originating on the BSC chain.
 // It should returns and object with a predefined set of keys.
-describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'transferNativeCoin(targetAddress, targetChain, from, pk, amount, gas)'", () => {
+describe.skip("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'transferNativeCoin(targetAddress, targetChain, from, pk, amount, gas)'", () => {
   it("Transfers native coin from BSC to another chain.", async () => {
     const query = await sdk.bsc.methods.transferNativeCoin(
       wallets.icon.pubK,
@@ -43,7 +62,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'transferNativeCoin(
 // ********************************************//
 // Test 2: calls 'addOwner' method originating on the BSC chain.
 // It should returns and object with a predefined set of keys.
-describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'addOwner(from, pk, _owner, gas)'", () => {
+describe.skip("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'addOwner(from, pk, _owner, gas)'", () => {
   it("adds a wallet as an owner to the bts contract.", async () => {
     const query = await sdk.bsc.methods.addOwner(
       wallets.bsc.pubK,
@@ -62,7 +81,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'addOwner(from, pk, 
 // ********************************************//
 // Test 3: calls 'reclaim' method originating on the BSC chain.
 // It should returns and object with a predefined set of keys.
-describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'reclaim(from, pk, _coinName, _value, gas)'", () => {
+describe.skip("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'reclaim(from, pk, _coinName, _value, gas)'", () => {
   it("Reclaims token from contract.", async () => {
     const query = await sdk.bsc.methods.reclaim(
       wallets.bsc.pubK,
@@ -80,9 +99,32 @@ describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'reclaim(from, pk, _
 });
 
 // ********************************************//
-// Test 4: calls 'removeOwner' method originating on the BSC chain.
+// Test 4: calls 'register' method originating on the BSC chain.
 // It should returns and object with a predefined set of keys.
-describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'removeOwner(from, pk, _owner, gas)'", () => {
+describe.skip("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'register(from, pk, _name, _symbol, _decimals, _feeNumerator, _fixedFee, _addr, gas)'", () => {
+  it("Reclaims token from contract.", async () => {
+    const query = await sdk.bsc.methods.register(
+      wallets.bsc.pubK,
+      wallets.bsc.privK,
+      "btp-0x61.bsc-WBNB",
+      "BNB",
+      "0x12",
+      "0x0",
+      "0x2aa1efb94e000"
+    );
+
+    console.log(`\n  > Result: ${JSON.stringify(query)}\n`);
+    assert.ok(
+      Object.keys(query).includes("jsonrpc") ||
+        Object.keys(query).includes("error")
+    );
+  }).timeout(5000);
+});
+
+// ********************************************//
+// Test 5: calls 'removeOwner' method originating on the BSC chain.
+// It should returns and object with a predefined set of keys.
+describe.skip("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'removeOwner(from, pk, _owner, gas)'", () => {
   it("Removes owner of BTS contract.", async () => {
     const query = await sdk.bsc.methods.removeOwner(
       wallets.bsc.pubK,
@@ -99,9 +141,9 @@ describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'removeOwner(from, p
 });
 
 // ********************************************//
-// Test 5: calls 'setFeeRatio' method originating on the BSC chain.
+// Test 6: calls 'setFeeRatio' method originating on the BSC chain.
 // It should returns and object with a predefined set of keys.
-describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'setFeeRatio(from, pk, _name, _feeNumerator, _fixedFee, gas)'", () => {
+describe.skip("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'setFeeRatio(from, pk, _name, _feeNumerator, _fixedFee, gas)'", () => {
   it("Sets fee ratio.", async () => {
     const query = await sdk.bsc.methods.setFeeRatio(
       wallets.bsc.pubK,
@@ -121,9 +163,9 @@ describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'setFeeRatio(from, p
 });
 
 // ********************************************//
-// Test 6: calls 'updateBTSPeriphery' method originating on the BSC chain.
+// Test 7: calls 'updateBTSPeriphery' method originating on the BSC chain.
 // It should returns and object with a predefined set of keys.
-describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'updateBTSPeriphery(from, pk, _btsPeriphery, gas)'", () => {
+describe.skip("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'updateBTSPeriphery(from, pk, _btsPeriphery, gas)'", () => {
   it("Updates BTSPeriphery contract.", async () => {
     const query = await sdk.bsc.methods.updateBTSPeriphery(
       wallets.bsc.pubK,
@@ -140,15 +182,17 @@ describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'updateBTSPeriphery(
 });
 
 // ********************************************//
-// Test 7: calls 'transfer' method originating on the BSC chain.
+// Test 9: calls 'transfer' method originating on the BSC chain.
 // It should returns and object with a predefined set of keys.
-describe.skip("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'transfer(from, pk, _coinName, _value, gas)'", () => {
+describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'transfer(from, pk, _coinName, _value, gas)'", () => {
   it("Transfers a coin crosschain.", async () => {
     const query = await sdk.bsc.methods.transfer(
+      wallets.icon.pubK,
+      "icon",
       wallets.bsc.pubK,
       wallets.bsc.privK,
-      "btp-0x2.icon-ICX",
-      "10"
+      "50",
+      "btp-0x2.icon-ICX"
     );
 
     console.log(`\n  > Result: ${JSON.stringify(query)}\n`);
@@ -160,39 +204,38 @@ describe.skip("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'transfer(from,
 });
 
 // ********************************************//
-// Test 8: calls 'transferBatch' method originating on the BSC chain.
+// Test 10: calls 'approveAndTransfer' method originating on the BSC chain.
 // It should returns and object with a predefined set of keys.
-describe.skip("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'transferbatch(from, pk, _coinName, _value, gas)'", () => {
+describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'approveAndTransfer(targetAddress, targetChain, from, pk, _coinName, _value, tokenContractAddress, tokenContractAbi, gas)'", () => {
+  it("Approves and Transfers a coin crosschain.", async () => {
+    const query = await sdk.bsc.methods.approveAndTransfer(
+      wallets.icon.pubK,
+      "icon",
+      wallets.bsc.pubK,
+      wallets.bsc.privK,
+      "btp-0x2.icon-ICX",
+      "50",
+      "0x7d8c52A23FD7e3ca1342797baE7caF6d7b8036BA"
+    );
+
+    console.log(`\n  > Result: ${JSON.stringify(query)}\n`);
+    assert.ok(
+      Object.keys(query).includes("jsonrpc") ||
+        Object.keys(query).includes("error")
+    );
+  }).timeout(5000);
+});
+
+// ********************************************//
+// Test 11: calls 'transferBatch' method originating on the BSC chain.
+// It should returns and object with a predefined set of keys.
+describe.skip("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'transferBatch(targetAddress, targetChain, from, pk, _coinNames, _values, gas)'", () => {
   it("Transfers batch of coins crosschain.", async () => {
     const query = await sdk.bsc.methods.transferBatch(
       wallets.bsc.pubK,
       wallets.bsc.privK,
       "btp-0x2.icon-ICX",
       "10"
-    );
-
-    console.log(`\n  > Result: ${JSON.stringify(query)}\n`);
-    assert.ok(
-      Object.keys(query).includes("jsonrpc") ||
-        Object.keys(query).includes("error")
-    );
-  }).timeout(5000);
-});
-
-// ********************************************//
-// Test 9: calls 'register' method originating on the BSC chain.
-// It should returns and object with a predefined set of keys.
-describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'register(from, pk, _name, _symbol, _decimals, _feeNumerator, _fixedFee, _addr, gas)'", () => {
-  it("Run 'register' method of BTS contract.", async () => {
-    const query = await sdk.bsc.methods.updateBTSPeriphery(
-      wallets.bsc.pubK,
-      wallets.bsc.privK,
-      "fooCoin",
-      "fooCoin",
-      18,
-      10,
-      10,
-      "0x4DeD312eB774B9828665448C55Faa8AE15353E56"
     );
 
     console.log(`\n  > Result: ${JSON.stringify(query)}\n`);

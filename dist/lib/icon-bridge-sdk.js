@@ -76,7 +76,7 @@ class IconBridgeSDK {
             approveTransfer: (from, pk, spender, rawAmount, tokenContractAddress, tokenContractAbi, web3Wrapper, gas = null, queryMethod = null) => __awaiter(this, void 0, void 0, function* () {
                 const valueInWei = web3Wrapper.utils.toWei(rawAmount, "ether");
                 const contractObject = this.lib.getContractObject(tokenContractAbi, tokenContractAddress, web3Wrapper);
-                return yield this.signTx(from, pk, "approve", tokenContractAddress, contractObject, web3Wrapper, null, gas, queryMethod, spender, valueInWei);
+                return yield this.signTx(from, pk, "approve", tokenContractAddress, contractObject, web3Wrapper, null, gas, queryMethod, null, spender, valueInWei);
             }),
             getAbiOf: (contractLabel, chain, isMainnet, getLogicContract = true) => {
                 return this.sdkUtils.getAbiOfLabelFromLocalData(contractLabel, chain, isMainnet, getLogicContract);

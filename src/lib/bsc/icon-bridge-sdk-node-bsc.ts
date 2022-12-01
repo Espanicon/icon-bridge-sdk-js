@@ -124,13 +124,57 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
      * @param _to - target BTP address.
      */
     transferBatch: async (
+      targetAddress: string,
+      targetChain: string = "icon",
+      from: string,
+      pk: string,
       _coinNames: string[],
       _values: string[],
-      _to: string,
-      gas: number | null = 2000000
-    ): Promise<void> => {
+      gas: number | null = 2000000,
+      useNativeQueryMethod: boolean = true
+    ): Promise<any> => {
       // index 23
-      console.log([_coinNames, _values, _to, gas]);
+      try {
+        const isMainnet: boolean | null =
+          this.#params.useMainnet == null ? true : this.#params.useMainnet;
+
+        // this params determine if we use the native query method, which
+        // would be http/https when running on nodejs or fetch if running
+        // on the browser or if we directly use the query method included
+        // in the web3js library. the default is not to use the method
+        // included in the web3js library.
+        const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
+        const btpAddress = this.#sdkUtils.getBTPAddress(
+          targetAddress,
+          targetChain,
+          isMainnet
+        );
+
+        const valuesInWei = _values.map(_value => {
+         return this.#bscWeb3.utils.toWei(_value, "ether");
+        })
+
+        // token transaction
+        const response = await this.#signBTSCoreTx(
+          from,
+          pk,
+          "transferBatch",
+          null,
+          gas,
+          queryMethod,
+          _coinNames,
+          valuesInWei,
+          btpAddress
+        );
+
+        return response;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running transferBatch(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\npk: ${pk}\n_values: ${_values}\n_coinNames: ${_coinNames}\n`
+        );
+        return { error: errorResult.toString() };
+      }
     },
 
     /**
@@ -206,8 +250,9 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       _coinName: string,
       _value: string,
       tokenContractAddress: string,
-      tokenContractAbi: any[],
-      gas: number | null = 2000000
+      tokenContractAbi: any[] = this.#sdkUtils.genericAbi,
+      gas: number | null = 2000000,
+      useNativeQueryMethod: boolean = true
     ): Promise<any> => {
       try {
         return await this.#approveAndTransfer(
@@ -219,7 +264,8 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
           _value,
           tokenContractAddress,
           tokenContractAbi,
-          gas
+          gas,
+          useNativeQueryMethod
         );
       } catch (err) {
         const errorResult = new Exception(
@@ -245,29 +291,36 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       pk: string,
       amount: string,
       tokenContractAddress: string,
-      tokenContractAbi: any[],
-      gas: number | null = null
+      tokenContractAbi: any[] = this.#sdkUtils.genericAbi,
+      gas: number | null = null,
+      useNativeQueryMethod: boolean = true
     ) => {
-      //
-      const isMainnet: boolean | null =
-        this.#params.useMainnet == null ? true : this.#params.useMainnet;
+      try {
+        // this params determine if we use the native query method, which
+        // would be http/https when running on nodejs or fetch if running
+        // on the browser or if we directly use the query method included
+        // in the web3js library. the default is not to use the method
+        // included in the web3js library.
+        const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
 
-      const btsCoreAddress = this.#callbackLib.getBTSCoreProxyContractAddress(
-        "bsc",
-        isMainnet
-      );
-
-      return await this.#callbackLib.approveTransfer(
-        from,
-        pk,
-        btsCoreAddress,
-        amount,
-        tokenContractAddress,
-        tokenContractAbi,
-        "bsc",
-        this.#bscWeb3,
-        gas
-      );
+        // first approve the contract to make transfer
+        const response = await this.#approveBTSCoreForTransfer(
+          from,
+          pk,
+          amount,
+          tokenContractAddress,
+          tokenContractAbi,
+          gas,
+          queryMethod
+        );
+        return response
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running approveTransfer(). Params:\nfrom: ${from}\npk: ${pk}\namount: ${amount}\ntokenContractAddress: ${tokenContractAddress}\ntokenContractAbi: ${tokenContractAbi}\n`
+        );
+        return { error: errorResult.toString() };
+      }
     },
 
 
@@ -551,7 +604,8 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
     amount: string,
     tokenContractAddress: string,
     tokenContractAbi: any[],
-    gas: number | null = null
+    gas: number | null = null,
+    queryMethod: null = null
   ) => {
     //
     const isMainnet: boolean | null =
@@ -569,9 +623,9 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       amount,
       tokenContractAddress,
       tokenContractAbi,
-      "bsc",
       this.#bscWeb3,
-      gas
+      gas,
+      queryMethod
     );
   };
 
