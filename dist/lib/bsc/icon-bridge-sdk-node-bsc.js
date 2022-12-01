@@ -190,13 +190,19 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
         _IconBridgeSDKNodeBSC_approveAndTransfer.set(this, (targetAddress, targetChain = "icon", from, pk, _coinName, _value, tokenContractAddress, tokenContractAbi, gas = 2000000, useNativeQueryMethod = true) => __awaiter(this, void 0, void 0, function* () {
             const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_params, "f").useMainnet;
             const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
-            const response = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_approveBTSCoreForTransfer, "f").call(this, from, pk, _value, tokenContractAddress, tokenContractAbi, gas);
+            const preTxRequest = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_approveBTSCoreForTransfer, "f").call(this, from, pk, _value, tokenContractAddress, tokenContractAbi, gas, queryMethod);
+            if (preTxRequest.result != null) {
+                yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_sdkUtils, "f").sleep(5000);
+            }
+            else {
+                throw new Error(`pre approve tx returned error. Result: ${preTxRequest}`);
+            }
             const btpAddress = __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_sdkUtils, "f").getBTPAddress(targetAddress, targetChain, isMainnet);
             const valueInWei = __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_bscWeb3, "f").utils.toWei(_value, "ether");
-            const response2 = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_signBTSCoreTx, "f").call(this, from, pk, "transfer", null, gas, queryMethod, _coinName, valueInWei, btpAddress);
+            const txRequest = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_signBTSCoreTx, "f").call(this, from, pk, "transfer", null, gas, queryMethod, _coinName, valueInWei, btpAddress);
             return {
-                approvalTx: response,
-                tokenTx: response2
+                approvalTx: preTxRequest,
+                tokenTx: txRequest
             };
         }));
         __classPrivateFieldSet(this, _IconBridgeSDKNodeBSC_params, Object.assign(Object.assign({}, params), { nonce: 0 }), "f");

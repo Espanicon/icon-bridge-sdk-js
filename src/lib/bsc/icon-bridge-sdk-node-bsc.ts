@@ -797,14 +797,27 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
     const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
 
     // first approve the contract to make transfer
-    const response = await this.#approveBTSCoreForTransfer(
+    const preTxRequest = await this.#approveBTSCoreForTransfer(
       from,
       pk,
       _value,
       tokenContractAddress,
       tokenContractAbi,
-      gas
+      gas,
+      queryMethod
     );
+
+    // if the preTxRequest was successfull the reply object will
+    // have a 'result' param. In that case we wait for 5 seconds
+    // to allow the chain to generate a new block to ensure that
+    // the following cross chain transaction will be successfull
+    if (preTxRequest.result != null) {
+      await this.#sdkUtils.sleep(5000)
+    } else {
+      throw new Error(
+        `pre approve tx returned error. Result: ${preTxRequest}`
+      )
+    }
 
     const btpAddress = this.#sdkUtils.getBTPAddress(
       targetAddress,
@@ -815,7 +828,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
     const valueInWei = this.#bscWeb3.utils.toWei(_value, "ether");
 
     // token transaction after approval
-    const response2 = await this.#signBTSCoreTx(
+    const txRequest = await this.#signBTSCoreTx(
       from,
       pk,
       "transfer",
@@ -828,8 +841,8 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
     );
 
     return {
-      approvalTx: response,
-      tokenTx: response2
+      approvalTx: preTxRequest,
+      tokenTx:txRequest 
     };
   };
 }
