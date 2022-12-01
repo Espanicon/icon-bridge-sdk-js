@@ -1157,39 +1157,265 @@ const balance = await SDK.bsc.methods.isValidCoin("btp-0x2.icon-ICX")
 |from|address|Wallet address of origin.|
 |pk|string|Private key of Wallet address of origin.|
 |_value|Decimal number as string|Amount of token to transfer.|
-|_coinName|string|Name of token to check.|
+|_coinName|string|Name of token to transfer.|
 |gas [?][id1]|Decimal|Max fee to pay.|
 
+##### Returns
+```js
+{
+  "jsonrpc":"2.0",
+  "id":49,
+  "result":"0x27fd4c75591e9ba64e5ddc32129012d188fc56926d17bc206f137965f6035f04"
+}
+
+```
+##### Example
+```js
+const balance = await SDK.bsc.methods.transfer("btp-0x2.icon-ICX")
+```
 ------------------
 #### `approveTransfer(from, pk, amount, tokenContractAddress, tokenContractAbi, gas)`
+| Parameter ([?][id1])| Type | Description|
+|--------------|------|----------|
+|from|address|Wallet address of origin.|
+|pk|string|Private key of Wallet address of origin.|
+|amount|Decimal number as string|Amount of native coin to transfer.|
+|tokenContract|string|Contract for the token to transfer.|
+|tokenContractAbi [?][id1]|Array\<Object\>|Contract abi for the token to transfer.|
+|gas [?][id1]|Decimal|Max fee to pay.|
 
+##### Returns
+```js
+{
+  "jsonrpc":"2.0",
+  "id":49,
+  "result":"0xfa1233a7154e5071710e8a5cc3e9b61de2d6231c7d5bcc95782dbfb03e5ffb2f"
+}
+
+```
+##### Example
+```js
+const balance = await SDK.bsc.methods.approveTransfer("0x0123..", "12345..", "50", "0x7d8c52A23FD7e3ca1342797baE7caF6d7b8036BA")
+```
 ------------------
 #### `approveAndTransfer(targetAddress, targetChain, from, pk, _coinName, _value, tokenContractAddress, tokenContractAbi, gas)`
+| Parameter ([?][id1])| Type | Description|
+|--------------|------|----------|
+|targetAddress|string|Wallet address of receiver.|
+|targetChain|string|Receiver chain. Currently only "icon" supported.|
+|from|address|Wallet address of origin.|
+|pk|string|Private key of Wallet address of origin.|
+|_value|Decimal number as string|Amount of token to transfer.|
+|_coinName|string|Name of token to transfer.|
+|tokenContract|string|Contract for the token to transfer.|
+|tokenContractAbi [?][id1]|Array\<Object\>|Contract abi for the token to transfer.|
+|gas [?][id1]|Decimal|Max fee to pay.|
+
+##### Returns
+```js
+{
+  "jsonrpc":"2.0",
+  "id":49,
+  "result":"0x8c5922efc4560fdf23d5ad3f1d7c275f5638fe09e60a85ebfb91f1cefbd2104f"
+}
+
+```
+##### Example
+```js
+const balance = await SDK.bsc.methods.approveAndTransfer("hx0123..", "icon", "0x0123..", "12345..", "50", "btp-0x2.icon-ICX",  "0x7d8c52A23FD7e3ca1342797baE7caF6d7b8036BA")
+```
 
 ------------------
 #### `transferBatch(targetAddress, targetChain, from, pk, _coinNames, _values, gas)`
+| Parameter ([?][id1])| Type | Description|
+|--------------|------|----------|
+|targetAddress|string|Wallet address of receiver.|
+|targetChain|string|Receiver chain.|
+|from|address|Wallet address of origin.|
+|pk|string|Private key of Wallet address of origin.|
+|_values|Array\<Decimal number as string\>|Amounts of tokens to transfer.|
+|_coinNames|Array\<string\>|Names of tokens to transfer.|
+|gas [?][id1]|Decimal|Max fee to pay.|
+
+##### Returns
+```js
+{
+  "jsonrpc":"2.0",
+  "id":49,
+  "result":"0x4b8886606539ed91ef90900a8a32605063d0c881b366132aded9115d021c2a91"
+}
+
+```
+##### Example
+```js
+const balance = await SDK.bsc.methods.transferBatch("hx0123..", "icon", "0x0123..", "12345..", ["50"], ["btp-0x2.icon-ICX"])
+```
 
 ------------------
 #### `transferNativeCoin(targetAddress, targetChain, from, pk, amount, gas)`
+| Parameter ([?][id1])| Type | Description|
+|--------------|------|----------|
+|targetAddress|string|Wallet address of receiver.|
+|targetChain|string|Receiver chain.|
+|from|address|Wallet address of origin.|
+|pk|string|Private key of Wallet address of origin.|
+|amount|Decimal number as string|Amount of native coin to transfer.|
+|gas [?][id1]|Decimal|Max fee to pay.|
 
+##### Returns
+```js
+{
+  "jsonrpc":"2.0",
+  "id":49,
+  "result":"0x64cbdc785c74a9bbb4217ba8860fb796910d89462be75f41f31e63b7a0c59c25"
+}
+
+```
+##### Example
+```js
+const balance = await SDK.bsc.methods.transferNativeCoin("hx0123..", "icon", "0x0123..", "12345..", "0.01")
+```
 ------------------
 #### `addOwner(from, pk, _owner, gas)`
+| Parameter ([?][id1])| Type | Description|
+|--------------|------|----------|
+|from|address|Wallet address of origin.|
+|pk|string|Private key of Wallet address of origin.|
+|_owner|Address|Address to add as owner of contract.|
+|gas [?][id1]|Decimal|Max fee to pay.|
 
+##### Returns
+```js
+{
+  "jsonrpc":"2.0",
+  "id":49,
+  "result":"0x0008cb96d74af6d180b5a9ebeff95ccf6d4a2ef91e44a00c8a8eb7e353b2a327"
+}
+
+```
+##### Example
+```js
+const balance = await SDK.bsc.methods.addOwner("0x0123..", "12345..", "0x2345..")
+```
 ------------------
 #### `reclaim(from, pk, _coinName, _value, gas)`
+| Parameter ([?][id1])| Type | Description|
+|--------------|------|----------|
+|from|address|Wallet address of origin.|
+|pk|string|Private key of Wallet address of origin.|
+|_coinName|string|Name of token to transfer.|
+|_value|Decimal number as string|Amount of token to transfer.|
+|gas [?][id1]|Decimal|Max fee to pay.|
 
+##### Returns
+```js
+{
+  "jsonrpc":"2.0",
+  "id":49,
+  "result":"0x2af680892738d5551c8411043551e92ab1447b7d07cc39234e7c948ca31f3e1a"
+}
+
+```
+##### Example
+```js
+const balance = await SDK.bsc.methods.reclaim("0x0123..", "12345..", "btp-0x2.icon-ICX", "10")
+```
 ------------------
 #### `register(from, pk, _name, _symbol, _feeNumerator, _fixedFee, _addr, gas)`
+| Parameter ([?][id1])| Type | Description|
+|--------------|------|----------|
+|from|address|Wallet address of origin.|
+|pk|string|Private key of Wallet address of origin.|
+|_name|string|Name of token to register.|
+|_symbol|string|Symbol of token to register.|
+|_decimals|Number as hex string|Token decimals.|
+|_feeNumerator|Number as hex string|Token fee numerator.|
+|_fixedFee|Number as hex string|Token fixed fee.|
+|_addr|address|Token contract address.|
+|gas [?][id1]|Decimal|Max fee to pay.|
 
+##### Returns
+```js
+{
+  "jsonrpc":"2.0",
+  "id":49,
+  "result":"0x8bb2a4d24f0d17207d00d7c6b8b9b9a366a0809bd7ba6011c7f40cbf334bf53f"
+}
+
+```
+##### Example
+```js
+const balance = await SDK.bsc.methods.register("btp-0x61.bsc-WBNB", "BNB", "0x12", "0x0", "0x2aa1efb94e000", "0x7d8c52A23FD7e3ca1342797baE7caF6d7b8036BA")
+```
 ------------------
 #### `removeOwner(from, pk, _owner, gas)`
+| Parameter ([?][id1])| Type | Description|
+|--------------|------|----------|
+|from|address|Wallet address of origin.|
+|pk|string|Private key of Wallet address of origin.|
+|_owner|Address|Address to remove as owner of contract.|
+|gas [?][id1]|Decimal|Max fee to pay.|
 
+##### Returns
+```js
+{
+  "jsonrpc":"2.0",
+  "id":49,
+  "result":"0xa683bec14f0a9e962308d4753551ac0c979f963a4d00ce6bfda3e996f72aa245"
+}
+
+```
+##### Example
+```js
+const balance = await SDK.bsc.methods.removeOwner("0x0123..", "12345..", "0x2345..")
+```
 ------------------
 #### `setFeeRatio(from, pk, _name, _feeNumerator, _fixedFee, gas)`
+| Parameter ([?][id1])| Type | Description|
+|--------------|------|----------|
+|from|address|Wallet address of origin.|
+|pk|string|Private key of Wallet address of origin.|
+|_name|string|Name of token to register.|
+|_feeNumerator|Number as hex string|Token fee numerator.|
+|_fixedFee|Number as hex string|Token fixed fee.|
+|gas [?][id1]|Decimal|Max fee to pay.|
 
+##### Returns
+```js
+{
+  "jsonrpc":"2.0",
+  "id":49,
+  "result":"0x86ab3e862e2593d8ef6cc4e21bd139358ecd9565ef81e4e2ac154c91f238d4be"
+}
+
+```
+##### Example
+```js
+const balance = await SDK.bsc.methods.setFeeRatio("btp-0x2.icon-ICX", 100, 10, 10000000)
+```
 ------------------
 #### `updateBTSPeriphery(from, pk, _btsPeriphery, gas)`
+| Parameter ([?][id1])| Type | Description|
+|--------------|------|----------|
+|from|address|Wallet address of origin.|
+|pk|string|Private key of Wallet address of origin.|
+|_name|string|Name of token to register.|
+|_btsPeriphery|address|address of btsPeriphery.|
+|gas [?][id1]|Decimal|Max fee to pay.|
 
+##### Returns
+```js
+{
+  "jsonrpc":"2.0",
+  "id":49,
+  "result":"0xdf45876b62bdd0210f7a4938c68eb449a96af02e6407caf5391e74158453035d"
+}
+
+```
+##### Example
+```js
+const balance = await SDK.bsc.methods.updateBTSPeriphery("0x1234..", "1234..", "0x234..")
+```
 
 ------------------
 ### IconBridge.bsc.rawjson

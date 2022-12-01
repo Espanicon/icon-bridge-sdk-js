@@ -44,7 +44,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
                     return { error: errorResult.toString() };
                 }
             }),
-            transferBatch: (targetAddress, targetChain = "icon", from, pk, _coinNames, _values, gas = 2000000, useNativeQueryMethod = true) => __awaiter(this, void 0, void 0, function* () {
+            transferBatch: (targetAddress, targetChain = "icon", from, pk, _values, _coinNames, gas = 2000000, useNativeQueryMethod = true) => __awaiter(this, void 0, void 0, function* () {
                 try {
                     const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_params, "f").useMainnet;
                     const queryMethod = useNativeQueryMethod ? this.queryMethod : null;

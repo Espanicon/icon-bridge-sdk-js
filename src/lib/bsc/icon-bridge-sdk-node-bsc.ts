@@ -119,17 +119,21 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
 
     /**
      * Allow users to transfer multiple coins/wrapped coins to another chain.
-     * @param _coinNames - list of coins.
-     * @param _values - list of values in same order of coins.
-     * @param _to - target BTP address.
+     * @param targetAddress - address of receiver.
+     * @param targetChain - receiver chain.
+     * @param from - address of sender.
+     * @param pk - private key of sender.
+     * @param _coinNames - name of coin to transfer.
+     * @param _values - amount to transfer.
+     * @param gas - transfer fee amount.
      */
     transferBatch: async (
       targetAddress: string,
       targetChain: string = "icon",
       from: string,
       pk: string,
-      _coinNames: string[],
       _values: string[],
+      _coinNames: string[],
       gas: number | null = 2000000,
       useNativeQueryMethod: boolean = true
     ): Promise<any> => {
@@ -236,8 +240,8 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
      * @param targetChain - receiver chain.
      * @param from - address of sender.
      * @param pk - private key of sender.
-     * @param _coinName - given name of wrapped coin.
      * @param _value - amount to transfer.
+     * @param _coinName - given name of wrapped coin.
      * @param tokenContractAddress - contract address of the token to be sent.
      * @param tokenContractAbi - contract abi of the token to be sent.
      * @param gas - transfer fee amount.
@@ -247,8 +251,8 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       targetChain: string = "icon",
       from: string,
       pk: string,
-      _coinName: string,
       _value: string,
+      _coinName: string,
       tokenContractAddress: string,
       tokenContractAbi: any[] = this.#sdkUtils.genericAbi,
       gas: number | null = 2000000,
@@ -428,9 +432,9 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       pk: string,
       _name: string,
       _symbol: string,
-      _decimals: number,
-      _feeNumerator: number,
-      _fixedFee: number,
+      _decimals: string,
+      _feeNumerator: string,
+      _fixedFee: string,
       _addr: string,
       gas: number | null = null,
       useNativeQueryMethod: boolean = true
