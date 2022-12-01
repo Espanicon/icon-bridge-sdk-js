@@ -395,6 +395,9 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
         // in the web3js library. the default is not to use the method
         // included in the web3js library.
         const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
+
+        const valueInWei = this.#bscWeb3.utils.toWei(_value, "ether");
+
         return await this.#signBTSCoreTx(
           from,
           pk,
@@ -403,7 +406,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
           gas,
           queryMethod,
           _coinName,
-          _value
+         valueInWei 
         );
       } catch (err) {
         const errorResult = new Exception(

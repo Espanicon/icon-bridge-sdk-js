@@ -72,7 +72,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
                     return { error: errorResult.toString() };
                 }
             }),
-            approveAndTransfer: (targetAddress, targetChain = "icon", from, pk, _coinName, _value, tokenContractAddress, tokenContractAbi = __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_sdkUtils, "f").genericAbi, gas = 2000000, useNativeQueryMethod = true) => __awaiter(this, void 0, void 0, function* () {
+            approveAndTransfer: (targetAddress, targetChain = "icon", from, pk, _value, _coinName, tokenContractAddress, tokenContractAbi = __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_sdkUtils, "f").genericAbi, gas = 2000000, useNativeQueryMethod = true) => __awaiter(this, void 0, void 0, function* () {
                 try {
                     return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_approveAndTransfer, "f").call(this, targetAddress, targetChain, from, pk, _coinName, _value, tokenContractAddress, tokenContractAbi, gas, useNativeQueryMethod);
                 }
@@ -105,7 +105,8 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
             reclaim: (from, pk, _coinName, _value, gas = null, useNativeQueryMethod = true) => __awaiter(this, void 0, void 0, function* () {
                 try {
                     const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
-                    return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_signBTSCoreTx, "f").call(this, from, pk, "reclaim", null, gas, queryMethod, _coinName, _value);
+                    const valueInWei = __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_bscWeb3, "f").utils.toWei(_value, "ether");
+                    return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_signBTSCoreTx, "f").call(this, from, pk, "reclaim", null, gas, queryMethod, _coinName, valueInWei);
                 }
                 catch (err) {
                     const errorResult = new Exception(err, `Error running reclaim(). Params:\nfrom: ${from}\npk: ${pk}\n_coinName: ${_coinName}\n_value: ${_value}\n`);
