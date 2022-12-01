@@ -42,11 +42,11 @@ new IconBridgeSDK({
 #### Parameters
 | Parameter ([?][id1])| Type | Description|
 |--------------|------|----------|
-| useMainnet|boolean|Use on mainnet or testnet for all chains in the bridge|
-|iconProvider.hostname|string|URL of the ICON RPC Node|
-|iconProvider.nid|number OR null| Network identifier of the ICON RPC Node|
-bscProvider.hostname|string|URL of the BSC RPC Node|
-bscProvider.nid|number OR null|Network indentifier of the BSC RPC Node|
+| useMainnet [?][id1]|boolean|Use on mainnet or testnet for all chains in the bridge|
+|iconProvider.hostname [?][id1]|string|URL of the ICON RPC Node|
+|iconProvider.nid [?][id1]|number OR null| Network identifier of the ICON RPC Node|
+bscProvider.hostname [?][id1]|string|URL of the BSC RPC Node|
+bscProvider.nid [?][id1]|number OR null|Network indentifier of the BSC RPC Node|
 
 #### Example
 ```js
