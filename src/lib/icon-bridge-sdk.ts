@@ -149,6 +149,7 @@ class IconBridgeSDK {
      * @param rest - Array of params to pass to method call.
      */
     signBTSCoreTx: async (
+      useWeb: boolean = false,
       from: string,
       pk: string,
       methodName: string,
@@ -178,6 +179,7 @@ class IconBridgeSDK {
 
       if (rest.length === 0) {
         return await this.signTx(
+          useWeb,
           from,
           pk,
           methodName,
@@ -191,6 +193,7 @@ class IconBridgeSDK {
         );
       } else {
         return await this.signTx(
+          useWeb,
           from,
           pk,
           methodName,
@@ -218,6 +221,7 @@ class IconBridgeSDK {
      * @param gas - gas for tx fee
      */
     approveTransfer: async (
+      useWeb: boolean = false,
       from: string,
       pk: string,
       spender: string,
@@ -238,6 +242,7 @@ class IconBridgeSDK {
       );
 
       return await this.signTx(
+        useWeb,
         from,
         pk,
         "approve",
@@ -464,6 +469,7 @@ class IconBridgeSDK {
    * @param rest -
    */
   private signTx = async (
+    useWeb: boolean = false,
     from: string,
     pk: string,
     methodName: string,
@@ -475,7 +481,7 @@ class IconBridgeSDK {
     queryMethod: any = null,
     nonce: any = null,
     ...rest: any[]
-  ): Promise<string | null> => {
+  ): Promise<any> => {
     // decoding a call to readonly method
     let encodedData = null;
     const contractMethod = contractObject.methods[methodName];
@@ -500,9 +506,11 @@ class IconBridgeSDK {
       tx["value"] = web3Wrapper.utils.toWei(amount, "ether");
     }
 
-    console.log('tx object');
-    console.log(tx);
-    // create the signed tx
+    // if useWeb is true return the unsigned tx object
+    if (useWeb === true) {
+      return tx;
+    }
+
     const signedTx = await web3Wrapper.eth.accounts.signTransaction(tx, pk);
 
     // making readonly call

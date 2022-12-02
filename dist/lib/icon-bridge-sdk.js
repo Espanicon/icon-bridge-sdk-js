@@ -62,21 +62,21 @@ class IconBridgeSDK {
                 }
                 return contractMethodCallResponse;
             }),
-            signBTSCoreTx: (from, pk, methodName, amount = null, chain, web3Wrapper, gas = null, queryMethod = null, nonce = null, ...rest) => __awaiter(this, void 0, void 0, function* () {
+            signBTSCoreTx: (useWeb = false, from, pk, methodName, amount = null, chain, web3Wrapper, gas = null, queryMethod = null, nonce = null, ...rest) => __awaiter(this, void 0, void 0, function* () {
                 const isMainnet = this.params.useMainnet == null ? true : this.params.useMainnet;
                 const BTSProxyContractAddress = this.lib.getBTSCoreProxyContractAddress(chain, isMainnet);
                 const contractObject = this.lib.getBTSCoreLogicContractObject(chain, web3Wrapper);
                 if (rest.length === 0) {
-                    return yield this.signTx(from, pk, methodName, BTSProxyContractAddress, contractObject, web3Wrapper, amount, gas, queryMethod, nonce);
+                    return yield this.signTx(useWeb, from, pk, methodName, BTSProxyContractAddress, contractObject, web3Wrapper, amount, gas, queryMethod, nonce);
                 }
                 else {
-                    return yield this.signTx(from, pk, methodName, BTSProxyContractAddress, contractObject, web3Wrapper, amount, gas, queryMethod, nonce, ...rest);
+                    return yield this.signTx(useWeb, from, pk, methodName, BTSProxyContractAddress, contractObject, web3Wrapper, amount, gas, queryMethod, nonce, ...rest);
                 }
             }),
-            approveTransfer: (from, pk, spender, rawAmount, tokenContractAddress, tokenContractAbi, web3Wrapper, gas = null, queryMethod = null) => __awaiter(this, void 0, void 0, function* () {
+            approveTransfer: (useWeb = false, from, pk, spender, rawAmount, tokenContractAddress, tokenContractAbi, web3Wrapper, gas = null, queryMethod = null) => __awaiter(this, void 0, void 0, function* () {
                 const valueInWei = web3Wrapper.utils.toWei(rawAmount, "ether");
                 const contractObject = this.lib.getContractObject(tokenContractAbi, tokenContractAddress, web3Wrapper);
-                return yield this.signTx(from, pk, "approve", tokenContractAddress, contractObject, web3Wrapper, null, gas, queryMethod, null, spender, valueInWei);
+                return yield this.signTx(useWeb, from, pk, "approve", tokenContractAddress, contractObject, web3Wrapper, null, gas, queryMethod, null, spender, valueInWei);
             }),
             getAbiOf: (contractLabel, chain, isMainnet, getLogicContract = true) => {
                 return this.sdkUtils.getAbiOfLabelFromLocalData(contractLabel, chain, isMainnet, getLogicContract);
@@ -131,7 +131,7 @@ class IconBridgeSDK {
                 return this.lib.getContractObjectByLabel("BTSCore", chain, web3Wrapper, true);
             }
         };
-        this.signTx = (from, pk, methodName, contractAddress, contractObject, web3Wrapper, amount = null, gas = null, queryMethod = null, nonce = null, ...rest) => __awaiter(this, void 0, void 0, function* () {
+        this.signTx = (useWeb = false, from, pk, methodName, contractAddress, contractObject, web3Wrapper, amount = null, gas = null, queryMethod = null, nonce = null, ...rest) => __awaiter(this, void 0, void 0, function* () {
             let encodedData = null;
             const contractMethod = contractObject.methods[methodName];
             if (rest.length === 0) {
@@ -152,8 +152,9 @@ class IconBridgeSDK {
             if (amount != null) {
                 tx["value"] = web3Wrapper.utils.toWei(amount, "ether");
             }
-            console.log('tx object');
-            console.log(tx);
+            if (useWeb === true) {
+                return tx;
+            }
             const signedTx = yield web3Wrapper.eth.accounts.signTransaction(tx, pk);
             let contractMethodCallResponse = null;
             if (queryMethod == null) {
