@@ -898,9 +898,9 @@ const balance = await SDK.icon.methods.disableRestrictions("hx0123..", "1234..."
 ```
 ------------------
 
-### IconBridge.icon.rawjson (TO BE IMPLEMENTED)
+### IconBridge.icon.web (TO BE IMPLEMENTED)
 
-`iconBridge.icon.rawjson` offers the unsigned raw JSON RPC string of the defined signed method of the ICON Bridge. This option is necessary when you want to use a third party wallet (ICONex, Hana) to sign the required transaction object without your program having any access to the users private key.
+`iconBridge.icon.web` offers the unsigned raw JSON RPC string of the selected method of the ICON Bridge. This option is intended to be used with a third party wallet (ICONex, Hana) to sign the required transaction object without your program having any access to the users private key.
 
 ------------------
 ### IconBridge.bsc
@@ -1422,12 +1422,13 @@ const balance = await SDK.bsc.methods.updateBTSPeriphery("0x1234..", "1234..", "
 ```
 
 ------------------
-### IconBridge.bsc.rawjson (TO BE IMPLEMENTED)
+### IconBridge.bsc.web (TO BE IMPLEMENTED)
 
-`iconBridge.bsc.rawjson` offers the unsigned raw JSON RPC string of the defined signed method of the ICON Bridge. This option is necessary when you want to use a third party wallet (Metamask) to sign the required transaction object without your program having any access to the users private key.
+`iconBridge.bsc.web` offers the unsigned raw JSON RPC string of the selected method of the ICON Bridge. This option is intended to be used with a third party wallet (Metamask) to sign the required transaction object without your program having any access to the users private key.
 
 ------------------
 ### IconBridge.sdkUtils
+
 Miscellaneous utilities for the IconBridge SDK.
 * `networks`
 * `contracts`

@@ -152,6 +152,8 @@ class IconBridgeSDK {
             if (amount != null) {
                 tx["value"] = web3Wrapper.utils.toWei(amount, "ether");
             }
+            console.log('tx object');
+            console.log(tx);
             const signedTx = yield web3Wrapper.eth.accounts.signTransaction(tx, pk);
             let contractMethodCallResponse = null;
             if (queryMethod == null) {

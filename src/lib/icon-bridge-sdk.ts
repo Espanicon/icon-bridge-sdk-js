@@ -500,6 +500,8 @@ class IconBridgeSDK {
       tx["value"] = web3Wrapper.utils.toWei(amount, "ether");
     }
 
+    console.log('tx object');
+    console.log(tx);
     // create the signed tx
     const signedTx = await web3Wrapper.eth.accounts.signTransaction(tx, pk);
 
