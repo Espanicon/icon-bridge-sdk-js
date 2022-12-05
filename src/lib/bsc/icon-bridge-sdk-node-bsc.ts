@@ -721,46 +721,6 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
     },
 
     /**
-     * Allow users to deposit an amount of wrapped native coin into the
-     * BTSCore contract.
-     * @param targetAddress - address of receiver.
-     * @param targetChain - receiver chain.
-     * @param from - address of sender.
-     * @param pk - private key of sender.
-     * @param _value - amount to transfer.
-     * @param _coinName - given name of wrapped coin.
-     * @param tokenContractAddress - contract address of the token to be sent.
-     * @param tokenContractAbi - contract abi of the token to be sent.
-     * @param gas - transfer fee amount.
-     */
-    //approveAndTransfer: async (
-    //  targetAddress: string,
-    //  targetChain: string = "icon",
-    //  from: string,
-    //  pk: string,
-    //  _value: string,
-    //  _coinName: string,
-    //  tokenContractAddress: string,
-    //  tokenContractAbi: any[] = this.#sdkUtils.genericAbi,
-    //  gas: number | null = 2000000
-    //): Promise<any> => {
-    //  //
-    //  return await this.#localMethods.approveAndTransfer(
-    //    targetAddress,
-    //    targetChain,
-    //    from,
-    //    pk,
-    //    _value,
-    //    _coinName,
-    //    tokenContractAddress,
-    //    tokenContractAbi,
-    //    gas,
-    //    true,
-    //    true
-    //  )
-    //},
-
-    /**
      * Approves an amount of token to be sent by the BTSCore contract on
      * behalf of the originator wallet.
      * @param from - address of sender.
@@ -955,7 +915,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       gas: number | null = null
     ): Promise<any> => {
       //
-      return await this.localMethods.updateBTSPeriphery(
+      return await this.#localMethods.updateBTSPeriphery(
         from,
         pk,
         _btsPeriphery,

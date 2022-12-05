@@ -183,7 +183,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
                 return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_localMethods, "f").setFeeRatio(from, pk, _name, _feeNumerator, _fixedFee, gas, true, true);
             }),
             updateBTSPeriphery: (from, pk, _btsPeriphery, gas = null) => __awaiter(this, void 0, void 0, function* () {
-                return yield this.localMethods.updateBTSPeriphery(from, pk, _btsPeriphery, gas, true, true);
+                return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_localMethods, "f").updateBTSPeriphery(from, pk, _btsPeriphery, gas, true, true);
             })
         });
         _IconBridgeSDKNodeBSC_approveBTSCoreForTransfer.set(this, (useWeb = false, from, pk, amount, tokenContractAddress, tokenContractAbi, gas = null, queryMethod = null) => __awaiter(this, void 0, void 0, function* () {
