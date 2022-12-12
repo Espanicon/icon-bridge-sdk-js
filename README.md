@@ -5,7 +5,10 @@ WRITE INTRODUCTION AND HIGH LEVEL DESCRIPTION OF THE SDK
 
 ## Installation
 
-DESCRIBE INSTALLATION PROCESS
+Install as an npm package using the following command:
+```
+npm install git@github.com:Espanicon/icon-bridge-sdk-js.git
+```
 
 ## HOW TO USE
 
