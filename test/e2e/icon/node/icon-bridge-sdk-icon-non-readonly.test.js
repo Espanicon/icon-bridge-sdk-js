@@ -1,6 +1,6 @@
 // E2E Tests.
 require("dotenv").config();
-const IconBridgeSDK = require("../../../dist/icon-bridge-sdk-node");
+const IconBridgeSDK = require("../../../../dist/icon-bridge-sdk-node");
 const assert = require("assert");
 
 // Icon Bridge SDK

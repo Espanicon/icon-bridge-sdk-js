@@ -54,6 +54,9 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       ...this.superMethods,
       ...this.#localMethods
     };
+    this.web = {
+      ...this.#web
+    }
   }
 
   // ######################################################################
@@ -77,7 +80,8 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       from: string,
       pk: string,
       amount: number,
-      stepLimit: string | null = null
+      stepLimit: string | null = null,
+      useWeb: boolean = false
     ): Promise<any> => {
       //
       try {
@@ -98,6 +102,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
         );
 
         const txRequest = await this.#makeTxRequest(
+          useWeb,
           from,
           btsContract,
           pk,
@@ -138,7 +143,8 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       tokenContract: string,
       from: string,
       pk: string,
-      stepLimit: string | null = "10000000"
+      stepLimit: string | null = "10000000",
+      useWeb: boolean = false
     ): Promise<any> => {
       //
       try {
@@ -183,6 +189,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
 
         // make cross chain transaction
         const txRequest = await this.#transfer(
+          useWeb,
           tokenName,
           amount,
           btpAddress,
@@ -222,7 +229,8 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       tokenContract: string,
       from: string,
       pk: string,
-      stepLimit: string | null = "10000000"
+      stepLimit: string | null = "10000000",
+      useWeb: boolean = false
     ): Promise<any> => {
       //
       try {
@@ -268,6 +276,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
 
         // make cross chain transaction
         const txRequest = await this.#transfer(
+          useWeb,
           tokenName,
           amount,
           btpAddress,
@@ -300,7 +309,8 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       tokenContract: string | null = null,
       from: string,
       pk: string,
-      stepLimit: string | null = "5000000"
+      stepLimit: string | null = "5000000",
+      useWeb: boolean = false
     ): Promise<any> => {
       //
       try {
@@ -311,7 +321,8 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
           tokenContract,
           from,
           pk,
-          stepLimit
+          stepLimit,
+          useWeb
         )
 
         return txRequest;
@@ -339,13 +350,15 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       _to: string,
       from: string,
       pk: string,
-      stepLimit: string | null = "10000000"
+      stepLimit: string | null = "10000000",
+      useWeb: boolean = false
     ): Promise<any> => {
       //
       try {
 
         // make cross chain transaction
         const txRequest = await this.#transfer(
+          useWeb,
           _coinName,
           _value,
           _to,
@@ -379,7 +392,8 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       _to: string,
       from: string,
       pk: string,
-      stepLimit: string | null = null
+      stepLimit: string | null = null,
+      useWeb: boolean = false
     ): Promise<any> => {
       //
       try {
@@ -403,6 +417,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
 
       // make cross chain transaction
       const txRequest = await this.#makeTxRequest(
+        useWeb,
         from,
         btsContract,
         pk,
@@ -438,7 +453,8 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       tokenContract: string,
       from: string,
       pk: string,
-      stepLimit: string | null = "5000000"
+      stepLimit: string | null = "5000000",
+      useWeb: boolean = false
     ): Promise<any> => {
       //
       try {
@@ -447,7 +463,8 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
         tokenContract,
         from,
         pk,
-        stepLimit
+        stepLimit,
+        useWeb
       );
 
         return txRequest;
@@ -474,7 +491,8 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       _value: string,
       from: string,
       pk: string,
-      stepLimit: string | null = null
+      stepLimit: string | null = null,
+      useWeb: boolean = false
     ): Promise<any> => {
       //
       try {
@@ -493,6 +511,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
         Number(_value)*(10**18)
       )
         const txRequest = await this.#makeTxRequest(
+          useWeb,
           from,
           btsContract,
           pk,
@@ -526,7 +545,8 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       _addr: string,
       from: string,
       pk: string,
-      stepLimit: string | null = null
+      stepLimit: string | null = null,
+      useWeb: boolean = false
     ): Promise<any> => {
       try {
         const isMainnet: boolean =
@@ -540,6 +560,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
         );
 
         const txRequest = await this.#makeTxRequest(
+          useWeb,
           from,
           btsContract,
           pk,
@@ -570,7 +591,8 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       _addr: string,
       from: string,
       pk: string,
-      stepLimit: string | null = null
+      stepLimit: string | null = null,
+      useWeb: boolean = false
     ): Promise<any> => {
       //
       try {
@@ -585,6 +607,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
         );
 
         const txRequest = await this.#makeTxRequest(
+          useWeb,
           from,
           btsContract,
           pk,
@@ -626,7 +649,8 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       from: string,
       pk: string,
       _addr: string | null = null,
-      stepLimit: string | null = null
+      stepLimit: string | null = null,
+      useWeb: boolean = false
     ): Promise<any> => {
       //
       try {
@@ -660,6 +684,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
           }
 
         const txRequest = await this.#makeTxRequest(
+          useWeb,
           from,
           btsContract,
           pk,
@@ -694,7 +719,8 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       _fixedFee: string,
       from: string,
       pk: string,
-      stepLimit: string | null = null
+      stepLimit: string | null = null,
+      useWeb: boolean = false
     ): Promise<any> => {
       //
       try {
@@ -709,6 +735,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
         );
 
         const txRequest = await this.#makeTxRequest(
+          useWeb,
           from,
           btsContract,
           pk,
@@ -741,7 +768,8 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       _addresses: string[],
       from: string,
       pk: string,
-      stepLimit: string | null = null
+      stepLimit: string | null = null,
+      useWeb: boolean = false
     ): Promise<any> => {
       //
       try {
@@ -756,6 +784,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
         );
 
         const txRequest = await this.#makeTxRequest(
+          useWeb,
           from,
           btsContract,
           pk,
@@ -788,7 +817,8 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       _tokenLimits: string[],
       from: string,
       pk: string,
-      stepLimit: string | null = null
+      stepLimit: string | null = null,
+      useWeb: boolean = false
     ): Promise<any> => {
       //
       try {
@@ -803,6 +833,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
         );
 
         const txRequest = await this.#makeTxRequest(
+          useWeb,
           from,
           btsContract,
           pk,
@@ -835,7 +866,8 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       _addresses: string[],
       from: string,
       pk: string,
-      stepLimit: string | null = null
+      stepLimit: string | null = null,
+      useWeb: boolean = false
     ): Promise<any> => {
       //
       try {
@@ -850,6 +882,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
         );
 
         const txRequest = await this.#makeTxRequest(
+          useWeb,
           from,
           btsContract,
           pk,
@@ -878,7 +911,8 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     addRestriction: async (
       from: string,
       pk: string,
-      stepLimit: string | null = null
+      stepLimit: string | null = null,
+      useWeb: boolean = false
     ): Promise<any> => {
       //
       try {
@@ -893,6 +927,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
         );
 
         const txRequest = await this.#makeTxRequest(
+          useWeb,
           from,
           btsContract,
           pk,
@@ -921,7 +956,8 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     disableRestrictions: async (
       from: string,
       pk: string,
-      stepLimit: string | null = null
+      stepLimit: string | null = null,
+      useWeb: boolean = false
     ): Promise<any> => {
       //
       try {
@@ -936,6 +972,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
         );
 
         const txRequest = await this.#makeTxRequest(
+          useWeb,
           from,
           btsContract,
           pk,
@@ -946,6 +983,622 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
         );
 
         return txRequest;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running disableRestrictions(). Params:\nfrom: ${from}\npk: ${pk}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    }
+  };
+
+  #web = {
+    /*
+     * Allows users to transfer native coin to another chain.
+     * @param targetAddress - address that receives the transfer.
+     * @param targetChain - chain that receives the transfer.
+     * @param from - public address of origin.
+     * @param pk - private key of origin.
+     * @param amount - amount of native coin to send.
+     * @param stepLimit - max gas to pay.
+     */
+    transferNativeCoin: async (
+      targetAddress: string,
+      targetChain: string,
+      from: string,
+      pk: string,
+      amount: number,
+      stepLimit: string | null = null
+    ): Promise<any> => {
+      //
+      try {
+        return await this.#localMethods.transferNativeCoin(
+          targetAddress,
+          targetChain,
+          from,
+          pk,
+          amount,
+          stepLimit,
+          true
+        )
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running transferNativeCoin(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\npk: ${pk}\namount: ${amount}\nstepLimit: ${stepLimit}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /*
+     * Allow users to transfer native ICON tokens cross chain. 
+     * this method first makes a 'transfer' query to the token contract to
+     * transfer the tokens to the BTS contract and then calls the 'transfer'
+     * method on the BTS contract to make the cross chain transfer.
+     * @param tokenName - name of native ICON token to transfer.
+     * @param value - amount to transfers.
+     * @param targetAddress - receiver address.
+     * @param targetChain - receiving chain.
+     * @param from - public address of origin.
+     * @param pk - private key of origin.
+     * @param stepLimit - max gas to pay.
+     */
+    //transferNativeToken: async (
+    //  tokenName: string,
+    //  amount: string,
+    //  targetAddress: string,
+    //  targetChain: string,
+    //  tokenContract: string,
+    //  from: string,
+    //  pk: string,
+    //  stepLimit: string | null = "10000000"
+    //): Promise<any> => {
+    //  //
+    //  try {
+    //    return await this.#localMethods.transferNativeToken(
+    //      tokenName,
+    //      amount,
+    //      targetAddress,
+    //      targetChain,
+    //      tokenContract,
+    //      from,
+    //      pk,
+    //      stepLimit,
+    //      true
+    //    )
+    //  } catch (err) {
+    //    const errorResult = new Exception(
+    //      err,
+    //      `Error running transferNativeToken(). Params:\ntokenName: ${tokenName}\namount: ${amount}\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\ntokenContract: ${tokenContract}\nfrom: ${from}\npk: ${pk}\n`
+    //    );
+    //    return { error: errorResult.toString() };
+    //  }
+    //},
+
+    /*
+     * Allow users to transfer wrapped ICON tokens cross chain. 
+     * this method first makes an 'approve' query to the token contract to
+     * allow the BTS contract to make cross chain transfer on behalf of
+     * the originator wallet.
+     * @param tokenName - name of native ICON token to transfer.
+     * @param value - amount to transfers.
+     * @param targetAddress - receiver address.
+     * @param targetChain - receiving chain.
+     * @param from - public address of origin.
+     * @param pk - private key of origin.
+     * @param stepLimit - max gas to pay.
+     */
+    //transferWrappedToken: async (
+    //  tokenName: string,
+    //  amount: string,
+    //  targetAddress: string,
+    //  targetChain: string,
+    //  tokenContract: string,
+    //  from: string,
+    //  pk: string,
+    //  stepLimit: string | null = "10000000"
+    //): Promise<any> => {
+    //  //
+    //  try {
+    //    return await this.#localMethods.transferWrappedToken(
+    //      tokenName,
+    //      amount,
+    //      targetAddress,
+    //      targetChain,
+    //      tokenContract,
+    //      from,
+    //      pk,
+    //      stepLimit,
+    //      true
+    //    )
+    //  } catch (err) {
+    //    const errorResult = new Exception(
+    //      err,
+    //      `Error running transferWrappedToken(). Params:\ntokenName: ${tokenName}\namount: ${amount}\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\ntokenContract: ${tokenContract}\nfrom: ${from}\npk: ${pk}\n`
+    //    );
+    //    return { error: errorResult.toString() };
+    //  }
+    //},
+
+    /*
+     * Allow users to transfer token to the BTS contract. This step is
+     * necessary to do before using the transfer method of the BTS contract.
+     * @param _value - amount to transfers.
+     * @param tokenContract - token contract.
+     * @param from - public address of origin.
+     * @param pk - private key of origin.
+     * @param stepLimit - max gas to pay.
+     */
+    transferToBTSContract: async (
+      _value: string,
+      tokenContract: string | null = null,
+      from: string,
+      pk: string,
+      stepLimit: string | null = "5000000"
+    ): Promise<any> => {
+      //
+      try {
+        return await this.#localMethods.transferToBTSContract(
+          _value,
+          tokenContract,
+          from,
+          pk,
+          stepLimit,
+          true
+        )
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running transferToBTSContract(). Params:\n_value: ${_value}\ntokenContract: ${tokenContract}\n\nfrom: ${from}\npk: ${pk}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /*
+     * Allow users to transfer token between chains.
+     * @param _coinName - name of coin.
+     * @param _value - amount to transfers.
+     * @param _to - receiver address BTP formatted.
+     * @param from - public address of origin.
+     * @param pk - private key of origin.
+     * @param stepLimit - max gas to pay.
+     */
+    transfer: async (
+      _coinName: string,
+      _value: string,
+      _to: string,
+      from: string,
+      pk: string,
+      stepLimit: string | null = "10000000"
+    ): Promise<any> => {
+      //
+      try {
+        return await this.#localMethods.transfer(
+          _coinName,
+          _value,
+          _to,
+          from,
+          pk,
+          stepLimit,
+          true
+        )
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running transfer(). Params:\n_coinName: ${_coinName}\n_value: ${_value}\n_to: ${_to}\nfrom: ${from}\npk: ${pk}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /*
+     * Allow user to transfer a batch of tokens.
+     * @param _coinNames - names of tokens to transfer.
+     * @param _values - amounts to transfer.
+     * @param _to - receiver address BTP formatted.
+     * @param from - public address of origin.
+     * @param pk - private key of origin.
+     * @param stepLimit - max gas to pay.
+     */
+    transferBatch: async (
+      _coinNames: string[],
+      _values: string[],
+      _to: string,
+      from: string,
+      pk: string,
+      stepLimit: string | null = null
+    ): Promise<any> => {
+      //
+      try {
+        return await this.#localMethods.transferBatch(
+          _coinNames,
+          _values,
+          _to,
+          from,
+          pk,
+          stepLimit,
+          true
+        )
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running transferBatch(). Params:\n_coinNames: ${_coinNames}\n_values: ${_values}\n_to: ${_to}\nfrom: ${from}\npk: ${pk}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /*
+     * Approves the BTS contract address to send tokens on behalf
+     * of the originator wallet. This 'approve' method is used by the
+     * contracts of wrapped tokens to allow the BTS contract to move
+     * an amount of token cross chain.
+     * @param amount - amount being approved to spent.
+     * @param tokenContract - contract address for the wrapped token.
+     * @param from - public address of origin.
+     * @param pk - private key of origin.
+     * @param stepLimit - max gas to pay.
+     */
+    approveBTSContract: async (
+      amount: string,
+      tokenContract: string,
+      from: string,
+      pk: string,
+      stepLimit: string | null = "5000000"
+    ): Promise<any> => {
+      //
+      try {
+        return await this.#localMethods.approveBTSContract(
+          amount,
+          tokenContract,
+          from,
+          pk,
+          stepLimit,
+          true
+        )
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running approveBTSContract(). Params:\namount: ${amount}\ntokenContract: ${tokenContract}\nfrom: ${from}\npk: ${pk}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /*
+     * Reclaim the tokens refundable balance by an owner. Caller must be
+     * owner of coin.
+     * @param _coinName - coin name.
+     * @param _value - amount of re-claiming tokens.
+     * @param from - address of sender.
+     * @param pk - private key of sender.
+     * @param stepLimit - max gas to pay.
+     */
+    reclaim: async (
+      _coinName: string,
+      _value: string,
+      from: string,
+      pk: string,
+      stepLimit: string | null = null
+    ): Promise<any> => {
+      //
+      try {
+        return await this.#localMethods.reclaim(
+          _coinName,
+          _value,
+          from,
+          pk,
+          stepLimit,
+          true
+        )
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running reclaim(). Params:\n_coinName: ${_coinName}\n_value: ${_value}\nfrom: ${from}\npk: ${pk}`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    //
+    // The following methods can only be called by the contract owner
+    //
+    /*
+     * Add another Owner. Caller must be an Owner of BTP network.
+     * @param _addr - address of new owner.
+     * @param from - public address of origin.
+     * @param pk - private key of origin.
+     * @param stepLimit - max gas to pay.
+     */
+    addOwner: async (
+      _addr: string,
+      from: string,
+      pk: string,
+      stepLimit: string | null = null
+    ): Promise<any> => {
+      try {
+        return await this.#localMethods.addOwner(
+          _addr,
+          from,
+          pk,
+          stepLimit,
+          true
+        )
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running addOwner(). Params:\n_addr: ${_addr}\nfrom: ${from}\npk: ${pk}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /*
+     * Remove an existing owner. Caller must be an owner of BTP network.
+     * @param _addr - address of owner to remove.
+     * @param from - public address of origin.
+     * @param pk - private key of origin.
+     * @param stepLimit - max gas to pay.
+     */
+    removeOwner: async (
+      _addr: string,
+      from: string,
+      pk: string,
+      stepLimit: string | null = null
+    ): Promise<any> => {
+      //
+      try {
+        return await this.#localMethods.removeOwner(
+          _addr,
+          from,
+          pk,
+          stepLimit,
+          true
+        )
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running removeOwner(). Params:\n_addr: ${_addr}\nfrom: ${from}\npk: ${pk}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /*
+     * Registers a wrapped coin and id number of a supporting coin. Caller
+     * must be an owner of this contract.
+     * @param _name - must be different with the native coin name.
+     * @param _symbol - symbol name of wrapped coin.
+     * @param _decimals - decimal number.
+     * @param _feeNumerator -
+     * @param _fixedFee -
+     * @param from - public address of origin.
+     * @param pk - private key of origin.
+     * @param _addr -
+     * @param stepLimit - max gas to pay.
+     */
+    register: async (
+      _name: string,
+      _symbol: string,
+      _decimals: string,
+      _feeNumerator: string,
+      _fixedFee: string,
+      from: string,
+      pk: string,
+      _addr: string | null = null,
+      stepLimit: string | null = null
+    ): Promise<any> => {
+      //
+      try {
+        return await this.#localMethods.register(
+          _name,
+          _symbol,
+          _decimals,
+          _feeNumerator,
+          _fixedFee,
+          from,
+          pk,
+          _addr,
+          stepLimit,
+          true
+        )
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running register(). Params:\n_name: ${_name}\n_symbol: ${_symbol}\n_decimals: ${_decimals}\n_feeNumerator: ${_feeNumerator}\n_fixedFee: ${_fixedFee}\n_addr: ${_addr}\nfrom: ${from}\npk: ${pk}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /*
+     * Set fee ratio. Caller must be owner of this contract.
+     * @param _name -
+     * @param _feeNumerator -
+     * @param _fixedFee -
+     * @param from - public address of origin.
+     * @param pk - private key of origin.
+     * @param stepLimit - max gas to pay.
+     */
+    setFeeRatio: async (
+      _name: string,
+      _feeNumerator: string,
+      _fixedFee: string,
+      from: string,
+      pk: string,
+      stepLimit: string | null = null
+    ): Promise<any> => {
+      //
+      try {
+        return await this.#localMethods.setFeeRatio(
+          _name,
+          _feeNumerator,
+          _fixedFee,
+          from,
+          pk,
+          stepLimit,
+          true
+        )
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running setFeeRatio(). Params:\n_name: ${_name}\n_feeNumerator: ${_feeNumerator}\n_fixedFee: ${_fixedFee}\nfrom: ${from}\npk: ${pk}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /*
+     * Removes blacklisted addresses.
+     * @param _net - network
+     * @param _addresses - addresses to remove from blacklist.
+     * @param from - public address of origin.
+     * @param pk - private key of origin.
+     * @param stepLimit - max gas to pay.
+     */
+    removeBlacklistAddress: async (
+      _net: string,
+      _addresses: string[],
+      from: string,
+      pk: string,
+      stepLimit: string | null = null
+    ): Promise<any> => {
+      //
+      try {
+        return await this.#localMethods.removeBlacklistAddress(
+          _net,
+          _addresses,
+          from,
+          pk,
+          stepLimit,
+          true
+        )
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running removeBlacklistAddress(). Params:\n_net: ${_net}\n_addresses: ${_addresses}\nfrom: ${from}\npk: ${pk}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /*
+     * Set token limit. Caller must be owner of this contract.
+     * @param _coinNames - names of coins.
+     * @param _tokenLimits -
+     * @param from - public address of origin.
+     * @param pk - private key of origin.
+     * @param stepLimit - max gas to pay.
+     */
+    setTokenLimit: async (
+      _coinNames: string[],
+      _tokenLimits: string[],
+      from: string,
+      pk: string,
+      stepLimit: string | null = null
+    ): Promise<any> => {
+      //
+      try {
+        return await this.#localMethods.setTokenLimit(
+          _coinNames,
+          _tokenLimits,
+          from,
+          pk,
+          stepLimit,
+          true
+        )
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running setTokenLimit(). Params:\n_coinNames: ${_coinNames}\n_tokenLimits: ${_tokenLimits}\nfrom: ${from}\npk: ${pk}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /*
+     * Adds addresses to blacklist. Caller must be owner of this contract.
+     * @param _net -
+     * @param _addresses - list of addresses to blacklist.
+     * @param from - public address of origin.
+     * @param pk - private key of origin.
+     * @param stepLimit - max gas to pay.
+     */
+    addBlacklistAddress: async (
+      _net: string,
+      _addresses: string[],
+      from: string,
+      pk: string,
+      stepLimit: string | null = null
+    ): Promise<any> => {
+      //
+      try {
+        return await this.#localMethods.addBlacklistAddress(
+          _net,
+          _addresses,
+          from,
+          pk,
+          stepLimit,
+          true
+        )
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running addBlacklistAddress(). Params:\n_net: ${_net}\n_addresses: ${_addresses}\nfrom: ${from}\npk: ${pk}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /*
+     * Add restriction. Caller must be owner of this contract.
+     * @param from - public address of origin.
+     * @param pk - private key of origin.
+     * @param stepLimit - max gas to pay.
+     */
+    addRestriction: async (
+      from: string,
+      pk: string,
+      stepLimit: string | null = null
+    ): Promise<any> => {
+      //
+      try {
+        return await this.#localMethods.addRestriction(
+          from,
+          pk,
+          stepLimit,
+          true
+        )
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running addRestrictions(). Params:\nfrom: ${from}\npk: ${pk}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /*
+     * Disable restrictions. Caller must be owner of this contract.
+     * @param from - public address of origin.
+     * @param pk - private key of origin.
+     * @param stepLimit - max gas to pay.
+     */
+    disableRestrictions: async (
+      from: string,
+      pk: string,
+      stepLimit: string | null = null
+    ): Promise<any> => {
+      //
+      try {
+        return await this.#localMethods.disableRestrictions(
+          from,
+          pk,
+          stepLimit,
+          true
+        )
       } catch (err) {
         const errorResult = new Exception(
           err,
@@ -969,6 +1622,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
    * @param nid - nid of network.
    */
   #makeTxRequest = async (
+    useWeb: boolean = false,
     from: string,
     to: string,
     pk: string,
@@ -999,7 +1653,15 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       if (value !== 0) {
         txObj.value(IconAmount.of(value, IconAmount.Unit.ICX).toLoop());
       }
+
+      // build json rpc query
       const txObj2 = txObj.build();
+
+      // if useWeb is true return the unsigned tx object
+      if (useWeb === true) {
+        return txObj2;
+      }
+
       const wallet = IconWallet.loadPrivateKey(pk);
       const signedTx = new SignedTransaction(txObj2, wallet);
       const jsonRPCObj = this.espaniconLib.makeJSONRPCRequestObj(
@@ -1034,7 +1696,8 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     tokenContract: string | null = null,
     from: string,
     pk: string,
-    stepLimit: string | null = "5000000"
+    stepLimit: string | null = "5000000",
+      useWeb: boolean = false
   ): Promise<any> => {
     //
     try {
@@ -1062,6 +1725,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       // transfer token to the BTS address to be able to then
       // make the cross chain transaction
       const txRequest = await this.#makeTxRequest(
+        useWeb,
         from,
         tokenContract,
         pk,
@@ -1091,6 +1755,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
    * @param stepLimit - max gas to pay.
    */
   #transfer = async (
+    useWeb: boolean = false,
     _coinName: string,
     _value: string,
     _to: string,
@@ -1118,6 +1783,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
 
       // make cross chain transaction
       const txRequest = await this.#makeTxRequest(
+        useWeb,
         from,
         btsContract,
         pk,
@@ -1155,7 +1821,8 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     tokenContract: string,
     from: string,
     pk: string,
-    stepLimit: string | null = "5000000"
+    stepLimit: string | null = "5000000",
+    useWeb: boolean = false
   ): Promise<any> => {
     //
     try {
@@ -1167,6 +1834,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
 
     // make cross chain transaction
     const txRequest = await this.#makeTxRequest(
+      useWeb,
       from,
       tokenContract,
       pk,
@@ -1203,7 +1871,8 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     tokenContract: string,
     from: string,
     pk: string,
-    stepLimit: string | null = "5000000"
+    stepLimit: string | null = "5000000",
+    useWeb: boolean = false
   ): Promise<any> => {
     //
     try {
@@ -1223,7 +1892,8 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       tokenContract,
       from,
       pk,
-      stepLimit
+      stepLimit,
+      useWeb
     );
 
       return txRequest;
