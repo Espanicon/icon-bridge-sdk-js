@@ -9,7 +9,7 @@ DESCRIBE INSTALLATION PROCESS
 
 ## HOW TO USE
 
-DESCRIBE HOW TO USE
+For examples on how to use the `IconBridgeSDK` please refer to the [examples](examples/README.md) folder.
 
 ## API Specification
 
