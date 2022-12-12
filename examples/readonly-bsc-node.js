@@ -1,4 +1,4 @@
-const IconBridgeSDK = require("icon-bridge-sdk-js");
+const IconBridgeSDK = require("@espanicon/icon-bridge-sdk-js");
 
 const sdk = new IconBridgeSDK({
   useMainnet: false,

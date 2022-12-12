@@ -6,7 +6,7 @@
     "node": {
       "require": "./dist/icon-bridge-sdk-node.js"
     },
-    "default": "./dist/icon-bridge-sdk.js"
+    "default": "./dist/icon-bridge-sdk-web.mjs"
   },
   "main": "./src/icon-bridge-sdk.ts",
   "scripts": {
