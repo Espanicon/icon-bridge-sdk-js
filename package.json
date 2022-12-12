@@ -10,6 +10,7 @@
   },
   "main": "./src/icon-bridge-sdk.ts",
   "scripts": {
+    "foo": "tsc local-lib/buildABIData2.ts",
     "test": "npm run build && mocha --recursive",
     "test-unit": "npm run build && mocha --recursive ./test/unit/**/*.test.js",
     "test-e2e": "npm run build && mocha --recursive ./test/e2e/**/*.test.js",
