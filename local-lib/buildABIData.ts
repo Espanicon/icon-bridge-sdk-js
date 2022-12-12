@@ -1,13 +1,13 @@
 require("dotenv").config();
-import web3 from "web3";
-import utils from "./utils";
-import customPath from "./customPath";
+const web3 = require("web3");
 const EspaniconSDKNode = require("@espanicon/espanicon-sdk");
+const utils = require("./utils");
+const customPath = require("./customPath");
 const fs = require("fs");
 
 // variables
 const apiKey = process.env.BSC_API_KEY;
-const dataPath = utils.abiDataPath;
+const dataPath = "data/abiData.js";
 const lib = new EspaniconSDKNode(
   utils.networks.mainnet.icon.provider.hostname,
   utils.networks.mainnet.icon.provider.nid
@@ -16,6 +16,8 @@ const bscLib = new web3(utils.networks.mainnet.bsc.provider.hostname);
 const bscLibTestnet = new web3(utils.networks.testnet.bsc.provider.hostname);
 let count = 0;
 
+const preData = "const data =";
+const postData = ";module.exports = data;";
 // types
 interface Query {
   status: "0" | "1";
@@ -209,6 +211,7 @@ async function getMainnetAndTestnetAbiForBSC(): Promise<any> {
 
 async function runAsync(filePath: string): Promise<void> {
   // build abi data json
+  console.log("|--Beging fetching Data");
   try {
     const abiData = await getAbiDataOfAllChains();
 
@@ -217,7 +220,8 @@ async function runAsync(filePath: string): Promise<void> {
       fs.unlinkSync(filePath);
     }
 
-    const fileData = abiData;
+    // const fileData = abiData;
+    const fileData = preData + abiData + postData;
     fs.writeFileSync(filePath, fileData);
     console.log(`file "${filePath}" created`);
   } catch (err) {

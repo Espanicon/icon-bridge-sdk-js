@@ -1,7 +1,8 @@
 // utils/lib.ts
 //
-import fs from "fs";
-import customPath from "./customPath";
+// import fs from "fs";
+// import customPath from "./customPath";
+const ABI_DATA = require("../../data/abiData.js");
 
 // variables
 const abiDataPath = "data/abiData.json";
@@ -9,16 +10,20 @@ const abiDataPath = "data/abiData.json";
 
 // functions
 
-function readDb(path: string): any {
+function readDb(path: string, flag: boolean = true): any {
   try {
-    if (fs.existsSync(customPath(path))) {
-      const dbBuffer = fs.readFileSync(customPath(path), "utf-8");
-      const db = JSON.parse(dbBuffer);
-
-      return db;
+    if (flag === true) {
+      //
+      return ABI_DATA;
     } else {
-      console.log(`error accesing db file "${path}"`);
-      return null;
+      // if (fs.existsSync(customPath(path))) {
+      //   const dbBuffer = fs.readFileSync(customPath(path), "utf-8");
+      //   const db = JSON.parse(dbBuffer);
+      //   return db;
+      // } else {
+      //   console.log(`error accesing db file "${path}"`);
+      //   return null;
+      // }
     }
   } catch (err) {
     console.log(`error reading database at ${path}`);

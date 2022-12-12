@@ -1,20 +1,12 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-const fs_1 = __importDefault(require("fs"));
-const customPath_1 = __importDefault(require("./customPath"));
+const ABI_DATA = require("../../data/abiData.js");
 const abiDataPath = "data/abiData.json";
-function readDb(path) {
+function readDb(path, flag = true) {
     try {
-        if (fs_1.default.existsSync((0, customPath_1.default)(path))) {
-            const dbBuffer = fs_1.default.readFileSync((0, customPath_1.default)(path), "utf-8");
-            const db = JSON.parse(dbBuffer);
-            return db;
+        if (flag === true) {
+            return ABI_DATA;
         }
         else {
-            console.log(`error accesing db file "${path}"`);
-            return null;
         }
     }
     catch (err) {

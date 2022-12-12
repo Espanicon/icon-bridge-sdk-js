@@ -10,7 +10,7 @@
   },
   "main": "./src/icon-bridge-sdk.ts",
   "scripts": {
-    "foo": "tsc local-lib/buildABIData2.ts",
+    "build-data": "rm local-lib/*.js local-lib/*.js.* && tsc -p local-lib && node local-lib/buildABIData.js",
     "test": "npm run build && mocha --recursive",
     "test-unit": "npm run build && mocha --recursive ./test/unit/**/*.test.js",
     "test-e2e": "npm run build && mocha --recursive ./test/e2e/**/*.test.js",
@@ -23,8 +23,7 @@
     "test-e2e-bsc-web-nro": "npm run build && mocha --recursive ./test/e2e/bsc/web/icon-bridge-sdk-bsc-non-readonly.test.js",
     "build": "rm -rf dist/ && tsc",
     "test-web": "webpack serve --open",
-    "e2eTest-node": "npm run build && node ./dist/tests/e2eTests/node/main.mjs",
-    "build-data": "tsc && node ./dist/utils/buildABIData.js"
+    "e2eTest-node": "npm run build && node ./dist/tests/e2eTests/node/main.mjs"
   },
   "keywords": [
     "ICON",
