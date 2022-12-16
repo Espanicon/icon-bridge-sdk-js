@@ -11,12 +11,10 @@ const sdk = new IconBridgeSDK({
 // test wallets
 const wallets = {
   bsc: {
-    pubK: process.env.WALLET_BSC_ADDRESS,
-    privK: process.env.WALLET_BSC_PK
+    pubK: process.env.WALLET_BSC_ADDRESS
   },
   icon: {
-    pubK: process.env.WALLET_ICON_ADDRESS,
-    privK: process.env.WALLET_ICON_PK
+    pubK: process.env.WALLET_ICON_ADDRESS
   }
 };
 // ********************************************//
@@ -28,7 +26,6 @@ describe("E2E testing Icon Bridge SDK. Chain: 'icon', Method 'transferNativeCoin
       wallets.bsc.pubK,
       "bsc",
       wallets.icon.pubK,
-      wallets.icon.privK,
       "50"
     );
 
@@ -45,8 +42,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'icon', Method 'transferToBTSContr
     const query = await sdk.icon.web.transferToBTSContract(
       "50",
       "cxcadcaf77d8e46089fd3d98fcf71eabee1700f148",
-      wallets.icon.pubK,
-      wallets.icon.privK
+      wallets.icon.pubK
     );
 
     console.log(`\n  > Result: ${JSON.stringify(query)}\n`);
@@ -63,8 +59,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'icon', Method 'transfer(_coinName
       "btp-0x2.icon-bnUSD",
       "50",
       `btp://0x61.bsc/${wallets.bsc.pubK}`,
-      wallets.icon.pubK,
-      wallets.icon.privK
+      wallets.icon.pubK
     );
 
     console.log(`\n  > Result: ${JSON.stringify(query)}\n`);
@@ -81,8 +76,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'icon', Method 'transferBatch(_coi
       ["btp-0x2.icon-bnUSD"],
       ["50"],
       `btp://0x61.bsc/${wallets.bsc.pubK}`,
-      wallets.icon.pubK,
-      wallets.icon.privK
+      wallets.icon.pubK
     );
 
     console.log(`\n  > Result: ${JSON.stringify(query)}\n`);
@@ -98,8 +92,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'icon', Method 'approveBTSContract
     const query = await sdk.icon.web.approveBTSContract(
       "0.1",
       "cx55b835590d43af7bf6f5be3c3d50982264d24e5d",
-      wallets.icon.pubK,
-      wallets.icon.privK
+      wallets.icon.pubK
     );
 
     console.log(`\n  > Result: ${JSON.stringify(query)}\n`);
@@ -115,8 +108,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'icon', Method 'reclaim(_coinName,
     const query = await sdk.icon.web.reclaim(
       "btp-0x61.bsc-BNB",
       "0.1",
-      wallets.icon.pubK,
-      wallets.icon.privK
+      wallets.icon.pubK
     );
 
     console.log(`\n  > Result: ${JSON.stringify(query)}\n`);
@@ -131,8 +123,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'icon', Method 'addOwner(_addr, fr
   it("Makes call on 'addOwner' method.", async () => {
     const query = await sdk.icon.web.addOwner(
       wallets.icon.pubK,
-      wallets.icon.pubK,
-      wallets.icon.privK
+      wallets.icon.pubK
     );
 
     console.log(`\n  > Result: ${JSON.stringify(query)}\n`);
@@ -147,8 +138,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'icon', Method 'removeOwner(_addr,
   it("Makes call on 'removeOwner' method.", async () => {
     const query = await sdk.icon.web.removeOwner(
       wallets.icon.pubK,
-      wallets.icon.pubK,
-      wallets.icon.privK
+      wallets.icon.pubK
     );
 
     console.log(`\n  > Result: ${JSON.stringify(query)}\n`);
@@ -167,8 +157,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'icon', Method 'register(_name,_sy
       "0x12",
       "0x0",
       "0x2aa1efb94e000",
-      wallets.icon.pubK,
-      wallets.icon.privK
+      wallets.icon.pubK
     );
 
     console.log(`\n  > Result: ${JSON.stringify(query)}\n`);
@@ -185,8 +174,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'icon', Method 'setFeeRatio(_name,
       "btp-0x61.bsc-WBNB",
       "0x0",
       "0x2aa1efb94e000",
-      wallets.icon.pubK,
-      wallets.icon.privK
+      wallets.icon.pubK
     );
 
     console.log(`\n  > Result: ${JSON.stringify(query)}\n`);
@@ -203,8 +191,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'icon', Method 'removeBlacklistAdd
     const query = await sdk.icon.web.removeBlacklistAddress(
       "0x61.bsc",
       [wallets.icon.pubK],
-      wallets.icon.pubK,
-      wallets.icon.privK
+      wallets.icon.pubK
     );
 
     console.log(`\n  > Result: ${JSON.stringify(query)}\n`);
@@ -221,8 +208,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'icon', Method 'setTokenLimit(_coi
     const query = await sdk.icon.web.setTokenLimit(
       ["btp-0x61.bsc-WBNB"],
       ["0x0"],
-      wallets.icon.pubK,
-      wallets.icon.privK
+      wallets.icon.pubK
     );
 
     console.log(`\n  > Result: ${JSON.stringify(query)}\n`);
@@ -239,8 +225,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'icon', Method 'addBlacklistAddres
     const query = await sdk.icon.web.addBlacklistAddress(
       "0x61.bsc",
       [wallets.bsc.pubK],
-      wallets.icon.pubK,
-      wallets.icon.privK
+      wallets.icon.pubK
     );
 
     console.log(`\n  > Result: ${JSON.stringify(query)}\n`);
@@ -254,10 +239,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'icon', Method 'addBlacklistAddres
 // It should returns and object with a predefined set of keys.
 describe("E2E testing Icon Bridge SDK. Chain: 'icon', Method 'addRestriction(from, pk, stepLimit)'", () => {
   it("Makes call on 'addRestriction' method.", async () => {
-    const query = await sdk.icon.web.addRestriction(
-      wallets.icon.pubK,
-      wallets.icon.privK
-    );
+    const query = await sdk.icon.web.addRestriction(wallets.icon.pubK);
 
     console.log(`\n  > Result: ${JSON.stringify(query)}\n`);
     assert.ok(Object.keys(query).includes("from"));
@@ -270,10 +252,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'icon', Method 'addRestriction(fro
 // It should returns and object with a predefined set of keys.
 describe("E2E testing Icon Bridge SDK. Chain: 'icon', Method 'disableRestrictions(from, pk, stepLimit)'", () => {
   it("Makes call on 'disableRestrictions' method.", async () => {
-    const query = await sdk.icon.web.disableRestrictions(
-      wallets.icon.pubK,
-      wallets.icon.privK
-    );
+    const query = await sdk.icon.web.disableRestrictions(wallets.icon.pubK);
 
     console.log(`\n  > Result: ${JSON.stringify(query)}\n`);
     assert.ok(Object.keys(query).includes("from"));

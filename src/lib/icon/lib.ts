@@ -35,7 +35,7 @@ const makeTxRequest = async (
   useWeb: boolean = false,
   from: string,
   to: string,
-  pk: string,
+  pk: string | null,
   method: string,
   params: any = null,
   value: number = 0,
@@ -109,7 +109,7 @@ const transferToBTSContract = async (
   _value: string,
   tokenContract: string | null = null,
   from: string,
-  pk: string,
+  pk: string | null,
   stepLimit: string | null = "5000000",
   useWeb: boolean = false
 ): Promise<any> => {
@@ -181,7 +181,7 @@ const transfer = async (
   _value: string,
   _to: string,
   from: string,
-  pk: string,
+  pk: string | null,
   stepLimit: string | null = "5000000"
 ): Promise<any> => {
   //
@@ -247,7 +247,7 @@ const approve = async (
   amount: string,
   tokenContract: string,
   from: string,
-  pk: string,
+  pk: string | null,
   stepLimit: string | null = "5000000",
   useWeb: boolean = false
 ): Promise<any> => {
@@ -303,7 +303,7 @@ const approveBTSContract = async (
   amount: string,
   tokenContract: string,
   from: string,
-  pk: string,
+  pk: string | null,
   stepLimit: string | null = "5000000",
   useWeb: boolean = false
 ): Promise<any> => {

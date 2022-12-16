@@ -2,20 +2,7 @@
 //
 const Exception = require("../../utils/exception");
 const baseICONSDK = require("./icon-bridge-sdk-icon");
-// const IconService = require("icon-sdk-js");
 const localLib = require('./lib');
-
-// icon web3 lib
-// const {
-//   IconBuilder,
-//   IconAmount,
-//   IconConverter,
-//   IconWallet,
-//   SignedTransaction,
-//   // HttpProvider
-// } = IconService.default;
-
-// const { CallTransactionBuilder } = IconBuilder;
 
 // types
 type Provider = {
@@ -37,8 +24,6 @@ type InputParams = {
 class IconBridgeSDKNodeIcon extends baseICONSDK {
   #params: any;
   #sdkUtils: any;
-  // #iconHttpProvider: any;
-  // #iconService: any;
 
   /**
    * Constructor
@@ -47,10 +32,6 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     super(params, sdkUtils, CustomSDK);
     this.#params = params;
     this.#sdkUtils = sdkUtils;
-    // this.#iconHttpProvider = new HttpProvider(
-    //   "https://" + this.#params.iconProvider.hostname + "/api/v3"
-    // );
-    // this.#iconService = new IconService.default(this.#iconHttpProvider);
     this.methods = {
       ...this.superMethods,
       ...this.#localMethods
@@ -79,7 +60,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       targetAddress: string,
       targetChain: string,
       from: string,
-      pk: string,
+      pk: string | null,
       amount: number,
       stepLimit: string | null = null,
       useWeb: boolean = false
@@ -309,7 +290,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       _value: string,
       tokenContract: string | null = null,
       from: string,
-      pk: string,
+      pk: string | null,
       stepLimit: string | null = "5000000",
       useWeb: boolean = false
     ): Promise<any> => {
@@ -350,7 +331,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       _value: string,
       _to: string,
       from: string,
-      pk: string,
+      pk: string | null,
       stepLimit: string | null = "10000000",
       useWeb: boolean = false
     ): Promise<any> => {
@@ -392,7 +373,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       _values: string[],
       _to: string,
       from: string,
-      pk: string,
+      pk: string | null,
       stepLimit: string | null = null,
       useWeb: boolean = false
     ): Promise<any> => {
@@ -453,7 +434,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       amount: string,
       tokenContract: string,
       from: string,
-      pk: string,
+      pk: string | null,
       stepLimit: string | null = "5000000",
       useWeb: boolean = false
     ): Promise<any> => {
@@ -491,7 +472,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       _coinName: string,
       _value: string,
       from: string,
-      pk: string,
+      pk: string | null,
       stepLimit: string | null = null,
       useWeb: boolean = false
     ): Promise<any> => {
@@ -545,7 +526,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     addOwner: async (
       _addr: string,
       from: string,
-      pk: string,
+      pk: string | null,
       stepLimit: string | null = null,
       useWeb: boolean = false
     ): Promise<any> => {
@@ -591,7 +572,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     removeOwner: async (
       _addr: string,
       from: string,
-      pk: string,
+      pk: string | null,
       stepLimit: string | null = null,
       useWeb: boolean = false
     ): Promise<any> => {
@@ -648,7 +629,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       _feeNumerator: string,
       _fixedFee: string,
       from: string,
-      pk: string,
+      pk: string | null,
       _addr: string | null = null,
       stepLimit: string | null = null,
       useWeb: boolean = false
@@ -719,7 +700,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       _feeNumerator: string,
       _fixedFee: string,
       from: string,
-      pk: string,
+      pk: string | null,
       stepLimit: string | null = null,
       useWeb: boolean = false
     ): Promise<any> => {
@@ -768,7 +749,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       _net: string,
       _addresses: string[],
       from: string,
-      pk: string,
+      pk: string | null,
       stepLimit: string | null = null,
       useWeb: boolean = false
     ): Promise<any> => {
@@ -817,7 +798,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       _coinNames: string[],
       _tokenLimits: string[],
       from: string,
-      pk: string,
+      pk: string | null,
       stepLimit: string | null = null,
       useWeb: boolean = false
     ): Promise<any> => {
@@ -866,7 +847,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       _net: string,
       _addresses: string[],
       from: string,
-      pk: string,
+      pk: string | null,
       stepLimit: string | null = null,
       useWeb: boolean = false
     ): Promise<any> => {
@@ -911,7 +892,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
      */
     addRestriction: async (
       from: string,
-      pk: string,
+      pk: string | null,
       stepLimit: string | null = null,
       useWeb: boolean = false
     ): Promise<any> => {
@@ -956,7 +937,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
      */
     disableRestrictions: async (
       from: string,
-      pk: string,
+      pk: string | null,
       stepLimit: string | null = null,
       useWeb: boolean = false
     ): Promise<any> => {
@@ -1008,7 +989,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       targetAddress: string,
       targetChain: string,
       from: string,
-      pk: string,
+      // pk: string,
       amount: number,
       stepLimit: string | null = null
     ): Promise<any> => {
@@ -1018,7 +999,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
           targetAddress,
           targetChain,
           from,
-          pk,
+          null,
           amount,
           stepLimit,
           true
@@ -1026,101 +1007,11 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       } catch (err) {
         const errorResult = new Exception(
           err,
-          `Error running transferNativeCoin(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\npk: ${pk}\namount: ${amount}\nstepLimit: ${stepLimit}\n`
+          `Error running transferNativeCoin(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\namount: ${amount}\nstepLimit: ${stepLimit}\n`
         );
         return { error: errorResult.toString() };
       }
     },
-
-    /*
-     * Allow users to transfer native ICON tokens cross chain. 
-     * this method first makes a 'transfer' query to the token contract to
-     * transfer the tokens to the BTS contract and then calls the 'transfer'
-     * method on the BTS contract to make the cross chain transfer.
-     * @param tokenName - name of native ICON token to transfer.
-     * @param value - amount to transfers.
-     * @param targetAddress - receiver address.
-     * @param targetChain - receiving chain.
-     * @param from - public address of origin.
-     * @param pk - private key of origin.
-     * @param stepLimit - max gas to pay.
-     */
-    //transferNativeToken: async (
-    //  tokenName: string,
-    //  amount: string,
-    //  targetAddress: string,
-    //  targetChain: string,
-    //  tokenContract: string,
-    //  from: string,
-    //  pk: string,
-    //  stepLimit: string | null = "10000000"
-    //): Promise<any> => {
-    //  //
-    //  try {
-    //    return await this.#localMethods.transferNativeToken(
-    //      tokenName,
-    //      amount,
-    //      targetAddress,
-    //      targetChain,
-    //      tokenContract,
-    //      from,
-    //      pk,
-    //      stepLimit,
-    //      true
-    //    )
-    //  } catch (err) {
-    //    const errorResult = new Exception(
-    //      err,
-    //      `Error running transferNativeToken(). Params:\ntokenName: ${tokenName}\namount: ${amount}\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\ntokenContract: ${tokenContract}\nfrom: ${from}\npk: ${pk}\n`
-    //    );
-    //    return { error: errorResult.toString() };
-    //  }
-    //},
-
-    /*
-     * Allow users to transfer wrapped ICON tokens cross chain. 
-     * this method first makes an 'approve' query to the token contract to
-     * allow the BTS contract to make cross chain transfer on behalf of
-     * the originator wallet.
-     * @param tokenName - name of native ICON token to transfer.
-     * @param value - amount to transfers.
-     * @param targetAddress - receiver address.
-     * @param targetChain - receiving chain.
-     * @param from - public address of origin.
-     * @param pk - private key of origin.
-     * @param stepLimit - max gas to pay.
-     */
-    //transferWrappedToken: async (
-    //  tokenName: string,
-    //  amount: string,
-    //  targetAddress: string,
-    //  targetChain: string,
-    //  tokenContract: string,
-    //  from: string,
-    //  pk: string,
-    //  stepLimit: string | null = "10000000"
-    //): Promise<any> => {
-    //  //
-    //  try {
-    //    return await this.#localMethods.transferWrappedToken(
-    //      tokenName,
-    //      amount,
-    //      targetAddress,
-    //      targetChain,
-    //      tokenContract,
-    //      from,
-    //      pk,
-    //      stepLimit,
-    //      true
-    //    )
-    //  } catch (err) {
-    //    const errorResult = new Exception(
-    //      err,
-    //      `Error running transferWrappedToken(). Params:\ntokenName: ${tokenName}\namount: ${amount}\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\ntokenContract: ${tokenContract}\nfrom: ${from}\npk: ${pk}\n`
-    //    );
-    //    return { error: errorResult.toString() };
-    //  }
-    //},
 
     /*
      * Allow users to transfer token to the BTS contract. This step is
@@ -1135,7 +1026,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       _value: string,
       tokenContract: string | null = null,
       from: string,
-      pk: string,
+      // pk: string,
       stepLimit: string | null = "5000000"
     ): Promise<any> => {
       //
@@ -1144,14 +1035,14 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
           _value,
           tokenContract,
           from,
-          pk,
+          null,
           stepLimit,
           true
         )
       } catch (err) {
         const errorResult = new Exception(
           err,
-          `Error running transferToBTSContract(). Params:\n_value: ${_value}\ntokenContract: ${tokenContract}\n\nfrom: ${from}\npk: ${pk}\n`
+          `Error running transferToBTSContract(). Params:\n_value: ${_value}\ntokenContract: ${tokenContract}\n\nfrom: ${from}\n`
         );
         return { error: errorResult.toString() };
       }
@@ -1171,7 +1062,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       _value: string,
       _to: string,
       from: string,
-      pk: string,
+      // pk: string,
       stepLimit: string | null = "10000000"
     ): Promise<any> => {
       //
@@ -1181,14 +1072,14 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
           _value,
           _to,
           from,
-          pk,
+          null,
           stepLimit,
           true
         )
       } catch (err) {
         const errorResult = new Exception(
           err,
-          `Error running transfer(). Params:\n_coinName: ${_coinName}\n_value: ${_value}\n_to: ${_to}\nfrom: ${from}\npk: ${pk}\n`
+          `Error running transfer(). Params:\n_coinName: ${_coinName}\n_value: ${_value}\n_to: ${_to}\nfrom: ${from}\n`
         );
         return { error: errorResult.toString() };
       }
@@ -1208,7 +1099,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       _values: string[],
       _to: string,
       from: string,
-      pk: string,
+      // pk: string | null,
       stepLimit: string | null = null
     ): Promise<any> => {
       //
@@ -1218,14 +1109,14 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
           _values,
           _to,
           from,
-          pk,
+          null,
           stepLimit,
           true
         )
       } catch (err) {
         const errorResult = new Exception(
           err,
-          `Error running transferBatch(). Params:\n_coinNames: ${_coinNames}\n_values: ${_values}\n_to: ${_to}\nfrom: ${from}\npk: ${pk}\n`
+          `Error running transferBatch(). Params:\n_coinNames: ${_coinNames}\n_values: ${_values}\n_to: ${_to}\nfrom: ${from}\n`
         );
         return { error: errorResult.toString() };
       }
@@ -1246,7 +1137,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       amount: string,
       tokenContract: string,
       from: string,
-      pk: string,
+      // pk: string,
       stepLimit: string | null = "5000000"
     ): Promise<any> => {
       //
@@ -1255,14 +1146,14 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
           amount,
           tokenContract,
           from,
-          pk,
+          null,
           stepLimit,
           true
         )
       } catch (err) {
         const errorResult = new Exception(
           err,
-          `Error running approveBTSContract(). Params:\namount: ${amount}\ntokenContract: ${tokenContract}\nfrom: ${from}\npk: ${pk}\n`
+          `Error running approveBTSContract(). Params:\namount: ${amount}\ntokenContract: ${tokenContract}\nfrom: ${from}\n`
         );
         return { error: errorResult.toString() };
       }
@@ -1281,7 +1172,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       _coinName: string,
       _value: string,
       from: string,
-      pk: string,
+      // pk: string,
       stepLimit: string | null = null
     ): Promise<any> => {
       //
@@ -1290,14 +1181,14 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
           _coinName,
           _value,
           from,
-          pk,
+          null,
           stepLimit,
           true
         )
       } catch (err) {
         const errorResult = new Exception(
           err,
-          `Error running reclaim(). Params:\n_coinName: ${_coinName}\n_value: ${_value}\nfrom: ${from}\npk: ${pk}`
+          `Error running reclaim(). Params:\n_coinName: ${_coinName}\n_value: ${_value}\nfrom: ${from}\n`
         );
         return { error: errorResult.toString() };
       }
@@ -1316,21 +1207,21 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     addOwner: async (
       _addr: string,
       from: string,
-      pk: string,
+      // pk: string | null,
       stepLimit: string | null = null
     ): Promise<any> => {
       try {
         return await this.#localMethods.addOwner(
           _addr,
           from,
-          pk,
+          null,
           stepLimit,
           true
         )
       } catch (err) {
         const errorResult = new Exception(
           err,
-          `Error running addOwner(). Params:\n_addr: ${_addr}\nfrom: ${from}\npk: ${pk}\n`
+          `Error running addOwner(). Params:\n_addr: ${_addr}\nfrom: ${from}\n`
         );
         return { error: errorResult.toString() };
       }
@@ -1346,7 +1237,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     removeOwner: async (
       _addr: string,
       from: string,
-      pk: string,
+      // pk: string,
       stepLimit: string | null = null
     ): Promise<any> => {
       //
@@ -1354,14 +1245,14 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
         return await this.#localMethods.removeOwner(
           _addr,
           from,
-          pk,
+          null,
           stepLimit,
           true
         )
       } catch (err) {
         const errorResult = new Exception(
           err,
-          `Error running removeOwner(). Params:\n_addr: ${_addr}\nfrom: ${from}\npk: ${pk}\n`
+          `Error running removeOwner(). Params:\n_addr: ${_addr}\nfrom: ${from}\n`
         );
         return { error: errorResult.toString() };
       }
@@ -1387,7 +1278,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       _feeNumerator: string,
       _fixedFee: string,
       from: string,
-      pk: string,
+      // pk: string,
       _addr: string | null = null,
       stepLimit: string | null = null
     ): Promise<any> => {
@@ -1400,7 +1291,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
           _feeNumerator,
           _fixedFee,
           from,
-          pk,
+          null,
           _addr,
           stepLimit,
           true
@@ -1408,7 +1299,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       } catch (err) {
         const errorResult = new Exception(
           err,
-          `Error running register(). Params:\n_name: ${_name}\n_symbol: ${_symbol}\n_decimals: ${_decimals}\n_feeNumerator: ${_feeNumerator}\n_fixedFee: ${_fixedFee}\n_addr: ${_addr}\nfrom: ${from}\npk: ${pk}\n`
+          `Error running register(). Params:\n_name: ${_name}\n_symbol: ${_symbol}\n_decimals: ${_decimals}\n_feeNumerator: ${_feeNumerator}\n_fixedFee: ${_fixedFee}\n_addr: ${_addr}\nfrom: ${from}\n`
         );
         return { error: errorResult.toString() };
       }
@@ -1428,7 +1319,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       _feeNumerator: string,
       _fixedFee: string,
       from: string,
-      pk: string,
+      // pk: string,
       stepLimit: string | null = null
     ): Promise<any> => {
       //
@@ -1438,14 +1329,14 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
           _feeNumerator,
           _fixedFee,
           from,
-          pk,
+          null,
           stepLimit,
           true
         )
       } catch (err) {
         const errorResult = new Exception(
           err,
-          `Error running setFeeRatio(). Params:\n_name: ${_name}\n_feeNumerator: ${_feeNumerator}\n_fixedFee: ${_fixedFee}\nfrom: ${from}\npk: ${pk}\n`
+          `Error running setFeeRatio(). Params:\n_name: ${_name}\n_feeNumerator: ${_feeNumerator}\n_fixedFee: ${_fixedFee}\nfrom: ${from}\n`
         );
         return { error: errorResult.toString() };
       }
@@ -1463,7 +1354,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       _net: string,
       _addresses: string[],
       from: string,
-      pk: string,
+      // pk: string | null,
       stepLimit: string | null = null
     ): Promise<any> => {
       //
@@ -1472,14 +1363,14 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
           _net,
           _addresses,
           from,
-          pk,
+          null,
           stepLimit,
           true
         )
       } catch (err) {
         const errorResult = new Exception(
           err,
-          `Error running removeBlacklistAddress(). Params:\n_net: ${_net}\n_addresses: ${_addresses}\nfrom: ${from}\npk: ${pk}\n`
+          `Error running removeBlacklistAddress(). Params:\n_net: ${_net}\n_addresses: ${_addresses}\nfrom: ${from}\n`
         );
         return { error: errorResult.toString() };
       }
@@ -1497,7 +1388,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       _coinNames: string[],
       _tokenLimits: string[],
       from: string,
-      pk: string,
+      // pk: string | null,
       stepLimit: string | null = null
     ): Promise<any> => {
       //
@@ -1506,14 +1397,14 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
           _coinNames,
           _tokenLimits,
           from,
-          pk,
+          null,
           stepLimit,
           true
         )
       } catch (err) {
         const errorResult = new Exception(
           err,
-          `Error running setTokenLimit(). Params:\n_coinNames: ${_coinNames}\n_tokenLimits: ${_tokenLimits}\nfrom: ${from}\npk: ${pk}\n`
+          `Error running setTokenLimit(). Params:\n_coinNames: ${_coinNames}\n_tokenLimits: ${_tokenLimits}\nfrom: ${from}\n`
         );
         return { error: errorResult.toString() };
       }
@@ -1531,7 +1422,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       _net: string,
       _addresses: string[],
       from: string,
-      pk: string,
+      // pk: string,
       stepLimit: string | null = null
     ): Promise<any> => {
       //
@@ -1540,14 +1431,14 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
           _net,
           _addresses,
           from,
-          pk,
+          null,
           stepLimit,
           true
         )
       } catch (err) {
         const errorResult = new Exception(
           err,
-          `Error running addBlacklistAddress(). Params:\n_net: ${_net}\n_addresses: ${_addresses}\nfrom: ${from}\npk: ${pk}\n`
+          `Error running addBlacklistAddress(). Params:\n_net: ${_net}\n_addresses: ${_addresses}\nfrom: ${from}\n`
         );
         return { error: errorResult.toString() };
       }
@@ -1561,21 +1452,21 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
      */
     addRestriction: async (
       from: string,
-      pk: string,
+      // pk: string,
       stepLimit: string | null = null
     ): Promise<any> => {
       //
       try {
         return await this.#localMethods.addRestriction(
           from,
-          pk,
+          null,
           stepLimit,
           true
         )
       } catch (err) {
         const errorResult = new Exception(
           err,
-          `Error running addRestrictions(). Params:\nfrom: ${from}\npk: ${pk}\n`
+          `Error running addRestrictions(). Params:\nfrom: ${from}\n`
         );
         return { error: errorResult.toString() };
       }
@@ -1589,21 +1480,21 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
      */
     disableRestrictions: async (
       from: string,
-      pk: string,
+      // pk: string,
       stepLimit: string | null = null
     ): Promise<any> => {
       //
       try {
         return await this.#localMethods.disableRestrictions(
           from,
-          pk,
+          null,
           stepLimit,
           true
         )
       } catch (err) {
         const errorResult = new Exception(
           err,
-          `Error running disableRestrictions(). Params:\nfrom: ${from}\npk: ${pk}\n`
+          `Error running disableRestrictions(). Params:\nfrom: ${from}\n`
         );
         return { error: errorResult.toString() };
       }
@@ -1626,7 +1517,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     useWeb: boolean = false,
     from: string,
     to: string,
-    pk: string,
+    pk: string | null,
     method: string,
     params: any = null,
     value: number = 0,
@@ -1711,7 +1602,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     _value: string,
     tokenContract: string | null = null,
     from: string,
-    pk: string,
+    pk: string | null,
     stepLimit: string | null = "5000000",
     useWeb: boolean = false
   ): Promise<any> => {
@@ -1789,7 +1680,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     _value: string,
     _to: string,
     from: string,
-    pk: string,
+    pk: string | null,
     stepLimit: string | null = "5000000"
   ): Promise<any> => {
     //
@@ -1924,7 +1815,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     amount: string,
     tokenContract: string,
     from: string,
-    pk: string,
+    pk: string | null,
     stepLimit: string | null = "5000000",
     useWeb: boolean = false
   ): Promise<any> => {
