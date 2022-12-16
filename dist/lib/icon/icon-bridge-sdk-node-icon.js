@@ -19,12 +19,10 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
-var _IconBridgeSDKNodeIcon_params, _IconBridgeSDKNodeIcon_sdkUtils, _IconBridgeSDKNodeIcon_localMethods, _IconBridgeSDKNodeIcon_web, _IconBridgeSDKNodeIcon_makeTxRequest, _IconBridgeSDKNodeIcon_transferToBTSContract, _IconBridgeSDKNodeIcon_transfer, _IconBridgeSDKNodeIcon_approve, _IconBridgeSDKNodeIcon_approveBTSContract;
+var _IconBridgeSDKNodeIcon_params, _IconBridgeSDKNodeIcon_sdkUtils, _IconBridgeSDKNodeIcon_localMethods, _IconBridgeSDKNodeIcon_web, _IconBridgeSDKNodeIcon_makeTxRequest, _IconBridgeSDKNodeIcon_transferToBTSContract, _IconBridgeSDKNodeIcon_transfer, _IconBridgeSDKNodeIcon_approveBTSContract;
 const Exception = require("../../utils/exception");
 const baseICONSDK = require("./icon-bridge-sdk-icon");
-const IconService = require("icon-sdk-js");
-const { IconBuilder, IconAmount, IconConverter, IconWallet, SignedTransaction, } = IconService.default;
-const { CallTransactionBuilder } = IconBuilder;
+const localLib = require('./lib');
 class IconBridgeSDKNodeIcon extends baseICONSDK {
     constructor(params, sdkUtils, CustomSDK) {
         super(params, sdkUtils, CustomSDK);
@@ -406,33 +404,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
         });
         _IconBridgeSDKNodeIcon_makeTxRequest.set(this, (useWeb = false, from, to, pk, method, params = null, value = 0, stepLimit = null, nid = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").iconProvider.nid) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const useStepLimit = stepLimit == null ? "8000000" : stepLimit;
-                const txObj = new CallTransactionBuilder()
-                    .from(from)
-                    .to(to)
-                    .stepLimit(IconConverter.toBigNumber(useStepLimit))
-                    .nid(IconConverter.toBigNumber(nid))
-                    .nonce(IconConverter.toBigNumber(__classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_sdkUtils, "f").getRandNonce()))
-                    .version(IconConverter.toBigNumber("3"))
-                    .timestamp(new Date().getTime() * 1000)
-                    .method(method);
-                if (params != null) {
-                    txObj.params(params);
-                }
-                if (value !== 0) {
-                    txObj.value(IconAmount.of(value, IconAmount.Unit.ICX).toLoop());
-                }
-                const txObj2 = txObj.build();
-                if (useWeb === true) {
-                    return txObj2;
-                }
-                const wallet = IconWallet.loadPrivateKey(pk);
-                const signedTx = new SignedTransaction(txObj2, wallet);
-                const jsonRPCObj = this.espaniconLib.makeJSONRPCRequestObj("icx_sendTransaction");
-                jsonRPCObj["params"] = signedTx.getProperties();
-                const stringJsonObj = JSON.stringify(jsonRPCObj);
-                const query = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_sdkUtils, "f").makeJsonRpcCall(__classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").iconProvider.hostname, stringJsonObj, this.queryMethod);
-                return query;
+                return yield localLib.makeTxRequest(__classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_sdkUtils, "f"), this.espaniconLib, __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f"), this.queryMethod, useWeb, from, to, pk, method, params, value, stepLimit, nid);
             }
             catch (err) {
                 console.log("error running #makeTxRequest");
@@ -441,14 +413,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
         }));
         _IconBridgeSDKNodeIcon_transferToBTSContract.set(this, (_value, tokenContract = null, from, pk, stepLimit = "5000000", useWeb = false) => __awaiter(this, void 0, void 0, function* () {
             try {
-                if (tokenContract == null || !__classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_sdkUtils, "f").isValidContractAddress) {
-                    throw new Error(`Contract address is not valid. Address: ${tokenContract}`);
-                }
-                const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet;
-                const btsContract = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_sdkUtils, "f").getContractOfLabelFromLocalData("bts", "icon", isMainnet, false);
-                const parsedValue = this.espaniconLib.decimalToHex(Number(_value) * (10 ** 18));
-                const txRequest = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_makeTxRequest, "f").call(this, useWeb, from, tokenContract, pk, "transfer", { _to: btsContract, _value: parsedValue }, 0, stepLimit);
-                return txRequest;
+                return yield localLib.transferToBTSContract(__classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_sdkUtils, "f"), this.espaniconLib, __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f"), this.queryMethod, _value, tokenContract, from, pk, stepLimit, useWeb);
             }
             catch (err) {
                 const errorResult = new Exception(err, `Error running transferToBTSContract(). Params:\n_value: ${_value}\ntokenContract: ${tokenContract}\n\nfrom: ${from}\npk: ${pk}\n`);
@@ -457,34 +422,16 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
         }));
         _IconBridgeSDKNodeIcon_transfer.set(this, (useWeb = false, _coinName, _value, _to, from, pk, stepLimit = "5000000") => __awaiter(this, void 0, void 0, function* () {
             try {
-                const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet;
-                const btsContract = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_sdkUtils, "f").getContractOfLabelFromLocalData("bts", "icon", isMainnet, false);
-                const parsedValue = this.espaniconLib.decimalToHex(Number(_value) * (10 ** 18));
-                const txRequest = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_makeTxRequest, "f").call(this, useWeb, from, btsContract, pk, "transfer", { _coinName: _coinName, _value: parsedValue, _to: _to }, 0, stepLimit);
-                return txRequest;
+                return yield localLib.transfer(__classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_sdkUtils, "f"), this.espaniconLib, __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f"), this.queryMethod, useWeb, _coinName, _value, _to, from, pk, stepLimit);
             }
             catch (err) {
                 const errorResult = new Exception(err, `Error running transfer(). Params:\n_coinName: ${_coinName}\n_value: ${_value}\n_to: ${_to}\nfrom: ${from}\npk: ${pk}\n`);
                 return { error: errorResult.toString() };
             }
         }));
-        _IconBridgeSDKNodeIcon_approve.set(this, (spender, amount, tokenContract, from, pk, stepLimit = "5000000", useWeb = false) => __awaiter(this, void 0, void 0, function* () {
-            try {
-                const parsedValue = this.espaniconLib.decimalToHex(Number(amount) * (10 ** 18));
-                const txRequest = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_makeTxRequest, "f").call(this, useWeb, from, tokenContract, pk, "approve", { spender: spender, amount: parsedValue }, 0, stepLimit);
-                return txRequest;
-            }
-            catch (err) {
-                const errorResult = new Exception(err, `Error running approve(). Params:\nspender: ${spender}\namount: ${amount}\ntokenContract: ${tokenContract}\nfrom: ${from}\npk: ${pk}\n`);
-                return { error: errorResult.toString() };
-            }
-        }));
         _IconBridgeSDKNodeIcon_approveBTSContract.set(this, (amount, tokenContract, from, pk, stepLimit = "5000000", useWeb = false) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet;
-                const btsContract = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_sdkUtils, "f").getContractOfLabelFromLocalData("bts", "icon", isMainnet, false);
-                const txRequest = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_approve, "f").call(this, btsContract, amount, tokenContract, from, pk, stepLimit, useWeb);
-                return txRequest;
+                return yield localLib.approveBTSContract(__classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_sdkUtils, "f"), this.espaniconLib, __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f"), this.queryMethod, amount, tokenContract, from, pk, stepLimit, useWeb);
             }
             catch (err) {
                 const errorResult = new Exception(err, `Error running approveBTSContract(). Params:\namount: ${amount}\ntokenContract: ${tokenContract}\nfrom: ${from}\npk: ${pk}\n`);
@@ -497,6 +444,6 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
         this.web = Object.assign({}, __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_web, "f"));
     }
 }
-_IconBridgeSDKNodeIcon_params = new WeakMap(), _IconBridgeSDKNodeIcon_sdkUtils = new WeakMap(), _IconBridgeSDKNodeIcon_localMethods = new WeakMap(), _IconBridgeSDKNodeIcon_web = new WeakMap(), _IconBridgeSDKNodeIcon_makeTxRequest = new WeakMap(), _IconBridgeSDKNodeIcon_transferToBTSContract = new WeakMap(), _IconBridgeSDKNodeIcon_transfer = new WeakMap(), _IconBridgeSDKNodeIcon_approve = new WeakMap(), _IconBridgeSDKNodeIcon_approveBTSContract = new WeakMap();
+_IconBridgeSDKNodeIcon_params = new WeakMap(), _IconBridgeSDKNodeIcon_sdkUtils = new WeakMap(), _IconBridgeSDKNodeIcon_localMethods = new WeakMap(), _IconBridgeSDKNodeIcon_web = new WeakMap(), _IconBridgeSDKNodeIcon_makeTxRequest = new WeakMap(), _IconBridgeSDKNodeIcon_transferToBTSContract = new WeakMap(), _IconBridgeSDKNodeIcon_transfer = new WeakMap(), _IconBridgeSDKNodeIcon_approveBTSContract = new WeakMap();
 module.exports = IconBridgeSDKNodeIcon;
 //# sourceMappingURL=icon-bridge-sdk-node-icon.js.map

@@ -2,19 +2,20 @@
 //
 const Exception = require("../../utils/exception");
 const baseICONSDK = require("./icon-bridge-sdk-icon");
-const IconService = require("icon-sdk-js");
+// const IconService = require("icon-sdk-js");
+const localLib = require('./lib');
 
 // icon web3 lib
-const {
-  IconBuilder,
-  IconAmount,
-  IconConverter,
-  IconWallet,
-  SignedTransaction,
-  // HttpProvider
-} = IconService.default;
+// const {
+//   IconBuilder,
+//   IconAmount,
+//   IconConverter,
+//   IconWallet,
+//   SignedTransaction,
+//   // HttpProvider
+// } = IconService.default;
 
-const { CallTransactionBuilder } = IconBuilder;
+// const { CallTransactionBuilder } = IconBuilder;
 
 // types
 type Provider = {
@@ -1633,49 +1634,64 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     nid: string = this.#params.iconProvider.nid
   ) => {
     try {
-      const useStepLimit = stepLimit == null ? "8000000" : stepLimit;
-      const txObj = new CallTransactionBuilder()
-        .from(from)
-        .to(to)
-        .stepLimit(IconConverter.toBigNumber(useStepLimit))
-        .nid(IconConverter.toBigNumber(nid))
-        .nonce(IconConverter.toBigNumber(this.#sdkUtils.getRandNonce()))
-        .version(IconConverter.toBigNumber("3"))
-        .timestamp(new Date().getTime() * 1000)
-        .method(method);
-
-      // if any params are specified
-      if (params != null) {
-        txObj.params(params);
-      }
-
-      // if an amount of ICX is specified to transfer
-      if (value !== 0) {
-        txObj.value(IconAmount.of(value, IconAmount.Unit.ICX).toLoop());
-      }
-
-      // build json rpc query
-      const txObj2 = txObj.build();
-
-      // if useWeb is true return the unsigned tx object
-      if (useWeb === true) {
-        return txObj2;
-      }
-
-      const wallet = IconWallet.loadPrivateKey(pk);
-      const signedTx = new SignedTransaction(txObj2, wallet);
-      const jsonRPCObj = this.espaniconLib.makeJSONRPCRequestObj(
-        "icx_sendTransaction"
-      );
-      jsonRPCObj["params"] = signedTx.getProperties();
-      const stringJsonObj = JSON.stringify(jsonRPCObj);
-      const query = await this.#sdkUtils.makeJsonRpcCall(
-        this.#params.iconProvider.hostname,
-        stringJsonObj,
-        this.queryMethod
+      return await localLib.makeTxRequest(
+        this.#sdkUtils,
+        this.espaniconLib,
+        this.#params,
+        this.queryMethod,
+        useWeb,
+        from, 
+        to, 
+        pk, 
+        method, 
+        params, 
+        value, 
+        stepLimit, 
+        nid
       )
+      // const useStepLimit = stepLimit == null ? "8000000" : stepLimit;
+      // const txObj = new CallTransactionBuilder()
+      //   .from(from)
+      //   .to(to)
+      //   .stepLimit(IconConverter.toBigNumber(useStepLimit))
+      //   .nid(IconConverter.toBigNumber(nid))
+      //   .nonce(IconConverter.toBigNumber(this.#sdkUtils.getRandNonce()))
+      //   .version(IconConverter.toBigNumber("3"))
+      //   .timestamp(new Date().getTime() * 1000)
+      //   .method(method);
 
-      return query;
+      // // if any params are specified
+      // if (params != null) {
+      //   txObj.params(params);
+      // }
+
+      // // if an amount of ICX is specified to transfer
+      // if (value !== 0) {
+      //   txObj.value(IconAmount.of(value, IconAmount.Unit.ICX).toLoop());
+      // }
+
+      // // build json rpc query
+      // const txObj2 = txObj.build();
+
+      // // if useWeb is true return the unsigned tx object
+      // if (useWeb === true) {
+      //   return txObj2;
+      // }
+
+      // const wallet = IconWallet.loadPrivateKey(pk);
+      // const signedTx = new SignedTransaction(txObj2, wallet);
+      // const jsonRPCObj = this.espaniconLib.makeJSONRPCRequestObj(
+      //   "icx_sendTransaction"
+      // );
+      // jsonRPCObj["params"] = signedTx.getProperties();
+      // const stringJsonObj = JSON.stringify(jsonRPCObj);
+      // const query = await this.#sdkUtils.makeJsonRpcCall(
+      //   this.#params.iconProvider.hostname,
+      //   stringJsonObj,
+      //   this.queryMethod
+      // )
+
+      // return query;
     } catch (err) {
       console.log("error running #makeTxRequest");
       console.log(err);
@@ -1697,45 +1713,58 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     from: string,
     pk: string,
     stepLimit: string | null = "5000000",
-      useWeb: boolean = false
+    useWeb: boolean = false
   ): Promise<any> => {
     //
     try {
-      if (tokenContract == null || !this.#sdkUtils.isValidContractAddress) {
-        throw new Error(
-          `Contract address is not valid. Address: ${tokenContract}`
-        )
-      }
-
-      const isMainnet: boolean =
-        this.#params.useMainnet == null ? true : this.#params.useMainnet;
-
-      const btsContract = this.#sdkUtils.getContractOfLabelFromLocalData(
-        "bts",
-        "icon",
-        isMainnet,
-        false
-      );
-
-      // parse value into loop units and then into hexadecimal
-      const parsedValue = this.espaniconLib.decimalToHex(
-        Number(_value)*(10**18)
-      )
-
-      // transfer token to the BTS address to be able to then
-      // make the cross chain transaction
-      const txRequest = await this.#makeTxRequest(
-        useWeb,
-        from,
+      return await localLib.transferToBTSContract(
+        this.#sdkUtils,
+        this.espaniconLib,
+        this.#params,
+        this.queryMethod,
+        _value,
         tokenContract,
+        from,
         pk,
-        "transfer",
-        { _to: btsContract, _value: parsedValue },
-        0,
-        stepLimit
+        stepLimit,
+        useWeb
       )
 
-      return txRequest;
+    //   if (tokenContract == null || !this.#sdkUtils.isValidContractAddress) {
+    //     throw new Error(
+    //       `Contract address is not valid. Address: ${tokenContract}`
+    //     )
+    //   }
+
+    //   const isMainnet: boolean =
+    //     this.#params.useMainnet == null ? true : this.#params.useMainnet;
+
+    //   const btsContract = this.#sdkUtils.getContractOfLabelFromLocalData(
+    //     "bts",
+    //     "icon",
+    //     isMainnet,
+    //     false
+    //   );
+
+    //   // parse value into loop units and then into hexadecimal
+    //   const parsedValue = this.espaniconLib.decimalToHex(
+    //     Number(_value)*(10**18)
+    //   )
+
+    //   // transfer token to the BTS address to be able to then
+    //   // make the cross chain transaction
+    //   const txRequest = await this.#makeTxRequest(
+    //     useWeb,
+    //     from,
+    //     tokenContract,
+    //     pk,
+    //     "transfer",
+    //     { _to: btsContract, _value: parsedValue },
+    //     0,
+    //     stepLimit
+    //   )
+
+    //   return txRequest;
     } catch (err) {
       const errorResult = new Exception(
         err,
@@ -1765,35 +1794,47 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
   ): Promise<any> => {
     //
     try {
-
-      const isMainnet: boolean =
-        this.#params.useMainnet == null ? true : this.#params.useMainnet;
-
-      const btsContract = this.#sdkUtils.getContractOfLabelFromLocalData(
-        "bts",
-        "icon",
-        isMainnet,
-        false
-      );
-
-      // parse value into loop units and then into hexadecimal
-      const parsedValue = this.espaniconLib.decimalToHex(
-        Number(_value)*(10**18)
-      )
-
-      // make cross chain transaction
-      const txRequest = await this.#makeTxRequest(
+      return await localLib.transfer(
+        this.#sdkUtils,
+        this.espaniconLib,
+        this.#params,
+        this.queryMethod,
         useWeb,
+        _coinName,
+        _value,
+        _to,
         from,
-        btsContract,
         pk,
-        "transfer",
-        { _coinName: _coinName, _value: parsedValue, _to: _to},
-        0,
         stepLimit
-      );
+      )
+      // const isMainnet: boolean =
+      //   this.#params.useMainnet == null ? true : this.#params.useMainnet;
 
-      return txRequest;
+      // const btsContract = this.#sdkUtils.getContractOfLabelFromLocalData(
+      //   "bts",
+      //   "icon",
+      //   isMainnet,
+      //   false
+      // );
+
+      // // parse value into loop units and then into hexadecimal
+      // const parsedValue = this.espaniconLib.decimalToHex(
+      //   Number(_value)*(10**18)
+      // )
+
+      // // make cross chain transaction
+      // const txRequest = await this.#makeTxRequest(
+      //   useWeb,
+      //   from,
+      //   btsContract,
+      //   pk,
+      //   "transfer",
+      //   { _coinName: _coinName, _value: parsedValue, _to: _to},
+      //   0,
+      //   stepLimit
+      // );
+
+      // return txRequest;
     } catch (err) {
       const errorResult = new Exception(
         err,
@@ -1815,44 +1856,57 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
    * @param pk - private key of origin.
    * @param stepLimit - max gas to pay.
    */
-  #approve = async (
-    spender: string,
-    amount: string,
-    tokenContract: string,
-    from: string,
-    pk: string,
-    stepLimit: string | null = "5000000",
-    useWeb: boolean = false
-  ): Promise<any> => {
-    //
-    try {
+  //#approve = async (
+  //  spender: string,
+  //  amount: string,
+  //  tokenContract: string,
+  //  from: string,
+  //  pk: string,
+  //  stepLimit: string | null = "5000000",
+  //  useWeb: boolean = false
+  //): Promise<any> => {
+  //  //
+  //  try {
 
-    // parse value into loop units and then into hexadecimal
-    const parsedValue = this.espaniconLib.decimalToHex(
-      Number(amount)*(10**18)
-    )
+  //    return await localLib.approve(
+  //      this.#sdkUtils,
+  //      this.espaniconLib,
+  //      this.#params,
+  //      this.queryMethod,
+  //      spender,
+  //      amount,
+  //      tokenContract,
+  //      from,
+  //      pk,
+  //      stepLimit,
+  //      useWeb
+  //    )
+    // // parse value into loop units and then into hexadecimal
+    // const parsedValue = this.espaniconLib.decimalToHex(
+    //   Number(amount)*(10**18)
+    // )
 
-    // make cross chain transaction
-    const txRequest = await this.#makeTxRequest(
-      useWeb,
-      from,
-      tokenContract,
-      pk,
-      "approve",
-      { spender: spender, amount: parsedValue },
-      0,
-      stepLimit
-    );
+    // // make cross chain transaction
+    // const txRequest = await this.#makeTxRequest(
+    //   useWeb,
+    //   from,
+    //   tokenContract,
+    //   pk,
+    //   "approve",
+    //   { spender: spender, amount: parsedValue },
+    //   0,
+    //   stepLimit
+    // );
 
-      return txRequest;
-    } catch (err) {
-      const errorResult = new Exception(
-        err,
-        `Error running approve(). Params:\nspender: ${spender}\namount: ${amount}\ntokenContract: ${tokenContract}\nfrom: ${from}\npk: ${pk}\n`
-      );
-      return { error: errorResult.toString() };
-    }
-  };
+    //   return txRequest;
+    // } catch (err) {
+    //   const errorResult = new Exception(
+    //     err,
+    //     `Error running approve(). Params:\nspender: ${spender}\namount: ${amount}\ntokenContract: ${tokenContract}\nfrom: ${from}\npk: ${pk}\n`
+    //   );
+    //   return { error: errorResult.toString() };
+    // }
+  // };
 
   /*
    * Approves the BTS contract address to send tokens on behalf
@@ -1877,26 +1931,38 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     //
     try {
 
-    const isMainnet: boolean =
-      this.#params.useMainnet == null ? true : this.#params.useMainnet;
+      return await localLib.approveBTSContract(
+        this.#sdkUtils,
+        this.espaniconLib,
+        this.#params,
+        this.queryMethod,
+        amount,
+        tokenContract,
+        from,
+        pk,
+        stepLimit,
+        useWeb
+      )
+    // const isMainnet: boolean =
+    //   this.#params.useMainnet == null ? true : this.#params.useMainnet;
 
-    const btsContract = this.#sdkUtils.getContractOfLabelFromLocalData(
-      "bts",
-      "icon",
-      isMainnet,
-      false
-    );
-    const txRequest = await this.#approve(
-      btsContract,
-      amount,
-      tokenContract,
-      from,
-      pk,
-      stepLimit,
-      useWeb
-    );
+    // const btsContract = this.#sdkUtils.getContractOfLabelFromLocalData(
+    //   "bts",
+    //   "icon",
+    //   isMainnet,
+    //   false
+    // );
+    // const txRequest = await this.#approve(
+    //   btsContract,
+    //   amount,
+    //   tokenContract,
+    //   from,
+    //   pk,
+    //   stepLimit,
+    //   useWeb
+    // );
 
-      return txRequest;
+    //   return txRequest;
     } catch (err) {
       const errorResult = new Exception(
         err,
