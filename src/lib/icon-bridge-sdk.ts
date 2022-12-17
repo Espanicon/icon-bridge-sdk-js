@@ -151,7 +151,7 @@ class IconBridgeSDK {
     signBTSCoreTx: async (
       useWeb: boolean = false,
       from: string,
-      pk: string,
+      pk: string | null,
       methodName: string,
       amount: null | number = null,
       chain: string,
@@ -471,7 +471,7 @@ class IconBridgeSDK {
   private signTx = async (
     useWeb: boolean = false,
     from: string,
-    pk: string,
+    pk: string | null,
     methodName: string,
     contractAddress: string,
     contractObject: { methods: any },
@@ -511,6 +511,7 @@ class IconBridgeSDK {
       return tx;
     }
 
+    // sign transaction
     const signedTx = await web3Wrapper.eth.accounts.signTransaction(tx, pk);
 
     // making readonly call

@@ -73,7 +73,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       targetAddress: string,
       targetChain: string = "icon",
       from: string,
-      pk: string,
+      pk: string | null,
       _value: string,
       _coinName: string,
       gas: number | null = 2000000,
@@ -137,7 +137,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       targetAddress: string,
       targetChain: string = "icon",
       from: string,
-      pk: string,
+      pk: string | null,
       _values: string[],
       _coinNames: string[],
       gas: number | null = 2000000,
@@ -202,7 +202,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       targetAddress: string,
       targetChain: string = "icon",
       from: string,
-      pk: string,
+      pk: string | null,
       amount: string,
       gas: number | null = 2000000,
       useNativeQueryMethod: boolean = true,
@@ -304,7 +304,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
      */
     approveTransfer: async (
       from: string,
-      pk: string,
+      pk: string | null,
       amount: string,
       tokenContractAddress: string,
       tokenContractAbi: any[] = this.#sdkUtils.genericAbi,
@@ -355,7 +355,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
      */
     addOwner: async (
       from: string,
-      pk: string,
+      pk: string | null,
       _owner: string,
       gas: number | null = null,
       useNativeQueryMethod: boolean = true,
@@ -398,7 +398,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
      */
     reclaim: async (
       from: string,
-      pk: string,
+      pk: string | null,
       _coinName: string,
       _value: number,
       gas: number | null = null,
@@ -450,7 +450,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
      */
     register: async (
       from: string,
-      pk: string,
+      pk: string | null,
       _name: string,
       _symbol: string,
       _decimals: string,
@@ -501,7 +501,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
      */
     removeOwner: async (
       from: string,
-      pk: string,
+      pk: string | null,
       _owner: string,
       gas: number | null = null,
       useNativeQueryMethod: boolean = true,
@@ -544,7 +544,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
      */
     setFeeRatio: async (
       from: string,
-      pk: string,
+      pk: string | null,
       _name: string,
       _feeNumerator: number,
       _fixedFee: number,
@@ -589,7 +589,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
      */
     updateBTSPeriphery: async (
       from: string,
-      pk: string,
+      pk: string | null,
       _btsPeriphery: string,
       gas: number | null = null,
       useNativeQueryMethod: boolean = true,
@@ -629,7 +629,6 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
      * @param targetAddress - address of receiver.
      * @param targetChain - receiver chain.
      * @param from - address of sender.
-     * @param pk - private key of sender.
      * @param _value - amount to transfer.
      * @param _coinName - name of coin to transfer.
      * @param gas - transfer fee amount.
@@ -638,7 +637,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       targetAddress: string,
       targetChain: string = "icon",
       from: string,
-      pk: string,
+      // pk: string,
       _value: string,
       _coinName: string,
       gas: number | null = 2000000
@@ -648,7 +647,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
         targetAddress,
         targetChain,
         from,
-        pk,
+        null,
         _value,
         _coinName,
         gas,
@@ -662,7 +661,6 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
      * @param targetAddress - address of receiver.
      * @param targetChain - receiver chain.
      * @param from - address of sender.
-     * @param pk - private key of sender.
      * @param _coinNames - name of coin to transfer.
      * @param _values - amount to transfer.
      * @param gas - transfer fee amount.
@@ -671,7 +669,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       targetAddress: string,
       targetChain: string = "icon",
       from: string,
-      pk: string,
+      // pk: string,
       _values: string[],
       _coinNames: string[],
       gas: number | null = 2000000
@@ -681,7 +679,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
         targetAddress,
         targetChain,
         from,
-        pk,
+        null,
         _values,
         _coinNames,
         gas,
@@ -695,7 +693,6 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
      * @param targetAddress - address that receives transfer.
      * @param targetChain - chain that receives transfer.
      * @param from - public address of origin.
-     * @param pk - private key of origin.
      * @param amount - amount of native coin to send.
      * @param gas - transfer fee amount.
      */
@@ -703,7 +700,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       targetAddress: string,
       targetChain: string = "icon",
       from: string,
-      pk: string,
+      // pk: string,
       amount: string,
       gas: number | null = 2000000
     ): Promise<any> => {
@@ -712,7 +709,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
         targetAddress,
         targetChain,
         from,
-        pk,
+        null,
         amount,
         gas,
         true,
@@ -724,7 +721,6 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
      * Approves an amount of token to be sent by the BTSCore contract on
      * behalf of the originator wallet.
      * @param from - address of sender.
-     * @param pk - private key of sender.
      * @param amount - amount to approve.
      * @param tokenContractAddress - Contract address of the token to approve.
      * @param tokenContractAbi - Contract abi of the token to approve.
@@ -732,7 +728,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
      */
     approveTransfer: async (
       from: string,
-      pk: string,
+      // pk: string,
       amount: string,
       tokenContractAddress: string,
       tokenContractAbi: any[] = this.#sdkUtils.genericAbi,
@@ -741,7 +737,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       //
       return await this.#localMethods.approveTransfer(
         from,
-        pk,
+        null,
         amount,
         tokenContractAddress,
         tokenContractAbi,
@@ -757,21 +753,20 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
     /**
      * Add another Owner. Caller must be an Owner of BTP network.
      * @param from - address of sender.
-     * @param pk - private key of sender.
      * @param _owner - Address of new owner
      * @param gas - transfer fee amount.
      * @return
      */
     addOwner: async (
       from: string,
-      pk: string,
+      // pk: string,
       _owner: string,
       gas: number | null = null
     ): Promise<any> => {
       //
       return await this.#localMethods.addOwner(
         from,
-        pk,
+        null,
         _owner,
         gas,
         true,
@@ -783,14 +778,13 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
      * Reclaim the token's refundable balance by an owner. Caller must be
      * owner of coin.
      * @param from - address of sender.
-     * @param pk - private key of sender.
      * @param _coinName - coin name.
      * @param _value - amount of re-claiming tokens.
      * @param gas - transfer fee amount.
      */
     reclaim: async (
       from: string,
-      pk: string,
+      // pk: string,
       _coinName: string,
       _value: number,
       gas: number | null = null
@@ -798,7 +792,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       //
       return await this.#localMethods.reclaim(
         from,
-        pk,
+        null,
         _coinName,
         _value,
         gas,
@@ -811,7 +805,6 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
      * Registers a wrapped coin and id number of a supporting coin. Caller
      * must be an owner of this contract.
      * @param from - address of sender.
-     * @param pk - private key of sender.
      * @param _name - must be different with the native coin name.
      * @param _symbol - symbol name for a wrapped coin.
      * @param _decimals - decimal number.
@@ -822,7 +815,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
      */
     register: async (
       from: string,
-      pk: string,
+      // pk: string,
       _name: string,
       _symbol: string,
       _decimals: string,
@@ -834,7 +827,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       //
       return await this.#localMethods.register(
         from,
-        pk,
+        null,
         _name,
         _symbol,
         _decimals,
@@ -850,20 +843,19 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
     /**
      * Removing an existing owner. Caller must be an owner of BTP network.
      * @param from - address of sender.
-     * @param pk - private key of sender.
      * @param _owner - address of owner to be removed.
      * @param gas - transfer fee amount.
      */
     removeOwner: async (
       from: string,
-      pk: string,
+      // pk: string,
       _owner: string,
       gas: number | null = null
     ): Promise<any> => {
       //
       return await this.#localMethods.removeOwner(
         from,
-        pk,
+        null,
         _owner,
         gas,
         true,
@@ -874,7 +866,6 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
     /**
      * Set fee ratio. Caller must be an owner of this contract.
      * @param from - address of sender.
-     * @param pk - private key of sender.
      * @param _name -
      * @param _feeNumerator -
      * @param _fixedFee -
@@ -882,7 +873,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
      */
     setFeeRatio: async (
       from: string,
-      pk: string,
+      // pk: string,
       _name: string,
       _feeNumerator: number,
       _fixedFee: number,
@@ -891,7 +882,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       //
       return await this.#localMethods.setFeeRatio(
         from,
-        pk,
+        null,
         _name,
         _feeNumerator,
         _fixedFee,
@@ -904,20 +895,19 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
     /**
      * Updates BTS periphery address. Caller must be owner of contract.
      * @param from - address of sender.
-     * @param pk - private key of sender.
      * @param _btsPeriphery - btsPeriphery contract address.
      * @param gas - transfer fee amount.
      */
     updateBTSPeriphery: async (
       from: string,
-      pk: string,
+      // pk: string,
       _btsPeriphery: string,
       gas: number | null = null
     ): Promise<any> => {
       //
       return await this.#localMethods.updateBTSPeriphery(
         from,
-        pk,
+        null,
         _btsPeriphery,
         gas,
         true,
@@ -938,7 +928,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
   #approveBTSCoreForTransfer = async (
     useWeb: boolean = false,
     from: string,
-    pk: string,
+    pk: string | null,
     amount: string,
     tokenContractAddress: string,
     tokenContractAbi: any[],
@@ -979,7 +969,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
   #signBTSCoreTx = async (
     useWeb: boolean = false,
     from: string,
-    pk: string,
+    pk: string | null,
     methodName: string,
     amount: null | string = null,
     gas: number | null = null,

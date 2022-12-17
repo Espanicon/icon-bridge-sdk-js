@@ -16,4 +16,4 @@ In this folder you can find a set of example code files showing how to use the `
 * Calling a readonly method for the ICON side of the bridge inside a React webapp. [Example file](readonly-icon-react.js).
 * Calling a readonly method for the BSC side of the bridge inside a React webapp. [Example file](readonly-bsc-react.js).
 * Calling a pre-signage method for the ICON side of the bridge inside a React application. [Example file](tx-icon-react.js).
-* Calling a pre-signage method for the BSC side of the bridge inside a React application.
+* Calling a pre-signage method for the BSC side of the bridge inside a React application. [Example file](tx-bsc-react.js).

@@ -155,35 +155,35 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
             })
         });
         _IconBridgeSDKNodeBSC_web.set(this, {
-            transfer: (targetAddress, targetChain = "icon", from, pk, _value, _coinName, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
-                return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_localMethods, "f").transfer(targetAddress, targetChain, from, pk, _value, _coinName, gas, true, true);
+            transfer: (targetAddress, targetChain = "icon", from, _value, _coinName, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
+                return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_localMethods, "f").transfer(targetAddress, targetChain, from, null, _value, _coinName, gas, true, true);
             }),
-            transferBatch: (targetAddress, targetChain = "icon", from, pk, _values, _coinNames, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
-                return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_localMethods, "f").transferBatch(targetAddress, targetChain, from, pk, _values, _coinNames, gas, true, true);
+            transferBatch: (targetAddress, targetChain = "icon", from, _values, _coinNames, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
+                return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_localMethods, "f").transferBatch(targetAddress, targetChain, from, null, _values, _coinNames, gas, true, true);
             }),
-            transferNativeCoin: (targetAddress, targetChain = "icon", from, pk, amount, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
-                return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_localMethods, "f").transferNativeCoin(targetAddress, targetChain, from, pk, amount, gas, true, true);
+            transferNativeCoin: (targetAddress, targetChain = "icon", from, amount, gas = 2000000) => __awaiter(this, void 0, void 0, function* () {
+                return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_localMethods, "f").transferNativeCoin(targetAddress, targetChain, from, null, amount, gas, true, true);
             }),
-            approveTransfer: (from, pk, amount, tokenContractAddress, tokenContractAbi = __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_sdkUtils, "f").genericAbi, gas = null) => __awaiter(this, void 0, void 0, function* () {
-                return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_localMethods, "f").approveTransfer(from, pk, amount, tokenContractAddress, tokenContractAbi, gas, true, true);
+            approveTransfer: (from, amount, tokenContractAddress, tokenContractAbi = __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_sdkUtils, "f").genericAbi, gas = null) => __awaiter(this, void 0, void 0, function* () {
+                return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_localMethods, "f").approveTransfer(from, null, amount, tokenContractAddress, tokenContractAbi, gas, true, true);
             }),
-            addOwner: (from, pk, _owner, gas = null) => __awaiter(this, void 0, void 0, function* () {
-                return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_localMethods, "f").addOwner(from, pk, _owner, gas, true, true);
+            addOwner: (from, _owner, gas = null) => __awaiter(this, void 0, void 0, function* () {
+                return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_localMethods, "f").addOwner(from, null, _owner, gas, true, true);
             }),
-            reclaim: (from, pk, _coinName, _value, gas = null) => __awaiter(this, void 0, void 0, function* () {
-                return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_localMethods, "f").reclaim(from, pk, _coinName, _value, gas, true, true);
+            reclaim: (from, _coinName, _value, gas = null) => __awaiter(this, void 0, void 0, function* () {
+                return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_localMethods, "f").reclaim(from, null, _coinName, _value, gas, true, true);
             }),
-            register: (from, pk, _name, _symbol, _decimals, _feeNumerator, _fixedFee, _addr, gas = null) => __awaiter(this, void 0, void 0, function* () {
-                return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_localMethods, "f").register(from, pk, _name, _symbol, _decimals, _feeNumerator, _fixedFee, _addr, gas, true, true);
+            register: (from, _name, _symbol, _decimals, _feeNumerator, _fixedFee, _addr, gas = null) => __awaiter(this, void 0, void 0, function* () {
+                return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_localMethods, "f").register(from, null, _name, _symbol, _decimals, _feeNumerator, _fixedFee, _addr, gas, true, true);
             }),
-            removeOwner: (from, pk, _owner, gas = null) => __awaiter(this, void 0, void 0, function* () {
-                return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_localMethods, "f").removeOwner(from, pk, _owner, gas, true, true);
+            removeOwner: (from, _owner, gas = null) => __awaiter(this, void 0, void 0, function* () {
+                return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_localMethods, "f").removeOwner(from, null, _owner, gas, true, true);
             }),
-            setFeeRatio: (from, pk, _name, _feeNumerator, _fixedFee, gas = null) => __awaiter(this, void 0, void 0, function* () {
-                return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_localMethods, "f").setFeeRatio(from, pk, _name, _feeNumerator, _fixedFee, gas, true, true);
+            setFeeRatio: (from, _name, _feeNumerator, _fixedFee, gas = null) => __awaiter(this, void 0, void 0, function* () {
+                return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_localMethods, "f").setFeeRatio(from, null, _name, _feeNumerator, _fixedFee, gas, true, true);
             }),
-            updateBTSPeriphery: (from, pk, _btsPeriphery, gas = null) => __awaiter(this, void 0, void 0, function* () {
-                return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_localMethods, "f").updateBTSPeriphery(from, pk, _btsPeriphery, gas, true, true);
+            updateBTSPeriphery: (from, _btsPeriphery, gas = null) => __awaiter(this, void 0, void 0, function* () {
+                return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_localMethods, "f").updateBTSPeriphery(from, null, _btsPeriphery, gas, true, true);
             })
         });
         _IconBridgeSDKNodeBSC_approveBTSCoreForTransfer.set(this, (useWeb = false, from, pk, amount, tokenContractAddress, tokenContractAbi, gas = null, queryMethod = null) => __awaiter(this, void 0, void 0, function* () {

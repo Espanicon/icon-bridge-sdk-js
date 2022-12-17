@@ -13,12 +13,10 @@ const sdk = new IconBridgeSDK({
 // test wallets
 const wallets = {
   bsc: {
-    pubK: process.env.WALLET_BSC_ADDRESS,
-    privK: process.env.WALLET_BSC_PK
+    pubK: process.env.WALLET_BSC_ADDRESS
   },
   icon: {
-    pubK: process.env.WALLET_ICON_ADDRESS,
-    privK: process.env.WALLET_ICON_PK
+    pubK: process.env.WALLET_ICON_ADDRESS
   }
 };
 // ********************************************//
@@ -30,7 +28,6 @@ describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'transferNativeCoin(
       wallets.icon.pubK,
       "icon",
       wallets.bsc.pubK,
-      wallets.bsc.privK,
       "0.01"
     );
 
@@ -46,7 +43,6 @@ describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'addOwner(from, pk, 
   it("adds a wallet as an owner to the bts contract.", async () => {
     const query = await sdk.bsc.web.addOwner(
       wallets.bsc.pubK,
-      wallets.bsc.privK,
       wallets.bsc.pubK
     );
 
@@ -62,7 +58,6 @@ describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'reclaim(from, pk, _
   it("Reclaims token from contract.", async () => {
     const query = await sdk.bsc.web.reclaim(
       wallets.bsc.pubK,
-      wallets.bsc.privK,
       "btp-0x2.icon-ICX",
       "10"
     );
@@ -79,7 +74,6 @@ describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'register(from, pk, 
   it("Reclaims token from contract.", async () => {
     const query = await sdk.bsc.web.register(
       wallets.bsc.pubK,
-      wallets.bsc.privK,
       "btp-0x61.bsc-WBNB",
       "BNB",
       "0x12",
@@ -100,7 +94,6 @@ describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'removeOwner(from, p
   it("Removes owner of BTS contract.", async () => {
     const query = await sdk.bsc.web.removeOwner(
       wallets.bsc.pubK,
-      wallets.bsc.privK,
       wallets.bsc.pubK
     );
 
@@ -116,7 +109,6 @@ describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'setFeeRatio(from, p
   it("Sets fee ratio.", async () => {
     const query = await sdk.bsc.web.setFeeRatio(
       wallets.bsc.pubK,
-      wallets.bsc.privK,
       "btp-0x2.icon-ICX",
       100,
       10,
@@ -135,7 +127,6 @@ describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'updateBTSPeriphery(
   it("Updates BTSPeriphery contract.", async () => {
     const query = await sdk.bsc.web.updateBTSPeriphery(
       wallets.bsc.pubK,
-      wallets.bsc.privK,
       wallets.bsc.pubK
     );
 
@@ -153,7 +144,6 @@ describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'transferBatch(targe
       wallets.icon.pubK,
       "icon",
       wallets.bsc.pubK,
-      wallets.bsc.privK,
       ["50"],
       ["btp-0x2.icon-ICX"]
     );
@@ -172,7 +162,6 @@ describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'transfer(targetAddr
       wallets.icon.pubK,
       "icon",
       wallets.bsc.pubK,
-      wallets.bsc.privK,
       "50",
       "btp-0x2.icon-ICX"
     );
