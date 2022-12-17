@@ -637,7 +637,6 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       targetAddress: string,
       targetChain: string = "icon",
       from: string,
-      // pk: string,
       _value: string,
       _coinName: string,
       gas: number | null = 2000000
@@ -669,7 +668,6 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       targetAddress: string,
       targetChain: string = "icon",
       from: string,
-      // pk: string,
       _values: string[],
       _coinNames: string[],
       gas: number | null = 2000000
@@ -700,7 +698,6 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
       targetAddress: string,
       targetChain: string = "icon",
       from: string,
-      // pk: string,
       amount: string,
       gas: number | null = 2000000
     ): Promise<any> => {
@@ -728,7 +725,6 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
      */
     approveTransfer: async (
       from: string,
-      // pk: string,
       amount: string,
       tokenContractAddress: string,
       tokenContractAbi: any[] = this.#sdkUtils.genericAbi,
@@ -759,7 +755,6 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
      */
     addOwner: async (
       from: string,
-      // pk: string,
       _owner: string,
       gas: number | null = null
     ): Promise<any> => {
@@ -784,7 +779,6 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
      */
     reclaim: async (
       from: string,
-      // pk: string,
       _coinName: string,
       _value: number,
       gas: number | null = null
@@ -815,7 +809,6 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
      */
     register: async (
       from: string,
-      // pk: string,
       _name: string,
       _symbol: string,
       _decimals: string,
@@ -848,7 +841,6 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
      */
     removeOwner: async (
       from: string,
-      // pk: string,
       _owner: string,
       gas: number | null = null
     ): Promise<any> => {
@@ -873,7 +865,6 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
      */
     setFeeRatio: async (
       from: string,
-      // pk: string,
       _name: string,
       _feeNumerator: number,
       _fixedFee: number,
@@ -900,7 +891,6 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
      */
     updateBTSPeriphery: async (
       from: string,
-      // pk: string,
       _btsPeriphery: string,
       gas: number | null = null
     ): Promise<any> => {

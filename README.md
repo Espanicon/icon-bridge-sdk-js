@@ -903,9 +903,26 @@ const balance = await SDK.icon.methods.disableRestrictions("hx0123..", "1234..."
 ```
 ------------------
 
-### IconBridge.icon.web (TO BE IMPLEMENTED)
+### IconBridge.icon.web
 
 `iconBridge.icon.web` offers the unsigned raw JSON RPC string of the selected method of the ICON Bridge. This option is intended to be used with a third party wallet (ICONex, Hana) to sign the required transaction object without your program having any access to the users private key.
+
+The methods under this scope are the following:
+* `.transferNativeCoin(targetAddress, targetChain, from, amount, stepLimit?)`
+* `.transferToBTSContract(_value, tokenContract, from, stepLimit?)`
+* `.transfer(_coinName, _value, _to, from, stepLimit?)`
+* `.transferBatch(_coinNames, _values, _to, from, stepLimit?)`
+* `.approveBTSContract(amount, tokenContract, from, stepLimit?)`
+* `.reclaim(_coinName, _value, from, stepLimit?)`
+* `.addOwner(_addr, from, stepLimit?)`
+* `.removeOwner(_addr, from, stepLimit?)`
+* `.register(_name, _symbol, _decimals, _feeNumerator, _fixedFee, from, _addr, stepLimit?)`
+* `.setFeeRatio(_name, _feeNumerator, _fixedFee, from, stepLimit?)`
+* `.removeBlacklistAddress(_net, _addresses, from, stepLimit?)`
+* `.setTokenLimit(_coinNames, _tokenLimits, from, stepLimit?)`
+* `.addBlacklistAddress(_net, _addresses, from, stepLimit?)`
+* `.addRestriction(from, stepLimit?)`
+* `.disableRestrictions(from, stepLimit?)`
 
 ------------------
 ### IconBridge.bsc
@@ -1427,9 +1444,22 @@ const balance = await SDK.bsc.methods.updateBTSPeriphery("0x1234..", "1234..", "
 ```
 
 ------------------
-### IconBridge.bsc.web (TO BE IMPLEMENTED)
+### IconBridge.bsc.web
 
 `iconBridge.bsc.web` offers the unsigned raw JSON RPC string of the selected method of the ICON Bridge. This option is intended to be used with a third party wallet (Metamask) to sign the required transaction object without your program having any access to the users private key.
+
+The methods under this scope are the following:
+* `.transfer(targetAddress, targetChain, from, _value, _coinName, gas?)`
+* `.transferBatch(targetAddress, targetChain, from, _values, _coinNames, gas?)`
+* `.transferBatch(targetAddress, targetChain, from, _values, _coinNames, gas?)`
+* `.transferNativeCoin(targetAddress, targetChain, from, amount, gas?)`
+* `.approveTransfer(from, amount, tokenContractAddress, tokenContractAbi?, gas?)`
+* `.addOwner(from, _owner, gas?)`
+* `.reclaim(from, _coinName, _value, gas?)`
+* `.register(from, _name, _symbol, _decimals, _feeNumerator, _fixedFee, _addr, gas?)`
+* `.removeOwner(from, _owner, gas?)`
+* `.setFeeRatio(from, _name, _feeNumerator, _fixedFee, gas?)`
+* `.updateBTSPeriphery(from, _btsPeriphery, gas?)`
 
 ------------------
 ### IconBridge.sdkUtils
