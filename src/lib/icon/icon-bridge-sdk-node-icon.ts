@@ -989,7 +989,6 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       targetAddress: string,
       targetChain: string,
       from: string,
-      // pk: string,
       amount: number,
       stepLimit: string | null = null
     ): Promise<any> => {
@@ -1026,7 +1025,6 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       _value: string,
       tokenContract: string | null = null,
       from: string,
-      // pk: string,
       stepLimit: string | null = "5000000"
     ): Promise<any> => {
       //
@@ -1062,7 +1060,6 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       _value: string,
       _to: string,
       from: string,
-      // pk: string,
       stepLimit: string | null = "10000000"
     ): Promise<any> => {
       //
@@ -1099,7 +1096,6 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       _values: string[],
       _to: string,
       from: string,
-      // pk: string | null,
       stepLimit: string | null = null
     ): Promise<any> => {
       //
@@ -1137,7 +1133,6 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       amount: string,
       tokenContract: string,
       from: string,
-      // pk: string,
       stepLimit: string | null = "5000000"
     ): Promise<any> => {
       //
@@ -1172,7 +1167,6 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       _coinName: string,
       _value: string,
       from: string,
-      // pk: string,
       stepLimit: string | null = null
     ): Promise<any> => {
       //
@@ -1207,7 +1201,6 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     addOwner: async (
       _addr: string,
       from: string,
-      // pk: string | null,
       stepLimit: string | null = null
     ): Promise<any> => {
       try {
@@ -1237,7 +1230,6 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     removeOwner: async (
       _addr: string,
       from: string,
-      // pk: string,
       stepLimit: string | null = null
     ): Promise<any> => {
       //
@@ -1278,7 +1270,6 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       _feeNumerator: string,
       _fixedFee: string,
       from: string,
-      // pk: string,
       _addr: string | null = null,
       stepLimit: string | null = null
     ): Promise<any> => {
@@ -1319,7 +1310,6 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       _feeNumerator: string,
       _fixedFee: string,
       from: string,
-      // pk: string,
       stepLimit: string | null = null
     ): Promise<any> => {
       //
@@ -1354,7 +1344,6 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       _net: string,
       _addresses: string[],
       from: string,
-      // pk: string | null,
       stepLimit: string | null = null
     ): Promise<any> => {
       //
@@ -1388,7 +1377,6 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       _coinNames: string[],
       _tokenLimits: string[],
       from: string,
-      // pk: string | null,
       stepLimit: string | null = null
     ): Promise<any> => {
       //
@@ -1422,7 +1410,6 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       _net: string,
       _addresses: string[],
       from: string,
-      // pk: string,
       stepLimit: string | null = null
     ): Promise<any> => {
       //
@@ -1452,7 +1439,6 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
      */
     addRestriction: async (
       from: string,
-      // pk: string,
       stepLimit: string | null = null
     ): Promise<any> => {
       //
@@ -1480,7 +1466,6 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
      */
     disableRestrictions: async (
       from: string,
-      // pk: string,
       stepLimit: string | null = null
     ): Promise<any> => {
       //
@@ -1540,49 +1525,6 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
         stepLimit, 
         nid
       )
-      // const useStepLimit = stepLimit == null ? "8000000" : stepLimit;
-      // const txObj = new CallTransactionBuilder()
-      //   .from(from)
-      //   .to(to)
-      //   .stepLimit(IconConverter.toBigNumber(useStepLimit))
-      //   .nid(IconConverter.toBigNumber(nid))
-      //   .nonce(IconConverter.toBigNumber(this.#sdkUtils.getRandNonce()))
-      //   .version(IconConverter.toBigNumber("3"))
-      //   .timestamp(new Date().getTime() * 1000)
-      //   .method(method);
-
-      // // if any params are specified
-      // if (params != null) {
-      //   txObj.params(params);
-      // }
-
-      // // if an amount of ICX is specified to transfer
-      // if (value !== 0) {
-      //   txObj.value(IconAmount.of(value, IconAmount.Unit.ICX).toLoop());
-      // }
-
-      // // build json rpc query
-      // const txObj2 = txObj.build();
-
-      // // if useWeb is true return the unsigned tx object
-      // if (useWeb === true) {
-      //   return txObj2;
-      // }
-
-      // const wallet = IconWallet.loadPrivateKey(pk);
-      // const signedTx = new SignedTransaction(txObj2, wallet);
-      // const jsonRPCObj = this.espaniconLib.makeJSONRPCRequestObj(
-      //   "icx_sendTransaction"
-      // );
-      // jsonRPCObj["params"] = signedTx.getProperties();
-      // const stringJsonObj = JSON.stringify(jsonRPCObj);
-      // const query = await this.#sdkUtils.makeJsonRpcCall(
-      //   this.#params.iconProvider.hostname,
-      //   stringJsonObj,
-      //   this.queryMethod
-      // )
-
-      // return query;
     } catch (err) {
       console.log("error running #makeTxRequest");
       console.log(err);
@@ -1621,41 +1563,6 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
         useWeb
       )
 
-    //   if (tokenContract == null || !this.#sdkUtils.isValidContractAddress) {
-    //     throw new Error(
-    //       `Contract address is not valid. Address: ${tokenContract}`
-    //     )
-    //   }
-
-    //   const isMainnet: boolean =
-    //     this.#params.useMainnet == null ? true : this.#params.useMainnet;
-
-    //   const btsContract = this.#sdkUtils.getContractOfLabelFromLocalData(
-    //     "bts",
-    //     "icon",
-    //     isMainnet,
-    //     false
-    //   );
-
-    //   // parse value into loop units and then into hexadecimal
-    //   const parsedValue = this.espaniconLib.decimalToHex(
-    //     Number(_value)*(10**18)
-    //   )
-
-    //   // transfer token to the BTS address to be able to then
-    //   // make the cross chain transaction
-    //   const txRequest = await this.#makeTxRequest(
-    //     useWeb,
-    //     from,
-    //     tokenContract,
-    //     pk,
-    //     "transfer",
-    //     { _to: btsContract, _value: parsedValue },
-    //     0,
-    //     stepLimit
-    //   )
-
-    //   return txRequest;
     } catch (err) {
       const errorResult = new Exception(
         err,
@@ -1698,34 +1605,6 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
         pk,
         stepLimit
       )
-      // const isMainnet: boolean =
-      //   this.#params.useMainnet == null ? true : this.#params.useMainnet;
-
-      // const btsContract = this.#sdkUtils.getContractOfLabelFromLocalData(
-      //   "bts",
-      //   "icon",
-      //   isMainnet,
-      //   false
-      // );
-
-      // // parse value into loop units and then into hexadecimal
-      // const parsedValue = this.espaniconLib.decimalToHex(
-      //   Number(_value)*(10**18)
-      // )
-
-      // // make cross chain transaction
-      // const txRequest = await this.#makeTxRequest(
-      //   useWeb,
-      //   from,
-      //   btsContract,
-      //   pk,
-      //   "transfer",
-      //   { _coinName: _coinName, _value: parsedValue, _to: _to},
-      //   0,
-      //   stepLimit
-      // );
-
-      // return txRequest;
     } catch (err) {
       const errorResult = new Exception(
         err,
@@ -1834,26 +1713,6 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
         stepLimit,
         useWeb
       )
-    // const isMainnet: boolean =
-    //   this.#params.useMainnet == null ? true : this.#params.useMainnet;
-
-    // const btsContract = this.#sdkUtils.getContractOfLabelFromLocalData(
-    //   "bts",
-    //   "icon",
-    //   isMainnet,
-    //   false
-    // );
-    // const txRequest = await this.#approve(
-    //   btsContract,
-    //   amount,
-    //   tokenContract,
-    //   from,
-    //   pk,
-    //   stepLimit,
-    //   useWeb
-    // );
-
-    //   return txRequest;
     } catch (err) {
       const errorResult = new Exception(
         err,
