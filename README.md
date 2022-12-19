@@ -1,6 +1,4 @@
-[![GitHub license](https://badgen.net/github/license/Espanicon/icon-bridge-sdk-js)](https://github.com/Espanicon/icon-bridge-sdk-js/blob/master/LICENSE.md)
-
-[![TypeScript](https://badgen.net/badge/icon/typescript?icon=typescript&label)](https://typescriptlang.org)
+[![GitHub license](https://badgen.net/github/license/Espanicon/icon-bridge-sdk-js)](https://github.com/Espanicon/icon-bridge-sdk-js/blob/master/LICENSE.md) [![TypeScript](https://badgen.net/badge/icon/typescript?icon=typescript&label)](https://typescriptlang.org)
 
 
 # IconBridge SDK for Javascript
