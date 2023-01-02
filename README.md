@@ -15,6 +15,8 @@ Install as an npm package using the following command:
 npm install git@github.com:Espanicon/icon-bridge-sdk-js.git
 ```
 
+Node v18 is a requirement to use the SDK.
+
 ## HOW TO USE
 
 For examples on how to use the `IconBridgeSDK` please refer to the [examples](examples/README.md) folder.
@@ -1520,3 +1522,8 @@ Error example:
 Currently the SDK doesnt support sending multiple concurrent transactions to be processed on the same block, because of this if you send for example 2 transactions one after the other without waiting around 5 to 10 seconds depending on the types of transaction that you are sending the chain will reply back thinking you are either sending the same tx twice or you are trying to replace an already existing tx in the mempool.
 
 To fix this currently the only solution is to wait at least 5 to 10 seconds between sending each transaction.
+
+
+### After installing the SDK the following error occurs when running the app that uses the SDK: `error - TypeError: Cannot set property Request of #<Object> which has only a getter at eval`
+
+This error occurs if you are using a Node version older than v18. Check your node version with `node -v`. You can use `nvm` to manage node versions on different projects on your computer.
