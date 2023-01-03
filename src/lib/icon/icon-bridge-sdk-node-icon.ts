@@ -24,6 +24,7 @@ type InputParams = {
 class IconBridgeSDKNodeIcon extends baseICONSDK {
   #params: any;
   #sdkUtils: any;
+  #iconWeb3: any;
 
   /**
    * Constructor
@@ -32,6 +33,12 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     super(params, sdkUtils, CustomSDK);
     this.#params = params;
     this.#sdkUtils = sdkUtils;
+    this.#iconWeb3 = new CustomSDK(
+      this.#params.iconProvider.hostname,
+      this.#params.iconProvider.nid
+    );
+
+
     this.methods = {
       ...this.superMethods,
       ...this.#localMethods
@@ -994,7 +1001,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     ): Promise<any> => {
       //
       try {
-        return await this.#localMethods.transferNativeCoin(
+        const txParams = await this.#localMethods.transferNativeCoin(
           targetAddress,
           targetChain,
           from,
@@ -1002,7 +1009,12 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
           amount,
           stepLimit,
           true
-        )
+        );
+
+        const txObj = this.#iconWeb3.makeJSONRPCRequestObj("icx_sendTransaction");
+        txObj["params"] = { ...txParams }
+
+        return txObj
       } catch (err) {
         const errorResult = new Exception(
           err,
