@@ -60,7 +60,7 @@ const makeTxRequest = async (
     }
 
     // if an amount of ICX is specified to transfer
-    if (value !== 0) {
+    if (!Number.isNaN(Number(value)) && Number(value) !== 0) {
       txObj.value(IconAmount.of(value, IconAmount.Unit.ICX).toLoop());
     }
 
@@ -69,7 +69,23 @@ const makeTxRequest = async (
 
     // if useWeb is true return the unsigned tx object
     if (useWeb === true) {
-      return txObj2;
+      const txObjWeb = {
+        ...txObj2,
+        stepLimit: espaniconLib.decimalToHex(useStepLimit),
+        nid: espaniconLib.decimalToHex(nid),
+        nonce: espaniconLib.decimalToHex(sdkUtils.getRandNonce()),
+        version: espaniconLib.decimalToHex(Number("3")),
+        timestamp: espaniconLib.decimalToHex(new Date().getTime() * 1000)
+      };
+
+      if (!Number.isNaN(Number(value)) && Number(value) !== 0) {
+        txObjWeb.value = espaniconLib.decimalToHex(
+          IconAmount.of(Number(value), IconAmount.Unit.ICX).toLoop()
+        );
+      } else {
+        txObjWeb.value = "0x0";
+      }
+      return txObjWeb;
     }
 
     const wallet = IconWallet.loadPrivateKey(pk);
