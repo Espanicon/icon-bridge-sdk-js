@@ -1041,7 +1041,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     ): Promise<any> => {
       //
       try {
-        return await this.#localMethods.transferToBTSContract(
+        const txParams = await this.#localMethods.transferToBTSContract(
           _value,
           tokenContract,
           from,
@@ -1049,6 +1049,12 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
           stepLimit,
           true
         )
+        const txObj = this.#iconWeb3.makeJSONRPCRequestObj(
+          "icx_sendTransaction"
+        );
+        txObj["params"] = { ...txParams }
+
+        return txObj
       } catch (err) {
         const errorResult = new Exception(
           err,
@@ -1076,7 +1082,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     ): Promise<any> => {
       //
       try {
-        return await this.#localMethods.transfer(
+        const txParams =  await this.#localMethods.transfer(
           _coinName,
           _value,
           _to,
@@ -1085,6 +1091,12 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
           stepLimit,
           true
         )
+        const txObj = this.#iconWeb3.makeJSONRPCRequestObj(
+          "icx_sendTransaction"
+        );
+        txObj["params"] = { ...txParams }
+
+        return txObj
       } catch (err) {
         const errorResult = new Exception(
           err,
@@ -1112,7 +1124,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     ): Promise<any> => {
       //
       try {
-        return await this.#localMethods.transferBatch(
+        const txParams = await this.#localMethods.transferBatch(
           _coinNames,
           _values,
           _to,
@@ -1121,6 +1133,12 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
           stepLimit,
           true
         )
+        const txObj = this.#iconWeb3.makeJSONRPCRequestObj(
+          "icx_sendTransaction"
+        );
+        txObj["params"] = { ...txParams }
+
+        return txObj
       } catch (err) {
         const errorResult = new Exception(
           err,
@@ -1149,7 +1167,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     ): Promise<any> => {
       //
       try {
-        return await this.#localMethods.approveBTSContract(
+        const txParams = await this.#localMethods.approveBTSContract(
           amount,
           tokenContract,
           from,
@@ -1157,6 +1175,12 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
           stepLimit,
           true
         )
+        const txObj = this.#iconWeb3.makeJSONRPCRequestObj(
+          "icx_sendTransaction"
+        );
+        txObj["params"] = { ...txParams }
+
+        return txObj
       } catch (err) {
         const errorResult = new Exception(
           err,
@@ -1183,7 +1207,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     ): Promise<any> => {
       //
       try {
-        return await this.#localMethods.reclaim(
+        const txParams = await this.#localMethods.reclaim(
           _coinName,
           _value,
           from,
@@ -1191,6 +1215,12 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
           stepLimit,
           true
         )
+        const txObj = this.#iconWeb3.makeJSONRPCRequestObj(
+          "icx_sendTransaction"
+        );
+        txObj["params"] = { ...txParams }
+
+        return txObj
       } catch (err) {
         const errorResult = new Exception(
           err,
@@ -1216,13 +1246,19 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       stepLimit: string | null = null
     ): Promise<any> => {
       try {
-        return await this.#localMethods.addOwner(
+        const txParams = await this.#localMethods.addOwner(
           _addr,
           from,
           null,
           stepLimit,
           true
         )
+        const txObj = this.#iconWeb3.makeJSONRPCRequestObj(
+          "icx_sendTransaction"
+        );
+        txObj["params"] = { ...txParams }
+
+        return txObj
       } catch (err) {
         const errorResult = new Exception(
           err,
@@ -1246,13 +1282,19 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     ): Promise<any> => {
       //
       try {
-        return await this.#localMethods.removeOwner(
+        const txParams = await this.#localMethods.removeOwner(
           _addr,
           from,
           null,
           stepLimit,
           true
         )
+        const txObj = this.#iconWeb3.makeJSONRPCRequestObj(
+          "icx_sendTransaction"
+        );
+        txObj["params"] = { ...txParams }
+
+        return txObj
       } catch (err) {
         const errorResult = new Exception(
           err,
@@ -1287,7 +1329,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     ): Promise<any> => {
       //
       try {
-        return await this.#localMethods.register(
+        const txParams = await this.#localMethods.register(
           _name,
           _symbol,
           _decimals,
@@ -1299,6 +1341,12 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
           stepLimit,
           true
         )
+        const txObj = this.#iconWeb3.makeJSONRPCRequestObj(
+          "icx_sendTransaction"
+        );
+        txObj["params"] = { ...txParams }
+
+        return txObj
       } catch (err) {
         const errorResult = new Exception(
           err,
@@ -1326,7 +1374,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     ): Promise<any> => {
       //
       try {
-        return await this.#localMethods.setFeeRatio(
+        const txParams = await this.#localMethods.setFeeRatio(
           _name,
           _feeNumerator,
           _fixedFee,
@@ -1335,6 +1383,12 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
           stepLimit,
           true
         )
+        const txObj = this.#iconWeb3.makeJSONRPCRequestObj(
+          "icx_sendTransaction"
+        );
+        txObj["params"] = { ...txParams }
+
+        return txObj
       } catch (err) {
         const errorResult = new Exception(
           err,
@@ -1360,7 +1414,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     ): Promise<any> => {
       //
       try {
-        return await this.#localMethods.removeBlacklistAddress(
+        const txParams = await this.#localMethods.removeBlacklistAddress(
           _net,
           _addresses,
           from,
@@ -1368,6 +1422,12 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
           stepLimit,
           true
         )
+        const txObj = this.#iconWeb3.makeJSONRPCRequestObj(
+          "icx_sendTransaction"
+        );
+        txObj["params"] = { ...txParams }
+
+        return txObj
       } catch (err) {
         const errorResult = new Exception(
           err,
@@ -1393,7 +1453,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     ): Promise<any> => {
       //
       try {
-        return await this.#localMethods.setTokenLimit(
+        const txParams = await this.#localMethods.setTokenLimit(
           _coinNames,
           _tokenLimits,
           from,
@@ -1401,6 +1461,12 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
           stepLimit,
           true
         )
+        const txObj = this.#iconWeb3.makeJSONRPCRequestObj(
+          "icx_sendTransaction"
+        );
+        txObj["params"] = { ...txParams }
+
+        return txObj
       } catch (err) {
         const errorResult = new Exception(
           err,
@@ -1426,7 +1492,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     ): Promise<any> => {
       //
       try {
-        return await this.#localMethods.addBlacklistAddress(
+        const txParams = await this.#localMethods.addBlacklistAddress(
           _net,
           _addresses,
           from,
@@ -1434,6 +1500,12 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
           stepLimit,
           true
         )
+        const txObj = this.#iconWeb3.makeJSONRPCRequestObj(
+          "icx_sendTransaction"
+        );
+        txObj["params"] = { ...txParams }
+
+        return txObj
       } catch (err) {
         const errorResult = new Exception(
           err,
@@ -1455,12 +1527,18 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     ): Promise<any> => {
       //
       try {
-        return await this.#localMethods.addRestriction(
+        const txParams = await this.#localMethods.addRestriction(
           from,
           null,
           stepLimit,
           true
         )
+        const txObj = this.#iconWeb3.makeJSONRPCRequestObj(
+          "icx_sendTransaction"
+        );
+        txObj["params"] = { ...txParams }
+
+        return txObj
       } catch (err) {
         const errorResult = new Exception(
           err,
@@ -1482,12 +1560,18 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     ): Promise<any> => {
       //
       try {
-        return await this.#localMethods.disableRestrictions(
+        const txParams = await this.#localMethods.disableRestrictions(
           from,
           null,
           stepLimit,
           true
         )
+        const txObj = this.#iconWeb3.makeJSONRPCRequestObj(
+          "icx_sendTransaction"
+        );
+        txObj["params"] = { ...txParams }
+
+        return txObj
       } catch (err) {
         const errorResult = new Exception(
           err,

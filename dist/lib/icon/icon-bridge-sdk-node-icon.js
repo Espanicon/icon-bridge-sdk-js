@@ -281,7 +281,10 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
             }),
             transferToBTSContract: (_value, tokenContract = null, from, stepLimit = "5000000") => __awaiter(this, void 0, void 0, function* () {
                 try {
-                    return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_localMethods, "f").transferToBTSContract(_value, tokenContract, from, null, stepLimit, true);
+                    const txParams = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_localMethods, "f").transferToBTSContract(_value, tokenContract, from, null, stepLimit, true);
+                    const txObj = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_iconWeb3, "f").makeJSONRPCRequestObj("icx_sendTransaction");
+                    txObj["params"] = Object.assign({}, txParams);
+                    return txObj;
                 }
                 catch (err) {
                     const errorResult = new Exception(err, `Error running transferToBTSContract(). Params:\n_value: ${_value}\ntokenContract: ${tokenContract}\n\nfrom: ${from}\n`);
@@ -290,7 +293,10 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
             }),
             transfer: (_coinName, _value, _to, from, stepLimit = "10000000") => __awaiter(this, void 0, void 0, function* () {
                 try {
-                    return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_localMethods, "f").transfer(_coinName, _value, _to, from, null, stepLimit, true);
+                    const txParams = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_localMethods, "f").transfer(_coinName, _value, _to, from, null, stepLimit, true);
+                    const txObj = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_iconWeb3, "f").makeJSONRPCRequestObj("icx_sendTransaction");
+                    txObj["params"] = Object.assign({}, txParams);
+                    return txObj;
                 }
                 catch (err) {
                     const errorResult = new Exception(err, `Error running transfer(). Params:\n_coinName: ${_coinName}\n_value: ${_value}\n_to: ${_to}\nfrom: ${from}\n`);
@@ -299,7 +305,10 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
             }),
             transferBatch: (_coinNames, _values, _to, from, stepLimit = null) => __awaiter(this, void 0, void 0, function* () {
                 try {
-                    return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_localMethods, "f").transferBatch(_coinNames, _values, _to, from, null, stepLimit, true);
+                    const txParams = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_localMethods, "f").transferBatch(_coinNames, _values, _to, from, null, stepLimit, true);
+                    const txObj = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_iconWeb3, "f").makeJSONRPCRequestObj("icx_sendTransaction");
+                    txObj["params"] = Object.assign({}, txParams);
+                    return txObj;
                 }
                 catch (err) {
                     const errorResult = new Exception(err, `Error running transferBatch(). Params:\n_coinNames: ${_coinNames}\n_values: ${_values}\n_to: ${_to}\nfrom: ${from}\n`);
@@ -308,7 +317,10 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
             }),
             approveBTSContract: (amount, tokenContract, from, stepLimit = "5000000") => __awaiter(this, void 0, void 0, function* () {
                 try {
-                    return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_localMethods, "f").approveBTSContract(amount, tokenContract, from, null, stepLimit, true);
+                    const txParams = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_localMethods, "f").approveBTSContract(amount, tokenContract, from, null, stepLimit, true);
+                    const txObj = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_iconWeb3, "f").makeJSONRPCRequestObj("icx_sendTransaction");
+                    txObj["params"] = Object.assign({}, txParams);
+                    return txObj;
                 }
                 catch (err) {
                     const errorResult = new Exception(err, `Error running approveBTSContract(). Params:\namount: ${amount}\ntokenContract: ${tokenContract}\nfrom: ${from}\n`);
@@ -317,7 +329,10 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
             }),
             reclaim: (_coinName, _value, from, stepLimit = null) => __awaiter(this, void 0, void 0, function* () {
                 try {
-                    return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_localMethods, "f").reclaim(_coinName, _value, from, null, stepLimit, true);
+                    const txParams = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_localMethods, "f").reclaim(_coinName, _value, from, null, stepLimit, true);
+                    const txObj = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_iconWeb3, "f").makeJSONRPCRequestObj("icx_sendTransaction");
+                    txObj["params"] = Object.assign({}, txParams);
+                    return txObj;
                 }
                 catch (err) {
                     const errorResult = new Exception(err, `Error running reclaim(). Params:\n_coinName: ${_coinName}\n_value: ${_value}\nfrom: ${from}\n`);
@@ -326,7 +341,10 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
             }),
             addOwner: (_addr, from, stepLimit = null) => __awaiter(this, void 0, void 0, function* () {
                 try {
-                    return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_localMethods, "f").addOwner(_addr, from, null, stepLimit, true);
+                    const txParams = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_localMethods, "f").addOwner(_addr, from, null, stepLimit, true);
+                    const txObj = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_iconWeb3, "f").makeJSONRPCRequestObj("icx_sendTransaction");
+                    txObj["params"] = Object.assign({}, txParams);
+                    return txObj;
                 }
                 catch (err) {
                     const errorResult = new Exception(err, `Error running addOwner(). Params:\n_addr: ${_addr}\nfrom: ${from}\n`);
@@ -335,7 +353,10 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
             }),
             removeOwner: (_addr, from, stepLimit = null) => __awaiter(this, void 0, void 0, function* () {
                 try {
-                    return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_localMethods, "f").removeOwner(_addr, from, null, stepLimit, true);
+                    const txParams = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_localMethods, "f").removeOwner(_addr, from, null, stepLimit, true);
+                    const txObj = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_iconWeb3, "f").makeJSONRPCRequestObj("icx_sendTransaction");
+                    txObj["params"] = Object.assign({}, txParams);
+                    return txObj;
                 }
                 catch (err) {
                     const errorResult = new Exception(err, `Error running removeOwner(). Params:\n_addr: ${_addr}\nfrom: ${from}\n`);
@@ -344,7 +365,10 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
             }),
             register: (_name, _symbol, _decimals, _feeNumerator, _fixedFee, from, _addr = null, stepLimit = null) => __awaiter(this, void 0, void 0, function* () {
                 try {
-                    return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_localMethods, "f").register(_name, _symbol, _decimals, _feeNumerator, _fixedFee, from, null, _addr, stepLimit, true);
+                    const txParams = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_localMethods, "f").register(_name, _symbol, _decimals, _feeNumerator, _fixedFee, from, null, _addr, stepLimit, true);
+                    const txObj = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_iconWeb3, "f").makeJSONRPCRequestObj("icx_sendTransaction");
+                    txObj["params"] = Object.assign({}, txParams);
+                    return txObj;
                 }
                 catch (err) {
                     const errorResult = new Exception(err, `Error running register(). Params:\n_name: ${_name}\n_symbol: ${_symbol}\n_decimals: ${_decimals}\n_feeNumerator: ${_feeNumerator}\n_fixedFee: ${_fixedFee}\n_addr: ${_addr}\nfrom: ${from}\n`);
@@ -353,7 +377,10 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
             }),
             setFeeRatio: (_name, _feeNumerator, _fixedFee, from, stepLimit = null) => __awaiter(this, void 0, void 0, function* () {
                 try {
-                    return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_localMethods, "f").setFeeRatio(_name, _feeNumerator, _fixedFee, from, null, stepLimit, true);
+                    const txParams = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_localMethods, "f").setFeeRatio(_name, _feeNumerator, _fixedFee, from, null, stepLimit, true);
+                    const txObj = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_iconWeb3, "f").makeJSONRPCRequestObj("icx_sendTransaction");
+                    txObj["params"] = Object.assign({}, txParams);
+                    return txObj;
                 }
                 catch (err) {
                     const errorResult = new Exception(err, `Error running setFeeRatio(). Params:\n_name: ${_name}\n_feeNumerator: ${_feeNumerator}\n_fixedFee: ${_fixedFee}\nfrom: ${from}\n`);
@@ -362,7 +389,10 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
             }),
             removeBlacklistAddress: (_net, _addresses, from, stepLimit = null) => __awaiter(this, void 0, void 0, function* () {
                 try {
-                    return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_localMethods, "f").removeBlacklistAddress(_net, _addresses, from, null, stepLimit, true);
+                    const txParams = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_localMethods, "f").removeBlacklistAddress(_net, _addresses, from, null, stepLimit, true);
+                    const txObj = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_iconWeb3, "f").makeJSONRPCRequestObj("icx_sendTransaction");
+                    txObj["params"] = Object.assign({}, txParams);
+                    return txObj;
                 }
                 catch (err) {
                     const errorResult = new Exception(err, `Error running removeBlacklistAddress(). Params:\n_net: ${_net}\n_addresses: ${_addresses}\nfrom: ${from}\n`);
@@ -371,7 +401,10 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
             }),
             setTokenLimit: (_coinNames, _tokenLimits, from, stepLimit = null) => __awaiter(this, void 0, void 0, function* () {
                 try {
-                    return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_localMethods, "f").setTokenLimit(_coinNames, _tokenLimits, from, null, stepLimit, true);
+                    const txParams = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_localMethods, "f").setTokenLimit(_coinNames, _tokenLimits, from, null, stepLimit, true);
+                    const txObj = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_iconWeb3, "f").makeJSONRPCRequestObj("icx_sendTransaction");
+                    txObj["params"] = Object.assign({}, txParams);
+                    return txObj;
                 }
                 catch (err) {
                     const errorResult = new Exception(err, `Error running setTokenLimit(). Params:\n_coinNames: ${_coinNames}\n_tokenLimits: ${_tokenLimits}\nfrom: ${from}\n`);
@@ -380,7 +413,10 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
             }),
             addBlacklistAddress: (_net, _addresses, from, stepLimit = null) => __awaiter(this, void 0, void 0, function* () {
                 try {
-                    return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_localMethods, "f").addBlacklistAddress(_net, _addresses, from, null, stepLimit, true);
+                    const txParams = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_localMethods, "f").addBlacklistAddress(_net, _addresses, from, null, stepLimit, true);
+                    const txObj = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_iconWeb3, "f").makeJSONRPCRequestObj("icx_sendTransaction");
+                    txObj["params"] = Object.assign({}, txParams);
+                    return txObj;
                 }
                 catch (err) {
                     const errorResult = new Exception(err, `Error running addBlacklistAddress(). Params:\n_net: ${_net}\n_addresses: ${_addresses}\nfrom: ${from}\n`);
@@ -389,7 +425,10 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
             }),
             addRestriction: (from, stepLimit = null) => __awaiter(this, void 0, void 0, function* () {
                 try {
-                    return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_localMethods, "f").addRestriction(from, null, stepLimit, true);
+                    const txParams = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_localMethods, "f").addRestriction(from, null, stepLimit, true);
+                    const txObj = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_iconWeb3, "f").makeJSONRPCRequestObj("icx_sendTransaction");
+                    txObj["params"] = Object.assign({}, txParams);
+                    return txObj;
                 }
                 catch (err) {
                     const errorResult = new Exception(err, `Error running addRestrictions(). Params:\nfrom: ${from}\n`);
@@ -398,7 +437,10 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
             }),
             disableRestrictions: (from, stepLimit = null) => __awaiter(this, void 0, void 0, function* () {
                 try {
-                    return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_localMethods, "f").disableRestrictions(from, null, stepLimit, true);
+                    const txParams = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_localMethods, "f").disableRestrictions(from, null, stepLimit, true);
+                    const txObj = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_iconWeb3, "f").makeJSONRPCRequestObj("icx_sendTransaction");
+                    txObj["params"] = Object.assign({}, txParams);
+                    return txObj;
                 }
                 catch (err) {
                     const errorResult = new Exception(err, `Error running disableRestrictions(). Params:\nfrom: ${from}\n`);
