@@ -99,28 +99,31 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
                     return { error: errorResult.toString() };
                 }
             }),
-            transfer: (_coinName, _value, _to, from, pk, stepLimit = "10000000", useWeb = false) => __awaiter(this, void 0, void 0, function* () {
+            transfer: (_coinName, _value, from, targetChain, targetAddress, pk, stepLimit = "10000000", useWeb = false) => __awaiter(this, void 0, void 0, function* () {
                 try {
-                    const txRequest = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_transfer, "f").call(this, useWeb, _coinName, _value, _to, from, pk, stepLimit);
+                    const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet;
+                    const btpAddress = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_sdkUtils, "f").getBTPAddress(targetAddress, targetChain, isMainnet);
+                    const txRequest = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_transfer, "f").call(this, useWeb, _coinName, _value, btpAddress, from, pk, stepLimit);
                     return txRequest;
                 }
                 catch (err) {
-                    const errorResult = new Exception(err, `Error running transfer(). Params:\n_coinName: ${_coinName}\n_value: ${_value}\n_to: ${_to}\nfrom: ${from}\npk: ${pk}\n`);
+                    const errorResult = new Exception(err, `Error running transfer(). Params:\n_coinName: ${_coinName}\n_value: ${_value}\ntargetChain: ${targetChain}\ntargetAddress: ${targetAddress}\nfrom: ${from}\npk: ${pk}\n`);
                     return { error: errorResult.toString() };
                 }
             }),
-            transferBatch: (_coinNames, _values, _to, from, pk, stepLimit = null, useWeb = false) => __awaiter(this, void 0, void 0, function* () {
+            transferBatch: (_coinNames, _values, targetChain, targetAddress, from, pk, stepLimit = null, useWeb = false) => __awaiter(this, void 0, void 0, function* () {
                 try {
                     const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet;
+                    const btpAddress = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_sdkUtils, "f").getBTPAddress(targetAddress, targetChain, isMainnet);
                     const btsContract = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_sdkUtils, "f").getContractOfLabelFromLocalData("bts", "icon", isMainnet, false);
                     const parsedValues = _values.map(_value => {
                         return this.espaniconLib.decimalToHex(Number(_value) * (10 ** 18));
                     });
-                    const txRequest = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_makeTxRequest, "f").call(this, useWeb, from, btsContract, pk, "transferBatch", { _coinNames: _coinNames, _values: parsedValues, _to: _to }, 0, stepLimit);
+                    const txRequest = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_makeTxRequest, "f").call(this, useWeb, from, btsContract, pk, "transferBatch", { _coinNames: _coinNames, _values: parsedValues, _to: btpAddress }, 0, stepLimit);
                     return txRequest;
                 }
                 catch (err) {
-                    const errorResult = new Exception(err, `Error running transferBatch(). Params:\n_coinNames: ${_coinNames}\n_values: ${_values}\n_to: ${_to}\nfrom: ${from}\npk: ${pk}\n`);
+                    const errorResult = new Exception(err, `Error running transferBatch(). Params:\n_coinNames: ${_coinNames}\n_values: ${_values}\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\npk: ${pk}\n`);
                     return { error: errorResult.toString() };
                 }
             }),
@@ -291,27 +294,27 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
                     return { error: errorResult.toString() };
                 }
             }),
-            transfer: (_coinName, _value, _to, from, stepLimit = "10000000") => __awaiter(this, void 0, void 0, function* () {
+            transfer: (_coinName, _value, targetChain, targetAddress, from, stepLimit = "10000000") => __awaiter(this, void 0, void 0, function* () {
                 try {
-                    const txParams = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_localMethods, "f").transfer(_coinName, _value, _to, from, null, stepLimit, true);
+                    const txParams = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_localMethods, "f").transfer(_coinName, _value, targetChain, targetAddress, from, null, stepLimit, true);
                     const txObj = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_iconWeb3, "f").makeJSONRPCRequestObj("icx_sendTransaction");
                     txObj["params"] = Object.assign({}, txParams);
                     return txObj;
                 }
                 catch (err) {
-                    const errorResult = new Exception(err, `Error running transfer(). Params:\n_coinName: ${_coinName}\n_value: ${_value}\n_to: ${_to}\nfrom: ${from}\n`);
+                    const errorResult = new Exception(err, `Error running transfer(). Params:\n_coinName: ${_coinName}\n_value: ${_value}\ntargetChain: ${targetChain}\ntargetAddress: ${targetAddress}\nfrom: ${from}\n`);
                     return { error: errorResult.toString() };
                 }
             }),
-            transferBatch: (_coinNames, _values, _to, from, stepLimit = null) => __awaiter(this, void 0, void 0, function* () {
+            transferBatch: (_coinNames, _values, targetChain, targetAddress, from, stepLimit = null) => __awaiter(this, void 0, void 0, function* () {
                 try {
-                    const txParams = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_localMethods, "f").transferBatch(_coinNames, _values, _to, from, null, stepLimit, true);
+                    const txParams = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_localMethods, "f").transferBatch(_coinNames, _values, targetChain, targetAddress, from, null, stepLimit, true);
                     const txObj = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_iconWeb3, "f").makeJSONRPCRequestObj("icx_sendTransaction");
                     txObj["params"] = Object.assign({}, txParams);
                     return txObj;
                 }
                 catch (err) {
-                    const errorResult = new Exception(err, `Error running transferBatch(). Params:\n_coinNames: ${_coinNames}\n_values: ${_values}\n_to: ${_to}\nfrom: ${from}\n`);
+                    const errorResult = new Exception(err, `Error running transferBatch(). Params:\n_coinNames: ${_coinNames}\n_values: ${_values}\ntargetChain: ${targetChain}\ntargeAddress: ${targetAddress}\nfrom: ${from}\n`);
                     return { error: errorResult.toString() };
                 }
             }),

@@ -336,8 +336,9 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     transfer: async (
       _coinName: string,
       _value: string,
-      _to: string,
       from: string,
+      targetChain: string,
+      targetAddress: string,
       pk: string | null,
       stepLimit: string | null = "10000000",
       useWeb: boolean = false
@@ -345,12 +346,20 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       //
       try {
 
+        const isMainnet: boolean =
+          this.#params.useMainnet == null ? true : this.#params.useMainnet;
+
+        const btpAddress = this.#sdkUtils.getBTPAddress(
+          targetAddress,
+          targetChain,
+          isMainnet
+        );
         // make cross chain transaction
         const txRequest = await this.#transfer(
           useWeb,
           _coinName,
           _value,
-          _to,
+          btpAddress,
           from,
           pk,
           stepLimit
@@ -360,7 +369,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       } catch (err) {
         const errorResult = new Exception(
           err,
-          `Error running transfer(). Params:\n_coinName: ${_coinName}\n_value: ${_value}\n_to: ${_to}\nfrom: ${from}\npk: ${pk}\n`
+          `Error running transfer(). Params:\n_coinName: ${_coinName}\n_value: ${_value}\ntargetChain: ${targetChain}\ntargetAddress: ${targetAddress}\nfrom: ${from}\npk: ${pk}\n`
         );
         return { error: errorResult.toString() };
       }
@@ -378,7 +387,8 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     transferBatch: async (
       _coinNames: string[],
       _values: string[],
-      _to: string,
+      targetChain: string,
+      targetAddress: string,
       from: string,
       pk: string | null,
       stepLimit: string | null = null,
@@ -389,6 +399,12 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
 
       const isMainnet: boolean =
         this.#params.useMainnet == null ? true : this.#params.useMainnet;
+
+      const btpAddress = this.#sdkUtils.getBTPAddress(
+        targetAddress,
+        targetChain,
+        isMainnet
+      );
 
       const btsContract = this.#sdkUtils.getContractOfLabelFromLocalData(
         "bts",
@@ -411,7 +427,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
         btsContract,
         pk,
         "transferBatch",
-        { _coinNames: _coinNames, _values: parsedValues, _to: _to},
+        { _coinNames: _coinNames, _values: parsedValues, _to: btpAddress },
         0,
         stepLimit
       );
@@ -420,7 +436,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       } catch (err) {
         const errorResult = new Exception(
           err,
-          `Error running transferBatch(). Params:\n_coinNames: ${_coinNames}\n_values: ${_values}\n_to: ${_to}\nfrom: ${from}\npk: ${pk}\n`
+          `Error running transferBatch(). Params:\n_coinNames: ${_coinNames}\n_values: ${_values}\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\npk: ${pk}\n`
         );
         return { error: errorResult.toString() };
       }
@@ -1076,7 +1092,8 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     transfer: async (
       _coinName: string,
       _value: string,
-      _to: string,
+      targetChain: string,
+      targetAddress: string,
       from: string,
       stepLimit: string | null = "10000000"
     ): Promise<any> => {
@@ -1085,7 +1102,8 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
         const txParams =  await this.#localMethods.transfer(
           _coinName,
           _value,
-          _to,
+          targetChain,
+          targetAddress,
           from,
           null,
           stepLimit,
@@ -1100,7 +1118,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       } catch (err) {
         const errorResult = new Exception(
           err,
-          `Error running transfer(). Params:\n_coinName: ${_coinName}\n_value: ${_value}\n_to: ${_to}\nfrom: ${from}\n`
+          `Error running transfer(). Params:\n_coinName: ${_coinName}\n_value: ${_value}\ntargetChain: ${targetChain}\ntargetAddress: ${targetAddress}\nfrom: ${from}\n`
         );
         return { error: errorResult.toString() };
       }
@@ -1118,7 +1136,8 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
     transferBatch: async (
       _coinNames: string[],
       _values: string[],
-      _to: string,
+      targetChain: string,
+      targetAddress: string,
       from: string,
       stepLimit: string | null = null
     ): Promise<any> => {
@@ -1127,7 +1146,8 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
         const txParams = await this.#localMethods.transferBatch(
           _coinNames,
           _values,
-          _to,
+          targetChain,
+          targetAddress,
           from,
           null,
           stepLimit,
@@ -1142,7 +1162,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       } catch (err) {
         const errorResult = new Exception(
           err,
-          `Error running transferBatch(). Params:\n_coinNames: ${_coinNames}\n_values: ${_values}\n_to: ${_to}\nfrom: ${from}\n`
+          `Error running transferBatch(). Params:\n_coinNames: ${_coinNames}\n_values: ${_values}\ntargetChain: ${targetChain}\ntargeAddress: ${targetAddress}\nfrom: ${from}\n`
         );
         return { error: errorResult.toString() };
       }
