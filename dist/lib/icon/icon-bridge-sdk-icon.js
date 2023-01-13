@@ -262,7 +262,8 @@ class IconBridgeSDKIcon {
         this.espaniconLib = {
             makeJSONRPCRequestObj: __classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f").makeJSONRPCRequestObj,
             queryTypeMethod: __classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f").queryTypeMethod,
-            decimalToHex: __classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f").decimalToHex
+            decimalToHex: __classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f").decimalToHex,
+            getIcxBalance: __classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f").getIcxBalance
         };
     }
 }

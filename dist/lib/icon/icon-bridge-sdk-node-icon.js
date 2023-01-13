@@ -296,7 +296,7 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
             }),
             transfer: (_coinName, _value, targetChain, targetAddress, from, stepLimit = "10000000") => __awaiter(this, void 0, void 0, function* () {
                 try {
-                    const txParams = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_localMethods, "f").transfer(_coinName, _value, targetChain, targetAddress, from, null, stepLimit, true);
+                    const txParams = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_localMethods, "f").transfer(_coinName, _value, from, targetChain, targetAddress, null, stepLimit, true);
                     const txObj = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_iconWeb3, "f").makeJSONRPCRequestObj("icx_sendTransaction");
                     txObj["params"] = Object.assign({}, txParams);
                     return txObj;

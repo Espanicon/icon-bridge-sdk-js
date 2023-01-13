@@ -1102,9 +1102,9 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
         const txParams =  await this.#localMethods.transfer(
           _coinName,
           _value,
+          from,
           targetChain,
           targetAddress,
-          from,
           null,
           stepLimit,
           true

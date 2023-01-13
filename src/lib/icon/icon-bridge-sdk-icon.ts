@@ -41,7 +41,8 @@ class IconBridgeSDKIcon {
     this.espaniconLib = {
       makeJSONRPCRequestObj: this.#iconWeb3.makeJSONRPCRequestObj,
       queryTypeMethod: this.#iconWeb3.queryTypeMethod,
-      decimalToHex: this.#iconWeb3.decimalToHex
+      decimalToHex: this.#iconWeb3.decimalToHex,
+      getIcxBalance: this.#iconWeb3.getIcxBalance
     }
   }
 
