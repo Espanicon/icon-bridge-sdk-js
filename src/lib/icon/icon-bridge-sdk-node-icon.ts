@@ -497,7 +497,8 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
       from: string,
       pk: string | null,
       stepLimit: string | null = null,
-      useWeb: boolean = false
+      useWeb: boolean = false,
+      useHexInput: boolean = true
     ): Promise<any> => {
       //
       try {
@@ -511,10 +512,13 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
           false
         );
 
-      // parse value into loop units and then into hexadecimal
-      const parsedValue = this.espaniconLib.decimalToHex(
-        Number(_value)*(10**18)
-      )
+        // parse value into loop units and then into hexadecimal
+        let parsedValue = _value;
+        if (!useHexInput) {
+          parsedValue = this.espaniconLib.decimalToHex(
+            Number(_value)*(10**18)
+          )
+        }
         const txRequest = await this.#makeTxRequest(
           useWeb,
           from,

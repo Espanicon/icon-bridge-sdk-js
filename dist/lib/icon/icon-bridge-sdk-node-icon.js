@@ -137,11 +137,14 @@ class IconBridgeSDKNodeIcon extends baseICONSDK {
                     return { error: errorResult.toString() };
                 }
             }),
-            reclaim: (_coinName, _value, from, pk, stepLimit = null, useWeb = false) => __awaiter(this, void 0, void 0, function* () {
+            reclaim: (_coinName, _value, from, pk, stepLimit = null, useWeb = false, useHexInput = true) => __awaiter(this, void 0, void 0, function* () {
                 try {
                     const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_params, "f").useMainnet;
                     const btsContract = __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_sdkUtils, "f").getContractOfLabelFromLocalData("bts", "icon", isMainnet, false);
-                    const parsedValue = this.espaniconLib.decimalToHex(Number(_value) * (10 ** 18));
+                    let parsedValue = _value;
+                    if (!useHexInput) {
+                        parsedValue = this.espaniconLib.decimalToHex(Number(_value) * (10 ** 18));
+                    }
                     const txRequest = yield __classPrivateFieldGet(this, _IconBridgeSDKNodeIcon_makeTxRequest, "f").call(this, useWeb, from, btsContract, pk, "reclaim", { _coinName: _coinName, _value: parsedValue }, 0, stepLimit);
                     return txRequest;
                 }
