@@ -140,17 +140,18 @@ class IconBridgeSDK {
             else {
                 encodedData = contractMethod(...rest).encodeABI();
             }
+            const parsedGas = gas === null ? 2000000 : gas;
             const tx = {
                 from: from,
                 to: contractAddress,
-                gas: gas == null ? 2000000 : gas,
+                gas: this.sdkUtils.decimalToHex(parsedGas),
                 data: encodedData
             };
             if (nonce > 1) {
                 tx["nonce"] = nonce;
             }
             if (amount != null) {
-                tx["value"] = web3Wrapper.utils.toWei(amount, "ether");
+                tx["value"] = this.sdkUtils.decimalToHex(Number(web3Wrapper.utils.toWei(amount, "ether")));
             }
             if (useWeb === true) {
                 return tx;

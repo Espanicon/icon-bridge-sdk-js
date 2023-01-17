@@ -135,34 +135,34 @@ export const contracts = {
     },
     testnet: {
       [labels.sicx]: {
-        address: "cxc7b869d97a567044a2a5acea180ecd9071cd20b0"
+        address: "cx3044ad389267b50eb3c57103eade0c5a72261c1a"
       },
       [labels.bnusd]: {
-        address: "cxcadcaf77d8e46089fd3d98fcf71eabee1700f148"
+        address: "cx7f45afe9d8ce95e80c1be7c4eef2ea0dd843c4e3"
       },
       [labels.bnb]: {
-        address: "cx55b835590d43af7bf6f5be3c3d50982264d24e5d"
+        address: "cxcea1078c39e8b887692d3ccdd81bd711a6260ea5"
       },
       [labels.busd]: {
-        address: "cx39a7fefbe48ca7984e036abb1fab16f25fa641bb"
+        address: "cxea67f5fe1d1f7e1d29d54f185f0585b8262c788e"
       },
       [labels.usdt]: {
-        address: "cxdb7e556a7fd5441bead5d7c5403d414223d51132"
+        address: "cxac717247714a0b8e2b9038fdadfdcc0f033e325b"
       },
       [labels.usdc]: {
-        address: "cxf021731307d9f382935ac4bda81ee03946e1e4bd"
+        address: "cxd840ae3c79c1366895747aa8c228bd7e3459032f"
       },
       [labels.btcb]: {
-        address: "cx7c1ef7b631a64e33e35565b81e669a05cdd0d968"
+        address: "cx63be8619af9cdf1cb053ccde7642ae974648a8c1"
       },
       [labels.eth]: {
-        address: "cx4663c5f1d955207c5718aedb11ff029f08b50036"
+        address: "cx4b9cd9bb520b08d14c19c5035295f7e44003e42f"
       },
       [labels.bmc]: {
-        address: "cx053b96e2de3b9e6fc06db7b390d96ebf5fe82892"
+        address: "cxcc165238ae0e894835e88f549f22e520c7ad740f"
       },
       [labels.bts]: {
-        address: "cxa843db0a27750230559f997bafaeb7f8739afc81"
+        address: "cx949e9e242305309ed234c19183e9ed6e8f44ee73"
       }
     }
   },
@@ -215,46 +215,46 @@ export const contracts = {
     },
     testnet: {
       [labels.busd]: {
-        address: "0x119344c4354AcD401Ffb7Ed58e2B03fBA6759a87"
+        address: "0xED41B3B136a96c867Ee265cC8a79a8ea39eeC9C4"
       },
       [labels.usdt]: {
-        address: "0x51C59A4453e26c1DC46E282cbC6FFDD72ceC16DA"
+        address: "0x8dE8FaF129d5BD9844dbc92024907d48B415987C"
       },
       [labels.usdc]: {
-        address: "0x2f84D2Eeac14e2d02aaf00eB25801721D4233d19"
+        address: "0x9DDBcf279D1D01C32A2c13efCB6415f37416857F"
       },
       [labels.btcb]: {
-        address: "0xd5d707da717cf4771Ed995f16E976C711890F118"
+        address: "0x299Fb600FB51A208d3c268Da187539a59bE40041"
       },
       [labels.eth]: {
-        address: "0xE3471f58314332502Be2B0681a66D674D98763D6"
+        address: "0xd49a76cF9a79F13deaAcB789039e3ef76C4c1c5F"
       },
       [labels.icx]: {
-        address: "0x7d8c52A23FD7e3ca1342797baE7caF6d7b8036BA"
+        address: "0x0C8773fa9A67291e089cB8136Abb1bcb0Aae220F"
       },
       [labels.sicx]: {
-        address: "0x0a7792fe75548b26b287871081Aa6b05f48D9e89"
+        address: "0xBBE70cE3dAe164a188a47e6Be898F09D29AFdF74"
       },
       [labels.bnusd]: {
-        address: "0xc0c1aA22F99bb6724dC4159C256A5989D90A659C"
+        address: "0x4F6f26967a882c12a03DAe27272Ed0fd85A94443"
       },
       [labels.BMCManagement]: {
-        address: "0x5B9733113745F87A790321e2a84e73CbDa628B95",
+        address: "0x9Ab68EB48423AF80d7BDAffd7Ad976f69aa67e37",
         isProxy: false,
         implementation: null
       },
       [labels.BMCPeriphery]: {
-        address: "0x853CceE29C20331DB18937E6bEdb8ab477ebe691",
+        address: "0x99B22952e4D37d46046c46cD9F91cE1cdfB0605B",
         isProxy: false,
         implementation: null
       },
       [labels.BTSCore]: {
-        address: "0x1a2aDf985D6c2700fdAf72A9c1e2b39e3B647F7e",
+        address: "0x9fCBAD6F4C9dC2C0b109408E39cf042B9b2aE65A",
         isProxy: true,
         implementation: null
       },
       [labels.BTSPeriphery]: {
-        address: "0x69555E113279b3d3805492a829DD765ED394A669",
+        address: "0xd75A671A5196459b13c97424B0C275D51D2C3488",
         isProxy: true,
         implementation: null
       }

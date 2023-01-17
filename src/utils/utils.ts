@@ -423,6 +423,14 @@ function sleep(time: number = 2000): Promise<void> {
   return new Promise(resolve => setTimeout(resolve, time));
 }
 
+function decimalToHex(number: number) {
+  return "0x" + number.toString(16);
+}
+
+function hexToDecimal(hex: string) {
+  return parseInt(hex, 16);
+}
+
 // exports
 const utils = {
   networks,
@@ -452,7 +460,9 @@ const utils = {
   makeEthGetTransactionCountQuery,
   isValidTxString,
   sleep,
-  isValidContractAddress
+  isValidContractAddress,
+  decimalToHex,
+  hexToDecimal
 };
 
 export = utils;

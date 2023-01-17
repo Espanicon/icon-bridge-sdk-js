@@ -18,7 +18,7 @@ type InputParams = {
 type Tx = {
   from: string;
   to: string;
-  gas: number;
+  gas: string;
   data: object;
   value?: number;
   nonce?: any;
@@ -492,10 +492,11 @@ class IconBridgeSDK {
     }
 
     // get tx object
+    const parsedGas = gas === null ? 2000000 : gas 
     const tx: Tx = {
       from: from,
       to: contractAddress,
-      gas: gas == null ? 2000000 : gas,
+      gas: this.sdkUtils.decimalToHex(parsedGas),
       data: encodedData
     };
 
@@ -503,7 +504,9 @@ class IconBridgeSDK {
       tx["nonce"] = nonce;
     }
     if (amount != null) {
-      tx["value"] = web3Wrapper.utils.toWei(amount, "ether");
+      tx["value"] = this.sdkUtils.decimalToHex(
+        Number(web3Wrapper.utils.toWei(amount, "ether"))
+      )
     }
 
     // if useWeb is true return the unsigned tx object

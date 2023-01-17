@@ -220,6 +220,12 @@ function isValidContractAddress(tx) {
 function sleep(time = 2000) {
     return new Promise(resolve => setTimeout(resolve, time));
 }
+function decimalToHex(number) {
+    return "0x" + number.toString(16);
+}
+function hexToDecimal(hex) {
+    return parseInt(hex, 16);
+}
 const utils = {
     networks: networks_1.networks,
     chains: networks_1.chains,
@@ -248,7 +254,9 @@ const utils = {
     makeEthGetTransactionCountQuery,
     isValidTxString,
     sleep,
-    isValidContractAddress
+    isValidContractAddress,
+    decimalToHex,
+    hexToDecimal
 };
 module.exports = utils;
 //# sourceMappingURL=utils.js.map
