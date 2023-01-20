@@ -30,7 +30,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'icon', Method 'transferNativeCoin
     );
 
     console.log(`\n  > Result: ${JSON.stringify(query)}\n`);
-    assert.ok(Object.keys(query).includes("from"));
+    assert.ok(Object.keys(query).includes("jsonrpc"));
   }).timeout(5000);
 });
 
@@ -46,7 +46,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'icon', Method 'transferToBTSContr
     );
 
     console.log(`\n  > Result: ${JSON.stringify(query)}\n`);
-    assert.ok(Object.keys(query).includes("from"));
+    assert.ok(Object.keys(query).includes("jsonrpc"));
   }).timeout(5000);
 });
 
@@ -63,7 +63,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'icon', Method 'transfer(_coinName
     );
 
     console.log(`\n  > Result: ${JSON.stringify(query)}\n`);
-    assert.ok(Object.keys(query).includes("from"));
+    assert.ok(Object.keys(query).includes("jsonrpc"));
   }).timeout(5000);
 });
 
@@ -80,7 +80,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'icon', Method 'transferBatch(_coi
     );
 
     console.log(`\n  > Result: ${JSON.stringify(query)}\n`);
-    assert.ok(Object.keys(query).includes("from"));
+    assert.ok(Object.keys(query).includes("jsonrpc"));
   }).timeout(5000);
 });
 
@@ -96,7 +96,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'icon', Method 'approveBTSContract
     );
 
     console.log(`\n  > Result: ${JSON.stringify(query)}\n`);
-    assert.ok(Object.keys(query).includes("from"));
+    assert.ok(Object.keys(query).includes("jsonrpc"));
   }).timeout(5000);
 });
 
@@ -112,7 +112,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'icon', Method 'reclaim(_coinName,
     );
 
     console.log(`\n  > Result: ${JSON.stringify(query)}\n`);
-    assert.ok(Object.keys(query).includes("from"));
+    assert.ok(Object.keys(query).includes("jsonrpc"));
   }).timeout(5000);
 });
 
@@ -127,7 +127,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'icon', Method 'addOwner(_addr, fr
     );
 
     console.log(`\n  > Result: ${JSON.stringify(query)}\n`);
-    assert.ok(Object.keys(query).includes("from"));
+    assert.ok(Object.keys(query).includes("jsonrpc"));
   }).timeout(5000);
 });
 
@@ -142,7 +142,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'icon', Method 'removeOwner(_addr,
     );
 
     console.log(`\n  > Result: ${JSON.stringify(query)}\n`);
-    assert.ok(Object.keys(query).includes("from"));
+    assert.ok(Object.keys(query).includes("jsonrpc"));
   }).timeout(5000);
 });
 
@@ -161,7 +161,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'icon', Method 'register(_name,_sy
     );
 
     console.log(`\n  > Result: ${JSON.stringify(query)}\n`);
-    assert.ok(Object.keys(query).includes("from"));
+    assert.ok(Object.keys(query).includes("jsonrpc"));
   }).timeout(5000);
 });
 
@@ -178,7 +178,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'icon', Method 'setFeeRatio(_name,
     );
 
     console.log(`\n  > Result: ${JSON.stringify(query)}\n`);
-    assert.ok(Object.keys(query).includes("from"));
+    assert.ok(Object.keys(query).includes("jsonrpc"));
   }).timeout(5000);
 });
 
@@ -195,7 +195,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'icon', Method 'removeBlacklistAdd
     );
 
     console.log(`\n  > Result: ${JSON.stringify(query)}\n`);
-    assert.ok(Object.keys(query).includes("from"));
+    assert.ok(Object.keys(query).includes("jsonrpc"));
   }).timeout(5000);
 });
 
@@ -212,7 +212,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'icon', Method 'setTokenLimit(_coi
     );
 
     console.log(`\n  > Result: ${JSON.stringify(query)}\n`);
-    assert.ok(Object.keys(query).includes("from"));
+    assert.ok(Object.keys(query).includes("jsonrpc"));
   }).timeout(5000);
 });
 
@@ -229,7 +229,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'icon', Method 'addBlacklistAddres
     );
 
     console.log(`\n  > Result: ${JSON.stringify(query)}\n`);
-    assert.ok(Object.keys(query).includes("from"));
+    assert.ok(Object.keys(query).includes("jsonrpc"));
   }).timeout(5000);
 });
 
@@ -242,7 +242,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'icon', Method 'addRestriction(fro
     const query = await sdk.icon.web.addRestriction(wallets.icon.pubK);
 
     console.log(`\n  > Result: ${JSON.stringify(query)}\n`);
-    assert.ok(Object.keys(query).includes("from"));
+    assert.ok(Object.keys(query).includes("jsonrpc"));
   }).timeout(5000);
 });
 
@@ -255,6 +255,6 @@ describe("E2E testing Icon Bridge SDK. Chain: 'icon', Method 'disableRestriction
     const query = await sdk.icon.web.disableRestrictions(wallets.icon.pubK);
 
     console.log(`\n  > Result: ${JSON.stringify(query)}\n`);
-    assert.ok(Object.keys(query).includes("from"));
+    assert.ok(Object.keys(query).includes("jsonrpc"));
   }).timeout(5000);
 });

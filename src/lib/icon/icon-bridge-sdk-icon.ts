@@ -1,6 +1,7 @@
 // icon-bridge-sdk-icon.ts
 //
 const Exception = require("../../utils/exception");
+import localWebLib from './webLib';
 // const EspaniconSDK = require("@espanicon/espanicon-sdk");
 
 // types
@@ -26,6 +27,8 @@ class IconBridgeSDKIcon {
   #iconWeb3: any;
   queryMethod: any;
   espaniconLib: any;
+  methods: any;
+  web: any;
 
   /**
    * Constructor
@@ -44,7 +47,14 @@ class IconBridgeSDKIcon {
       decimalToHex: this.#iconWeb3.decimalToHex,
       getIcxBalance: this.#iconWeb3.getIcxBalance
     }
+    this.methods = {
+      ...this.superMethods
+    };
+    this.web = {
+      ...this.#web
+    }
   }
+
 
   // ######################################################################
   /**
@@ -431,7 +441,640 @@ class IconBridgeSDKIcon {
         );
         return { error: errorResult.toString() };
       }
-    }
+    },
+  };
+
+  #web = {
+    /*
+     */
+    transferNativeCoin: async (
+      targetAddress: string,
+      targetChain: string,
+      from: string,
+      amount: number,
+      stepLimit: string | null
+    ): Promise<any> => {
+      //
+      try {
+        const isMainnet: boolean =
+          this.#params.useMainnet == null ? true : this.#params.useMainnet;
+
+        const btpAddress = this.#sdkUtils.getBTPAddress(
+          targetAddress,
+          targetChain,
+          isMainnet
+        );
+
+        const btsContract = this.#sdkUtils.getContractOfLabelFromLocalData(
+          "bts",
+          "icon",
+          isMainnet,
+          false
+        );
+
+        const txRequest = await localWebLib.makeTxRequest(
+          this.#sdkUtils,
+          this.#iconWeb3,
+          from,
+          btsContract,
+          "transferNativeCoin",
+          { _to: btpAddress },
+          amount,
+          stepLimit,
+          this.#params.iconProvider.nid
+        );
+
+        return txRequest;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running transferNativeCoin(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\namount: ${amount}\nstepLimit: ${stepLimit}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /*
+     */
+    transferToBTSContract: async (
+      _value: string,
+      tokenContract: string | null = null,
+      from: string,
+      stepLimit: string | null = "5000000"
+    ): Promise<any> => {
+      //
+      try {
+        return await localWebLib.transferToBTSContract(
+          this.#sdkUtils,
+          this.#iconWeb3,
+          this.#params,
+          _value,
+          tokenContract,
+          from,
+          stepLimit
+        );
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running transferToBTSContract(). Params:\n_value: ${_value}\ntokenContract: ${tokenContract}\nfrom: ${from}\nstepLimit: ${stepLimit}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /*
+     */
+    transfer: async (
+      _coinName: string,
+      _value: string,
+      from: string,
+      targetChain: string,
+      targetAddress: string,
+      stepLimit: string | null = "5000000"
+    ): Promise<any> => {
+      //
+      try {
+        const isMainnet: boolean =
+          this.#params.useMainnet == null ? true : this.#params.useMainnet;
+
+        const btpAddress = this.#sdkUtils.getBTPAddress(
+          targetAddress,
+          targetChain,
+          isMainnet
+        );
+
+        const txRequest = await localWebLib.transfer(
+          this.#sdkUtils,
+          this.#iconWeb3,
+          this.#params,
+          _coinName,
+          _value,
+          btpAddress,
+          from,
+          stepLimit
+        );
+
+        return txRequest;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running transfer(). Params:\n_coinName: ${_coinName}\n_value: ${_value}\nfrom: ${from}\ntargetChain: ${targetChain}\ntargetAddress: ${targetAddress}\nstepLimit: ${stepLimit}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /*
+     */
+    transferBatch: async (
+      _coinNames: string[],
+      _values: string[],
+      targetChain: string,
+      targetAddress: string,
+      from: string,
+      stepLimit: string | null = "5000000"
+    ): Promise<any> => {
+      //
+      try {
+        const isMainnet: boolean =
+          this.#params.useMainnet == null ? true : this.#params.useMainnet;
+
+        const btpAddress = this.#sdkUtils.getBTPAddress(
+          targetAddress,
+          targetChain,
+          isMainnet
+        );
+
+        const btsContract = this.#sdkUtils.getContractOfLabelFromLocalData(
+          "bts",
+          "icon",
+          isMainnet,
+          false
+        );
+
+        const parsedValues = _values.map(value => {
+          return this.#iconWeb3.decimalToHex(
+            Number(value)*(10**18)
+          )
+        });
+
+        const txRequest = await localWebLib.makeTxRequest(
+          this.#sdkUtils,
+          this.#iconWeb3,
+          from,
+          btsContract,
+          "transferBatch",
+          { _coinNames: _coinNames, _values: parsedValues, _to: btpAddress },
+          0,
+          stepLimit,
+          this.#params.iconProvider.nid
+        );
+
+        return txRequest;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running transferBatch(). Params:\n_coinNames: ${_coinNames}\n_values: ${_values}\nfrom: ${from}\ntargetChain: ${targetChain}\ntargetAddress: ${targetAddress}\nstepLimit: ${stepLimit}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /*
+     */
+    approveBTSContract: async (
+      amount: string,
+      tokenContract: string,
+      from: string,
+      stepLimit: string | null = "5000000"
+    ): Promise<any> => {
+      //
+      try {
+        return await localWebLib.approveBTSContract(
+          this.#sdkUtils,
+          this.#iconWeb3,
+          this.#params,
+          amount,
+          tokenContract,
+          from,
+          stepLimit
+        );
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running approveBTSContract(). Params:\namount: ${amount}\ntokenContract: ${tokenContract}\nfrom: ${from}\nstepLimit: ${stepLimit}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /*
+     */
+    reclaim: async (
+      _coinName: string,
+      _value: string,
+      from: string,
+      stepLimit: string
+    ): Promise<any> => {
+      try {
+        const isMainnet: boolean =
+          this.#params.useMainnet == null ? true : this.#params.useMainnet;
+
+        const btsContract = this.#sdkUtils.getContractOfLabelFromLocalData(
+          "bts",
+          "icon",
+          isMainnet,
+          false
+        );
+
+        const txRequest = await localWebLib.makeTxRequest(
+          this.#sdkUtils,
+          this.#iconWeb3,
+          from,
+          btsContract,
+          "reclaim",
+          { _coinName: _coinName, _value: _value },
+          0,
+          stepLimit,
+          this.#params.iconProvider.nid
+        );
+
+        return txRequest;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running reclaim(). Params:\n_coinName: ${_coinName}\n_value: ${_value}\nfrom: ${from}\nstepLimit: ${stepLimit}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /*
+     */
+    addOwner: async (
+      _addr: string,
+      from: string,
+      stepLimit: string
+    ): Promise<any> => {
+      try {
+        const isMainnet: boolean =
+          this.#params.useMainnet == null ? true : this.#params.useMainnet;
+
+        const btsContract = this.#sdkUtils.getContractOfLabelFromLocalData(
+          "bts",
+          "icon",
+          isMainnet,
+          false
+        );
+
+        const txRequest = await localWebLib.makeTxRequest(
+          this.#sdkUtils,
+          this.#iconWeb3,
+          from,
+          btsContract,
+          "adOwner",
+          { _addr: _addr },
+          0,
+          stepLimit,
+          this.#params.iconProvider.nid
+        );
+
+        return txRequest;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running addOwner(). Params:\n_addr: ${_addr}\nfrom: ${from}\nstepLimit: ${stepLimit}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /*
+     */
+    removeOwner: async (
+      _addr: string,
+      from: string,
+      stepLimit: string
+    ): Promise<any> => {
+      try {
+        const isMainnet: boolean =
+          this.#params.useMainnet == null ? true : this.#params.useMainnet;
+
+        const btsContract = this.#sdkUtils.getContractOfLabelFromLocalData(
+          "bts",
+          "icon",
+          isMainnet,
+          false
+        );
+
+        const txRequest = await localWebLib.makeTxRequest(
+          this.#sdkUtils,
+          this.#iconWeb3,
+          from,
+          btsContract,
+          "removeOwner",
+          { _addr: _addr },
+          0,
+          stepLimit,
+          this.#params.iconProvider.nid
+        );
+
+        return txRequest;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running removeOwner(). Params:\n_addr: ${_addr}\nfrom: ${from}\nstepLimit: ${stepLimit}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /*
+     */
+    register: async (
+      _name: string,
+      _symbol: string,
+      _decimals: string,
+      _feeNumerator: string,
+      _fixedFee: string,
+      from: string,
+      _addr: string | null = null,
+      stepLimit: string
+    ): Promise<any> => {
+      try {
+        const isMainnet: boolean =
+          this.#params.useMainnet == null ? true : this.#params.useMainnet;
+
+        const btsContract = this.#sdkUtils.getContractOfLabelFromLocalData(
+          "bts",
+          "icon",
+          isMainnet,
+          false
+        );
+
+        const queryParams: {
+          _name: string,
+          _symbol: string,
+          _decimals: string,
+          _feeNumerator: string,
+          _fixedFee: string,
+          _addr?: string
+        } = {
+          _name: _name,
+          _symbol: _symbol,
+          _decimals: _decimals,
+          _feeNumerator: _feeNumerator,
+          _fixedFee: _fixedFee
+        }
+
+        if (_addr != null) {
+          queryParams["_addr"] = _addr;
+        }
+
+        const txRequest = await localWebLib.makeTxRequest(
+          this.#sdkUtils,
+          this.#iconWeb3,
+          from,
+          btsContract,
+          "register",
+          { ...queryParams },
+          0,
+          stepLimit,
+          this.#params.iconProvider.nid
+        );
+
+        return txRequest;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running register(). Params:\n_name: ${_name}\n_symbol: ${_symbol}\n_decimals: ${_decimals}\n_feeNumerator: ${_feeNumerator}\n_fixedFee: ${_fixedFee}\n_addr: ${_addr}\nfrom: ${from}\nstepLimit: ${stepLimit}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /*
+     */
+    setFeeRatio: async (
+      _name: string,
+      _feeNumerator: string,
+      _fixedFee: string,
+      from: string,
+      stepLimit: string
+    ): Promise<any> => {
+      try {
+        const isMainnet: boolean =
+          this.#params.useMainnet == null ? true : this.#params.useMainnet;
+
+        const btsContract = this.#sdkUtils.getContractOfLabelFromLocalData(
+          "bts",
+          "icon",
+          isMainnet,
+          false
+        );
+
+        const txRequest = await localWebLib.makeTxRequest(
+          this.#sdkUtils,
+          this.#iconWeb3,
+          from,
+          btsContract,
+          "setFeeRatio",
+          { _name: _name, _feeNumerator: _feeNumerator, _fixedFee: _fixedFee },
+          0,
+          stepLimit,
+          this.#params.iconProvider.nid
+        );
+
+        return txRequest;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running setFeeRatio(). Params:\n_name: ${_name}\n_feeNumerator: ${_feeNumerator}\n_fixedFee: ${_fixedFee}\nfrom: ${from}\nstepLimit: ${stepLimit}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /*
+     */
+    removeBlacklistAddress: async (
+      _net: string,
+      _addresses: string[],
+      from: string,
+      stepLimit: string
+    ): Promise<any> => {
+      try {
+        const isMainnet: boolean =
+          this.#params.useMainnet == null ? true : this.#params.useMainnet;
+
+        const btsContract = this.#sdkUtils.getContractOfLabelFromLocalData(
+          "bts",
+          "icon",
+          isMainnet,
+          false
+        );
+
+        const txRequest = await localWebLib.makeTxRequest(
+          this.#sdkUtils,
+          this.#iconWeb3,
+          from,
+          btsContract,
+          "removeBlacklistAddress",
+          { _net: _net, _addresses: _addresses },
+          0,
+          stepLimit,
+          this.#params.iconProvider.nid
+        );
+
+        return txRequest;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running removeBlacklistAddress(). Params:\n_net: ${_net}\n_addresses: ${_addresses}\nfrom: ${from}\nstepLimit: ${stepLimit}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /*
+     */
+    setTokenLimit: async (
+      _coinNames: string[],
+      _tokenLimits: string[],
+      from: string,
+      stepLimit: string
+    ): Promise<any> => {
+      try {
+        const isMainnet: boolean =
+          this.#params.useMainnet == null ? true : this.#params.useMainnet;
+
+        const btsContract = this.#sdkUtils.getContractOfLabelFromLocalData(
+          "bts",
+          "icon",
+          isMainnet,
+          false
+        );
+
+        const txRequest = await localWebLib.makeTxRequest(
+          this.#sdkUtils,
+          this.#iconWeb3,
+          from,
+          btsContract,
+          "setTokenLimit",
+          { _coinNames: _coinNames, _tokenLimits: _tokenLimits },
+          0,
+          stepLimit,
+          this.#params.iconProvider.nid
+        );
+
+        return txRequest;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running setTokenLimit(). Params:\n_coinNames: ${_coinNames}\n_tokenLimits: ${_tokenLimits}\nfrom: ${from}\nstepLimit: ${stepLimit}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /*
+     */
+    addBlacklistAddress: async (
+      _net: string,
+      _addresses: string[],
+      from: string,
+      stepLimit: string
+    ): Promise<any> => {
+      try {
+        const isMainnet: boolean =
+          this.#params.useMainnet == null ? true : this.#params.useMainnet;
+
+        const btsContract = this.#sdkUtils.getContractOfLabelFromLocalData(
+          "bts",
+          "icon",
+          isMainnet,
+          false
+        );
+
+        const txRequest = await localWebLib.makeTxRequest(
+          this.#sdkUtils,
+          this.#iconWeb3,
+          from,
+          btsContract,
+          "addBlacklistAddress",
+          { _net: _net, _addresses: _addresses },
+          0,
+          stepLimit,
+          this.#params.iconProvider.nid
+        );
+
+        return txRequest;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running addBlacklistAddress(). Params:\n_net: ${_net}\n_addresses: ${_addresses}\nfrom: ${from}\nstepLimit: ${stepLimit}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /*
+     */
+    addRestriction: async (
+      from: string,
+      stepLimit: string
+    ): Promise<any> => {
+      try {
+        const isMainnet: boolean =
+          this.#params.useMainnet == null ? true : this.#params.useMainnet;
+
+        const btsContract = this.#sdkUtils.getContractOfLabelFromLocalData(
+          "bts",
+          "icon",
+          isMainnet,
+          false
+        );
+
+        const txRequest = await localWebLib.makeTxRequest(
+          this.#sdkUtils,
+          this.#iconWeb3,
+          from,
+          btsContract,
+          "addRestriction",
+          null,
+          0,
+          stepLimit,
+          this.#params.iconProvider.nid
+        );
+
+        return txRequest;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running addRestriction(). Params:\nfrom: ${from}\nstepLimit: ${stepLimit}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
+
+    /*
+     */
+    disableRestrictions: async (
+      from: string,
+      stepLimit: string
+    ): Promise<any> => {
+      try {
+        const isMainnet: boolean =
+          this.#params.useMainnet == null ? true : this.#params.useMainnet;
+
+        const btsContract = this.#sdkUtils.getContractOfLabelFromLocalData(
+          "bts",
+          "icon",
+          isMainnet,
+          false
+        );
+
+        const txRequest = await localWebLib.makeTxRequest(
+          this.#sdkUtils,
+          this.#iconWeb3,
+          from,
+          btsContract,
+          "disableRestrictions",
+          null,
+          0,
+          stepLimit,
+          this.#params.iconProvider.nid
+        );
+
+        return txRequest;
+      } catch (err) {
+        const errorResult = new Exception(
+          err,
+          `Error running disableRestrictions(). Params:\nfrom: ${from}\nstepLimit: ${stepLimit}\n`
+        );
+        return { error: errorResult.toString() };
+      }
+    },
   };
 
   private makeReadonlyQuery = async (

@@ -2,7 +2,7 @@ import EspaniconSDK from "@espanicon/espanicon-sdk";
 // import utils from "./utils/utils.js";
 import IconBridgeSDK from "./lib/icon-bridge-sdk.js";
 import bscNodeBridge  from "./lib/bsc/icon-bridge-sdk-node-bsc.js";
-import iconNodeBridge from './lib/icon/icon-bridge-sdk-node-icon.js';
+import iconNodeBridge from './lib/icon/icon-bridge-sdk-icon.js';
 
 // types
 type Provider = {
