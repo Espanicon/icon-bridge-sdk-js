@@ -484,7 +484,8 @@ class IconBridgeSDKIcon {
           this.#params.iconProvider.nid
         );
 
-        return txRequest;
+        const txObj = this.parseTxParams(txRequest);
+        return txObj;
       } catch (err) {
         const errorResult = new Exception(
           err,
@@ -504,7 +505,7 @@ class IconBridgeSDKIcon {
     ): Promise<any> => {
       //
       try {
-        return await localWebLib.transferToBTSContract(
+        const txRequest = await localWebLib.transferToBTSContract(
           this.#sdkUtils,
           this.#iconWeb3,
           this.#params,
@@ -513,6 +514,8 @@ class IconBridgeSDKIcon {
           from,
           stepLimit
         );
+        const txObj = this.parseTxParams(txRequest);
+        return txObj;
       } catch (err) {
         const errorResult = new Exception(
           err,
@@ -554,7 +557,8 @@ class IconBridgeSDKIcon {
           stepLimit
         );
 
-        return txRequest;
+        const txObj = this.parseTxParams(txRequest);
+        return txObj;
       } catch (err) {
         const errorResult = new Exception(
           err,
@@ -610,7 +614,8 @@ class IconBridgeSDKIcon {
           this.#params.iconProvider.nid
         );
 
-        return txRequest;
+        const txObj = this.parseTxParams(txRequest);
+        return txObj;
       } catch (err) {
         const errorResult = new Exception(
           err,
@@ -630,7 +635,7 @@ class IconBridgeSDKIcon {
     ): Promise<any> => {
       //
       try {
-        return await localWebLib.approveBTSContract(
+        const txRequest = await localWebLib.approveBTSContract(
           this.#sdkUtils,
           this.#iconWeb3,
           this.#params,
@@ -639,6 +644,8 @@ class IconBridgeSDKIcon {
           from,
           stepLimit
         );
+        const txObj = this.parseTxParams(txRequest);
+        return txObj;
       } catch (err) {
         const errorResult = new Exception(
           err,
@@ -679,7 +686,8 @@ class IconBridgeSDKIcon {
           this.#params.iconProvider.nid
         );
 
-        return txRequest;
+        const txObj = this.parseTxParams(txRequest);
+        return txObj;
       } catch (err) {
         const errorResult = new Exception(
           err,
@@ -719,7 +727,8 @@ class IconBridgeSDKIcon {
           this.#params.iconProvider.nid
         );
 
-        return txRequest;
+        const txObj = this.parseTxParams(txRequest);
+        return txObj;
       } catch (err) {
         const errorResult = new Exception(
           err,
@@ -759,7 +768,8 @@ class IconBridgeSDKIcon {
           this.#params.iconProvider.nid
         );
 
-        return txRequest;
+        const txObj = this.parseTxParams(txRequest);
+        return txObj;
       } catch (err) {
         const errorResult = new Exception(
           err,
@@ -823,7 +833,8 @@ class IconBridgeSDKIcon {
           this.#params.iconProvider.nid
         );
 
-        return txRequest;
+        const txObj = this.parseTxParams(txRequest);
+        return txObj;
       } catch (err) {
         const errorResult = new Exception(
           err,
@@ -865,7 +876,8 @@ class IconBridgeSDKIcon {
           this.#params.iconProvider.nid
         );
 
-        return txRequest;
+        const txObj = this.parseTxParams(txRequest);
+        return txObj;
       } catch (err) {
         const errorResult = new Exception(
           err,
@@ -906,7 +918,8 @@ class IconBridgeSDKIcon {
           this.#params.iconProvider.nid
         );
 
-        return txRequest;
+        const txObj = this.parseTxParams(txRequest);
+        return txObj;
       } catch (err) {
         const errorResult = new Exception(
           err,
@@ -947,7 +960,8 @@ class IconBridgeSDKIcon {
           this.#params.iconProvider.nid
         );
 
-        return txRequest;
+        const txObj = this.parseTxParams(txRequest);
+        return txObj;
       } catch (err) {
         const errorResult = new Exception(
           err,
@@ -988,7 +1002,8 @@ class IconBridgeSDKIcon {
           this.#params.iconProvider.nid
         );
 
-        return txRequest;
+        const txObj = this.parseTxParams(txRequest);
+        return txObj;
       } catch (err) {
         const errorResult = new Exception(
           err,
@@ -1027,7 +1042,8 @@ class IconBridgeSDKIcon {
           this.#params.iconProvider.nid
         );
 
-        return txRequest;
+        const txObj = this.parseTxParams(txRequest);
+        return txObj;
       } catch (err) {
         const errorResult = new Exception(
           err,
@@ -1066,7 +1082,8 @@ class IconBridgeSDKIcon {
           this.#params.iconProvider.nid
         );
 
-        return txRequest;
+        const txObj = this.parseTxParams(txRequest);
+        return txObj;
       } catch (err) {
         const errorResult = new Exception(
           err,
@@ -1103,6 +1120,14 @@ class IconBridgeSDKIcon {
     );
 
     return request;
+  };
+
+  private parseTxParams = (
+    txParams: any,
+  ) => {
+    const txObj = this.#iconWeb3.makeJSONRPCRequestObj("icx_SendTransaction");
+    txObj["params"] = { ...txParams };
+    return txObj;
   };
 }
 

@@ -259,7 +259,8 @@ class IconBridgeSDKIcon {
                     const btpAddress = __classPrivateFieldGet(this, _IconBridgeSDKIcon_sdkUtils, "f").getBTPAddress(targetAddress, targetChain, isMainnet);
                     const btsContract = __classPrivateFieldGet(this, _IconBridgeSDKIcon_sdkUtils, "f").getContractOfLabelFromLocalData("bts", "icon", isMainnet, false);
                     const txRequest = yield webLib_1.default.makeTxRequest(__classPrivateFieldGet(this, _IconBridgeSDKIcon_sdkUtils, "f"), __classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f"), from, btsContract, "transferNativeCoin", { _to: btpAddress }, amount, stepLimit, __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").iconProvider.nid);
-                    return txRequest;
+                    const txObj = this.parseTxParams(txRequest);
+                    return txObj;
                 }
                 catch (err) {
                     const errorResult = new Exception(err, `Error running transferNativeCoin(). Params:\ntargetAddress: ${targetAddress}\ntargetChain: ${targetChain}\nfrom: ${from}\namount: ${amount}\nstepLimit: ${stepLimit}\n`);
@@ -268,7 +269,9 @@ class IconBridgeSDKIcon {
             }),
             transferToBTSContract: (_value, tokenContract = null, from, stepLimit = "5000000") => __awaiter(this, void 0, void 0, function* () {
                 try {
-                    return yield webLib_1.default.transferToBTSContract(__classPrivateFieldGet(this, _IconBridgeSDKIcon_sdkUtils, "f"), __classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f"), __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f"), _value, tokenContract, from, stepLimit);
+                    const txRequest = yield webLib_1.default.transferToBTSContract(__classPrivateFieldGet(this, _IconBridgeSDKIcon_sdkUtils, "f"), __classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f"), __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f"), _value, tokenContract, from, stepLimit);
+                    const txObj = this.parseTxParams(txRequest);
+                    return txObj;
                 }
                 catch (err) {
                     const errorResult = new Exception(err, `Error running transferToBTSContract(). Params:\n_value: ${_value}\ntokenContract: ${tokenContract}\nfrom: ${from}\nstepLimit: ${stepLimit}\n`);
@@ -280,7 +283,8 @@ class IconBridgeSDKIcon {
                     const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").useMainnet;
                     const btpAddress = __classPrivateFieldGet(this, _IconBridgeSDKIcon_sdkUtils, "f").getBTPAddress(targetAddress, targetChain, isMainnet);
                     const txRequest = yield webLib_1.default.transfer(__classPrivateFieldGet(this, _IconBridgeSDKIcon_sdkUtils, "f"), __classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f"), __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f"), _coinName, _value, btpAddress, from, stepLimit);
-                    return txRequest;
+                    const txObj = this.parseTxParams(txRequest);
+                    return txObj;
                 }
                 catch (err) {
                     const errorResult = new Exception(err, `Error running transfer(). Params:\n_coinName: ${_coinName}\n_value: ${_value}\nfrom: ${from}\ntargetChain: ${targetChain}\ntargetAddress: ${targetAddress}\nstepLimit: ${stepLimit}\n`);
@@ -296,7 +300,8 @@ class IconBridgeSDKIcon {
                         return __classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f").decimalToHex(Number(value) * (10 ** 18));
                     });
                     const txRequest = yield webLib_1.default.makeTxRequest(__classPrivateFieldGet(this, _IconBridgeSDKIcon_sdkUtils, "f"), __classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f"), from, btsContract, "transferBatch", { _coinNames: _coinNames, _values: parsedValues, _to: btpAddress }, 0, stepLimit, __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").iconProvider.nid);
-                    return txRequest;
+                    const txObj = this.parseTxParams(txRequest);
+                    return txObj;
                 }
                 catch (err) {
                     const errorResult = new Exception(err, `Error running transferBatch(). Params:\n_coinNames: ${_coinNames}\n_values: ${_values}\nfrom: ${from}\ntargetChain: ${targetChain}\ntargetAddress: ${targetAddress}\nstepLimit: ${stepLimit}\n`);
@@ -305,7 +310,9 @@ class IconBridgeSDKIcon {
             }),
             approveBTSContract: (amount, tokenContract, from, stepLimit = "5000000") => __awaiter(this, void 0, void 0, function* () {
                 try {
-                    return yield webLib_1.default.approveBTSContract(__classPrivateFieldGet(this, _IconBridgeSDKIcon_sdkUtils, "f"), __classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f"), __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f"), amount, tokenContract, from, stepLimit);
+                    const txRequest = yield webLib_1.default.approveBTSContract(__classPrivateFieldGet(this, _IconBridgeSDKIcon_sdkUtils, "f"), __classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f"), __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f"), amount, tokenContract, from, stepLimit);
+                    const txObj = this.parseTxParams(txRequest);
+                    return txObj;
                 }
                 catch (err) {
                     const errorResult = new Exception(err, `Error running approveBTSContract(). Params:\namount: ${amount}\ntokenContract: ${tokenContract}\nfrom: ${from}\nstepLimit: ${stepLimit}\n`);
@@ -317,7 +324,8 @@ class IconBridgeSDKIcon {
                     const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").useMainnet;
                     const btsContract = __classPrivateFieldGet(this, _IconBridgeSDKIcon_sdkUtils, "f").getContractOfLabelFromLocalData("bts", "icon", isMainnet, false);
                     const txRequest = yield webLib_1.default.makeTxRequest(__classPrivateFieldGet(this, _IconBridgeSDKIcon_sdkUtils, "f"), __classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f"), from, btsContract, "reclaim", { _coinName: _coinName, _value: _value }, 0, stepLimit, __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").iconProvider.nid);
-                    return txRequest;
+                    const txObj = this.parseTxParams(txRequest);
+                    return txObj;
                 }
                 catch (err) {
                     const errorResult = new Exception(err, `Error running reclaim(). Params:\n_coinName: ${_coinName}\n_value: ${_value}\nfrom: ${from}\nstepLimit: ${stepLimit}\n`);
@@ -329,7 +337,8 @@ class IconBridgeSDKIcon {
                     const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").useMainnet;
                     const btsContract = __classPrivateFieldGet(this, _IconBridgeSDKIcon_sdkUtils, "f").getContractOfLabelFromLocalData("bts", "icon", isMainnet, false);
                     const txRequest = yield webLib_1.default.makeTxRequest(__classPrivateFieldGet(this, _IconBridgeSDKIcon_sdkUtils, "f"), __classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f"), from, btsContract, "adOwner", { _addr: _addr }, 0, stepLimit, __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").iconProvider.nid);
-                    return txRequest;
+                    const txObj = this.parseTxParams(txRequest);
+                    return txObj;
                 }
                 catch (err) {
                     const errorResult = new Exception(err, `Error running addOwner(). Params:\n_addr: ${_addr}\nfrom: ${from}\nstepLimit: ${stepLimit}\n`);
@@ -341,7 +350,8 @@ class IconBridgeSDKIcon {
                     const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").useMainnet;
                     const btsContract = __classPrivateFieldGet(this, _IconBridgeSDKIcon_sdkUtils, "f").getContractOfLabelFromLocalData("bts", "icon", isMainnet, false);
                     const txRequest = yield webLib_1.default.makeTxRequest(__classPrivateFieldGet(this, _IconBridgeSDKIcon_sdkUtils, "f"), __classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f"), from, btsContract, "removeOwner", { _addr: _addr }, 0, stepLimit, __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").iconProvider.nid);
-                    return txRequest;
+                    const txObj = this.parseTxParams(txRequest);
+                    return txObj;
                 }
                 catch (err) {
                     const errorResult = new Exception(err, `Error running removeOwner(). Params:\n_addr: ${_addr}\nfrom: ${from}\nstepLimit: ${stepLimit}\n`);
@@ -363,7 +373,8 @@ class IconBridgeSDKIcon {
                         queryParams["_addr"] = _addr;
                     }
                     const txRequest = yield webLib_1.default.makeTxRequest(__classPrivateFieldGet(this, _IconBridgeSDKIcon_sdkUtils, "f"), __classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f"), from, btsContract, "register", Object.assign({}, queryParams), 0, stepLimit, __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").iconProvider.nid);
-                    return txRequest;
+                    const txObj = this.parseTxParams(txRequest);
+                    return txObj;
                 }
                 catch (err) {
                     const errorResult = new Exception(err, `Error running register(). Params:\n_name: ${_name}\n_symbol: ${_symbol}\n_decimals: ${_decimals}\n_feeNumerator: ${_feeNumerator}\n_fixedFee: ${_fixedFee}\n_addr: ${_addr}\nfrom: ${from}\nstepLimit: ${stepLimit}\n`);
@@ -375,7 +386,8 @@ class IconBridgeSDKIcon {
                     const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").useMainnet;
                     const btsContract = __classPrivateFieldGet(this, _IconBridgeSDKIcon_sdkUtils, "f").getContractOfLabelFromLocalData("bts", "icon", isMainnet, false);
                     const txRequest = yield webLib_1.default.makeTxRequest(__classPrivateFieldGet(this, _IconBridgeSDKIcon_sdkUtils, "f"), __classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f"), from, btsContract, "setFeeRatio", { _name: _name, _feeNumerator: _feeNumerator, _fixedFee: _fixedFee }, 0, stepLimit, __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").iconProvider.nid);
-                    return txRequest;
+                    const txObj = this.parseTxParams(txRequest);
+                    return txObj;
                 }
                 catch (err) {
                     const errorResult = new Exception(err, `Error running setFeeRatio(). Params:\n_name: ${_name}\n_feeNumerator: ${_feeNumerator}\n_fixedFee: ${_fixedFee}\nfrom: ${from}\nstepLimit: ${stepLimit}\n`);
@@ -387,7 +399,8 @@ class IconBridgeSDKIcon {
                     const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").useMainnet;
                     const btsContract = __classPrivateFieldGet(this, _IconBridgeSDKIcon_sdkUtils, "f").getContractOfLabelFromLocalData("bts", "icon", isMainnet, false);
                     const txRequest = yield webLib_1.default.makeTxRequest(__classPrivateFieldGet(this, _IconBridgeSDKIcon_sdkUtils, "f"), __classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f"), from, btsContract, "removeBlacklistAddress", { _net: _net, _addresses: _addresses }, 0, stepLimit, __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").iconProvider.nid);
-                    return txRequest;
+                    const txObj = this.parseTxParams(txRequest);
+                    return txObj;
                 }
                 catch (err) {
                     const errorResult = new Exception(err, `Error running removeBlacklistAddress(). Params:\n_net: ${_net}\n_addresses: ${_addresses}\nfrom: ${from}\nstepLimit: ${stepLimit}\n`);
@@ -399,7 +412,8 @@ class IconBridgeSDKIcon {
                     const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").useMainnet;
                     const btsContract = __classPrivateFieldGet(this, _IconBridgeSDKIcon_sdkUtils, "f").getContractOfLabelFromLocalData("bts", "icon", isMainnet, false);
                     const txRequest = yield webLib_1.default.makeTxRequest(__classPrivateFieldGet(this, _IconBridgeSDKIcon_sdkUtils, "f"), __classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f"), from, btsContract, "setTokenLimit", { _coinNames: _coinNames, _tokenLimits: _tokenLimits }, 0, stepLimit, __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").iconProvider.nid);
-                    return txRequest;
+                    const txObj = this.parseTxParams(txRequest);
+                    return txObj;
                 }
                 catch (err) {
                     const errorResult = new Exception(err, `Error running setTokenLimit(). Params:\n_coinNames: ${_coinNames}\n_tokenLimits: ${_tokenLimits}\nfrom: ${from}\nstepLimit: ${stepLimit}\n`);
@@ -411,7 +425,8 @@ class IconBridgeSDKIcon {
                     const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").useMainnet;
                     const btsContract = __classPrivateFieldGet(this, _IconBridgeSDKIcon_sdkUtils, "f").getContractOfLabelFromLocalData("bts", "icon", isMainnet, false);
                     const txRequest = yield webLib_1.default.makeTxRequest(__classPrivateFieldGet(this, _IconBridgeSDKIcon_sdkUtils, "f"), __classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f"), from, btsContract, "addBlacklistAddress", { _net: _net, _addresses: _addresses }, 0, stepLimit, __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").iconProvider.nid);
-                    return txRequest;
+                    const txObj = this.parseTxParams(txRequest);
+                    return txObj;
                 }
                 catch (err) {
                     const errorResult = new Exception(err, `Error running addBlacklistAddress(). Params:\n_net: ${_net}\n_addresses: ${_addresses}\nfrom: ${from}\nstepLimit: ${stepLimit}\n`);
@@ -423,7 +438,8 @@ class IconBridgeSDKIcon {
                     const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").useMainnet;
                     const btsContract = __classPrivateFieldGet(this, _IconBridgeSDKIcon_sdkUtils, "f").getContractOfLabelFromLocalData("bts", "icon", isMainnet, false);
                     const txRequest = yield webLib_1.default.makeTxRequest(__classPrivateFieldGet(this, _IconBridgeSDKIcon_sdkUtils, "f"), __classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f"), from, btsContract, "addRestriction", null, 0, stepLimit, __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").iconProvider.nid);
-                    return txRequest;
+                    const txObj = this.parseTxParams(txRequest);
+                    return txObj;
                 }
                 catch (err) {
                     const errorResult = new Exception(err, `Error running addRestriction(). Params:\nfrom: ${from}\nstepLimit: ${stepLimit}\n`);
@@ -435,7 +451,8 @@ class IconBridgeSDKIcon {
                     const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").useMainnet;
                     const btsContract = __classPrivateFieldGet(this, _IconBridgeSDKIcon_sdkUtils, "f").getContractOfLabelFromLocalData("bts", "icon", isMainnet, false);
                     const txRequest = yield webLib_1.default.makeTxRequest(__classPrivateFieldGet(this, _IconBridgeSDKIcon_sdkUtils, "f"), __classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f"), from, btsContract, "disableRestrictions", null, 0, stepLimit, __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").iconProvider.nid);
-                    return txRequest;
+                    const txObj = this.parseTxParams(txRequest);
+                    return txObj;
                 }
                 catch (err) {
                     const errorResult = new Exception(err, `Error running disableRestrictions(). Params:\nfrom: ${from}\nstepLimit: ${stepLimit}\n`);
@@ -450,6 +467,11 @@ class IconBridgeSDKIcon {
             const request = yield __classPrivateFieldGet(this, _IconBridgeSDKIcon_sdkUtils, "f").makeJsonRpcCall(__classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").iconProvider.hostname, JSONRPCObject, this.queryMethod);
             return request;
         });
+        this.parseTxParams = (txParams) => {
+            const txObj = __classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f").makeJSONRPCRequestObj("icx_SendTransaction");
+            txObj["params"] = Object.assign({}, txParams);
+            return txObj;
+        };
         __classPrivateFieldSet(this, _IconBridgeSDKIcon_params, params, "f");
         __classPrivateFieldSet(this, _IconBridgeSDKIcon_sdkUtils, sdkUtils, "f");
         __classPrivateFieldSet(this, _IconBridgeSDKIcon_iconWeb3, new CustomSDK(__classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").iconProvider.hostname, __classPrivateFieldGet(this, _IconBridgeSDKIcon_params, "f").iconProvider.nid), "f");
