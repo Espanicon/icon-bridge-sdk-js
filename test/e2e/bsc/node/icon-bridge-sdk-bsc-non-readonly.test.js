@@ -21,6 +21,11 @@ const wallets = {
     privK: process.env.WALLET_ICON_PK
   }
 };
+
+const contracts = sdk.sdkUtils.contracts.bsc.testnet;
+const labels = sdk.sdkUtils.labels;
+// const nativeIconToken = contracts[labels.sicx].address;
+const nativeIconCoin = contracts[labels.icx].address;
 // ********************************************//
 // Test 1: calls 'transferNativeCoin' method originating on the BSC chain.
 // It should returns and object with a predefined set of keys.
@@ -194,8 +199,8 @@ describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'transfer(from, pk, 
     const preQuery = await sdk.bsc.methods.approveTransfer(
       wallets.bsc.pubK,
       wallets.bsc.privK,
-      "50",
-      "0x7d8c52A23FD7e3ca1342797baE7caF6d7b8036BA"
+      "20",
+      nativeIconCoin
     );
 
     let query = {};
@@ -206,7 +211,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'transfer(from, pk, 
         "icon",
         wallets.bsc.pubK,
         wallets.bsc.privK,
-        "50",
+        "20",
         "btp-0x2.icon-ICX"
       );
     }
@@ -232,9 +237,9 @@ describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'approveAndTransfer(
       "icon",
       wallets.bsc.pubK,
       wallets.bsc.privK,
-      "50",
+      "20",
       "btp-0x2.icon-ICX",
-      "0x7d8c52A23FD7e3ca1342797baE7caF6d7b8036BA"
+      nativeIconCoin
     );
 
     console.log(`\n  > Result: ${JSON.stringify(query)}\n`);
@@ -256,8 +261,8 @@ describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'transferBatch(targe
     const preQuery = await sdk.bsc.methods.approveTransfer(
       wallets.bsc.pubK,
       wallets.bsc.privK,
-      "50",
-      "0x7d8c52A23FD7e3ca1342797baE7caF6d7b8036BA"
+      "20",
+      nativeIconCoin
     );
 
     let query = {};
