@@ -6,7 +6,11 @@ const Exception = require("../../utils/exception");
 type TxObj = {
   from: string;
   to: string;
-  method: any;
+  dataType: string;
+  data: {
+    method: string;
+    params?: any;
+  };
   stepLimit: string;
   nid: string;
   nonce: string;
@@ -42,7 +46,10 @@ const makeTxRequest = async (
     const txObjWeb: TxObj = {
       from: from,
       to: to,
-      method: method,
+      dataType: "call",
+      data: {
+        method: method
+      },
       stepLimit: espaniconLib.decimalToHex(useStepLimit),
       nid: espaniconLib.decimalToHex(nid),
       nonce: espaniconLib.decimalToHex(sdkUtils.getRandNonce()),
@@ -59,7 +66,7 @@ const makeTxRequest = async (
 
     // if any params are specified
     if (params != null) {
-      txObjWeb.params = params;
+      txObjWeb.data.params = params;
     }
 
     return txObjWeb;

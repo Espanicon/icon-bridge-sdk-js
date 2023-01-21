@@ -15,7 +15,10 @@ const makeTxRequest = (sdkUtils, espaniconLib, from, to, method, params = null, 
         const txObjWeb = {
             from: from,
             to: to,
-            method: method,
+            dataType: "call",
+            data: {
+                method: method
+            },
             stepLimit: espaniconLib.decimalToHex(useStepLimit),
             nid: espaniconLib.decimalToHex(nid),
             nonce: espaniconLib.decimalToHex(sdkUtils.getRandNonce()),
@@ -29,7 +32,7 @@ const makeTxRequest = (sdkUtils, espaniconLib, from, to, method, params = null, 
             txObjWeb.value = "0x0";
         }
         if (params != null) {
-            txObjWeb.params = params;
+            txObjWeb.data.params = params;
         }
         return txObjWeb;
     }
