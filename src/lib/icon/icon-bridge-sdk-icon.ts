@@ -1125,7 +1125,7 @@ class IconBridgeSDKIcon {
   private parseTxParams = (
     txParams: any,
   ) => {
-    const txObj = this.#iconWeb3.makeJSONRPCRequestObj("icx_SendTransaction");
+    const txObj = this.#iconWeb3.makeJSONRPCRequestObj("icx_sendTransaction");
     txObj["params"] = { ...txParams };
     return txObj;
   };

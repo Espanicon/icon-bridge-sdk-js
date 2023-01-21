@@ -468,7 +468,7 @@ class IconBridgeSDKIcon {
             return request;
         });
         this.parseTxParams = (txParams) => {
-            const txObj = __classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f").makeJSONRPCRequestObj("icx_SendTransaction");
+            const txObj = __classPrivateFieldGet(this, _IconBridgeSDKIcon_iconWeb3, "f").makeJSONRPCRequestObj("icx_sendTransaction");
             txObj["params"] = Object.assign({}, txParams);
             return txObj;
         };
