@@ -24,6 +24,7 @@ class IconBridgeSDKBSC {
   #bscWeb3: any;
   #callbackLib: any;
   queryMethod: any;
+  #sdkUtils: any;
 
   /**
    * Constructor
@@ -32,12 +33,14 @@ class IconBridgeSDKBSC {
     params: InputParams,
     bscWeb3: any,
     callbackLib: any,
+    sdkUtils: any,
     queryMethod: any
   ) {
     this.#params = params;
     this.#bscWeb3 = bscWeb3;
     this.#callbackLib = callbackLib;
     this.queryMethod = queryMethod;
+    this.#sdkUtils = sdkUtils;
   }
 
   // ######################################################################
@@ -62,6 +65,8 @@ class IconBridgeSDKBSC {
         const isMainnet: boolean | null =
           this.#params.useMainnet == null ? true : this.#params.useMainnet;
 
+        const methodName = "balanceOf";
+
         // this params determine if we use the native query method, which
         // would be http/https when running on nodejs or fetch if running
         // on the browser or if we directly use the query method included
@@ -69,7 +74,7 @@ class IconBridgeSDKBSC {
         // included in the web3js library.
         const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
         const response = await this.#callbackLib.BTSReadonlyQuery(
-          "balanceOf",
+          methodName,
           "bsc",
           this.#bscWeb3,
           queryMethod,
@@ -84,8 +89,12 @@ class IconBridgeSDKBSC {
           true
         );
 
+        const methodAbi = this.#sdkUtils.getAbiFromMethodLabel(
+          methodName,
+          BTSLogicContractABI
+        );
         const parsedResponse = this.#bscWeb3.eth.abi.decodeParameters(
-          BTSLogicContractABI[4].outputs,
+          methodAbi.outputs,
           response
         );
 
@@ -115,6 +124,8 @@ class IconBridgeSDKBSC {
         const isMainnet: boolean | null =
           this.#params.useMainnet == null ? true : this.#params.useMainnet;
 
+        const methodName = "balanceOfBatch";
+
         // this params determine if we use the native query method, which
         // would be http/https when running on nodejs or fetch if running
         // on the browser or if we directly use the query method included
@@ -122,7 +133,7 @@ class IconBridgeSDKBSC {
         // included in the web3js library.
         const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
         const response = await this.#callbackLib.BTSReadonlyQuery(
-          "balanceOfBatch",
+          methodName,
           "bsc",
           this.#bscWeb3,
           queryMethod,
@@ -137,8 +148,12 @@ class IconBridgeSDKBSC {
           true
         );
 
+        const methodAbi = this.#sdkUtils.getAbiFromMethodLabel(
+          methodName,
+          BTSLogicContractABI
+        );
         const parsedResponse = this.#bscWeb3.eth.abi.decodeParameters(
-          BTSLogicContractABI[5].outputs,
+          methodAbi.outputs,
           response
         );
 
@@ -165,6 +180,7 @@ class IconBridgeSDKBSC {
         const isMainnet: boolean | null =
           this.#params.useMainnet == null ? true : this.#params.useMainnet;
 
+        const methodName = "coinId";
         // this params determine if we use the native query method, which
         // would be http/https when running on nodejs or fetch if running
         // on the browser or if we directly use the query method included
@@ -172,7 +188,7 @@ class IconBridgeSDKBSC {
         // included in the web3js library.
         const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
         const response = await this.#callbackLib.BTSReadonlyQuery(
-          "coinId",
+          methodName,
           "bsc",
           this.#bscWeb3,
           queryMethod,
@@ -186,8 +202,12 @@ class IconBridgeSDKBSC {
           true
         );
 
+        const methodAbi = this.#sdkUtils.getAbiFromMethodLabel(
+          methodName,
+          BTSLogicContractABI
+        );
         const parsedResponse = this.#bscWeb3.eth.abi.decodeParameters(
-          BTSLogicContractABI[6].outputs,
+          methodAbi.outputs,
           response
         );
 
@@ -210,6 +230,7 @@ class IconBridgeSDKBSC {
         const isMainnet: boolean | null =
           this.#params.useMainnet == null ? true : this.#params.useMainnet;
 
+        const methodName = "coinNames";
         // this params determine if we use the native query method, which
         // would be http/https when running on nodejs or fetch if running
         // on the browser or if we directly use the query method included
@@ -217,7 +238,7 @@ class IconBridgeSDKBSC {
         // included in the web3js library.
         const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
         const response = await this.#callbackLib.BTSReadonlyQuery(
-          "coinNames",
+          methodName,
           "bsc",
           this.#bscWeb3,
           queryMethod
@@ -230,8 +251,12 @@ class IconBridgeSDKBSC {
           true
         );
 
+        const methodAbi = this.#sdkUtils.getAbiFromMethodLabel(
+          methodName,
+          BTSLogicContractABI
+        );
         const parsedResponse = this.#bscWeb3.eth.abi.decodeParameters(
-          BTSLogicContractABI[7].outputs,
+          methodAbi.outputs,
           response
         );
 
@@ -258,6 +283,7 @@ class IconBridgeSDKBSC {
         const isMainnet: boolean | null =
           this.#params.useMainnet == null ? true : this.#params.useMainnet;
 
+        const methodName = "feeRatio";
         // this params determine if we use the native query method, which
         // would be http/https when running on nodejs or fetch if running
         // on the browser or if we directly use the query method included
@@ -265,7 +291,7 @@ class IconBridgeSDKBSC {
         // included in the web3js library.
         const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
         const response = await this.#callbackLib.BTSReadonlyQuery(
-          "feeRatio",
+          methodName,
           "bsc",
           this.#bscWeb3,
           queryMethod,
@@ -279,8 +305,12 @@ class IconBridgeSDKBSC {
           true
         );
 
+        const methodAbi = this.#sdkUtils.getAbiFromMethodLabel(
+          methodName,
+          BTSLogicContractABI
+        );
         const parsedResponse = this.#bscWeb3.eth.abi.decodeParameters(
-          BTSLogicContractABI[8].outputs,
+          methodAbi.outputs,
           response
         );
 
@@ -306,6 +336,7 @@ class IconBridgeSDKBSC {
         const isMainnet: boolean | null =
           this.#params.useMainnet == null ? true : this.#params.useMainnet;
 
+        const methodName = "getAccumulatedFees";
         // this params determine if we use the native query method, which
         // would be http/https when running on nodejs or fetch if running
         // on the browser or if we directly use the query method included
@@ -313,7 +344,7 @@ class IconBridgeSDKBSC {
         // included in the web3js library.
         const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
         const response = await this.#callbackLib.BTSReadonlyQuery(
-          "getAccumulatedFees",
+          methodName,
           "bsc",
           this.#bscWeb3,
           queryMethod
@@ -326,8 +357,12 @@ class IconBridgeSDKBSC {
           true
         );
 
+        const methodAbi = this.#sdkUtils.getAbiFromMethodLabel(
+          methodName,
+          BTSLogicContractABI
+        );
         const parsedResponse = this.#bscWeb3.eth.abi.decodeParameters(
-          BTSLogicContractABI[9].outputs,
+          methodAbi.outputs,
           response
         );
 
@@ -351,6 +386,7 @@ class IconBridgeSDKBSC {
       try {
         const isMainnet: boolean | null =
           this.#params.useMainnet == null ? true : this.#params.useMainnet;
+        const methodName = "getNativeCoinName";
 
         // this params determine if we use the native query method, which
         // would be http/https when running on nodejs or fetch if running
@@ -359,7 +395,7 @@ class IconBridgeSDKBSC {
         // included in the web3js library.
         const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
         const response = await this.#callbackLib.BTSReadonlyQuery(
-          "getNativeCoinName",
+          methodName,
           "bsc",
           this.#bscWeb3,
           queryMethod
@@ -372,8 +408,12 @@ class IconBridgeSDKBSC {
           true
         );
 
+        const methodAbi = this.#sdkUtils.getAbiFromMethodLabel(
+          methodName,
+          BTSLogicContractABI
+        );
         const parsedResponse = this.#bscWeb3.eth.abi.decodeParameters(
-          BTSLogicContractABI[10].outputs,
+          methodAbi.outputs,
           response
         );
 
@@ -391,93 +431,106 @@ class IconBridgeSDKBSC {
      * Returns list of current owners.
      * @return Array of address of current owners.
      */
-    getOwners: async (useNativeQueryMethod: boolean = true): Promise<any> => {
-      try {
-        const isMainnet: boolean | null =
-          this.#params.useMainnet == null ? true : this.#params.useMainnet;
+    // getOwners: async (useNativeQueryMethod: boolean = true): Promise<any> => {
+    //   try {
+    //     const isMainnet: boolean | null =
+    //       this.#params.useMainnet == null ? true : this.#params.useMainnet;
 
-        // this params determine if we use the native query method, which
-        // would be http/https when running on nodejs or fetch if running
-        // on the browser or if we directly use the query method included
-        // in the web3js library. the default is not to use the method
-        // included in the web3js library.
-        const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
-        const response = await this.#callbackLib.BTSReadonlyQuery(
-          "getOwners",
-          "bsc",
-          this.#bscWeb3,
-          queryMethod
-        );
+    //     const methodName = "getOwners";
+    //     // this params determine if we use the native query method, which
+    //     // would be http/https when running on nodejs or fetch if running
+    //     // on the browser or if we directly use the query method included
+    //     // in the web3js library. the default is not to use the method
+    //     // included in the web3js library.
+    //     const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
+    //     const response = await this.#callbackLib.BTSReadonlyQuery(
+    //       methodName,
+    //       "bsc",
+    //       this.#bscWeb3,
+    //       queryMethod
+    //     );
 
-        const BTSLogicContractABI = this.#callbackLib.getAbiOf(
-          "BTSCore",
-          "bsc",
-          isMainnet,
-          true
-        );
+    //     console.log('response');
+    //     console.log(response);
 
-        const parsedResponse = this.#bscWeb3.eth.abi.decodeParameters(
-          BTSLogicContractABI[11].outputs,
-          response
-        );
+    //     const BTSLogicContractABI = this.#callbackLib.getAbiOf(
+    //       "BTSCore",
+    //       "bsc",
+    //       isMainnet,
+    //       true
+    //     );
 
-        return parsedResponse;
-      } catch (err) {
-        const errorResult = new Exception(
-          err,
-          `Error running getOwners(). Params:\n ** NO PARAMS**\n`
-        );
-        return { error: errorResult.toString() };
-      }
-    },
+    //     const methodAbi = this.#sdkUtils.getAbiFromMethodLabel(
+    //       methodName,
+    //       BTSLogicContractABI
+    //     );
+    //     const parsedResponse = this.#bscWeb3.eth.abi.decodeParameters(
+    //       methodAbi.outputs,
+    //       response
+    //     );
+
+    //     return parsedResponse;
+    //   } catch (err) {
+    //     const errorResult = new Exception(
+    //       err,
+    //       `Error running getOwners(). Params:\n ** NO PARAMS**\n`
+    //     );
+    //     return { error: errorResult.toString() };
+    //   }
+    // },
 
     /**
      * Checks is a especified address has owner role.
      * @param _owner - address to check.
      */
-    isOwner: async (
-      _owner: string,
-      useNativeQueryMethod: boolean = true
-    ): Promise<any> => {
-      try {
-        const isMainnet: boolean | null =
-          this.#params.useMainnet == null ? true : this.#params.useMainnet;
+    // isOwner: async (
+    //   _owner: string,
+    //   useNativeQueryMethod: boolean = true
+    // ): Promise<any> => {
+    //   try {
+    //     const isMainnet: boolean | null =
+    //       this.#params.useMainnet == null ? true : this.#params.useMainnet;
 
-        // this params determine if we use the native query method, which
-        // would be http/https when running on nodejs or fetch if running
-        // on the browser or if we directly use the query method included
-        // in the web3js library. the default is not to use the method
-        // included in the web3js library.
-        const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
-        const response = await this.#callbackLib.BTSReadonlyQuery(
-          "isOwner",
-          "bsc",
-          this.#bscWeb3,
-          queryMethod,
-          _owner
-        );
+    //     const methodName = "isOwner";
+    //     // this params determine if we use the native query method, which
+    //     // would be http/https when running on nodejs or fetch if running
+    //     // on the browser or if we directly use the query method included
+    //     // in the web3js library. the default is not to use the method
+    //     // included in the web3js library.
+    //     const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
+    //     const response = await this.#callbackLib.BTSReadonlyQuery(
+    //       methodName,
+    //       "bsc",
+    //       this.#bscWeb3,
+    //       queryMethod,
+    //       _owner
+    //     );
 
-        const BTSLogicContractABI = this.#callbackLib.getAbiOf(
-          "BTSCore",
-          "bsc",
-          isMainnet,
-          true
-        );
+    //     const BTSLogicContractABI = this.#callbackLib.getAbiOf(
+    //       "BTSCore",
+    //       "bsc",
+    //       isMainnet,
+    //       true
+    //     );
 
-        const parsedResponse = this.#bscWeb3.eth.abi.decodeParameters(
-          BTSLogicContractABI[14].outputs,
-          response
-        );
+    //     const methodAbi = this.#sdkUtils.getAbiFromMethodLabel(
+    //       methodName,
+    //       BTSLogicContractABI
+    //     );
+    //     const parsedResponse = this.#bscWeb3.eth.abi.decodeParameters(
+    //       methodAbi.outputs,
+    //       response
+    //     );
 
-        return parsedResponse;
-      } catch (err) {
-        const errorResult = new Exception(
-          err,
-          `Error running isOwner(). Params:\n_owner: ${_owner}\n`
-        );
-        return { error: errorResult.toString() };
-      }
-    },
+    //     return parsedResponse;
+    //   } catch (err) {
+    //     const errorResult = new Exception(
+    //       err,
+    //       `Error running isOwner(). Params:\n_owner: ${_owner}\n`
+    //     );
+    //     return { error: errorResult.toString() };
+    //   }
+    // },
 
     /**
      * Checks validity of a coin name.
@@ -491,6 +544,7 @@ class IconBridgeSDKBSC {
         const isMainnet: boolean | null =
           this.#params.useMainnet == null ? true : this.#params.useMainnet;
 
+        const methodName = "isValidCoin";
         // this params determine if we use the native query method, which
         // would be http/https when running on nodejs or fetch if running
         // on the browser or if we directly use the query method included
@@ -498,7 +552,7 @@ class IconBridgeSDKBSC {
         // included in the web3js library.
         const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
         const response = await this.#callbackLib.BTSReadonlyQuery(
-          "isValidCoin",
+          methodName,
           "bsc",
           this.#bscWeb3,
           queryMethod,
@@ -512,8 +566,12 @@ class IconBridgeSDKBSC {
           true
         );
 
+        const methodAbi = this.#sdkUtils.getAbiFromMethodLabel(
+          methodName,
+          BTSLogicContractABI
+        );
         const parsedResponse = this.#bscWeb3.eth.abi.decodeParameters(
-          BTSLogicContractABI[15].outputs,
+          methodAbi.outputs,
           response
         );
 

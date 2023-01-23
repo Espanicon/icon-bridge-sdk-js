@@ -24,7 +24,7 @@ const baseBSCSDK = require("./icon-bridge-sdk-bsc");
 const Exception = require("../../utils/exception");
 class IconBridgeSDKNodeBSC extends baseBSCSDK {
     constructor(params, bscWeb3, sdkUtils, callbackLib, queryMethod) {
-        super(params, bscWeb3, callbackLib, queryMethod);
+        super(params, bscWeb3, callbackLib, sdkUtils, queryMethod);
         _IconBridgeSDKNodeBSC_params.set(this, void 0);
         _IconBridgeSDKNodeBSC_bscWeb3.set(this, void 0);
         _IconBridgeSDKNodeBSC_sdkUtils.set(this, void 0);
@@ -167,17 +167,11 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
             approveTransfer: (from, amount, tokenContractAddress, tokenContractAbi = __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_sdkUtils, "f").genericAbi, gas = null) => __awaiter(this, void 0, void 0, function* () {
                 return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_localMethods, "f").approveTransfer(from, null, amount, tokenContractAddress, tokenContractAbi, gas, true, true);
             }),
-            addOwner: (from, _owner, gas = null) => __awaiter(this, void 0, void 0, function* () {
-                return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_localMethods, "f").addOwner(from, null, _owner, gas, true, true);
-            }),
             reclaim: (from, _coinName, _value, gas = null) => __awaiter(this, void 0, void 0, function* () {
                 return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_localMethods, "f").reclaim(from, null, _coinName, _value, gas, true, true);
             }),
             register: (from, _name, _symbol, _decimals, _feeNumerator, _fixedFee, _addr, gas = null) => __awaiter(this, void 0, void 0, function* () {
                 return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_localMethods, "f").register(from, null, _name, _symbol, _decimals, _feeNumerator, _fixedFee, _addr, gas, true, true);
-            }),
-            removeOwner: (from, _owner, gas = null) => __awaiter(this, void 0, void 0, function* () {
-                return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_localMethods, "f").removeOwner(from, null, _owner, gas, true, true);
             }),
             setFeeRatio: (from, _name, _feeNumerator, _fixedFee, gas = null) => __awaiter(this, void 0, void 0, function* () {
                 return yield __classPrivateFieldGet(this, _IconBridgeSDKNodeBSC_localMethods, "f").setFeeRatio(from, null, _name, _feeNumerator, _fixedFee, gas, true, true);

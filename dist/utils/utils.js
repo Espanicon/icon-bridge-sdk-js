@@ -226,6 +226,15 @@ function decimalToHex(number) {
 function hexToDecimal(hex) {
     return parseInt(hex, 16);
 }
+function getAbiFromMethodLabel(method, abi) {
+    let result = null;
+    for (const each of abi) {
+        if (each.name === method) {
+            result = each;
+        }
+    }
+    return result;
+}
 const utils = {
     networks: networks_1.networks,
     chains: networks_1.chains,
@@ -256,7 +265,8 @@ const utils = {
     sleep,
     isValidContractAddress,
     decimalToHex,
-    hexToDecimal
+    hexToDecimal,
+    getAbiFromMethodLabel
 };
 module.exports = utils;
 //# sourceMappingURL=utils.js.map

@@ -19,21 +19,24 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
-var _IconBridgeSDKBSC_params, _IconBridgeSDKBSC_bscWeb3, _IconBridgeSDKBSC_callbackLib;
+var _IconBridgeSDKBSC_params, _IconBridgeSDKBSC_bscWeb3, _IconBridgeSDKBSC_callbackLib, _IconBridgeSDKBSC_sdkUtils;
 const Exception = require("../../utils/exception");
 class IconBridgeSDKBSC {
-    constructor(params, bscWeb3, callbackLib, queryMethod) {
+    constructor(params, bscWeb3, callbackLib, sdkUtils, queryMethod) {
         _IconBridgeSDKBSC_params.set(this, void 0);
         _IconBridgeSDKBSC_bscWeb3.set(this, void 0);
         _IconBridgeSDKBSC_callbackLib.set(this, void 0);
+        _IconBridgeSDKBSC_sdkUtils.set(this, void 0);
         this.superMethods = {
             balanceOf: (_owner, _coinName, useNativeQueryMethod = true) => __awaiter(this, void 0, void 0, function* () {
                 try {
                     const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKBSC_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKBSC_params, "f").useMainnet;
+                    const methodName = "balanceOf";
                     const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
-                    const response = yield __classPrivateFieldGet(this, _IconBridgeSDKBSC_callbackLib, "f").BTSReadonlyQuery("balanceOf", "bsc", __classPrivateFieldGet(this, _IconBridgeSDKBSC_bscWeb3, "f"), queryMethod, _owner, _coinName);
+                    const response = yield __classPrivateFieldGet(this, _IconBridgeSDKBSC_callbackLib, "f").BTSReadonlyQuery(methodName, "bsc", __classPrivateFieldGet(this, _IconBridgeSDKBSC_bscWeb3, "f"), queryMethod, _owner, _coinName);
                     const BTSLogicContractABI = __classPrivateFieldGet(this, _IconBridgeSDKBSC_callbackLib, "f").getAbiOf("BTSCore", "bsc", isMainnet, true);
-                    const parsedResponse = __classPrivateFieldGet(this, _IconBridgeSDKBSC_bscWeb3, "f").eth.abi.decodeParameters(BTSLogicContractABI[4].outputs, response);
+                    const methodAbi = __classPrivateFieldGet(this, _IconBridgeSDKBSC_sdkUtils, "f").getAbiFromMethodLabel(methodName, BTSLogicContractABI);
+                    const parsedResponse = __classPrivateFieldGet(this, _IconBridgeSDKBSC_bscWeb3, "f").eth.abi.decodeParameters(methodAbi.outputs, response);
                     return parsedResponse;
                 }
                 catch (err) {
@@ -44,10 +47,12 @@ class IconBridgeSDKBSC {
             balanceOfBatch: (_owner, _coinNames, useNativeQueryMethod = true) => __awaiter(this, void 0, void 0, function* () {
                 try {
                     const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKBSC_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKBSC_params, "f").useMainnet;
+                    const methodName = "balanceOfBatch";
                     const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
-                    const response = yield __classPrivateFieldGet(this, _IconBridgeSDKBSC_callbackLib, "f").BTSReadonlyQuery("balanceOfBatch", "bsc", __classPrivateFieldGet(this, _IconBridgeSDKBSC_bscWeb3, "f"), queryMethod, _owner, _coinNames);
+                    const response = yield __classPrivateFieldGet(this, _IconBridgeSDKBSC_callbackLib, "f").BTSReadonlyQuery(methodName, "bsc", __classPrivateFieldGet(this, _IconBridgeSDKBSC_bscWeb3, "f"), queryMethod, _owner, _coinNames);
                     const BTSLogicContractABI = __classPrivateFieldGet(this, _IconBridgeSDKBSC_callbackLib, "f").getAbiOf("BTSCore", "bsc", isMainnet, true);
-                    const parsedResponse = __classPrivateFieldGet(this, _IconBridgeSDKBSC_bscWeb3, "f").eth.abi.decodeParameters(BTSLogicContractABI[5].outputs, response);
+                    const methodAbi = __classPrivateFieldGet(this, _IconBridgeSDKBSC_sdkUtils, "f").getAbiFromMethodLabel(methodName, BTSLogicContractABI);
+                    const parsedResponse = __classPrivateFieldGet(this, _IconBridgeSDKBSC_bscWeb3, "f").eth.abi.decodeParameters(methodAbi.outputs, response);
                     return parsedResponse;
                 }
                 catch (err) {
@@ -58,10 +63,12 @@ class IconBridgeSDKBSC {
             coinId: (_coinName, useNativeQueryMethod = true) => __awaiter(this, void 0, void 0, function* () {
                 try {
                     const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKBSC_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKBSC_params, "f").useMainnet;
+                    const methodName = "coinId";
                     const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
-                    const response = yield __classPrivateFieldGet(this, _IconBridgeSDKBSC_callbackLib, "f").BTSReadonlyQuery("coinId", "bsc", __classPrivateFieldGet(this, _IconBridgeSDKBSC_bscWeb3, "f"), queryMethod, _coinName);
+                    const response = yield __classPrivateFieldGet(this, _IconBridgeSDKBSC_callbackLib, "f").BTSReadonlyQuery(methodName, "bsc", __classPrivateFieldGet(this, _IconBridgeSDKBSC_bscWeb3, "f"), queryMethod, _coinName);
                     const BTSLogicContractABI = __classPrivateFieldGet(this, _IconBridgeSDKBSC_callbackLib, "f").getAbiOf("BTSCore", "bsc", isMainnet, true);
-                    const parsedResponse = __classPrivateFieldGet(this, _IconBridgeSDKBSC_bscWeb3, "f").eth.abi.decodeParameters(BTSLogicContractABI[6].outputs, response);
+                    const methodAbi = __classPrivateFieldGet(this, _IconBridgeSDKBSC_sdkUtils, "f").getAbiFromMethodLabel(methodName, BTSLogicContractABI);
+                    const parsedResponse = __classPrivateFieldGet(this, _IconBridgeSDKBSC_bscWeb3, "f").eth.abi.decodeParameters(methodAbi.outputs, response);
                     return parsedResponse;
                 }
                 catch (err) {
@@ -72,10 +79,12 @@ class IconBridgeSDKBSC {
             coinNames: (useNativeQueryMethod = true) => __awaiter(this, void 0, void 0, function* () {
                 try {
                     const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKBSC_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKBSC_params, "f").useMainnet;
+                    const methodName = "coinNames";
                     const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
-                    const response = yield __classPrivateFieldGet(this, _IconBridgeSDKBSC_callbackLib, "f").BTSReadonlyQuery("coinNames", "bsc", __classPrivateFieldGet(this, _IconBridgeSDKBSC_bscWeb3, "f"), queryMethod);
+                    const response = yield __classPrivateFieldGet(this, _IconBridgeSDKBSC_callbackLib, "f").BTSReadonlyQuery(methodName, "bsc", __classPrivateFieldGet(this, _IconBridgeSDKBSC_bscWeb3, "f"), queryMethod);
                     const BTSLogicContractABI = __classPrivateFieldGet(this, _IconBridgeSDKBSC_callbackLib, "f").getAbiOf("BTSCore", "bsc", isMainnet, true);
-                    const parsedResponse = __classPrivateFieldGet(this, _IconBridgeSDKBSC_bscWeb3, "f").eth.abi.decodeParameters(BTSLogicContractABI[7].outputs, response);
+                    const methodAbi = __classPrivateFieldGet(this, _IconBridgeSDKBSC_sdkUtils, "f").getAbiFromMethodLabel(methodName, BTSLogicContractABI);
+                    const parsedResponse = __classPrivateFieldGet(this, _IconBridgeSDKBSC_bscWeb3, "f").eth.abi.decodeParameters(methodAbi.outputs, response);
                     return parsedResponse;
                 }
                 catch (err) {
@@ -86,10 +95,12 @@ class IconBridgeSDKBSC {
             feeRatio: (_coinName, useNativeQueryMethod = true) => __awaiter(this, void 0, void 0, function* () {
                 try {
                     const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKBSC_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKBSC_params, "f").useMainnet;
+                    const methodName = "feeRatio";
                     const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
-                    const response = yield __classPrivateFieldGet(this, _IconBridgeSDKBSC_callbackLib, "f").BTSReadonlyQuery("feeRatio", "bsc", __classPrivateFieldGet(this, _IconBridgeSDKBSC_bscWeb3, "f"), queryMethod, _coinName);
+                    const response = yield __classPrivateFieldGet(this, _IconBridgeSDKBSC_callbackLib, "f").BTSReadonlyQuery(methodName, "bsc", __classPrivateFieldGet(this, _IconBridgeSDKBSC_bscWeb3, "f"), queryMethod, _coinName);
                     const BTSLogicContractABI = __classPrivateFieldGet(this, _IconBridgeSDKBSC_callbackLib, "f").getAbiOf("BTSCore", "bsc", isMainnet, true);
-                    const parsedResponse = __classPrivateFieldGet(this, _IconBridgeSDKBSC_bscWeb3, "f").eth.abi.decodeParameters(BTSLogicContractABI[8].outputs, response);
+                    const methodAbi = __classPrivateFieldGet(this, _IconBridgeSDKBSC_sdkUtils, "f").getAbiFromMethodLabel(methodName, BTSLogicContractABI);
+                    const parsedResponse = __classPrivateFieldGet(this, _IconBridgeSDKBSC_bscWeb3, "f").eth.abi.decodeParameters(methodAbi.outputs, response);
                     return parsedResponse;
                 }
                 catch (err) {
@@ -100,10 +111,12 @@ class IconBridgeSDKBSC {
             getAccumulatedFees: (useNativeQueryMethod = true) => __awaiter(this, void 0, void 0, function* () {
                 try {
                     const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKBSC_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKBSC_params, "f").useMainnet;
+                    const methodName = "getAccumulatedFees";
                     const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
-                    const response = yield __classPrivateFieldGet(this, _IconBridgeSDKBSC_callbackLib, "f").BTSReadonlyQuery("getAccumulatedFees", "bsc", __classPrivateFieldGet(this, _IconBridgeSDKBSC_bscWeb3, "f"), queryMethod);
+                    const response = yield __classPrivateFieldGet(this, _IconBridgeSDKBSC_callbackLib, "f").BTSReadonlyQuery(methodName, "bsc", __classPrivateFieldGet(this, _IconBridgeSDKBSC_bscWeb3, "f"), queryMethod);
                     const BTSLogicContractABI = __classPrivateFieldGet(this, _IconBridgeSDKBSC_callbackLib, "f").getAbiOf("BTSCore", "bsc", isMainnet, true);
-                    const parsedResponse = __classPrivateFieldGet(this, _IconBridgeSDKBSC_bscWeb3, "f").eth.abi.decodeParameters(BTSLogicContractABI[9].outputs, response);
+                    const methodAbi = __classPrivateFieldGet(this, _IconBridgeSDKBSC_sdkUtils, "f").getAbiFromMethodLabel(methodName, BTSLogicContractABI);
+                    const parsedResponse = __classPrivateFieldGet(this, _IconBridgeSDKBSC_bscWeb3, "f").eth.abi.decodeParameters(methodAbi.outputs, response);
                     return parsedResponse;
                 }
                 catch (err) {
@@ -114,10 +127,12 @@ class IconBridgeSDKBSC {
             getNativeCoinName: (useNativeQueryMethod = true) => __awaiter(this, void 0, void 0, function* () {
                 try {
                     const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKBSC_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKBSC_params, "f").useMainnet;
+                    const methodName = "getNativeCoinName";
                     const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
-                    const response = yield __classPrivateFieldGet(this, _IconBridgeSDKBSC_callbackLib, "f").BTSReadonlyQuery("getNativeCoinName", "bsc", __classPrivateFieldGet(this, _IconBridgeSDKBSC_bscWeb3, "f"), queryMethod);
+                    const response = yield __classPrivateFieldGet(this, _IconBridgeSDKBSC_callbackLib, "f").BTSReadonlyQuery(methodName, "bsc", __classPrivateFieldGet(this, _IconBridgeSDKBSC_bscWeb3, "f"), queryMethod);
                     const BTSLogicContractABI = __classPrivateFieldGet(this, _IconBridgeSDKBSC_callbackLib, "f").getAbiOf("BTSCore", "bsc", isMainnet, true);
-                    const parsedResponse = __classPrivateFieldGet(this, _IconBridgeSDKBSC_bscWeb3, "f").eth.abi.decodeParameters(BTSLogicContractABI[10].outputs, response);
+                    const methodAbi = __classPrivateFieldGet(this, _IconBridgeSDKBSC_sdkUtils, "f").getAbiFromMethodLabel(methodName, BTSLogicContractABI);
+                    const parsedResponse = __classPrivateFieldGet(this, _IconBridgeSDKBSC_bscWeb3, "f").eth.abi.decodeParameters(methodAbi.outputs, response);
                     return parsedResponse;
                 }
                 catch (err) {
@@ -125,41 +140,15 @@ class IconBridgeSDKBSC {
                     return { error: errorResult.toString() };
                 }
             }),
-            getOwners: (useNativeQueryMethod = true) => __awaiter(this, void 0, void 0, function* () {
-                try {
-                    const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKBSC_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKBSC_params, "f").useMainnet;
-                    const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
-                    const response = yield __classPrivateFieldGet(this, _IconBridgeSDKBSC_callbackLib, "f").BTSReadonlyQuery("getOwners", "bsc", __classPrivateFieldGet(this, _IconBridgeSDKBSC_bscWeb3, "f"), queryMethod);
-                    const BTSLogicContractABI = __classPrivateFieldGet(this, _IconBridgeSDKBSC_callbackLib, "f").getAbiOf("BTSCore", "bsc", isMainnet, true);
-                    const parsedResponse = __classPrivateFieldGet(this, _IconBridgeSDKBSC_bscWeb3, "f").eth.abi.decodeParameters(BTSLogicContractABI[11].outputs, response);
-                    return parsedResponse;
-                }
-                catch (err) {
-                    const errorResult = new Exception(err, `Error running getOwners(). Params:\n ** NO PARAMS**\n`);
-                    return { error: errorResult.toString() };
-                }
-            }),
-            isOwner: (_owner, useNativeQueryMethod = true) => __awaiter(this, void 0, void 0, function* () {
-                try {
-                    const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKBSC_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKBSC_params, "f").useMainnet;
-                    const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
-                    const response = yield __classPrivateFieldGet(this, _IconBridgeSDKBSC_callbackLib, "f").BTSReadonlyQuery("isOwner", "bsc", __classPrivateFieldGet(this, _IconBridgeSDKBSC_bscWeb3, "f"), queryMethod, _owner);
-                    const BTSLogicContractABI = __classPrivateFieldGet(this, _IconBridgeSDKBSC_callbackLib, "f").getAbiOf("BTSCore", "bsc", isMainnet, true);
-                    const parsedResponse = __classPrivateFieldGet(this, _IconBridgeSDKBSC_bscWeb3, "f").eth.abi.decodeParameters(BTSLogicContractABI[14].outputs, response);
-                    return parsedResponse;
-                }
-                catch (err) {
-                    const errorResult = new Exception(err, `Error running isOwner(). Params:\n_owner: ${_owner}\n`);
-                    return { error: errorResult.toString() };
-                }
-            }),
             isValidCoin: (_coinName, useNativeQueryMethod = true) => __awaiter(this, void 0, void 0, function* () {
                 try {
                     const isMainnet = __classPrivateFieldGet(this, _IconBridgeSDKBSC_params, "f").useMainnet == null ? true : __classPrivateFieldGet(this, _IconBridgeSDKBSC_params, "f").useMainnet;
+                    const methodName = "isValidCoin";
                     const queryMethod = useNativeQueryMethod ? this.queryMethod : null;
-                    const response = yield __classPrivateFieldGet(this, _IconBridgeSDKBSC_callbackLib, "f").BTSReadonlyQuery("isValidCoin", "bsc", __classPrivateFieldGet(this, _IconBridgeSDKBSC_bscWeb3, "f"), queryMethod, _coinName);
+                    const response = yield __classPrivateFieldGet(this, _IconBridgeSDKBSC_callbackLib, "f").BTSReadonlyQuery(methodName, "bsc", __classPrivateFieldGet(this, _IconBridgeSDKBSC_bscWeb3, "f"), queryMethod, _coinName);
                     const BTSLogicContractABI = __classPrivateFieldGet(this, _IconBridgeSDKBSC_callbackLib, "f").getAbiOf("BTSCore", "bsc", isMainnet, true);
-                    const parsedResponse = __classPrivateFieldGet(this, _IconBridgeSDKBSC_bscWeb3, "f").eth.abi.decodeParameters(BTSLogicContractABI[15].outputs, response);
+                    const methodAbi = __classPrivateFieldGet(this, _IconBridgeSDKBSC_sdkUtils, "f").getAbiFromMethodLabel(methodName, BTSLogicContractABI);
+                    const parsedResponse = __classPrivateFieldGet(this, _IconBridgeSDKBSC_bscWeb3, "f").eth.abi.decodeParameters(methodAbi.outputs, response);
                     return parsedResponse;
                 }
                 catch (err) {
@@ -172,8 +161,9 @@ class IconBridgeSDKBSC {
         __classPrivateFieldSet(this, _IconBridgeSDKBSC_bscWeb3, bscWeb3, "f");
         __classPrivateFieldSet(this, _IconBridgeSDKBSC_callbackLib, callbackLib, "f");
         this.queryMethod = queryMethod;
+        __classPrivateFieldSet(this, _IconBridgeSDKBSC_sdkUtils, sdkUtils, "f");
     }
 }
-_IconBridgeSDKBSC_params = new WeakMap(), _IconBridgeSDKBSC_bscWeb3 = new WeakMap(), _IconBridgeSDKBSC_callbackLib = new WeakMap();
+_IconBridgeSDKBSC_params = new WeakMap(), _IconBridgeSDKBSC_bscWeb3 = new WeakMap(), _IconBridgeSDKBSC_callbackLib = new WeakMap(), _IconBridgeSDKBSC_sdkUtils = new WeakMap();
 module.exports = IconBridgeSDKBSC;
 //# sourceMappingURL=icon-bridge-sdk-bsc.js.map

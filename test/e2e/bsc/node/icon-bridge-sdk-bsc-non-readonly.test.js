@@ -29,7 +29,7 @@ const nativeIconCoin = contracts[labels.icx].address;
 // ********************************************//
 // Test 1: calls 'transferNativeCoin' method originating on the BSC chain.
 // It should returns and object with a predefined set of keys.
-describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'transferNativeCoin(targetAddress, targetChain, from, pk, amount, gas)'", () => {
+describe("Test 1: E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'transferNativeCoin(targetAddress, targetChain, from, pk, amount, gas)'", () => {
   it("Transfers native coin from BSC to another chain.", async () => {
     // sleep for 5 seconds
     await sdk.sdkUtils.sleep(10000);
@@ -50,29 +50,29 @@ describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'transferNativeCoin(
 // ********************************************//
 // Test 2: calls 'addOwner' method originating on the BSC chain.
 // It should returns and object with a predefined set of keys.
-describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'addOwner(from, pk, _owner, gas)'", () => {
-  it("adds a wallet as an owner to the bts contract.", async () => {
-    // sleep for 5 seconds
-    await sdk.sdkUtils.sleep(10000);
+// describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'addOwner(from, pk, _owner, gas)'", () => {
+//   it("adds a wallet as an owner to the bts contract.", async () => {
+//     // sleep for 5 seconds
+//     await sdk.sdkUtils.sleep(10000);
 
-    const query = await sdk.bsc.methods.addOwner(
-      wallets.bsc.pubK,
-      wallets.bsc.privK,
-      wallets.bsc.pubK
-    );
+//     const query = await sdk.bsc.methods.addOwner(
+//       wallets.bsc.pubK,
+//       wallets.bsc.privK,
+//       wallets.bsc.pubK
+//     );
 
-    console.log(`\n  > Result: ${JSON.stringify(query)}\n`);
-    assert.ok(
-      Object.keys(query).includes("jsonrpc") ||
-        Object.keys(query).includes("error")
-    );
-  }).timeout(40000);
-});
+//     console.log(`\n  > Result: ${JSON.stringify(query)}\n`);
+//     assert.ok(
+//       Object.keys(query).includes("jsonrpc") ||
+//         Object.keys(query).includes("error")
+//     );
+//   }).timeout(40000);
+// });
 
 // ********************************************//
 // Test 3: calls 'reclaim' method originating on the BSC chain.
 // It should returns and object with a predefined set of keys.
-describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'reclaim(from, pk, _coinName, _value, gas)'", () => {
+describe("Test 2: E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'reclaim(from, pk, _coinName, _value, gas)'", () => {
   it("Reclaims token from contract.", async () => {
     // sleep for 5 seconds
     await sdk.sdkUtils.sleep(10000);
@@ -95,7 +95,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'reclaim(from, pk, _
 // ********************************************//
 // Test 4: calls 'register' method originating on the BSC chain.
 // It should returns and object with a predefined set of keys.
-describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'register(from, pk, _name, _symbol, _decimals, _feeNumerator, _fixedFee, _addr, gas)'", () => {
+describe("Test 3: E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'register(from, pk, _name, _symbol, _decimals, _feeNumerator, _fixedFee, _addr, gas)'", () => {
   it("Reclaims token from contract.", async () => {
     // sleep for 5 seconds
     await sdk.sdkUtils.sleep(10000);
@@ -122,29 +122,29 @@ describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'register(from, pk, 
 // ********************************************//
 // Test 5: calls 'removeOwner' method originating on the BSC chain.
 // It should returns and object with a predefined set of keys.
-describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'removeOwner(from, pk, _owner, gas)'", () => {
-  it("Removes owner of BTS contract.", async () => {
-    // sleep for 5 seconds
-    await sdk.sdkUtils.sleep(10000);
+// describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'removeOwner(from, pk, _owner, gas)'", () => {
+//   it("Removes owner of BTS contract.", async () => {
+//     // sleep for 5 seconds
+//     await sdk.sdkUtils.sleep(10000);
 
-    const query = await sdk.bsc.methods.removeOwner(
-      wallets.bsc.pubK,
-      wallets.bsc.privK,
-      wallets.bsc.pubK
-    );
+//     const query = await sdk.bsc.methods.removeOwner(
+//       wallets.bsc.pubK,
+//       wallets.bsc.privK,
+//       wallets.bsc.pubK
+//     );
 
-    console.log(`\n  > Result: ${JSON.stringify(query)}\n`);
-    assert.ok(
-      Object.keys(query).includes("jsonrpc") ||
-        Object.keys(query).includes("error")
-    );
-  }).timeout(40000);
-});
+//     console.log(`\n  > Result: ${JSON.stringify(query)}\n`);
+//     assert.ok(
+//       Object.keys(query).includes("jsonrpc") ||
+//         Object.keys(query).includes("error")
+//     );
+//   }).timeout(40000);
+// });
 
 // ********************************************//
 // Test 6: calls 'setFeeRatio' method originating on the BSC chain.
 // It should returns and object with a predefined set of keys.
-describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'setFeeRatio(from, pk, _name, _feeNumerator, _fixedFee, gas)'", () => {
+describe("Test 4: E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'setFeeRatio(from, pk, _name, _feeNumerator, _fixedFee, gas)'", () => {
   it("Sets fee ratio.", async () => {
     // sleep for 5 seconds
     await sdk.sdkUtils.sleep(10000);
@@ -169,7 +169,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'setFeeRatio(from, p
 // ********************************************//
 // Test 7: calls 'updateBTSPeriphery' method originating on the BSC chain.
 // It should returns and object with a predefined set of keys.
-describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'updateBTSPeriphery(from, pk, _btsPeriphery, gas)'", () => {
+describe("Test 5: E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'updateBTSPeriphery(from, pk, _btsPeriphery, gas)'", () => {
   it("Updates BTSPeriphery contract.", async () => {
     // sleep for 5 seconds
     await sdk.sdkUtils.sleep(10000);
@@ -191,7 +191,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'updateBTSPeriphery(
 // ********************************************//
 // Test 9: calls 'transfer' method originating on the BSC chain.
 // It should returns and object with a predefined set of keys.
-describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'transfer(from, pk, _coinName, _value, gas)'", () => {
+describe("Test 6: E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'transfer(from, pk, _coinName, _value, gas)'", () => {
   it("Transfers a coin crosschain.", async () => {
     // sleep for 5 seconds
     await sdk.sdkUtils.sleep(10000);
@@ -227,7 +227,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'transfer(from, pk, 
 // ********************************************//
 // Test 10: calls 'approveAndTransfer' method originating on the BSC chain.
 // It should returns and object with a predefined set of keys.
-describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'approveAndTransfer(targetAddress, targetChain, from, pk, _coinName, _value, tokenContractAddress, tokenContractAbi, gas)'", () => {
+describe("Test 7: E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'approveAndTransfer(targetAddress, targetChain, from, pk, _coinName, _value, tokenContractAddress, tokenContractAbi, gas)'", () => {
   it("Approves and Transfers a coin crosschain.", async () => {
     // sleep for X seconds
     await sdk.sdkUtils.sleep(10000);
@@ -253,7 +253,7 @@ describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'approveAndTransfer(
 // ********************************************//
 // Test 11: calls 'transferBatch' method originating on the BSC chain.
 // It should returns and object with a predefined set of keys.
-describe("E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'transferBatch(targetAddress, targetChain, from, pk, _coinNames, _values, gas)'", () => {
+describe("Test 8: E2E testing Icon Bridge SDK. Chain: 'bsc', Method 'transferBatch(targetAddress, targetChain, from, pk, _coinNames, _values, gas)'", () => {
   it("Transfers batch of coins crosschain.", async () => {
     // sleep for 5 seconds
     await sdk.sdkUtils.sleep(10000);

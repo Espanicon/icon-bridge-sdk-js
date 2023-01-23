@@ -431,6 +431,17 @@ function hexToDecimal(hex: string) {
   return parseInt(hex, 16);
 }
 
+function getAbiFromMethodLabel(method: string, abi: any) {
+  let result: any = null;
+  for (const each of abi) {
+    if (each.name === method) {
+      result = each;
+    }
+  }
+
+  return result;
+}
+
 // exports
 const utils = {
   networks,
@@ -462,7 +473,8 @@ const utils = {
   sleep,
   isValidContractAddress,
   decimalToHex,
-  hexToDecimal
+  hexToDecimal,
+  getAbiFromMethodLabel
 };
 
 export = utils;

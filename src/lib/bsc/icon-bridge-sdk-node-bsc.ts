@@ -39,7 +39,7 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
     callbackLib: any,
     queryMethod: any
   ) {
-    super(params, bscWeb3, callbackLib, queryMethod);
+    super(params, bscWeb3, callbackLib, sdkUtils, queryMethod);
     this.#params = {
       ...params,
       nonce: 0
@@ -753,21 +753,21 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
      * @param gas - transfer fee amount.
      * @return
      */
-    addOwner: async (
-      from: string,
-      _owner: string,
-      gas: number | null = null
-    ): Promise<any> => {
-      //
-      return await this.#localMethods.addOwner(
-        from,
-        null,
-        _owner,
-        gas,
-        true,
-        true
-      )
-    },
+    //addOwner: async (
+    //  from: string,
+    //  _owner: string,
+    //  gas: number | null = null
+    //): Promise<any> => {
+    //  //
+    //  return await this.#localMethods.addOwner(
+    //    from,
+    //    null,
+    //    _owner,
+    //    gas,
+    //    true,
+    //    true
+    //  )
+    //},
 
     /**
      * Reclaim the token's refundable balance by an owner. Caller must be
@@ -839,21 +839,21 @@ class IconBridgeSDKNodeBSC extends baseBSCSDK {
      * @param _owner - address of owner to be removed.
      * @param gas - transfer fee amount.
      */
-    removeOwner: async (
-      from: string,
-      _owner: string,
-      gas: number | null = null
-    ): Promise<any> => {
-      //
-      return await this.#localMethods.removeOwner(
-        from,
-        null,
-        _owner,
-        gas,
-        true,
-        true
-      )
-    },
+    //removeOwner: async (
+    //  from: string,
+    //  _owner: string,
+    //  gas: number | null = null
+    //): Promise<any> => {
+    //  //
+    //  return await this.#localMethods.removeOwner(
+    //    from,
+    //    null,
+    //    _owner,
+    //    gas,
+    //    true,
+    //    true
+    //  )
+    //},
 
     /**
      * Set fee ratio. Caller must be an owner of this contract.
