@@ -2,7 +2,6 @@
 
 
 # IconBridge SDK for Javascript
- ** UNDER DEVELOPMENT **
 
 ICON Bridge is an early iteration of ICON’s cutting-edge interoperability product, BTP, which allows cross-chain transfers and integration with any blockchain that supports smart contracts.
 
