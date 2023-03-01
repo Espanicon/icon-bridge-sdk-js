@@ -45,8 +45,8 @@ type EthJsonRpc = {
 };
 
 // variables
-const abiDataPath = lib.abiDataPath;
-const urlRegex = /^((https|http):\/\/)?(([a-zA-Z0-9-]{1,}\.){1,}([a-zA-Z0-9]{1,63}))(:[0-9]{2,5})?(\/.*)?$/;
+const urlRegex =
+  /^((https|http):\/\/)?(([a-zA-Z0-9-]{1,}\.){1,}([a-zA-Z0-9]{1,63}))(:[0-9]{2,5})?(\/.*)?$/;
 
 const defaultSDKParams: InputParams = {
   useMainnet: null,
@@ -93,7 +93,7 @@ function getContractOf(
   chain: string,
   isMainnet: boolean = true
 ) {
-  return lib.getContractOf(token, chain, contracts, isMainnet);
+  return lib.getContractOf(token, chain, isMainnet);
 }
 
 function removeZerosFromAddress(address: string): string {
@@ -420,7 +420,7 @@ function isValidContractAddress(tx: string) {
 }
 
 function sleep(time: number = 2000): Promise<void> {
-  return new Promise(resolve => setTimeout(resolve, time));
+  return new Promise((resolve) => setTimeout(resolve, time));
 }
 
 function decimalToHex(number: number) {
@@ -442,13 +442,18 @@ function getAbiFromMethodLabel(method: string, abi: any) {
   return result;
 }
 
+function resolveAbiDataPath(path?: string) {
+  if (path) {
+    lib.dbService.write(path);
+  }
+}
+
 // exports
 const utils = {
   networks,
   chains,
   contracts,
   getBTPAddress,
-  abiDataPath,
   genericAbi,
   labels,
   tokenLabels,
@@ -474,7 +479,8 @@ const utils = {
   isValidContractAddress,
   decimalToHex,
   hexToDecimal,
-  getAbiFromMethodLabel
+  getAbiFromMethodLabel,
+  resolveAbiDataPath
 };
 
 export = utils;

@@ -1,24 +1,35 @@
 "use strict";
-const ABI_DATA = require("../../data/abiData.js");
-const abiDataPath = "data/abiData.json";
-function readDb(path, flag = true) {
-    try {
-        if (flag === true) {
-            return ABI_DATA;
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+const fs_1 = __importDefault(require("fs"));
+function _dbService() {
+    let abiData = require("../../data/abiData.js");
+    return {
+        read() {
+            return abiData;
+        },
+        write(path) {
+            try {
+                if (fs_1.default.existsSync(path)) {
+                    abiData = JSON.parse(fs_1.default.readFileSync(path, "utf-8"));
+                }
+                else {
+                    console.info(`Error  accessing file at ${path}`);
+                }
+            }
+            catch (error) {
+                console.info(error);
+            }
         }
-        else {
-        }
-    }
-    catch (err) {
-        console.log(`error reading database at ${path}`);
-        console.log(err);
-        return null;
-    }
+    };
 }
-function getContractOf(token, chain, contractData, isMainnet = true) {
+const dbService = _dbService();
+function getContractOf(token, chain, isMainnet = true) {
     let result = null;
     let mainnetData = null;
     let testnetData = null;
+    const contractData = dbService.read();
     switch (chain) {
         case "icon":
             mainnetData = contractData.icon.mainnet;
@@ -48,7 +59,7 @@ function getContractOf(token, chain, contractData, isMainnet = true) {
     return result;
 }
 function getDataFromLocalData(label, chain, isMainnet, getAbi, getLogicContract = false) {
-    const localData = readDb(abiDataPath);
+    const localData = dbService.read();
     let result = null;
     const allChains = Object.keys(localData);
     if (allChains.includes(chain)) {
@@ -100,8 +111,7 @@ function getAbiOfLabelFromLocalData(label, chain, isMainnet, getLogicContract = 
 }
 const lib = {
     getContractOf,
-    readDb,
-    abiDataPath,
+    dbService,
     getContractOfLabelFromLocalData,
     getAbiOfLabelFromLocalData
 };

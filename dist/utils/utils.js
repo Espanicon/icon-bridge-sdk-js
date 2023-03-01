@@ -14,7 +14,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 const contracts_1 = require("./contracts");
 const networks_1 = require("./networks");
 const lib_1 = __importDefault(require("./lib"));
-const abiDataPath = lib_1.default.abiDataPath;
 const urlRegex = /^((https|http):\/\/)?(([a-zA-Z0-9-]{1,}\.){1,}([a-zA-Z0-9]{1,63}))(:[0-9]{2,5})?(\/.*)?$/;
 const defaultSDKParams = {
     useMainnet: null,
@@ -46,7 +45,7 @@ function getBTPAddress(address, chain, isMainnet = true) {
     return result;
 }
 function getContractOf(token, chain, isMainnet = true) {
-    return lib_1.default.getContractOf(token, chain, contracts_1.contracts, isMainnet);
+    return lib_1.default.getContractOf(token, chain, isMainnet);
 }
 function removeZerosFromAddress(address) {
     return "0x" + address.slice(address.length - 40, address.length);
@@ -218,7 +217,7 @@ function isValidContractAddress(tx) {
     return regex.test(tx);
 }
 function sleep(time = 2000) {
-    return new Promise(resolve => setTimeout(resolve, time));
+    return new Promise((resolve) => setTimeout(resolve, time));
 }
 function decimalToHex(number) {
     return "0x" + number.toString(16);
@@ -235,12 +234,16 @@ function getAbiFromMethodLabel(method, abi) {
     }
     return result;
 }
+function resolveAbiDataPath(path) {
+    if (path) {
+        lib_1.default.dbService.write(path);
+    }
+}
 const utils = {
     networks: networks_1.networks,
     chains: networks_1.chains,
     contracts: contracts_1.contracts,
     getBTPAddress,
-    abiDataPath,
     genericAbi: contracts_1.genericAbi,
     labels: contracts_1.labels,
     tokenLabels: contracts_1.tokenLabels,
@@ -266,7 +269,8 @@ const utils = {
     isValidContractAddress,
     decimalToHex,
     hexToDecimal,
-    getAbiFromMethodLabel
+    getAbiFromMethodLabel,
+    resolveAbiDataPath
 };
 module.exports = utils;
 //# sourceMappingURL=utils.js.map

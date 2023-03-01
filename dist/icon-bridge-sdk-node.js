@@ -9,6 +9,7 @@ const defaultParams = {
 class IconBridgeSDKNode extends IconBridgeSDK {
     constructor(inputParams = defaultParams) {
         super(inputParams);
+        this.sdkUtils.resolveAbiDataPath(inputParams.abiDataFile);
         this.icon = new iconNodeBridge(this.params, this.sdkUtils, EspaniconSDK);
         this.bsc = new bscNodeBridge(this.params, this.bscWeb3, this.sdkUtils, this.lib, this.icon.queryMethod);
     }

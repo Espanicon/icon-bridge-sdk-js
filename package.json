@@ -9,6 +9,7 @@
     "default": "./dist/icon-bridge-sdk-web.mjs"
   },
   "main": "./src/icon-bridge-sdk.ts",
+  "types": "./src/icon-bridge-sdk-node.d.ts",
   "scripts": {
     "build-data": "rm local-lib/*.js local-lib/*.js.* && tsc -p local-lib && node local-lib/buildABIData.js",
     "test": "npm run build && mocha --recursive",

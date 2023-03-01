@@ -1,36 +1,28 @@
 // utils/lib.ts
-//
-// import fs from "fs";
-// import customPath from "./customPath";
-const ABI_DATA = require("../../data/abiData.js");
-
-// variables
-const abiDataPath = "data/abiData.json";
-// types
+import fs from "fs";
 
 // functions
 
-function readDb(path: string, flag: boolean = true): any {
-  try {
-    if (flag === true) {
-      //
-      return ABI_DATA;
-    } else {
-      // if (fs.existsSync(customPath(path))) {
-      //   const dbBuffer = fs.readFileSync(customPath(path), "utf-8");
-      //   const db = JSON.parse(dbBuffer);
-      //   return db;
-      // } else {
-      //   console.log(`error accesing db file "${path}"`);
-      //   return null;
-      // }
+function _dbService() {
+  let abiData = require("../../data/abiData.js");
+  return {
+    read() {
+      return abiData;
+    },
+    write(path: string) {
+      try {
+        if (fs.existsSync(path)) {
+          abiData = JSON.parse(fs.readFileSync(path, "utf-8"));
+        } else {
+          console.info(`Error  accessing file at ${path}`);
+        }
+      } catch (error) {
+        console.info(error);
+      }
     }
-  } catch (err) {
-    console.log(`error reading database at ${path}`);
-    console.log(err);
-    return null;
-  }
+  };
 }
+const dbService = _dbService();
 
 type Network = {
   [key: string]: { address: string };
@@ -39,13 +31,13 @@ type Network = {
 function getContractOf(
   token: string,
   chain: string,
-  contractData: any,
   isMainnet: boolean = true
 ): string | null {
   //
   let result: string | null = null;
   let mainnetData: Network | null = null;
   let testnetData: Network | null = null;
+  const contractData = dbService.read();
 
   switch (chain) {
     case "icon":
@@ -85,14 +77,14 @@ function getDataFromLocalData(
   getLogicContract: boolean = false
 ) {
   //
-  const localData = readDb(abiDataPath);
+  const localData = dbService.read();
   let result: any = null;
   const allChains = Object.keys(localData);
 
   if (allChains.includes(chain)) {
     const chainData = localData[chain];
-    const testnetKeys = (Object.keys(chainData.testnet) as unknown) as string;
-    const mainnetKeys = (Object.keys(chainData.mainnet) as unknown) as string;
+    const testnetKeys = Object.keys(chainData.testnet) as unknown as string;
+    const mainnetKeys = Object.keys(chainData.mainnet) as unknown as string;
     let contractData = null;
 
     if (isMainnet === true && mainnetKeys.includes(label)) {
@@ -151,8 +143,7 @@ function getAbiOfLabelFromLocalData(
 
 const lib = {
   getContractOf,
-  readDb,
-  abiDataPath,
+  dbService,
   getContractOfLabelFromLocalData,
   getAbiOfLabelFromLocalData
 };
