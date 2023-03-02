@@ -1,28 +1,8 @@
 // utils/lib.ts
-import fs from "fs";
+
+import { dbService } from "./db-service";
 
 // functions
-
-function _dbService() {
-  let abiData = require("../../data/abiData.js");
-  return {
-    read() {
-      return abiData;
-    },
-    write(path: string) {
-      try {
-        if (fs.existsSync(path)) {
-          abiData = JSON.parse(fs.readFileSync(path, "utf-8"));
-        } else {
-          console.info(`Error  accessing file at ${path}`);
-        }
-      } catch (error) {
-        console.info(error);
-      }
-    }
-  };
-}
-const dbService = _dbService();
 
 type Network = {
   [key: string]: { address: string };

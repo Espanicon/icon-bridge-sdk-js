@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 const contracts_1 = require("./contracts");
 const networks_1 = require("./networks");
 const lib_1 = __importDefault(require("./lib"));
+const fs_1 = __importDefault(require("fs"));
 const urlRegex = /^((https|http):\/\/)?(([a-zA-Z0-9-]{1,}\.){1,}([a-zA-Z0-9]{1,63}))(:[0-9]{2,5})?(\/.*)?$/;
 const defaultSDKParams = {
     useMainnet: null,
@@ -236,7 +237,17 @@ function getAbiFromMethodLabel(method, abi) {
 }
 function resolveAbiDataPath(path) {
     if (path) {
-        lib_1.default.dbService.write(path);
+        try {
+            if (fs_1.default.existsSync(path)) {
+                lib_1.default.dbService.write(JSON.parse(fs_1.default.readFileSync(path, "utf-8")));
+            }
+            else {
+                console.info(`Error  accessing file at ${path}`);
+            }
+        }
+        catch (error) {
+            console.info(error);
+        }
     }
 }
 const utils = {

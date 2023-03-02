@@ -10,6 +10,7 @@ import {
 } from "./contracts";
 import { networks, chains } from "./networks";
 import lib from "./lib";
+import fs from "fs";
 
 // types
 type Provider = {
@@ -444,7 +445,15 @@ function getAbiFromMethodLabel(method: string, abi: any) {
 
 function resolveAbiDataPath(path?: string) {
   if (path) {
-    lib.dbService.write(path);
+    try {
+      if (fs.existsSync(path)) {
+        lib.dbService.write(JSON.parse(fs.readFileSync(path, "utf-8")));
+      } else {
+        console.info(`Error  accessing file at ${path}`);
+      }
+    } catch (error) {
+      console.info(error);
+    }
   }
 }
 

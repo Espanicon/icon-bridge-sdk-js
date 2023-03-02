@@ -15,6 +15,7 @@
     "test": "npm run build && mocha --recursive",
     "test-unit": "npm run build && mocha --recursive ./test/unit/**/*.test.js",
     "test-e2e": "npm run build && mocha --recursive ./test/e2e/**/*.test.js",
+    "test-integration": "npm run build && mocha --recursive ./test/integration/**/*.test.js",
     "test-e2e-icon": "npm run build && mocha --recursive ./test/e2e/icon/**/*.test.js",
     "test-e2e-icon-ro": "npm run build && mocha --recursive ./test/e2e/icon/icon-bridge-sdk-icon-readonly.test.js",
     "test-e2e-icon-node-nro": "npm run build && mocha --recursive ./test/e2e/icon/node/icon-bridge-sdk-icon-non-readonly.test.js",
@@ -70,6 +71,7 @@
     "@espanicon/espanicon-sdk": "github:Espanicon/espanicon-sdk",
     "dotenv": "^16.0.3",
     "icon-sdk-js": "^1.2.8",
+    "joi": "^17.8.3",
     "web3": "^1.8.0"
   }
 }

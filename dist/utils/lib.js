@@ -1,35 +1,10 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-const fs_1 = __importDefault(require("fs"));
-function _dbService() {
-    let abiData = require("../../data/abiData.js");
-    return {
-        read() {
-            return abiData;
-        },
-        write(path) {
-            try {
-                if (fs_1.default.existsSync(path)) {
-                    abiData = JSON.parse(fs_1.default.readFileSync(path, "utf-8"));
-                }
-                else {
-                    console.info(`Error  accessing file at ${path}`);
-                }
-            }
-            catch (error) {
-                console.info(error);
-            }
-        }
-    };
-}
-const dbService = _dbService();
+const db_service_1 = require("./db-service");
 function getContractOf(token, chain, isMainnet = true) {
     let result = null;
     let mainnetData = null;
     let testnetData = null;
-    const contractData = dbService.read();
+    const contractData = db_service_1.dbService.read();
     switch (chain) {
         case "icon":
             mainnetData = contractData.icon.mainnet;
@@ -59,7 +34,7 @@ function getContractOf(token, chain, isMainnet = true) {
     return result;
 }
 function getDataFromLocalData(label, chain, isMainnet, getAbi, getLogicContract = false) {
-    const localData = dbService.read();
+    const localData = db_service_1.dbService.read();
     let result = null;
     const allChains = Object.keys(localData);
     if (allChains.includes(chain)) {
@@ -111,7 +86,7 @@ function getAbiOfLabelFromLocalData(label, chain, isMainnet, getLogicContract = 
 }
 const lib = {
     getContractOf,
-    dbService,
+    dbService: db_service_1.dbService,
     getContractOfLabelFromLocalData,
     getAbiOfLabelFromLocalData
 };
