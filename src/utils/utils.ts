@@ -10,7 +10,6 @@ import {
 } from "./contracts";
 import { networks, chains } from "./networks";
 import lib from "./lib";
-import fs from "fs";
 
 // types
 type Provider = {
@@ -22,6 +21,7 @@ type InputParams = {
   useMainnet: null | boolean;
   iconProvider: Provider;
   bscProvider: Provider;
+  abiData: unknown;
 };
 
 type Protocol = "https" | "http";
@@ -55,7 +55,8 @@ const defaultSDKParams: InputParams = {
     hostname: networks.mainnet.icon.provider.hostname,
     nid: null
   },
-  bscProvider: { hostname: networks.mainnet.bsc.provider.hostname, nid: null }
+  bscProvider: { hostname: networks.mainnet.bsc.provider.hostname, nid: null },
+  abiData: null
 };
 
 // functions
@@ -169,6 +170,9 @@ function getSDKParams(
         result.bscProvider.nid = inputParams.iconProvider.nid;
       }
     }
+
+    // handle customized abi data if any
+    handleAbiData(inputParams.abiData);
   }
   return result;
 }
@@ -443,14 +447,10 @@ function getAbiFromMethodLabel(method: string, abi: any) {
   return result;
 }
 
-function resolveAbiDataPath(path?: string) {
-  if (path) {
+function handleAbiData(data: unknown) {
+  if (data) {
     try {
-      if (fs.existsSync(path)) {
-        lib.dbService.write(JSON.parse(fs.readFileSync(path, "utf-8")));
-      } else {
-        console.info(`Error  accessing file at ${path}`);
-      }
+      lib.dbService.write(data);
     } catch (error) {
       console.info(error);
     }
@@ -488,8 +488,7 @@ const utils = {
   isValidContractAddress,
   decimalToHex,
   hexToDecimal,
-  getAbiFromMethodLabel,
-  resolveAbiDataPath
+  getAbiFromMethodLabel
 };
 
 export = utils;

@@ -14,7 +14,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 const contracts_1 = require("./contracts");
 const networks_1 = require("./networks");
 const lib_1 = __importDefault(require("./lib"));
-const fs_1 = __importDefault(require("fs"));
 const urlRegex = /^((https|http):\/\/)?(([a-zA-Z0-9-]{1,}\.){1,}([a-zA-Z0-9]{1,63}))(:[0-9]{2,5})?(\/.*)?$/;
 const defaultSDKParams = {
     useMainnet: null,
@@ -22,7 +21,8 @@ const defaultSDKParams = {
         hostname: networks_1.networks.mainnet.icon.provider.hostname,
         nid: null
     },
-    bscProvider: { hostname: networks_1.networks.mainnet.bsc.provider.hostname, nid: null }
+    bscProvider: { hostname: networks_1.networks.mainnet.bsc.provider.hostname, nid: null },
+    abiData: null
 };
 function getBTPAddress(address, chain, isMainnet = true) {
     let result = null;
@@ -100,6 +100,7 @@ function getSDKParams(inputParams, defaultParams = defaultSDKParams) {
                 result.bscProvider.nid = inputParams.iconProvider.nid;
             }
         }
+        handleAbiData(inputParams.abiData);
     }
     return result;
 }
@@ -235,15 +236,10 @@ function getAbiFromMethodLabel(method, abi) {
     }
     return result;
 }
-function resolveAbiDataPath(path) {
-    if (path) {
+function handleAbiData(data) {
+    if (data) {
         try {
-            if (fs_1.default.existsSync(path)) {
-                lib_1.default.dbService.write(JSON.parse(fs_1.default.readFileSync(path, "utf-8")));
-            }
-            else {
-                console.info(`Error  accessing file at ${path}`);
-            }
+            lib_1.default.dbService.write(data);
         }
         catch (error) {
             console.info(error);
@@ -280,8 +276,7 @@ const utils = {
     isValidContractAddress,
     decimalToHex,
     hexToDecimal,
-    getAbiFromMethodLabel,
-    resolveAbiDataPath
+    getAbiFromMethodLabel
 };
 module.exports = utils;
 //# sourceMappingURL=utils.js.map

@@ -13,7 +13,7 @@ type InputParams = {
   useMainnet: null | boolean;
   iconProvider?: Provider;
   bscProvider?: Provider;
-  abiDataFile?: string;
+  abiData?: unknown;
 };
 // variables
 const defaultParams = {
@@ -27,8 +27,6 @@ class IconBridgeSDKNode extends IconBridgeSDK {
 
   constructor(inputParams: InputParams = defaultParams) {
     super(inputParams);
-
-    this.sdkUtils.resolveAbiDataPath(inputParams.abiDataFile);
 
     this.icon = new iconNodeBridge(this.params, this.sdkUtils, EspaniconSDK);
 
