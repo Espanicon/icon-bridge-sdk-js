@@ -4,9 +4,13 @@
   "description": "An sdk written in JS for the ICON Bridge",
   "exports": {
     "node": {
+      "types": "./src/icon-bridge-sdk-node.d.ts",
       "require": "./dist/icon-bridge-sdk-node.js"
     },
-    "default": "./dist/icon-bridge-sdk-web.mjs"
+    "default": {
+      "types": "./src/icon-bridge-sdk-node.d.ts",
+      "require": "./dist/icon-bridge-sdk-web.mjs"
+    }
   },
   "main": "./src/icon-bridge-sdk.ts",
   "scripts": {

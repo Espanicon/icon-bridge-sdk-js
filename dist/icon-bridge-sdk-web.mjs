@@ -1,7 +1,7 @@
 import EspaniconSDK from "@espanicon/espanicon-sdk";
 import IconBridgeSDK from "./lib/icon-bridge-sdk.js";
 import bscNodeBridge from "./lib/bsc/icon-bridge-sdk-node-bsc.js";
-import iconNodeBridge from './lib/icon/icon-bridge-sdk-icon.js';
+import iconNodeBridge from "./lib/icon/icon-bridge-sdk-icon.js";
 const defaultParams = {
     useMainnet: true
 };
